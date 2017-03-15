@@ -1,0 +1,111 @@
+# Telegram Bot API
+[telegram bot api](https://core.telegram.org/bots/api) [golang](https://golang.org) implementation
+
+[![Build Status](https://travis-ci.org/lujem/telegram.svg?branch=master)](https://travis-ci.org/lujem/telegram)
+[![Go Report Card](https://goreportcard.com/badge/github.com/lujem/telegram)](https://goreportcard.com/report/github.com/lujem/telegram)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://raw.githubusercontent.com/lujem/telegram/master/LICENSE)
+
+
+- [ ] Making requests
+- [ ] Getting updates
+    - [ ] Update
+    - [ ] getUpdates
+    - [ ] setWebhook
+    - [ ] deleteWebhook
+    - [ ] getWebhookInfo
+    - [ ] WebhookInfo
+- [ ] Available types
+    - [ ] User
+    - [ ] Chat
+    - [ ] Message
+    - [ ] MessageEntity
+    - [ ] PhotoSize
+    - [ ] Audio
+    - [ ] Document
+    - [ ] Sticker
+    - [ ] Video
+    - [ ] Voice
+    - [ ] Contact
+    - [ ] Location
+    - [ ] Venue
+    - [ ] UserProfilePhotos
+    - [ ] File
+    - [ ] ReplyKeyboardMarkup
+    - [ ] KeyboardButton
+    - [ ] ReplyKeyboardRemove
+    - [ ] InlineKeyboardMarkup
+    - [ ] InlineKeyboardButton
+    - [ ] CallbackQuery
+    - [ ] ForceReply
+    - [ ] ChatMember
+    - [ ] ResponseParameters
+    - [ ] InputFile
+    - [ ] Sending files
+- [ ] Available methods
+    - [ ] getMe
+    - [ ] sendMessage
+    - [ ] Formatting options
+    - [ ] forwardMessage
+    - [ ] sendPhoto
+    - [ ] sendAudio
+    - [ ] sendDocument
+    - [ ] sendSticker
+    - [ ] sendVideo
+    - [ ] sendVoice
+    - [ ] sendLocation
+    - [ ] sendVenue
+    - [ ] sendContact
+    - [ ] sendChatAction
+    - [ ] getUserProfilePhotos
+    - [ ] getFile
+    - [ ] kickChatMember
+    - [ ] leaveChat
+    - [ ] unbanChatMember
+    - [ ] getChat
+    - [ ] getChatAdministrators
+    - [ ] getChatMembersCount
+    - [ ] getChatMember
+    - [ ] answerCallbackQuery
+    - [ ] Inline mode methods
+- [ ] Updating messages
+    - [ ] editMessageText
+    - [ ] editMessageCaption
+    - [ ] editMessageReplyMarkup
+- [ ] Inline mode
+    - [ ] InlineQuery
+    - [ ] answerInlineQuery
+    - [ ] InlineQueryResult
+    - [ ] InlineQueryResultArticle
+    - [ ] InlineQueryResultPhoto
+    - [ ] InlineQueryResultGif
+    - [ ] InlineQueryResultMpeg4Gif
+    - [ ] InlineQueryResultVideo
+    - [ ] InlineQueryResultAudio
+    - [ ] InlineQueryResultVoice
+    - [ ] InlineQueryResultDocument
+    - [ ] InlineQueryResultLocation
+    - [ ] InlineQueryResultVenue
+    - [ ] InlineQueryResultContact
+    - [ ] InlineQueryResultGame
+    - [ ] InlineQueryResultCachedPhoto
+    - [ ] InlineQueryResultCachedGif
+    - [ ] InlineQueryResultCachedMpeg4Gif
+    - [ ] InlineQueryResultCachedSticker
+    - [ ] InlineQueryResultCachedDocument
+    - [ ] InlineQueryResultCachedVideo
+    - [ ] InlineQueryResultCachedVoice
+    - [ ] InlineQueryResultCachedAudio
+    - [ ] InputMessageContent
+    - [ ] InputTextMessageContent
+    - [ ] InputLocationMessageContent
+    - [ ] InputVenueMessageContent
+    - [ ] InputContactMessageContent
+    - [ ] ChosenInlineResult
+- [ ] Games
+    - [ ] sendGame
+    - [ ] Game
+    - [ ] Animation
+    - [ ] CallbackGame
+    - [ ] setGameScore
+    - [ ] getGameHighScores
+    - [ ] GameHighScore
