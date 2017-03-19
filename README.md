@@ -5,8 +5,16 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/lujem/telegram)](https://goreportcard.com/report/github.com/lujem/telegram)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://raw.githubusercontent.com/lujem/telegram/master/LICENSE)
 
+## Install
+```sh
+go get github.com/lujem/telegram
+```
 
-- [ ] Making requests
+## Example
+no example yet!
+
+## Status
+- [x] Making requests
 - [ ] Getting updates
     - [X] Update
     - [X] getUpdates
@@ -106,3 +114,11 @@
     - [ ] setGameScore
     - [ ] getGameHighScores
     - [X] GameHighScore
+
+
+## License
+MIT License
+
+## Contributing
+You can submit a [new issue](https://github.com/lujem/telegram/issues/new) in github [issues](https://github.com/lujem/telegram/issues).
+Or you can [create a fork](https://help.github.com/articles/fork-a-repo), hack on your fork and when you're done create a [pull request](https://help.github.com/articles/fork-a-repo#pull-requests), so that the code contribution can get merged into the main package.
