@@ -4,6 +4,4 @@ before_install:
 - mkdir -p /home/travis/gopath/bin
 
 go:
-#- 1.7
-#- 1.8
 - tip
