@@ -28,7 +28,7 @@ lint: fetch check-gometalinter
 	--disable-all \
 	--enable=gofmt \
 	--enable=vet --enable=vetshadow \
-	--enable=gocyclo \
+	--enable=gocyclo --cyclo-over=24 \
 	--enable=golint \
 	--enable=ineffassign \
 	--enable=misspell \

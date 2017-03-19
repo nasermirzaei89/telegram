@@ -8,104 +8,101 @@
 
 - [ ] Making requests
 - [ ] Getting updates
-    - [ ] Update
-    - [ ] getUpdates
+    - [X] Update
+    - [X] getUpdates
     - [ ] setWebhook
     - [ ] deleteWebhook
     - [ ] getWebhookInfo
     - [ ] WebhookInfo
-- [ ] Available types
-    - [ ] User
-    - [ ] Chat
-    - [ ] Message
-    - [ ] MessageEntity
-    - [ ] PhotoSize
-    - [ ] Audio
-    - [ ] Document
-    - [ ] Sticker
-    - [ ] Video
-    - [ ] Voice
-    - [ ] Contact
-    - [ ] Location
-    - [ ] Venue
-    - [ ] UserProfilePhotos
-    - [ ] File
-    - [ ] ReplyKeyboardMarkup
-    - [ ] KeyboardButton
-    - [ ] ReplyKeyboardRemove
-    - [ ] InlineKeyboardMarkup
-    - [ ] InlineKeyboardButton
-    - [ ] CallbackQuery
-    - [ ] ForceReply
-    - [ ] ChatMember
-    - [ ] ResponseParameters
-    - [ ] InputFile
-    - [ ] Sending files
-- [ ] Available methods
-    - [ ] getMe
-    - [ ] sendMessage
-    - [ ] Formatting options
-    - [ ] forwardMessage
-    - [ ] sendPhoto
-    - [ ] sendAudio
-    - [ ] sendDocument
-    - [ ] sendSticker
-    - [ ] sendVideo
-    - [ ] sendVoice
-    - [ ] sendLocation
-    - [ ] sendVenue
-    - [ ] sendContact
-    - [ ] sendChatAction
-    - [ ] getUserProfilePhotos
-    - [ ] getFile
-    - [ ] kickChatMember
-    - [ ] leaveChat
-    - [ ] unbanChatMember
-    - [ ] getChat
-    - [ ] getChatAdministrators
-    - [ ] getChatMembersCount
-    - [ ] getChatMember
-    - [ ] answerCallbackQuery
-    - [ ] Inline mode methods
+- [X] Available types
+    - [X] User
+    - [X] Chat
+    - [X] Message
+    - [X] MessageEntity
+    - [X] PhotoSize
+    - [X] Audio
+    - [X] Document
+    - [X] Sticker
+    - [X] Video
+    - [X] Voice
+    - [X] Contact
+    - [X] Location
+    - [X] Venue
+    - [X] UserProfilePhotos
+    - [X] File
+    - [X] ReplyKeyboardMarkup
+    - [X] KeyboardButton
+    - [X] ReplyKeyboardRemove
+    - [X] InlineKeyboardMarkup
+    - [X] InlineKeyboardButton
+    - [X] CallbackQuery
+    - [X] ForceReply
+    - [X] ChatMember
+    - [X] ResponseParameters
+    - [X] InputFile
+- [X] Available methods
+    - [X] getMe
+    - [X] sendMessage
+    - [X] forwardMessage
+    - [X] sendPhoto
+    - [X] sendAudio
+    - [X] sendDocument
+    - [X] sendSticker
+    - [X] sendVideo
+    - [X] sendVoice
+    - [X] sendLocation
+    - [X] sendVenue
+    - [X] sendContact
+    - [X] sendChatAction
+    - [X] getUserProfilePhotos
+    - [X] getFile
+    - [X] kickChatMember
+    - [X] leaveChat
+    - [X] unbanChatMember
+    - [X] getChat
+    - [X] getChatAdministrators
+    - [X] getChatMembersCount
+    - [X] getChatMember
+    - [X] answerCallbackQuery
 - [ ] Updating messages
     - [ ] editMessageText
     - [ ] editMessageCaption
     - [ ] editMessageReplyMarkup
 - [ ] Inline mode
-    - [ ] InlineQuery
+    - [X] InlineQuery
     - [ ] answerInlineQuery
-    - [ ] InlineQueryResult
-    - [ ] InlineQueryResultArticle
-    - [ ] InlineQueryResultPhoto
-    - [ ] InlineQueryResultGif
-    - [ ] InlineQueryResultMpeg4Gif
-    - [ ] InlineQueryResultVideo
-    - [ ] InlineQueryResultAudio
-    - [ ] InlineQueryResultVoice
-    - [ ] InlineQueryResultDocument
-    - [ ] InlineQueryResultLocation
-    - [ ] InlineQueryResultVenue
-    - [ ] InlineQueryResultContact
-    - [ ] InlineQueryResultGame
-    - [ ] InlineQueryResultCachedPhoto
-    - [ ] InlineQueryResultCachedGif
-    - [ ] InlineQueryResultCachedMpeg4Gif
-    - [ ] InlineQueryResultCachedSticker
-    - [ ] InlineQueryResultCachedDocument
-    - [ ] InlineQueryResultCachedVideo
-    - [ ] InlineQueryResultCachedVoice
-    - [ ] InlineQueryResultCachedAudio
+    - [X] InlineQueryResult
+    - [X] InlineQueryResultArticle
+    - [X] InlineQueryResultPhoto
+    - [X] InlineQueryResultGif
+    - [X] InlineQueryResultMpeg4Gif
+    - [X] InlineQueryResultVideo
+    - [X] InlineQueryResultAudio
+    - [X] InlineQueryResultVoice
+    - [X] InlineQueryResultDocument
+    - [X] InlineQueryResultLocation
+    - [X] InlineQueryResultVenue
+    - [X] InlineQueryResultContact
+    - [X] InlineQueryResultGame
+    - [X] InlineQueryResultCachedPhoto
+    - [X] InlineQueryResultCachedGif
+    - [X] InlineQueryResultCachedMpeg4Gif
+    - [X] InlineQueryResultCachedSticker
+    - [X] InlineQueryResultCachedDocument
+    - [X] InlineQueryResultCachedVideo
+    - [X] InlineQueryResultCachedVoice
+    - [X] InlineQueryResultCachedAudio
     - [ ] InputMessageContent
-    - [ ] InputTextMessageContent
-    - [ ] InputLocationMessageContent
-    - [ ] InputVenueMessageContent
-    - [ ] InputContactMessageContent
-    - [ ] ChosenInlineResult
+    - [X] InputTextMessageContent
+    - [X] InputLocationMessageContent
+    - [X] InputVenueMessageContent
+    - [X] InputContactMessageContent
+    - [X] ChosenInlineResult
 - [ ] Games
     - [ ] sendGame
-    - [ ] Game
-    - [ ] Animation
+    - [X] Game
+    - [X] Animation
     - [ ] CallbackGame
     - [ ] setGameScore
     - [ ] getGameHighScores
-    - [ ] GameHighScore
+    - [X] GameHighScore
