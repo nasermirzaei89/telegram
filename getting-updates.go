@@ -12,13 +12,13 @@ import (
 // At most one of the optional parameters can be present in any given update.
 type Update struct {
 	UpdateID           int64               `json:"update_id"`
-	Message            *Message            `json:"message"`
-	EditedMessage      *Message            `json:"edited_message"`
-	ChannelPost        *Message            `json:"channel_post"`
-	EditedChannelPost  *Message            `json:"edited_channel_post"`
-	InlineQuery        *InlineQuery        `json:"inline_query"`
-	ChosenInlineResult *ChosenInlineResult `json:"chosen_inline_result"`
-	CallbackQuery      *CallbackQuery      `json:"callback_query"`
+	Message            *Message            `json:"message,omitempty"`
+	EditedMessage      *Message            `json:"edited_message,omitempty"`
+	ChannelPost        *Message            `json:"channel_post,omitempty"`
+	EditedChannelPost  *Message            `json:"edited_channel_post,omitempty"`
+	InlineQuery        *InlineQuery        `json:"inline_query,omitempty"`
+	ChosenInlineResult *ChosenInlineResult `json:"chosen_inline_result,omitempty"`
+	CallbackQuery      *CallbackQuery      `json:"callback_query,omitempty"`
 }
 
 // List the types of updates you want your bot to receive.

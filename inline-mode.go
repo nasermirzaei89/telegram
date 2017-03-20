@@ -1,18 +1,78 @@
 package telegram
 
-import "errors"
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"mime/multipart"
+)
 
 // InlineQuery represents an incoming inline query. When the user sends an empty query, your bot could return some default or trending results.
 type InlineQuery struct {
 	ID       string    `json:"id"`
-	From     *User     `json:"from"`
-	Location *Location `json:"location"`
+	From     User      `json:"from"`
+	Location *Location `json:"location,omitempty"`
 	Query    string    `json:"query"`
 	Offset   string    `json:"offset"`
 }
 
-func (obj *API) answerInlineQuery(InlineQueryID string, results []InlineQueryResult, cacheTime int64, isPersonal bool, nextOffset string, switchPmText string, switchPmParameter string) (*bool, error) {
-	return nil, errors.New("Not implemented")
+func (obj *API) answerInlineQuery(InlineQueryID string, results []InlineQueryResult, cacheTime *int64, isPersonal *bool, nextOffset *string, switchPmText *string, switchPmParameter *string) (*bool, error) {
+	body := new(bytes.Buffer)
+	writer := multipart.NewWriter(body)
+
+	writer.WriteField("inline_query_id", InlineQueryID)
+
+	b, err := json.Marshal(results)
+	if err != nil {
+		return nil, err
+	}
+	writer.WriteField("results", string(b))
+
+	if cacheTime != nil {
+		writer.WriteField("cache_time", fmt.Sprintf("%d", *cacheTime))
+	}
+
+	if isPersonal != nil {
+		writer.WriteField("is_personal", fmt.Sprintf("%t", *isPersonal))
+	}
+
+	if nextOffset != nil {
+		writer.WriteField("next_offset", *nextOffset)
+	}
+
+	if switchPmText != nil {
+		writer.WriteField("switch_pm_text", *switchPmText)
+	}
+
+	if switchPmParameter != nil {
+		writer.WriteField("switch_pm_parameter", *switchPmParameter)
+	}
+
+	err = writer.Close()
+	if err != nil {
+		return nil, err
+	}
+
+	rsp, err := obj.makingRequest("answerInlineQuery", writer.FormDataContentType(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	v := new(struct {
+		Result *bool `json:"result,omitempty"`
+		Error
+	})
+
+	err = json.Unmarshal(rsp, v)
+	if err != nil {
+		return nil, err
+	}
+
+	if !v.OK {
+		return nil, fmt.Errorf("error %d: %s", v.ErrorCode, v.Description)
+	}
+
+	return v.Result, nil
 }
 
 // InlineQueryResult represents one result of an inline query.
@@ -23,14 +83,14 @@ type InlineQueryResultArticle struct {
 	Type                string                `json:"type"`
 	ID                  string                `json:"id"`
 	Title               string                `json:"title"`
-	InputMessageContent *InputMessageContent  `json:"input_message_content"`
-	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup"`
-	URL                 string                `json:"url"`
-	HideURL             bool                  `json:"hide_url"`
-	Description         string                `json:"description"`
-	ThumbURL            string                `json:"thumb_url"`
-	ThumbWidth          int64                 `json:"thumb_width"`
-	ThumbHeight         int64                 `json:"thumb_height"`
+	InputMessageContent InputMessageContent   `json:"input_message_content"`
+	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
+	URL                 *string               `json:"url,omitempty"`
+	HideURL             *bool                 `json:"hide_url,omitempty"`
+	Description         *string               `json:"description,omitempty"`
+	ThumbURL            *string               `json:"thumb_url,omitempty"`
+	ThumbWidth          *int64                `json:"thumb_width,omitempty"`
+	ThumbHeight         *int64                `json:"thumb_height,omitempty"`
 }
 
 // InlineQueryResultPhoto represents a link to a photo. By default, this photo will be sent by the user with optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the photo.
@@ -39,13 +99,13 @@ type InlineQueryResultPhoto struct {
 	ID                  string                `json:"id"`
 	PhotoURL            string                `json:"photo_url"`
 	ThumbURL            string                `json:"thumb_url"`
-	PhotoWidth          int64                 `json:"photo_width"`
-	PhotoHeight         int64                 `json:"photo_height"`
-	Title               string                `json:"title"`
-	Description         string                `json:"description"`
-	Caption             string                `json:"caption"`
-	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup"`
-	InputMessageContent *InputMessageContent  `json:"input_message_content"`
+	PhotoWidth          *int64                `json:"photo_width,omitempty"`
+	PhotoHeight         *int64                `json:"photo_height,omitempty"`
+	Title               *string               `json:"title,omitempty"`
+	Description         *string               `json:"description,omitempty"`
+	Caption             *string               `json:"caption,omitempty"`
+	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
+	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
 }
 
 // InlineQueryResultGif represents a link to an animated GIF file. By default, this animated GIF file will be sent by the user with optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the animation.
@@ -53,13 +113,13 @@ type InlineQueryResultGif struct {
 	Type                string                `json:"type"`
 	ID                  string                `json:"id"`
 	GifURL              string                `json:"gif_url"`
-	GifWidth            int64                 `json:"gif_width"`
-	GifHeight           int64                 `json:"gif_height"`
+	GifWidth            *int64                `json:"gif_width,omitempty"`
+	GifHeight           *int64                `json:"gif_height,omitempty"`
 	ThumbURL            string                `json:"thumb_url"`
-	Title               string                `json:"title"`
-	Caption             string                `json:"caption"`
-	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup"`
-	InputMessageContent *InputMessageContent  `json:"input_message_content"`
+	Title               *string               `json:"title,omitempty"`
+	Caption             *string               `json:"caption,omitempty"`
+	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
+	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
 }
 
 // InlineQueryResultMpeg4Gif represents a link to a video animation (H.264/MPEG-4 AVC video without sound). By default, this animated MPEG-4 file will be sent by the user with optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the animation.
@@ -67,13 +127,13 @@ type InlineQueryResultMpeg4Gif struct {
 	Type                string                `json:"type"`
 	ID                  string                `json:"id"`
 	Mpeg4URL            string                `json:"mpeg4_url"`
-	Mpeg4Width          int64                 `json:"mpeg4_width"`
-	Mpeg4Height         int64                 `json:"mpeg4_height"`
+	Mpeg4Width          *int64                `json:"mpeg4_width,omitempty"`
+	Mpeg4Height         *int64                `json:"mpeg4_height,omitempty"`
 	ThumbURL            string                `json:"thumb_url"`
-	Title               string                `json:"title"`
-	Caption             string                `json:"caption"`
-	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup"`
-	InputMessageContent *InputMessageContent  `json:"input_message_content"`
+	Title               *string               `json:"title,omitempty"`
+	Caption             *string               `json:"caption,omitempty"`
+	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
+	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
 }
 
 // InlineQueryResultVideo represents a link to a page containing an embedded video player or a video file. By default, this video file will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the video.
@@ -84,13 +144,13 @@ type InlineQueryResultVideo struct {
 	MimeType            string                `json:"mime_type"`
 	ThumbURL            string                `json:"thumb_url"`
 	Title               string                `json:"title"`
-	Caption             string                `json:"caption"`
-	VideoWidth          int64                 `json:"video_width"`
-	VideoHeight         int64                 `json:"video_height"`
-	VideoDuration       int64                 `json:"video_duration"`
-	Description         string                `json:"description"`
-	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup"`
-	InputMessageContent *InputMessageContent  `json:"input_message_content"`
+	Caption             *string               `json:"caption,omitempty"`
+	VideoWidth          *int64                `json:"video_width,omitempty"`
+	VideoHeight         *int64                `json:"video_height,omitempty"`
+	VideoDuration       *int64                `json:"video_duration,omitempty"`
+	Description         *string               `json:"description,omitempty"`
+	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
+	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
 }
 
 // InlineQueryResultAudio represents a link to an mp3 audio file. By default, this audio file will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the audio.
@@ -99,11 +159,11 @@ type InlineQueryResultAudio struct {
 	ID                  string                `json:"id"`
 	AudioURL            string                `json:"audio_url"`
 	Title               string                `json:"title"`
-	Caption             string                `json:"caption"`
-	Performer           string                `json:"performer"`
-	AudioDuration       int64                 `json:"audio_duration"`
-	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup"`
-	InputMessageContent *InputMessageContent  `json:"input_message_content"`
+	Caption             *string               `json:"caption,omitempty"`
+	Performer           *string               `json:"performer,omitempty"`
+	AudioDuration       *int64                `json:"audio_duration,omitempty"`
+	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
+	InputMessageContent InputMessageContent   `json:"input_message_content,omitempty"`
 }
 
 // InlineQueryResultVoice represents a link to a voice recording in an .ogg container encoded with OPUS. By default, this voice recording will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the the voice message.
@@ -112,10 +172,10 @@ type InlineQueryResultVoice struct {
 	ID                  string                `json:"id"`
 	VoiceURL            string                `json:"voice_url"`
 	Title               string                `json:"title"`
-	Caption             string                `json:"caption"`
-	VoiceDuration       string                `json:"voice_duration"`
-	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup"`
-	InputMessageContent *InputMessageContent  `json:"input_message_content"`
+	Caption             *string               `json:"caption,omitempty"`
+	VoiceDuration       *string               `json:"voice_duration,omitempty"`
+	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
+	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
 }
 
 // InlineQueryResultDocument represents a link to a file. By default, this file will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the file. Currently, only .PDF and .ZIP files can be sent using this method.
@@ -123,15 +183,15 @@ type InlineQueryResultDocument struct {
 	Type                string                `json:"type"`
 	ID                  string                `json:"id"`
 	Title               string                `json:"title"`
-	Caption             string                `json:"caption"`
+	Caption             *string               `json:"caption,omitempty"`
 	DocumentURL         string                `json:"document_url"`
 	MimeType            string                `json:"mime_type"`
-	Description         string                `json:"description"`
-	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup"`
-	InputMessageContent *InputMessageContent  `json:"input_message_content"`
-	ThumbURL            string                `json:"thumb_url"`
-	ThumbWidth          int64                 `json:"thumb_width"`
-	ThumbHeight         int64                 `json:"thumb_height"`
+	Description         *string               `json:"description,omitempty"`
+	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
+	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
+	ThumbURL            *string               `json:"thumb_url,omitempty"`
+	ThumbWidth          *int64                `json:"thumb_width,omitempty"`
+	ThumbHeight         *int64                `json:"thumb_height,omitempty"`
 }
 
 // InlineQueryResultLocation represents a location on a map. By default, the location will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the location.
@@ -141,11 +201,11 @@ type InlineQueryResultLocation struct {
 	Latitude            float64               `json:"latitude"`
 	Longitude           float64               `json:"longitude"`
 	Title               string                `json:"title"`
-	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup"`
-	InputMessageContent *InputMessageContent  `json:"input_message_content"`
-	ThumbURL            string                `json:"thumb_url"`
-	ThumbWidth          int64                 `json:"thumb_width"`
-	ThumbHeight         int64                 `json:"thumb_height"`
+	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
+	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
+	ThumbURL            *string               `json:"thumb_url,omitempty"`
+	ThumbWidth          *int64                `json:"thumb_width,omitempty"`
+	ThumbHeight         *int64                `json:"thumb_height,omitempty"`
 }
 
 // InlineQueryResultVenue represents a venue. By default, the venue will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the venue.
@@ -156,12 +216,12 @@ type InlineQueryResultVenue struct {
 	Longitude           float64               `json:"longitude"`
 	Title               string                `json:"title"`
 	Address             string                `json:"address"`
-	FoursquareID        string                `json:"foursquare_id"`
-	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup"`
-	InputMessageContent *InputMessageContent  `json:"input_message_content"`
-	ThumbURL            string                `json:"thumb_url"`
-	ThumbWidth          int64                 `json:"thumb_width"`
-	ThumbHeight         int64                 `json:"thumb_height"`
+	FoursquareID        *string               `json:"foursquare_id,omitempty"`
+	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
+	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
+	ThumbURL            *string               `json:"thumb_url,omitempty"`
+	ThumbWidth          *int64                `json:"thumb_width,omitempty"`
+	ThumbHeight         *int64                `json:"thumb_height,omitempty"`
 }
 
 // InlineQueryResultContact represents a contact with a phone number. By default, this contact will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the contact.
@@ -170,12 +230,12 @@ type InlineQueryResultContact struct {
 	ID                  string                `json:"id"`
 	PhoneNumber         string                `json:"phone_number"`
 	FirstName           string                `json:"first_name"`
-	LastName            string                `json:"last_name"`
-	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup"`
-	InputMessageContent *InputMessageContent  `json:"input_message_content"`
-	ThumbURL            string                `json:"thumb_url"`
-	ThumbWidth          int64                 `json:"thumb_width"`
-	ThumbHeight         int64                 `json:"thumb_height"`
+	LastName            *string               `json:"last_name,omitempty"`
+	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
+	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
+	ThumbURL            *string               `json:"thumb_url,omitempty"`
+	ThumbWidth          *int64                `json:"thumb_width,omitempty"`
+	ThumbHeight         *int64                `json:"thumb_height,omitempty"`
 }
 
 // InlineQueryResultGame represents a Game.
@@ -183,7 +243,7 @@ type InlineQueryResultGame struct {
 	Type          string                `json:"type"`
 	ID            string                `json:"id"`
 	GameShortName string                `json:"game_short_name"`
-	ReplyMarkup   *InlineKeyboardMarkup `json:"reply_markup"`
+	ReplyMarkup   *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
 }
 
 // InlineQueryResultCachedPhoto represents a link to a photo stored on the Telegram servers. By default, this photo will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the photo.
@@ -191,11 +251,11 @@ type InlineQueryResultCachedPhoto struct {
 	Type                string                `json:"type"`
 	ID                  string                `json:"id"`
 	PhotoFileID         string                `json:"photo_file_id"`
-	Title               string                `json:"title"`
-	Description         string                `json:"description"`
-	Caption             string                `json:"caption"`
-	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup"`
-	InputMessageContent *InputMessageContent  `json:"input_message_content"`
+	Title               *string               `json:"title,omitempty"`
+	Description         *string               `json:"description,omitempty"`
+	Caption             *string               `json:"caption,omitempty"`
+	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
+	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
 }
 
 // InlineQueryResultCachedGif represents a link to an animated GIF file stored on the Telegram servers. By default, this animated GIF file will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with specified content instead of the animation.
@@ -203,10 +263,10 @@ type InlineQueryResultCachedGif struct {
 	Type                string                `json:"type"`
 	ID                  string                `json:"id"`
 	GifFileID           string                `json:"gif_file_id"`
-	Title               string                `json:"title"`
-	Caption             string                `json:"caption"`
-	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup"`
-	InputMessageContent *InputMessageContent  `json:"input_message_content"`
+	Title               *string               `json:"title,omitempty"`
+	Caption             *string               `json:"caption,omitempty"`
+	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
+	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
 }
 
 // InlineQueryResultCachedMpeg4Gif represents a link to a video animation (H.264/MPEG-4 AVC video without sound) stored on the Telegram servers. By default, this animated MPEG-4 file will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the animation.
@@ -214,10 +274,10 @@ type InlineQueryResultCachedMpeg4Gif struct {
 	Type                string                `json:"type"`
 	ID                  string                `json:"id"`
 	Mpeg4FileID         string                `json:"mpeg4_file_id"`
-	Title               string                `json:"title"`
-	Caption             string                `json:"caption"`
-	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup"`
-	InputMessageContent *InputMessageContent  `json:"input_message_content"`
+	Title               *string               `json:"title,omitempty"`
+	Caption             *string               `json:"caption,omitempty"`
+	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
+	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
 }
 
 // InlineQueryResultCachedSticker represents a link to a sticker stored on the Telegram servers. By default, this sticker will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the sticker.
@@ -225,8 +285,8 @@ type InlineQueryResultCachedSticker struct {
 	Type                string                `json:"type"`
 	ID                  string                `json:"id"`
 	StickerFileID       string                `json:"sticker_file_id"`
-	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup"`
-	InputMessageContent *InputMessageContent  `json:"input_message_content"`
+	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
+	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
 }
 
 // InlineQueryResultCachedDocument represents a link to a file stored on the Telegram servers. By default, this file will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the file.
@@ -235,10 +295,10 @@ type InlineQueryResultCachedDocument struct {
 	ID                  string                `json:"id"`
 	Title               string                `json:"title"`
 	DocumentFileID      string                `json:"document_file_id"`
-	Description         string                `json:"description"`
-	Caption             string                `json:"caption"`
-	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup"`
-	InputMessageContent *InputMessageContent  `json:"input_message_content"`
+	Description         *string               `json:"description,omitempty"`
+	Caption             *string               `json:"caption,omitempty"`
+	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
+	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
 }
 
 // InlineQueryResultCachedVideo represents a link to a video file stored on the Telegram servers. By default, this video file will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the video.
@@ -247,10 +307,10 @@ type InlineQueryResultCachedVideo struct {
 	ID                  string                `json:"id"`
 	VideoFileID         string                `json:"video_file_id"`
 	Title               string                `json:"title"`
-	Description         string                `json:"description"`
-	Caption             string                `json:"caption"`
-	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup"`
-	InputMessageContent *InputMessageContent  `json:"input_message_content"`
+	Description         *string               `json:"description,omitempty"`
+	Caption             *string               `json:"caption,omitempty"`
+	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
+	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
 }
 
 // InlineQueryResultCachedVoice represents a link to a voice message stored on the Telegram servers. By default, this voice message will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the voice message.
@@ -259,9 +319,9 @@ type InlineQueryResultCachedVoice struct {
 	ID                  string                `json:"id"`
 	VoiceFileID         string                `json:"voice_file_id"`
 	Title               string                `json:"title"`
-	Caption             string                `json:"caption"`
-	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup"`
-	InputMessageContent *InputMessageContent  `json:"input_message_content"`
+	Caption             *string               `json:"caption,omitempty"`
+	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
+	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
 }
 
 // InlineQueryResultCachedAudio represents a link to an mp3 audio file stored on the Telegram servers. By default, this audio file will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the audio.
@@ -269,9 +329,9 @@ type InlineQueryResultCachedAudio struct {
 	Type                string                `json:"type"`
 	ID                  string                `json:"id"`
 	AudioFileID         string                `json:"audio_file_id"`
-	Caption             string                `json:"caption"`
-	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup"`
-	InputMessageContent *InputMessageContent  `json:"input_message_content"`
+	Caption             *string               `json:"caption,omitempty"`
+	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
+	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
 }
 
 // InputMessageContent represents the content of a message to be sent as a result of an inline query
@@ -279,9 +339,9 @@ type InputMessageContent interface{}
 
 // InputTextMessageContent represents the content of a text message to be sent as the result of an inline query.
 type InputTextMessageContent struct {
-	MessageText           string `json:"message_text"`
-	ParseMode             string `json:"parse_mode"`
-	DisableWebPagePreview bool   `json:"disable_web_page_preview"`
+	MessageText           string  `json:"message_text"`
+	ParseMode             *string `json:"parse_mode,omitempty"`
+	DisableWebPagePreview *bool   `json:"disable_web_page_preview,omitempty"`
 }
 
 // InputLocationMessageContent represents the content of a location message to be sent as the result of an inline query.
@@ -296,21 +356,21 @@ type InputVenueMessageContent struct {
 	Longitude    float64 `json:"longitude"`
 	Title        string  `json:"title"`
 	Address      string  `json:"address"`
-	FoursquareID string  `json:"foursquare_id"`
+	FoursquareID *string `json:"foursquare_id,omitempty"`
 }
 
 // InputContactMessageContent represents the content of a contact message to be sent as the result of an inline query.
 type InputContactMessageContent struct {
-	PhoneNumber string `json:"phone_number"`
-	FirstName   string `json:"first_name"`
-	LastName    string `json:"last_name"`
+	PhoneNumber string  `json:"phone_number"`
+	FirstName   string  `json:"first_name"`
+	LastName    *string `json:"last_name,omitempty"`
 }
 
 // ChosenInlineResult represents a result of an inline query that was chosen by the user and sent to their chat partner.
 type ChosenInlineResult struct {
 	ResultID        string    `json:"result_id"`
-	From            *User     `json:"from"`
-	Location        *Location `json:"location"`
-	InlineMessageID string    `json:"inline_message_id"`
+	From            User      `json:"from"`
+	Location        *Location `json:"location,omitempty"`
+	InlineMessageID *string   `json:"inline_message_id,omitempty"`
 	Query           string    `json:"query"`
 }

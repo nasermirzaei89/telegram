@@ -11,6 +11,7 @@ import (
 func (obj *API) getMe() (*User, error) {
 	body := new(bytes.Buffer)
 	writer := multipart.NewWriter(body)
+	writer.WriteField("foo", "bar")
 	err := writer.Close()
 	if err != nil {
 		return nil, err
@@ -36,6 +37,12 @@ func (obj *API) getMe() (*User, error) {
 
 	return v.Result, nil
 }
+
+// The Bot API supports basic formatting for messages. You can use bold and italic text, as well as inline links and pre-formatted code in your bots' messages. Telegram clients will render them accordingly. You can use either markdown-style or HTML-style formatting.
+const (
+	ParseModeMarkdown = "Markdown"
+	ParseModeHTML     = "HTML"
+)
 
 func (obj *API) sendMessage(chatID interface{}, text string, parseMode *string, disableWebPagePreview, disableNotification *bool, replyToMessageID *int64, replyMarkup interface{}) (*Message, error) {
 	body := new(bytes.Buffer)

@@ -128,3 +128,8 @@ func (obj *API) GetChatMember(chatID interface{}, userID int64) (*ChatMember, er
 func (obj *API) AnswerCallbackQuery(callbackQueryID string, text *string, showAlert *bool, url *string, cacheTime *int64) (*bool, error) {
 	return obj.answerCallbackQuery(callbackQueryID, text, showAlert, url, cacheTime)
 }
+
+// AnswerInlineQuery is a method to send answers to an inline query
+func (obj *API) AnswerInlineQuery(InlineQueryID string, results []InlineQueryResult, cacheTime *int64, isPersonal *bool, nextOffset *string, switchPmText *string, switchPmParameter *string) (*bool, error) {
+	return obj.answerInlineQuery(InlineQueryID, results, cacheTime, isPersonal, nextOffset, switchPmText, switchPmParameter)
+}
