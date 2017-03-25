@@ -78,6 +78,23 @@ func (obj *API) answerInlineQuery(InlineQueryID string, results []InlineQueryRes
 // InlineQueryResult represents one result of an inline query.
 type InlineQueryResult interface{}
 
+// Type of the inline query result
+const (
+	InlineQueryResultTypeArticle  = "article"
+	InlineQueryResultTypePhoto    = "photo"
+	InlineQueryResultTypeGif      = "gif"
+	InlineQueryResultTypeMpeg4Gif = "mpeg4_gif"
+	InlineQueryResultTypeVideo    = "video"
+	InlineQueryResultTypeAudio    = "audio"
+	InlineQueryResultTypeVoice    = "voice"
+	InlineQueryResultTypeDocument = "document"
+	InlineQueryResultTypeLocation = "location"
+	InlineQueryResultTypeVenue    = "venue"
+	InlineQueryResultTypeContact  = "contact"
+	InlineQueryResultTypeGame     = "game"
+	InlineQueryResultTypeSticker  = "sticker"
+)
+
 // InlineQueryResultArticle represents a link to an article or web page.
 type InlineQueryResultArticle struct {
 	Type                string                `json:"type"`
