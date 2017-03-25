@@ -78,7 +78,7 @@ no example yet!
     - [ ] editMessageReplyMarkup
 - [ ] Inline mode
     - [X] InlineQuery
-    - [ ] answerInlineQuery
+    - [X] answerInlineQuery
     - [X] InlineQueryResult
     - [X] InlineQueryResultArticle
     - [X] InlineQueryResultPhoto
@@ -100,7 +100,7 @@ no example yet!
     - [X] InlineQueryResultCachedVideo
     - [X] InlineQueryResultCachedVoice
     - [X] InlineQueryResultCachedAudio
-    - [ ] InputMessageContent
+    - [X] InputMessageContent
     - [X] InputTextMessageContent
     - [X] InputLocationMessageContent
     - [X] InputVenueMessageContent
