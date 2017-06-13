@@ -33,6 +33,7 @@ no example yet!
     - [X] Sticker
     - [X] Video
     - [X] Voice
+    - [ ] VideoNote
     - [X] Contact
     - [X] Location
     - [X] Venue
@@ -58,6 +59,7 @@ no example yet!
     - [X] sendSticker
     - [X] sendVideo
     - [X] sendVoice
+    - [ ] sendVideoNote
     - [X] sendLocation
     - [X] sendVenue
     - [X] sendContact
@@ -65,8 +67,8 @@ no example yet!
     - [X] getUserProfilePhotos
     - [X] getFile
     - [X] kickChatMember
-    - [X] leaveChat
     - [X] unbanChatMember
+    - [X] leaveChat
     - [X] getChat
     - [X] getChatAdministrators
     - [X] getChatMembersCount
@@ -76,6 +78,7 @@ no example yet!
     - [ ] editMessageText
     - [ ] editMessageCaption
     - [ ] editMessageReplyMarkup
+    - [ ] deleteMessage
 - [ ] Inline mode
     - [X] InlineQuery
     - [X] answerInlineQuery
@@ -106,6 +109,18 @@ no example yet!
     - [X] InputVenueMessageContent
     - [X] InputContactMessageContent
     - [X] ChosenInlineResult
+- [ ] Payments
+    - [ ] sendInvoice
+    - [ ] answerShippingQuery
+    - [ ] answerPreCheckoutQuery
+    - [ ] LabeledPrice
+    - [ ] Invoice
+    - [ ] ShippingAddress
+    - [ ] OrderInfo
+    - [ ] ShippingOption
+    - [ ] SuccessfulPayment
+    - [ ] ShippingQuery
+    - [ ] PreCheckoutQuery
 - [ ] Games
     - [ ] sendGame
     - [X] Game
