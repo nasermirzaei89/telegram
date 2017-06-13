@@ -2,7 +2,7 @@ package telegram
 
 import "errors"
 
-func (obj *API) sendGame(chatID int64, gameShortName string, disableNotification bool, replyToMessageID int64, replyMarkup *InlineKeyboardMarkup) (*Message, error) {
+func (obj *API) sendGame(chatID int64, gameShortName string, disableNotification *bool, replyToMessageID *int64, replyMarkup *InlineKeyboardMarkup) (*Message, error) {
 	return nil, errors.New("Not implemented")
 }
 
