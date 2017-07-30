@@ -7,10 +7,11 @@ import (
 
 // User represents a Telegram user or bot.
 type User struct {
-	ID        int64   `json:"id"`
-	FirstName string  `json:"first_name"`
-	LastName  *string `json:"last_name,omitempty"`
-	Username  *string `json:"username,omitempty"`
+	ID           int64   `json:"id"`
+	FirstName    string  `json:"first_name"`
+	LastName     *string `json:"last_name,omitempty"`
+	Username     *string `json:"username,omitempty"`
+	LanguageCode *string `json:"language_code,omitempty"`
 }
 
 // Chat represents a chat.
@@ -23,6 +24,14 @@ type Chat struct {
 	LastName                    *string `json:"last_name,omitempty"`
 	AllMembersAreAdministrators *bool   `json:"all_members_are_administrators,omitempty"`
 }
+
+// Type of chat, can be either “private”, “group”, “supergroup” or “channel”
+const (
+	ChatTypePrivate    = "private"
+	ChatTypeGroup      = "group"
+	ChatTypeSuperGroup = "supergroup"
+	ChatTypeChannel    = "channel"
+)
 
 // Message represents a message.
 type Message struct {
