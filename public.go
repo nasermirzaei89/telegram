@@ -133,3 +133,8 @@ func (obj *API) AnswerCallbackQuery(callbackQueryID string, text *string, showAl
 func (obj *API) AnswerInlineQuery(InlineQueryID string, results []InlineQueryResult, cacheTime *int64, isPersonal *bool, nextOffset *string, switchPmText *string, switchPmParameter *string) (*bool, error) {
 	return obj.answerInlineQuery(InlineQueryID, results, cacheTime, isPersonal, nextOffset, switchPmText, switchPmParameter)
 }
+
+// EditMessageText is a method to edit text and game messages sent by the bot or via the bot (for inline bots). On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.
+func (obj *API) EditMessageText(chatID interface{}, messageID *int64, inlineMessageID *string, text string, parseMode *string, disableWebPagePreview *bool, replyMarkup interface{}) (*Message, *bool, error) {
+	return obj.editMessageText(chatID, messageID, inlineMessageID, text, parseMode, disableWebPagePreview, replyMarkup)
+}
