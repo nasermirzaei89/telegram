@@ -17,6 +17,7 @@ type Error struct {
 	Description string `json:"description,omitempty"`
 }
 
+// Error ...
 func (e Error) Error() string {
 	if !e.OK {
 		return fmt.Sprintf("error %d: %s", e.ErrorCode, e.Description)
@@ -63,44 +64,7 @@ func (obj *BotAPI) callMethod(name string, parameters ...parameter) (interface{}
 			continue
 		}
 
-		switch v := parameters[i].value.(type) {
-		case string:
-			err := writer.WriteField(parameters[i].name, v)
-			if err != nil {
-				return nil, err
-			}
-		case int32, int64:
-			err := writer.WriteField(parameters[i].name, fmt.Sprintf("%d", v))
-			if err != nil {
-				return nil, err
-			}
-		case InputFile:
-			part, err := writer.CreateFormFile(parameters[i].name, parameters[i].name)
-			if err != nil {
-				return nil, err
-			}
-			_, err = io.Copy(part, v)
-			if err != nil {
-				return nil, err
-			}
-		case bool:
-			err := writer.WriteField(parameters[i].name, fmt.Sprintf("%t", v))
-			if err != nil {
-				return nil, err
-			}
-		case InlineKeyboardMarkup, ReplyKeyboardMarkup, ReplyKeyboardRemove, ForceReply:
-			b, err := json.Marshal(v)
-			if err != nil {
-				return nil, err
-			}
-
-			err = writer.WriteField(parameters[i].name, string(b))
-			if err != nil {
-				return nil, err
-			}
-		default:
-			return nil, fmt.Errorf("invalide type %T for %s", parameters[i].name, v)
-		}
+		writeField(writer, parameters[i].name, parameters[i].value)
 	}
 
 	err := writer.Close()
@@ -128,6 +92,49 @@ func (obj *BotAPI) callMethod(name string, parameters ...parameter) (interface{}
 	}
 
 	return res.Result, nil
+}
+
+func writeField(writer *multipart.Writer, name string, value interface{}) error {
+	switch v := value.(type) {
+	case string:
+		err := writer.WriteField(name, v)
+		if err != nil {
+			return err
+		}
+	case int32, int64:
+		err := writer.WriteField(name, fmt.Sprintf("%d", v))
+		if err != nil {
+			return err
+		}
+	case InputFile:
+		part, err := writer.CreateFormFile(name, name)
+		if err != nil {
+			return err
+		}
+		_, err = io.Copy(part, v)
+		if err != nil {
+			return err
+		}
+	case bool:
+		err := writer.WriteField(name, fmt.Sprintf("%t", v))
+		if err != nil {
+			return err
+		}
+	case InlineKeyboardMarkup, ReplyKeyboardMarkup, ReplyKeyboardRemove, ForceReply:
+		b, err := json.Marshal(v)
+		if err != nil {
+			return err
+		}
+
+		err = writer.WriteField(name, string(b))
+		if err != nil {
+			return err
+		}
+	default:
+		return fmt.Errorf("invalide type %T for %s", name, v)
+	}
+
+	return nil
 }
 
 func (obj *BotAPI) makingRequest(methodName string, contentType string, body *bytes.Buffer) ([]byte, error) {

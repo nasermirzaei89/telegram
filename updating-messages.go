@@ -1,5 +1,6 @@
 package telegram
 
+// EditMessageText ...
 func (obj *BotAPI) EditMessageText(chatID *interface{}, messageID *int32, inlineMessageID *string, text string, parseMode *string, disableWebPagePreview *bool, replyMarkup *InlineKeyboardMarkup) (*Message, error) {
 
 	parameters := []parameter{
@@ -70,6 +71,7 @@ func (obj *BotAPI) EditMessageText(chatID *interface{}, messageID *int32, inline
 	return res.(*Message), nil
 }
 
+// EditMessageCaption ...
 func (obj *BotAPI) EditMessageCaption(chatID *interface{}, messageID *int32, inlineMessageID *string, caption *string, parseMode *string, replyMarkup *InlineKeyboardMarkup) (*Message, error) {
 
 	parameters := []parameter{
@@ -132,6 +134,7 @@ func (obj *BotAPI) EditMessageCaption(chatID *interface{}, messageID *int32, inl
 	return res.(*Message), nil
 }
 
+// EditMessageReplyMarkup ...
 func (obj *BotAPI) EditMessageReplyMarkup(chatID *interface{}, messageID *int32, inlineMessageID *string, replyMarkup *InlineKeyboardMarkup) (*Message, error) {
 
 	parameters := []parameter{
@@ -178,6 +181,7 @@ func (obj *BotAPI) EditMessageReplyMarkup(chatID *interface{}, messageID *int32,
 	return res.(*Message), nil
 }
 
+// DeleteMessage ...
 func (obj *BotAPI) DeleteMessage(chatID interface{}, messageID int32) (*bool, error) {
 
 	parameters := []parameter{

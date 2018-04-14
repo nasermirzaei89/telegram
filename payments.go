@@ -1,5 +1,6 @@
 package telegram
 
+// SendInvoice ...
 func (obj *BotAPI) SendInvoice(chatID int32, title string, description string, payload string, providerToken string, startParameter string, currency string, prices []LabeledPrice, providerData *string, photoURL *string, photoSize *int32, photoWidth *int32, photoHeight *int32, needName *bool, needPhoneNumber *bool, needEmail *bool, needShippingAddress *bool, sendPhoneNumberToProvider *bool, sendEmailToProvider *bool, isFlexible *bool, disableNotification *bool, replyToMessageID *int32, replyMarkup *InlineKeyboardMarkup) (*Message, error) {
 
 	parameters := []parameter{
@@ -197,6 +198,7 @@ func (obj *BotAPI) SendInvoice(chatID int32, title string, description string, p
 	return res.(*Message), nil
 }
 
+// AnswerShippingQuery ...
 func (obj *BotAPI) AnswerShippingQuery(shippingQueryID string, ok bool, shippingOptions *[]ShippingOption, errorMessage *string) (*bool, error) {
 
 	parameters := []parameter{
@@ -242,6 +244,7 @@ func (obj *BotAPI) AnswerShippingQuery(shippingQueryID string, ok bool, shipping
 	return res.(*bool), nil
 }
 
+// AnswerPreCheckoutQuery ...
 func (obj *BotAPI) AnswerPreCheckoutQuery(preCheckoutQueryID string, ok bool, errorMessage *string) (*bool, error) {
 
 	parameters := []parameter{
@@ -279,11 +282,13 @@ func (obj *BotAPI) AnswerPreCheckoutQuery(preCheckoutQueryID string, ok bool, er
 	return res.(*bool), nil
 }
 
+// LabeledPrice ...
 type LabeledPrice struct {
 	Label  string `json:"label"`
 	Amount int32  `json:"amount"`
 }
 
+// Invoice ...
 type Invoice struct {
 	Title          string `json:"title"`
 	Description    string `json:"description"`
@@ -292,6 +297,7 @@ type Invoice struct {
 	TotalAmount    int32  `json:"total_amount"`
 }
 
+// ShippingAddress ...
 type ShippingAddress struct {
 	CountryCode string `json:"country_code"`
 	State       string `json:"state"`
@@ -301,6 +307,7 @@ type ShippingAddress struct {
 	PostCode    string `json:"post_code"`
 }
 
+// OrderInfo ...
 type OrderInfo struct {
 	Name            string           `json:"name"`
 	PhoneNumber     *string          `json:"phone_number,omitempty"`
@@ -308,12 +315,14 @@ type OrderInfo struct {
 	ShippingAddress *ShippingAddress `json:"shipping_address,omitempty"`
 }
 
+// ShippingOption ...
 type ShippingOption struct {
 	ID     string         `json:"id"`
 	Title  string         `json:"title"`
 	Prices []LabeledPrice `json:"prices"`
 }
 
+// SuccessfulPayment ...
 type SuccessfulPayment struct {
 	Currency                string     `json:"currency"`
 	TotalAmount             int32      `json:"total_amount"`
@@ -324,6 +333,7 @@ type SuccessfulPayment struct {
 	ProviderPaymentChargeID string
 }
 
+// ShippingQuery ...
 type ShippingQuery struct {
 	ID              string          `json:"id"`
 	From            User            `json:"from"`
@@ -331,6 +341,7 @@ type ShippingQuery struct {
 	ShippingAddress ShippingAddress `json:"shipping_address"`
 }
 
+// PreCheckoutQuery ...
 type PreCheckoutQuery struct {
 	ID               string     `json:"id"`
 	From             User       `json:"from"`

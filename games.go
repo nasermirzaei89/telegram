@@ -1,5 +1,6 @@
 package telegram
 
+// SendGame ...
 func (obj *BotAPI) SendGame(chatID int32, gameShortName string, disableNotification *bool, replyToMessageID *int32, replyMarkup *InlineKeyboardMarkup) (*Message, error) {
 
 	parameters := []parameter{
@@ -53,6 +54,7 @@ func (obj *BotAPI) SendGame(chatID int32, gameShortName string, disableNotificat
 	return res.(*Message), nil
 }
 
+// Game  ...
 type Game struct {
 	Title        string           `json:"title"`
 	Description  string           `json:"description"`
@@ -62,6 +64,7 @@ type Game struct {
 	Animation    *Animation       `json:"animation,omitempty"`
 }
 
+// Animation  ...
 type Animation struct {
 	FileID   string     `json:"file_id"`
 	Thumb    *PhotoSize `json:"thumb"`
@@ -70,8 +73,10 @@ type Animation struct {
 	FileSize *int32     `json:"file_size"`
 }
 
+// CallbackGame  ...
 type CallbackGame interface{}
 
+// SetGameScore ...
 func (obj *BotAPI) SetGameScore(userID int32, score int32, force *bool, disableEditMessage *bool, chatID *int32, messageID *int32, inlineMessageID *string) (*Message, error) {
 
 	parameters := []parameter{
@@ -141,6 +146,7 @@ func (obj *BotAPI) SetGameScore(userID int32, score int32, force *bool, disableE
 	return res.(*Message), nil
 }
 
+// GetGameHighScores ...
 func (obj *BotAPI) GetGameHighScores(userID int32, chatID *int32, messageID *int32, inlineMessageID *string) (*[]GameHighScore, error) {
 
 	parameters := []parameter{
@@ -186,6 +192,7 @@ func (obj *BotAPI) GetGameHighScores(userID int32, chatID *int32, messageID *int
 	return res.(*[]GameHighScore), nil
 }
 
+// GameHighScore  ...
 type GameHighScore struct {
 	Position int32 `json:"position"`
 	User     User  `json:"user"`

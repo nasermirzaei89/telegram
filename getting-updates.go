@@ -1,5 +1,6 @@
 package telegram
 
+// Update ...
 type Update struct {
 	UpdateID           int64               `json:"update_id"`
 	Message            *Message            `json:"message,omitempty"`
@@ -13,6 +14,7 @@ type Update struct {
 	PreCheckoutQuery   *PreCheckoutQuery   `json:"pre_checkout_query,omitempty"`
 }
 
+// GetUpdates ...
 func (obj *BotAPI) GetUpdates(offset, limit, timeout *int64, allowedUpdates *[]string) ([]Update, error) {
 	parameters := []parameter{
 		{
@@ -57,6 +59,7 @@ func (obj *BotAPI) GetUpdates(offset, limit, timeout *int64, allowedUpdates *[]s
 	return res.([]Update), nil
 }
 
+// SetWebhook ...
 func (obj *BotAPI) SetWebhook(url string, certificate *InputFile, maxConnections *int32, allowedUpdates *[]string) (*bool, error) {
 	parameters := []parameter{
 		{
@@ -101,6 +104,7 @@ func (obj *BotAPI) SetWebhook(url string, certificate *InputFile, maxConnections
 	return res.(*bool), nil
 }
 
+// DeleteWebhook ...
 func (obj *BotAPI) DeleteWebhook() (*bool, error) {
 	res, err := obj.callMethod("deleteWebhook")
 	if err != nil {
@@ -110,6 +114,7 @@ func (obj *BotAPI) DeleteWebhook() (*bool, error) {
 	return res.(*bool), nil
 }
 
+// GetWebhookInfo ...
 func (obj *BotAPI) GetWebhookInfo() (*WebhookInfo, error) {
 	res, err := obj.callMethod("getWebhookInfo")
 	if err != nil {
@@ -119,6 +124,7 @@ func (obj *BotAPI) GetWebhookInfo() (*WebhookInfo, error) {
 	return res.(*WebhookInfo), nil
 }
 
+// WebhookInfo ...
 type WebhookInfo struct {
 	URL                  string    `json:"url"`
 	HasCustomCertificate bool      `json:"has_custom_certificate"`

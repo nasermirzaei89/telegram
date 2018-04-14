@@ -1,5 +1,6 @@
 package telegram
 
+// InlineQuery ...
 type InlineQuery struct {
 	ID       string    `json:"id"`
 	From     User      `json:"from"`
@@ -8,6 +9,7 @@ type InlineQuery struct {
 	Offset   string    `json:"offset"`
 }
 
+// AnswerInlineQuery ...
 func (obj *BotAPI) AnswerInlineQuery(inlineQueryID string, results []InlineQueryResult, cacheTime *int32, isPersonal *bool, nextOffset, switchPmText, switchPmParameter *string) (*bool, error) {
 	parameters := []parameter{
 		{

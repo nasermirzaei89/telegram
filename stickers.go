@@ -1,5 +1,6 @@
 package telegram
 
+// Sticker ...
 type Sticker struct {
 	FileID       string        `json:"file_id"`
 	Width        int32         `json:"width"`
@@ -11,6 +12,7 @@ type Sticker struct {
 	FileSize     *int32        `json:"file_size,omitempty"`
 }
 
+// StickerSet ...
 type StickerSet struct {
 	Name          string    `json:"name"`
 	Title         string    `json:"title"`
@@ -18,6 +20,7 @@ type StickerSet struct {
 	Stickers      []Sticker `json:"stickers"`
 }
 
+// MaskPosition ...
 type MaskPosition struct {
 	Point  string  `json:"point"`
 	XShift float32 `json:"x_shift"`
@@ -25,6 +28,7 @@ type MaskPosition struct {
 	Scale  float32 `json:"scale"`
 }
 
+// SendSticker ...
 func (obj *BotAPI) SendSticker(chatID interface{}, sticker interface{}, disableNotification *bool, replyToMessageID *int32, replyMarkup *interface{}) (*Message, error) {
 
 	parameters := []parameter{
@@ -83,6 +87,7 @@ func (obj *BotAPI) SendSticker(chatID interface{}, sticker interface{}, disableN
 	return res.(*Message), nil
 }
 
+// GetStickerSet ...
 func (obj *BotAPI) GetStickerSet(name string) (*StickerSet, error) {
 
 	parameters := []parameter{
@@ -104,6 +109,7 @@ func (obj *BotAPI) GetStickerSet(name string) (*StickerSet, error) {
 	return res.(*StickerSet), nil
 }
 
+// UploadStickerFile ...
 func (obj *BotAPI) UploadStickerFile(userID int32, pngSticker InputFile) (*File, error) {
 
 	parameters := []parameter{
@@ -133,6 +139,7 @@ func (obj *BotAPI) UploadStickerFile(userID int32, pngSticker InputFile) (*File,
 	return res.(*File), nil
 }
 
+// CreateNewStickerSet ...
 func (obj *BotAPI) CreateNewStickerSet(userID int32, name string, title string, pngSticker interface{}, emojis string, containsMasks *bool, maskPosition *MaskPosition) (*bool, error) {
 
 	parameters := []parameter{
@@ -203,6 +210,7 @@ func (obj *BotAPI) CreateNewStickerSet(userID int32, name string, title string, 
 	return res.(*bool), nil
 }
 
+// AddStickerToSet ...
 func (obj *BotAPI) AddStickerToSet(userID int32, name string, pngSticker interface{}, emojis string, maskPosition *MaskPosition) (*bool, error) {
 
 	parameters := []parameter{
@@ -257,6 +265,7 @@ func (obj *BotAPI) AddStickerToSet(userID int32, name string, pngSticker interfa
 	return res.(*bool), nil
 }
 
+// SetStickerPositionInSet ...
 func (obj *BotAPI) SetStickerPositionInSet(sticker string, position int32) (*bool, error) {
 
 	parameters := []parameter{
@@ -286,6 +295,7 @@ func (obj *BotAPI) SetStickerPositionInSet(sticker string, position int32) (*boo
 	return res.(*bool), nil
 }
 
+// DeleteStickerFromSet ...
 func (obj *BotAPI) DeleteStickerFromSet(sticker string) (*bool, error) {
 
 	parameters := []parameter{

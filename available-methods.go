@@ -1,5 +1,6 @@
 package telegram
 
+// GetMe ...
 func (obj *BotAPI) GetMe() (*User, error) {
 
 	res, err := obj.callMethod("getMe")
@@ -10,6 +11,7 @@ func (obj *BotAPI) GetMe() (*User, error) {
 	return res.(*User), nil
 }
 
+// SendMessage ...
 func (obj *BotAPI) SendMessage(chatID interface{}, text string, parseMode *string, disableWebPagePreview *bool, disableNotification *bool, replyToMessageID *int32, replyMarkup *interface{}) (*Message, error) {
 
 	parameters := []parameter{
@@ -83,6 +85,7 @@ func (obj *BotAPI) SendMessage(chatID interface{}, text string, parseMode *strin
 	return res.(*Message), nil
 }
 
+// ForwardMessage ...
 func (obj *BotAPI) ForwardMessage(chatID interface{}, fromChatID interface{}, disableNotification *bool, messageID int32) (*Message, error) {
 
 	parameters := []parameter{
@@ -130,6 +133,7 @@ func (obj *BotAPI) ForwardMessage(chatID interface{}, fromChatID interface{}, di
 	return res.(*Message), nil
 }
 
+// SendPhoto ...
 func (obj *BotAPI) SendPhoto(chatID interface{}, photo interface{}, caption *string, parseMode *string, disableNotification *bool, replyToMessageID *int32, replyMarkup *interface{}) (*Message, error) {
 
 	parameters := []parameter{
@@ -204,6 +208,7 @@ func (obj *BotAPI) SendPhoto(chatID interface{}, photo interface{}, caption *str
 	return res.(*Message), nil
 }
 
+// SendAudio ...
 func (obj *BotAPI) SendAudio(chatID interface{}, audio interface{}, caption *string, parseMode *string, duration *int32, performer *string, title *string, disableNotification *bool, replyToMessageID *int32, replyMarkup *interface{}) (*Message, error) {
 
 	parameters := []parameter{
@@ -302,6 +307,7 @@ func (obj *BotAPI) SendAudio(chatID interface{}, audio interface{}, caption *str
 	return res.(*Message), nil
 }
 
+// SendDocument ...
 func (obj *BotAPI) SendDocument(chatID interface{}, document interface{}, caption *string, parseMode *string, disableNotification *bool, replyToMessageID *int32, replyMarkup *interface{}) (*Message, error) {
 
 	parameters := []parameter{
@@ -376,6 +382,7 @@ func (obj *BotAPI) SendDocument(chatID interface{}, document interface{}, captio
 	return res.(*Message), nil
 }
 
+// SendVideo ...
 func (obj *BotAPI) SendVideo(chatID interface{}, video interface{}, duration *int32, width *int32, height *int32, caption *string, parseMode *string, supportsStreaming *bool, disableNotification *bool, replyToMessageID *int32, replyMarkup *interface{}) (*Message, error) {
 
 	parameters := []parameter{
@@ -482,6 +489,7 @@ func (obj *BotAPI) SendVideo(chatID interface{}, video interface{}, duration *in
 	return res.(*Message), nil
 }
 
+// SendVoice ...
 func (obj *BotAPI) SendVoice(chatID interface{}, voice interface{}, caption *string, parseMode *string, duration *int32, disableNotification *bool, replyToMessageID *int32, replyMarkup *interface{}) (*Message, error) {
 
 	parameters := []parameter{
@@ -564,6 +572,7 @@ func (obj *BotAPI) SendVoice(chatID interface{}, voice interface{}, caption *str
 	return res.(*Message), nil
 }
 
+// SendVideoNote ...
 func (obj *BotAPI) SendVideoNote(chatID interface{}, videoNote interface{}, duration *int32, length *int32, disableNotification *bool, replyToMessageID *int32, replyMarkup *interface{}) (*Message, error) {
 
 	parameters := []parameter{
@@ -638,6 +647,7 @@ func (obj *BotAPI) SendVideoNote(chatID interface{}, videoNote interface{}, dura
 	return res.(*Message), nil
 }
 
+// SendMediaGroup ...
 func (obj *BotAPI) SendMediaGroup(chatID interface{}, media []InputMedia, disableNotification *bool, replyToMessageID *int32) (*[]Message, error) {
 
 	parameters := []parameter{
@@ -684,6 +694,7 @@ func (obj *BotAPI) SendMediaGroup(chatID interface{}, media []InputMedia, disabl
 	return res.(*[]Message), nil
 }
 
+// SendLocation ...
 func (obj *BotAPI) SendLocation(chatID interface{}, latitude float32, longitude float32, livePeriod *int32, disableNotification *bool, replyToMessageID *int32, replyMarkup *interface{}) (*Message, error) {
 
 	parameters := []parameter{
@@ -757,6 +768,7 @@ func (obj *BotAPI) SendLocation(chatID interface{}, latitude float32, longitude 
 	return res.(*Message), nil
 }
 
+// EditMessageLiveLocation ...
 func (obj *BotAPI) EditMessageLiveLocation(chatID *interface{}, messageID *int32, inlineMessageID *string, latitude float32, longitude float32, replyMarkup *InlineKeyboardMarkup) (*Message, error) {
 
 	parameters := []parameter{
@@ -819,6 +831,7 @@ func (obj *BotAPI) EditMessageLiveLocation(chatID *interface{}, messageID *int32
 	return res.(*Message), nil
 }
 
+// StopMessageLiveLocation ...
 func (obj *BotAPI) StopMessageLiveLocation(chatID *interface{}, messageID *int32, inlineMessageID *string, replyMarkup *InlineKeyboardMarkup) (*Message, error) {
 
 	parameters := []parameter{
@@ -865,6 +878,7 @@ func (obj *BotAPI) StopMessageLiveLocation(chatID *interface{}, messageID *int32
 	return res.(*Message), nil
 }
 
+// SendVenue ...
 func (obj *BotAPI) SendVenue(chatID interface{}, latitude float32, longitude float32, title string, address string, foursquareID *string, disableNotification *bool, replyToMessageID *int32, replyMarkup *interface{}) (*Message, error) {
 
 	parameters := []parameter{
@@ -954,6 +968,7 @@ func (obj *BotAPI) SendVenue(chatID interface{}, latitude float32, longitude flo
 	return res.(*Message), nil
 }
 
+// SendContact ...
 func (obj *BotAPI) SendContact(chatID interface{}, phoneNumber string, firstName string, lastName *string, disableNotification *bool, replyToMessageID *int32, replyMarkup *interface{}) (*Message, error) {
 
 	parameters := []parameter{
@@ -1027,6 +1042,7 @@ func (obj *BotAPI) SendContact(chatID interface{}, phoneNumber string, firstName
 	return res.(*Message), nil
 }
 
+// SendChatAction ...
 func (obj *BotAPI) SendChatAction(chatID interface{}, action string) (*bool, error) {
 
 	parameters := []parameter{
@@ -1057,6 +1073,7 @@ func (obj *BotAPI) SendChatAction(chatID interface{}, action string) (*bool, err
 	return res.(*bool), nil
 }
 
+// GetUserProfilePhotos ...
 func (obj *BotAPI) GetUserProfilePhotos(userID int32, offset *int32, limit *int32) (*UserProfilePhotos, error) {
 
 	parameters := []parameter{
@@ -1094,6 +1111,7 @@ func (obj *BotAPI) GetUserProfilePhotos(userID int32, offset *int32, limit *int3
 	return res.(*UserProfilePhotos), nil
 }
 
+// GetFile ...
 func (obj *BotAPI) GetFile(fileID string) (*File, error) {
 
 	parameters := []parameter{
@@ -1115,6 +1133,7 @@ func (obj *BotAPI) GetFile(fileID string) (*File, error) {
 	return res.(*File), nil
 }
 
+// KickChatMember ...
 func (obj *BotAPI) KickChatMember(chatID interface{}, userID int32, untilDate *int32) (*bool, error) {
 
 	parameters := []parameter{
@@ -1153,6 +1172,7 @@ func (obj *BotAPI) KickChatMember(chatID interface{}, userID int32, untilDate *i
 	return res.(*bool), nil
 }
 
+// UnbanChatMember ...
 func (obj *BotAPI) UnbanChatMember(chatID interface{}, userID int32) (*bool, error) {
 
 	parameters := []parameter{
@@ -1183,6 +1203,7 @@ func (obj *BotAPI) UnbanChatMember(chatID interface{}, userID int32) (*bool, err
 	return res.(*bool), nil
 }
 
+// RestrictChatMember ...
 func (obj *BotAPI) RestrictChatMember(chatID interface{}, userID int32, untilDate *int32, canSendMessages *bool, canSendMediaMessages *bool, canSendOtherMessages *bool, canAddWebPagePreviews *bool) (*bool, error) {
 
 	parameters := []parameter{
@@ -1253,6 +1274,7 @@ func (obj *BotAPI) RestrictChatMember(chatID interface{}, userID int32, untilDat
 	return res.(*bool), nil
 }
 
+// PromoteChatMember ...
 func (obj *BotAPI) PromoteChatMember(chatID interface{}, userID int32, canChangeInfo *bool, canPostMessages *bool, canEditMessages *bool, canDeleteMessages *bool, canInviteUsers *bool, canRestrictMembers *bool, canPinMessages *bool, canPromoteMembers *bool) (*bool, error) {
 
 	parameters := []parameter{
@@ -1347,6 +1369,7 @@ func (obj *BotAPI) PromoteChatMember(chatID interface{}, userID int32, canChange
 	return res.(*bool), nil
 }
 
+// ExportChatInviteLink ...
 func (obj *BotAPI) ExportChatInviteLink(chatID interface{}) (*string, error) {
 
 	parameters := []parameter{
@@ -1369,6 +1392,7 @@ func (obj *BotAPI) ExportChatInviteLink(chatID interface{}) (*string, error) {
 	return res.(*string), nil
 }
 
+// SetChatPhoto ...
 func (obj *BotAPI) SetChatPhoto(chatID interface{}, photo InputFile) (*bool, error) {
 
 	parameters := []parameter{
@@ -1399,6 +1423,7 @@ func (obj *BotAPI) SetChatPhoto(chatID interface{}, photo InputFile) (*bool, err
 	return res.(*bool), nil
 }
 
+// DeleteChatPhoto ...
 func (obj *BotAPI) DeleteChatPhoto(chatID interface{}) (*bool, error) {
 
 	parameters := []parameter{
@@ -1421,6 +1446,7 @@ func (obj *BotAPI) DeleteChatPhoto(chatID interface{}) (*bool, error) {
 	return res.(*bool), nil
 }
 
+// SetChatTitle ...
 func (obj *BotAPI) SetChatTitle(chatID interface{}, title string) (*bool, error) {
 
 	parameters := []parameter{
@@ -1451,6 +1477,7 @@ func (obj *BotAPI) SetChatTitle(chatID interface{}, title string) (*bool, error)
 	return res.(*bool), nil
 }
 
+// SetChatDescription ...
 func (obj *BotAPI) SetChatDescription(chatID interface{}, description *string) (*bool, error) {
 
 	parameters := []parameter{
@@ -1481,6 +1508,7 @@ func (obj *BotAPI) SetChatDescription(chatID interface{}, description *string) (
 	return res.(*bool), nil
 }
 
+// PinChatMessage ...
 func (obj *BotAPI) PinChatMessage(chatID interface{}, messageID int32, disableNotification *bool) (*bool, error) {
 
 	parameters := []parameter{
@@ -1519,6 +1547,7 @@ func (obj *BotAPI) PinChatMessage(chatID interface{}, messageID int32, disableNo
 	return res.(*bool), nil
 }
 
+// UnpinChatMessage ...
 func (obj *BotAPI) UnpinChatMessage(chatID interface{}) (*bool, error) {
 
 	parameters := []parameter{
@@ -1541,6 +1570,7 @@ func (obj *BotAPI) UnpinChatMessage(chatID interface{}) (*bool, error) {
 	return res.(*bool), nil
 }
 
+// LeaveChat ...
 func (obj *BotAPI) LeaveChat(chatID interface{}) (*bool, error) {
 
 	parameters := []parameter{
@@ -1563,6 +1593,7 @@ func (obj *BotAPI) LeaveChat(chatID interface{}) (*bool, error) {
 	return res.(*bool), nil
 }
 
+// GetChat ...
 func (obj *BotAPI) GetChat(chatID interface{}) (*Chat, error) {
 
 	parameters := []parameter{
@@ -1585,6 +1616,7 @@ func (obj *BotAPI) GetChat(chatID interface{}) (*Chat, error) {
 	return res.(*Chat), nil
 }
 
+// GetChatAdministrators ...
 func (obj *BotAPI) GetChatAdministrators(chatID interface{}) (*ChatMember, error) {
 
 	parameters := []parameter{
@@ -1607,6 +1639,7 @@ func (obj *BotAPI) GetChatAdministrators(chatID interface{}) (*ChatMember, error
 	return res.(*ChatMember), nil
 }
 
+// GetChatMembersCount ...
 func (obj *BotAPI) GetChatMembersCount(chatID interface{}) (*int32, error) {
 
 	parameters := []parameter{
@@ -1629,6 +1662,7 @@ func (obj *BotAPI) GetChatMembersCount(chatID interface{}) (*int32, error) {
 	return res.(*int32), nil
 }
 
+// GetChatMember ...
 func (obj *BotAPI) GetChatMember(chatID interface{}, userID int32) (*ChatMember, error) {
 
 	parameters := []parameter{
@@ -1659,6 +1693,7 @@ func (obj *BotAPI) GetChatMember(chatID interface{}, userID int32) (*ChatMember,
 	return res.(*ChatMember), nil
 }
 
+// SetChatStickerSet ...
 func (obj *BotAPI) SetChatStickerSet(chatID interface{}, stickerSetName string) (*bool, error) {
 
 	parameters := []parameter{
@@ -1689,6 +1724,7 @@ func (obj *BotAPI) SetChatStickerSet(chatID interface{}, stickerSetName string) 
 	return res.(*bool), nil
 }
 
+// DeleteChatStickerSet ...
 func (obj *BotAPI) DeleteChatStickerSet(chatID interface{}) (*bool, error) {
 
 	parameters := []parameter{
@@ -1711,6 +1747,7 @@ func (obj *BotAPI) DeleteChatStickerSet(chatID interface{}) (*bool, error) {
 	return res.(*bool), nil
 }
 
+// AnswerCallbackQuery ...
 func (obj *BotAPI) AnswerCallbackQuery(callbackQueryID string, text *string, showAlert *bool, uRL *string, cacheTime *int32) (*bool, error) {
 
 	parameters := []parameter{
