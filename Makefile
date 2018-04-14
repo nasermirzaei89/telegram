@@ -8,11 +8,11 @@ all: lint
 
 lint:
 	which gometalinter || (go get -u -v github.com/alecthomas/gometalinter && gometalinter --install)
-	gometalinter --vendor --skip=vendor/ --exclude=vendor \
+	gometalinter
 	--disable-all \
 	--enable=gofmt \
 	--enable=vet --enable=vetshadow \
-	--enable=gocyclo --cyclo-over=24 \
+	--enable=gocyclo --cyclo-over=15 \
 	--enable=golint \
 	--enable=ineffassign \
 	--enable=misspell \

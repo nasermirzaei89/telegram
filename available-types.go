@@ -38,15 +38,6 @@ type Chat struct {
 	CanSetStickerSet            *bool      `json:"can_set_sticker_set,omitempty"`            // Optional. True, if the bot can change the group sticker set. Returned only in getChat.
 }
 
-// Type of chat, can be either “private”, “group”, “supergroup” or “channel”
-// TODO: Move this
-const (
-	ChatTypePrivate    = "private"
-	ChatTypeGroup      = "group"
-	ChatTypeSuperGroup = "supergroup"
-	ChatTypeChannel    = "channel"
-)
-
 // Message represents a message.
 type Message struct {
 	MessageID             int32              `json:"message_id"`                        // Unique message identifier inside this chat

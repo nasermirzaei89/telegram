@@ -10,14 +10,6 @@ import (
 	"net/http"
 )
 
-// request content types
-const (
-	// URL query string // we doesn't support this
-	ContentTypeApplicationXWWWFormURLEncode = "application/x-www-form-urlencoded"
-	ContentTypeApplicationJSON              = "application/json"    // except for uploading files
-	ContentTypeMultipartFormData            = "multipart/form-data" // use to upload files
-)
-
 // Error is structure of error embedded in telegram responses
 type Error struct {
 	OK          bool   `json:"ok"`
