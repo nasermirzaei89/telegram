@@ -1,12 +1,5 @@
 package telegram
 
-import (
-	"bytes"
-	"encoding/json"
-	"fmt"
-	"mime/multipart"
-)
-
 // InlineQuery represents an incoming inline query. When the user sends an empty query, your bot could return some default or trending results.
 type InlineQuery struct {
 	ID       string    `json:"id"`
@@ -16,63 +9,72 @@ type InlineQuery struct {
 	Offset   string    `json:"offset"`
 }
 
-func (obj *API) answerInlineQuery(InlineQueryID string, results []InlineQueryResult, cacheTime *int64, isPersonal *bool, nextOffset *string, switchPmText *string, switchPmParameter *string) (*bool, error) {
-	body := new(bytes.Buffer)
-	writer := multipart.NewWriter(body)
+func (obj *BotAPI) AnswerInlineQuery(inlineQueryID string, results []InlineQueryResult, cacheTime *int32, isPersonal *bool, nextOffset, switchPmText, switchPmParameter *string) (*bool, error) {
+	parameters := []parameter{
+		{
+			name:     "inline_query_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: inlineQueryID,
+		},
+		{
+			name:     "results",
+			required: true,
+			types: []parameterType{
+				parameterTypeArrayOfInlineQueryResult,
+			},
+			value: results,
+		},
+		{
+			name:     "cache_time",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: cacheTime,
+		},
+		{
+			name:     "is_personal",
+			required: false,
+			types: []parameterType{
+				parameterTypeBoolean,
+			},
+			value: isPersonal,
+		},
+		{
+			name:     "next_offset",
+			required: false,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: nextOffset,
+		},
+		{
+			name:     "switch_pm_text",
+			required: false,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: switchPmText,
+		},
+		{
+			name:     "switch_pm_parameter",
+			required: false,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: switchPmParameter,
+		},
+	}
 
-	writer.WriteField("inline_query_id", InlineQueryID)
-
-	b, err := json.Marshal(results)
+	res, err := obj.callMethod("answerInlineQuery", parameters...)
 	if err != nil {
 		return nil, err
 	}
-	writer.WriteField("results", string(b))
 
-	if cacheTime != nil {
-		writer.WriteField("cache_time", fmt.Sprintf("%d", *cacheTime))
-	}
-
-	if isPersonal != nil {
-		writer.WriteField("is_personal", fmt.Sprintf("%t", *isPersonal))
-	}
-
-	if nextOffset != nil {
-		writer.WriteField("next_offset", *nextOffset)
-	}
-
-	if switchPmText != nil {
-		writer.WriteField("switch_pm_text", *switchPmText)
-	}
-
-	if switchPmParameter != nil {
-		writer.WriteField("switch_pm_parameter", *switchPmParameter)
-	}
-
-	err = writer.Close()
-	if err != nil {
-		return nil, err
-	}
-
-	rsp, err := obj.makingRequest("answerInlineQuery", writer.FormDataContentType(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	v := new(struct {
-		Result *bool `json:"result,omitempty"`
-		Error
-	})
-
-	err = json.Unmarshal(rsp, v)
-	if err != nil {
-		return nil, err
-	}
-
-	if !v.OK {
-		return nil, fmt.Errorf("error %d: %s", v.ErrorCode, v.Description)
-	}
-
-	return v.Result, nil
+	return res.(*bool), nil
 }
 
 // InlineQueryResult represents one result of an inline query.
@@ -106,8 +108,8 @@ type InlineQueryResultArticle struct {
 	HideURL             *bool                 `json:"hide_url,omitempty"`
 	Description         *string               `json:"description,omitempty"`
 	ThumbURL            *string               `json:"thumb_url,omitempty"`
-	ThumbWidth          *int64                `json:"thumb_width,omitempty"`
-	ThumbHeight         *int64                `json:"thumb_height,omitempty"`
+	ThumbWidth          *int32                `json:"thumb_width,omitempty"`
+	ThumbHeight         *int32                `json:"thumb_height,omitempty"`
 }
 
 // InlineQueryResultPhoto represents a link to a photo. By default, this photo will be sent by the user with optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the photo.
@@ -116,8 +118,8 @@ type InlineQueryResultPhoto struct {
 	ID                  string                `json:"id"`
 	PhotoURL            string                `json:"photo_url"`
 	ThumbURL            string                `json:"thumb_url"`
-	PhotoWidth          *int64                `json:"photo_width,omitempty"`
-	PhotoHeight         *int64                `json:"photo_height,omitempty"`
+	PhotoWidth          *int32                `json:"photo_width,omitempty"`
+	PhotoHeight         *int32                `json:"photo_height,omitempty"`
 	Title               *string               `json:"title,omitempty"`
 	Description         *string               `json:"description,omitempty"`
 	Caption             *string               `json:"caption,omitempty"`
@@ -130,8 +132,8 @@ type InlineQueryResultGif struct {
 	Type                string                `json:"type"`
 	ID                  string                `json:"id"`
 	GifURL              string                `json:"gif_url"`
-	GifWidth            *int64                `json:"gif_width,omitempty"`
-	GifHeight           *int64                `json:"gif_height,omitempty"`
+	GifWidth            *int32                `json:"gif_width,omitempty"`
+	GifHeight           *int32                `json:"gif_height,omitempty"`
 	ThumbURL            string                `json:"thumb_url"`
 	Title               *string               `json:"title,omitempty"`
 	Caption             *string               `json:"caption,omitempty"`
@@ -144,8 +146,8 @@ type InlineQueryResultMpeg4Gif struct {
 	Type                string                `json:"type"`
 	ID                  string                `json:"id"`
 	Mpeg4URL            string                `json:"mpeg4_url"`
-	Mpeg4Width          *int64                `json:"mpeg4_width,omitempty"`
-	Mpeg4Height         *int64                `json:"mpeg4_height,omitempty"`
+	Mpeg4Width          *int32                `json:"mpeg4_width,omitempty"`
+	Mpeg4Height         *int32                `json:"mpeg4_height,omitempty"`
 	ThumbURL            string                `json:"thumb_url"`
 	Title               *string               `json:"title,omitempty"`
 	Caption             *string               `json:"caption,omitempty"`
@@ -162,9 +164,9 @@ type InlineQueryResultVideo struct {
 	ThumbURL            string                `json:"thumb_url"`
 	Title               string                `json:"title"`
 	Caption             *string               `json:"caption,omitempty"`
-	VideoWidth          *int64                `json:"video_width,omitempty"`
-	VideoHeight         *int64                `json:"video_height,omitempty"`
-	VideoDuration       *int64                `json:"video_duration,omitempty"`
+	VideoWidth          *int32                `json:"video_width,omitempty"`
+	VideoHeight         *int32                `json:"video_height,omitempty"`
+	VideoDuration       *int32                `json:"video_duration,omitempty"`
 	Description         *string               `json:"description,omitempty"`
 	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
 	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
@@ -178,7 +180,7 @@ type InlineQueryResultAudio struct {
 	Title               string                `json:"title"`
 	Caption             *string               `json:"caption,omitempty"`
 	Performer           *string               `json:"performer,omitempty"`
-	AudioDuration       *int64                `json:"audio_duration,omitempty"`
+	AudioDuration       *int32                `json:"audio_duration,omitempty"`
 	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
 	InputMessageContent InputMessageContent   `json:"input_message_content,omitempty"`
 }
@@ -207,8 +209,8 @@ type InlineQueryResultDocument struct {
 	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
 	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
 	ThumbURL            *string               `json:"thumb_url,omitempty"`
-	ThumbWidth          *int64                `json:"thumb_width,omitempty"`
-	ThumbHeight         *int64                `json:"thumb_height,omitempty"`
+	ThumbWidth          *int32                `json:"thumb_width,omitempty"`
+	ThumbHeight         *int32                `json:"thumb_height,omitempty"`
 }
 
 // InlineQueryResultLocation represents a location on a map. By default, the location will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the location.
@@ -221,8 +223,8 @@ type InlineQueryResultLocation struct {
 	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
 	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
 	ThumbURL            *string               `json:"thumb_url,omitempty"`
-	ThumbWidth          *int64                `json:"thumb_width,omitempty"`
-	ThumbHeight         *int64                `json:"thumb_height,omitempty"`
+	ThumbWidth          *int32                `json:"thumb_width,omitempty"`
+	ThumbHeight         *int32                `json:"thumb_height,omitempty"`
 }
 
 // InlineQueryResultVenue represents a venue. By default, the venue will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the venue.
@@ -237,8 +239,8 @@ type InlineQueryResultVenue struct {
 	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
 	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
 	ThumbURL            *string               `json:"thumb_url,omitempty"`
-	ThumbWidth          *int64                `json:"thumb_width,omitempty"`
-	ThumbHeight         *int64                `json:"thumb_height,omitempty"`
+	ThumbWidth          *int32                `json:"thumb_width,omitempty"`
+	ThumbHeight         *int32                `json:"thumb_height,omitempty"`
 }
 
 // InlineQueryResultContact represents a contact with a phone number. By default, this contact will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the contact.
@@ -251,8 +253,8 @@ type InlineQueryResultContact struct {
 	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
 	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
 	ThumbURL            *string               `json:"thumb_url,omitempty"`
-	ThumbWidth          *int64                `json:"thumb_width,omitempty"`
-	ThumbHeight         *int64                `json:"thumb_height,omitempty"`
+	ThumbWidth          *int32                `json:"thumb_width,omitempty"`
+	ThumbHeight         *int32                `json:"thumb_height,omitempty"`
 }
 
 // InlineQueryResultGame represents a Game.

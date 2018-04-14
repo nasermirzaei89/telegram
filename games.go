@@ -1,12 +1,58 @@
 package telegram
 
-import "errors"
+func (obj *BotAPI) SendGame(chatID int32, gameShortName string, disableNotification *bool, replyToMessageID *int32, replyMarkup *InlineKeyboardMarkup) (*Message, error) {
 
-func (obj *API) sendGame(chatID int64, gameShortName string, disableNotification *bool, replyToMessageID *int64, replyMarkup *InlineKeyboardMarkup) (*Message, error) {
-	return nil, errors.New("Not implemented")
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: chatID,
+		},
+		{
+			name:     "game_short_name",
+			required: true,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: gameShortName,
+		},
+		{
+			name:     "disable_notification",
+			required: false,
+			types: []parameterType{
+				parameterTypeBoolean,
+			},
+			value: disableNotification,
+		},
+		{
+			name:     "reply_to_message_id",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: replyToMessageID,
+		},
+		{
+			name:     "reply_markup",
+			required: false,
+			types: []parameterType{
+				parameterTypeInlineKeyboardMarkup,
+			},
+			value: replyMarkup,
+		},
+	}
+
+	res, err := obj.callMethod("sendGame", parameters...)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.(*Message), nil
 }
 
-// Game represents a game. Use BotFather to create and edit games, their short names will act as unique identifiers.
 type Game struct {
 	Title        string           `json:"title"`
 	Description  string           `json:"description"`
@@ -16,30 +62,132 @@ type Game struct {
 	Animation    *Animation       `json:"animation,omitempty"`
 }
 
-// Animation ...
-// You can provide an animation for your game so that it looks stylish in chats (check out Lumberjack for an example). This object represents an animation file to be displayed in the message containing a game.
 type Animation struct {
 	FileID   string     `json:"file_id"`
-	Thumb    *PhotoSize `json:"thumb,omitempty"`
-	FileName *string    `json:"file_name,omitempty"`
-	MimeType *string    `json:"mime_type,omitempty"`
-	FileSize *int64     `json:"file_size,omitempty"`
+	Thumb    *PhotoSize `json:"thumb"`
+	FileName *string    `json:"file_name"`
+	MimeType *string    `json:"mime_type"`
+	FileSize *int32     `json:"file_size"`
 }
 
-// CallbackGame is a placeholder, currently holds no information. Use BotFather to set up your game.
 type CallbackGame interface{}
 
-func (obj *API) setGameScore(userID int64, score int64, force bool, disableEditMessage bool, chatID int64, messageID int64, inlineMessageID string) (*Message, *bool, error) {
-	return nil, nil, errors.New("Not implemented")
+func (obj *BotAPI) SetGameScore(userID int32, score int32, force *bool, disableEditMessage *bool, chatID *int32, messageID *int32, inlineMessageID *string) (*Message, error) {
+
+	parameters := []parameter{
+		{
+			name:     "user_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: userID,
+		},
+		{
+			name:     "score",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: score,
+		},
+		{
+			name:     "force",
+			required: false,
+			types: []parameterType{
+				parameterTypeBoolean,
+			},
+			value: force,
+		},
+		{
+			name:     "disable_edit_message",
+			required: false,
+			types: []parameterType{
+				parameterTypeBoolean,
+			},
+			value: disableEditMessage,
+		},
+		{
+			name:     "chat_id",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: chatID,
+		},
+		{
+			name:     "message_id",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: messageID,
+		},
+		{
+			name:     "inline_message_id",
+			required: false,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: inlineMessageID,
+		},
+	}
+
+	res, err := obj.callMethod("setGameScore", parameters...)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.(*Message), nil
 }
 
-func (obj *API) getGameHighScores(userID int64, chatID int64, messageID int64, inlineMessageID string) ([]GameHighScore, error) {
-	return nil, errors.New("Not implemented")
+func (obj *BotAPI) GetGameHighScores(userID int32, chatID *int32, messageID *int32, inlineMessageID *string) (*[]GameHighScore, error) {
+
+	parameters := []parameter{
+		{
+			name:     "user_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: userID,
+		},
+		{
+			name:     "chat_id",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: chatID,
+		},
+		{
+			name:     "message_id",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: messageID,
+		},
+		{
+			name:     "inline_message_id",
+			required: false,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: inlineMessageID,
+		},
+	}
+
+	res, err := obj.callMethod("getGameHighScores", parameters...)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.(*[]GameHighScore), nil
 }
 
-// GameHighScore represents one row of the high scores table for a game.
 type GameHighScore struct {
-	Position int64 `json:"position"`
+	Position int32 `json:"position"`
 	User     User  `json:"user"`
-	Score    int64 `json:"score"`
+	Score    int32 `json:"score"`
 }

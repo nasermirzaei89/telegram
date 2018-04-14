@@ -1,83 +1,209 @@
 package telegram
 
-import (
-	"bytes"
-	"encoding/json"
-	"errors"
-	"fmt"
-	"mime/multipart"
-)
+func (obj *BotAPI) EditMessageText(chatID *interface{}, messageID *int32, inlineMessageID *string, text string, parseMode *string, disableWebPagePreview *bool, replyMarkup *InlineKeyboardMarkup) (*Message, error) {
 
-func (obj *API) editMessageText(chatID interface{}, messageID *int64, inlineMessageID *string, text string, parseMode *string, disableWebPagePreview *bool, replyMarkup interface{}) (*Message, *bool, error) {
-	body := new(bytes.Buffer)
-	writer := multipart.NewWriter(body)
-
-	switch chatID.(type) {
-	case string:
-		writer.WriteField("chat_id", chatID.(string))
-	case int64:
-		writer.WriteField("chat_id", fmt.Sprintf("%d", chatID.(int64)))
-	default:
-		return nil, nil, fmt.Errorf("invalide type %T for chat id", chatID)
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+		{
+			name:     "message_id",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: messageID,
+		},
+		{
+			name:     "inline_message_id",
+			required: false,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: inlineMessageID,
+		},
+		{
+			name:     "text",
+			required: true,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: text,
+		},
+		{
+			name:     "parse_mode",
+			required: false,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: parseMode,
+		},
+		{
+			name:     "disable_web_page_preview",
+			required: false,
+			types: []parameterType{
+				parameterTypeBoolean,
+			},
+			value: disableWebPagePreview,
+		},
+		{
+			name:     "reply_markup",
+			required: false,
+			types: []parameterType{
+				parameterTypeInlineKeyboardMarkup,
+			},
+			value: replyMarkup,
+		},
 	}
 
-	if messageID != nil {
-		writer.WriteField("message_id", fmt.Sprintf("%d", *messageID))
-	}
-
-	if inlineMessageID != nil {
-		writer.WriteField("inline_message_id", *inlineMessageID)
-	}
-
-	writer.WriteField("text", text)
-
-	if parseMode != nil {
-		writer.WriteField("parse_mode", *parseMode)
-	}
-
-	if disableWebPagePreview != nil {
-		writer.WriteField("disable_web_page_preview", fmt.Sprintf("%t", *disableWebPagePreview))
-	}
-
-	if replyMarkup != nil {
-		b, err := json.Marshal(replyMarkup)
-		if err != nil {
-			return nil, nil, err
-		}
-		writer.WriteField("reply_markup", string(b))
-	}
-
-	err := writer.Close()
+	res, err := obj.callMethod("editMessageText", parameters...)
 	if err != nil {
-		return nil, nil, err
+		return nil, err
 	}
 
-	rsp, err := obj.makingRequest("editMessageText", writer.FormDataContentType(), body)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	v := new(struct {
-		Result *Message `json:"result,omitempty"`
-		Error
-	})
-
-	err = json.Unmarshal(rsp, v)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	if !v.OK {
-		return nil, nil, fmt.Errorf("error %d: %s", v.ErrorCode, v.Description)
-	}
-
-	return v.Result, nil, nil
+	return res.(*Message), nil
 }
 
-func (obj *API) editMessageCaption(chatID interface{}, messageID int64, inlineMessageID int64, caption string, replyMarkup interface{}) (*Message, *bool, error) {
-	return nil, nil, errors.New("Not implemented")
+func (obj *BotAPI) EditMessageCaption(chatID *interface{}, messageID *int32, inlineMessageID *string, caption *string, parseMode *string, replyMarkup *InlineKeyboardMarkup) (*Message, error) {
+
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+		{
+			name:     "message_id",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: messageID,
+		},
+		{
+			name:     "inline_message_id",
+			required: false,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: inlineMessageID,
+		},
+		{
+			name:     "caption",
+			required: false,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: caption,
+		},
+		{
+			name:     "parse_mode",
+			required: false,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: parseMode,
+		},
+		{
+			name:     "reply_markup",
+			required: false,
+			types: []parameterType{
+				parameterTypeInlineKeyboardMarkup,
+			},
+			value: replyMarkup,
+		},
+	}
+
+	res, err := obj.callMethod("editMessageCaption", parameters...)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.(*Message), nil
 }
 
-func (obj *API) editMessageReplyMarkup(chatID interface{}, messageID int64, inlineMessageID int64, replyMarkup interface{}) (*Message, *bool, error) {
-	return nil, nil, errors.New("Not implemented")
+func (obj *BotAPI) EditMessageReplyMarkup(chatID *interface{}, messageID *int32, inlineMessageID *string, replyMarkup *InlineKeyboardMarkup) (*Message, error) {
+
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+		{
+			name:     "message_id",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: messageID,
+		},
+		{
+			name:     "inline_message_id",
+			required: false,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: inlineMessageID,
+		},
+		{
+			name:     "reply_markup",
+			required: false,
+			types: []parameterType{
+				parameterTypeInlineKeyboardMarkup,
+			},
+			value: replyMarkup,
+		},
+	}
+
+	res, err := obj.callMethod("editMessageReplyMarkup", parameters...)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.(*Message), nil
+}
+
+func (obj *BotAPI) DeleteMessage(chatID interface{}, messageID int32) (*bool, error) {
+
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+		{
+			name:     "message_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: messageID,
+		},
+	}
+
+	res, err := obj.callMethod("deleteMessage", parameters...)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.(*bool), nil
 }

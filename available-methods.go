@@ -1,1325 +1,1765 @@
 package telegram
 
-import (
-	"bytes"
-	"encoding/json"
-	"fmt"
-	"io"
-	"mime/multipart"
-)
+func (obj *BotAPI) GetMe() (*User, error) {
 
-func (obj *API) getMe() (*User, error) {
-	body := new(bytes.Buffer)
-	writer := multipart.NewWriter(body)
-	writer.WriteField("foo", "bar")
-	err := writer.Close()
-	if err != nil {
-		return nil, err
-	}
-	rsp, err := obj.makingRequest("getMe", writer.FormDataContentType(), body)
+	res, err := obj.callMethod("getMe")
 	if err != nil {
 		return nil, err
 	}
 
-	v := new(struct {
-		Result *User `json:"result,omitempty"`
-		Error
-	})
-
-	err = json.Unmarshal(rsp, v)
-	if err != nil {
-		return nil, err
-	}
-
-	if !v.OK {
-		return nil, fmt.Errorf("error %d: %s", v.ErrorCode, v.Description)
-	}
-
-	return v.Result, nil
+	return res.(*User), nil
 }
 
-// The Bot API supports basic formatting for messages. You can use bold and italic text, as well as inline links and pre-formatted code in your bots' messages. Telegram clients will render them accordingly. You can use either markdown-style or HTML-style formatting.
-const (
-	ParseModeMarkdown = "Markdown"
-	ParseModeHTML     = "HTML"
-)
+func (obj *BotAPI) SendMessage(chatID interface{}, text string, parseMode *string, disableWebPagePreview *bool, disableNotification *bool, replyToMessageID *int32, replyMarkup *interface{}) (*Message, error) {
 
-func (obj *API) sendMessage(chatID interface{}, text string, parseMode *string, disableWebPagePreview, disableNotification *bool, replyToMessageID *int64, replyMarkup interface{}) (*Message, error) {
-	body := new(bytes.Buffer)
-	writer := multipart.NewWriter(body)
-
-	switch chatID.(type) {
-	case string:
-		writer.WriteField("chat_id", chatID.(string))
-	case int64:
-		writer.WriteField("chat_id", fmt.Sprintf("%d", chatID.(int64)))
-	default:
-		return nil, fmt.Errorf("invalide type %T for chat id", chatID)
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+		{
+			name:     "text",
+			required: true,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: text,
+		},
+		{
+			name:     "parse_mode",
+			required: false,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: parseMode,
+		},
+		{
+			name:     "disable_web_page_preview",
+			required: false,
+			types: []parameterType{
+				parameterTypeBoolean,
+			},
+			value: disableWebPagePreview,
+		},
+		{
+			name:     "disable_notification",
+			required: false,
+			types: []parameterType{
+				parameterTypeBoolean,
+			},
+			value: disableNotification,
+		},
+		{
+			name:     "reply_to_message_id",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: replyToMessageID,
+		},
+		{
+			name:     "reply_markup",
+			required: false,
+			types: []parameterType{
+				parameterTypeInlineKeyboardMarkup,
+				parameterTypeReplyKeyboardMarkup,
+				parameterTypeReplyKeyboardRemove,
+				parameterTypeForceReply,
+			},
+			value: replyMarkup,
+		},
 	}
 
-	writer.WriteField("text", text)
-	if parseMode != nil {
-		writer.WriteField("parse_mode", *parseMode)
-	}
-	if disableWebPagePreview != nil {
-		writer.WriteField("disable_web_page_preview", fmt.Sprintf("%t", *disableWebPagePreview))
-	}
-	if disableNotification != nil {
-		writer.WriteField("disable_notification", fmt.Sprintf("%t", *disableNotification))
-	}
-	if replyToMessageID != nil {
-		writer.WriteField("reply_to_message_id", fmt.Sprintf("%d", *replyToMessageID))
-	}
-	if replyMarkup != nil {
-		b, err := json.Marshal(replyMarkup)
-		if err != nil {
-			return nil, err
-		}
-		writer.WriteField("reply_markup", string(b))
-	}
-	err := writer.Close()
+	res, err := obj.callMethod("sendMessage", parameters...)
 	if err != nil {
 		return nil, err
 	}
-	rsp, err := obj.makingRequest("sendMessage", writer.FormDataContentType(), body)
-	if err != nil {
-		return nil, err
-	}
 
-	v := new(struct {
-		Result *Message `json:"result,omitempty"`
-		Error
-	})
-
-	err = json.Unmarshal(rsp, v)
-	if err != nil {
-		return nil, err
-	}
-
-	if !v.OK {
-		return nil, fmt.Errorf("error %d: %s", v.ErrorCode, v.Description)
-	}
-
-	return v.Result, nil
+	return res.(*Message), nil
 }
 
-func (obj *API) forwardMessage(chatID, fromChatID interface{}, disableNotification *bool, messageID int64) (*Message, error) {
-	body := new(bytes.Buffer)
-	writer := multipart.NewWriter(body)
+func (obj *BotAPI) ForwardMessage(chatID interface{}, fromChatID interface{}, disableNotification *bool, messageID int32) (*Message, error) {
 
-	switch chatID.(type) {
-	case string:
-		writer.WriteField("chat_id", chatID.(string))
-	case int64:
-		writer.WriteField("chat_id", fmt.Sprintf("%d", chatID.(int64)))
-	default:
-		return nil, fmt.Errorf("invalide type %T for chat id", chatID)
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+		{
+			name:     "from_chat_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: fromChatID,
+		},
+		{
+			name:     "disable_notification",
+			required: false,
+			types: []parameterType{
+				parameterTypeBoolean,
+			},
+			value: disableNotification,
+		},
+		{
+			name:     "message_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: messageID,
+		},
 	}
 
-	switch fromChatID.(type) {
-	case string:
-		writer.WriteField("from_chat_id", fromChatID.(string))
-	case int64:
-		writer.WriteField("from_chat_id", fmt.Sprintf("%d", fromChatID.(int64)))
-	default:
-		return nil, fmt.Errorf("invalide type %T for from chat id", fromChatID)
-	}
-
-	if disableNotification != nil {
-		writer.WriteField("disable_notification", fmt.Sprintf("%t", *disableNotification))
-	}
-
-	writer.WriteField("message_id", fmt.Sprintf("%d", messageID))
-
-	err := writer.Close()
+	res, err := obj.callMethod("forwardMessage", parameters...)
 	if err != nil {
 		return nil, err
 	}
 
-	rsp, err := obj.makingRequest("forwardMessage", writer.FormDataContentType(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	v := new(struct {
-		Result *Message `json:"result,omitempty"`
-		Error
-	})
-
-	err = json.Unmarshal(rsp, v)
-	if err != nil {
-		return nil, err
-	}
-
-	if !v.OK {
-		return nil, fmt.Errorf("error %d: %s", v.ErrorCode, v.Description)
-	}
-
-	return v.Result, nil
+	return res.(*Message), nil
 }
 
-func (obj *API) sendPhoto(chatID interface{}, photo interface{}, caption *string, disableNotification *bool, replyToMessageID *int64, replyMarkup interface{}) (*Message, error) {
-	body := new(bytes.Buffer)
-	writer := multipart.NewWriter(body)
+func (obj *BotAPI) SendPhoto(chatID interface{}, photo interface{}, caption *string, parseMode *string, disableNotification *bool, replyToMessageID *int32, replyMarkup *interface{}) (*Message, error) {
 
-	switch chatID.(type) {
-	case string:
-		err := writer.WriteField("chat_id", chatID.(string))
-		if err != nil {
-			return nil, err
-		}
-	case int64:
-		err := writer.WriteField("chat_id", fmt.Sprintf("%d", chatID.(int64)))
-		if err != nil {
-			return nil, err
-		}
-	default:
-		return nil, fmt.Errorf("invalide type %T for chat id", chatID)
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+		{
+			name:     "photo",
+			required: true,
+			types: []parameterType{
+				parameterTypeInputFile,
+				parameterTypeString,
+			},
+			value: photo,
+		},
+		{
+			name:     "caption",
+			required: false,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: caption,
+		},
+		{
+			name:     "parse_mode",
+			required: false,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: parseMode,
+		},
+		{
+			name:     "disable_notification",
+			required: false,
+			types: []parameterType{
+				parameterTypeBoolean,
+			},
+			value: disableNotification,
+		},
+		{
+			name:     "reply_to_message_id",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: replyToMessageID,
+		},
+		{
+			name:     "reply_markup",
+			required: false,
+			types: []parameterType{
+				parameterTypeInlineKeyboardMarkup,
+				parameterTypeReplyKeyboardMarkup,
+				parameterTypeReplyKeyboardRemove,
+				parameterTypeForceReply,
+			},
+			value: replyMarkup,
+		},
 	}
 
-	switch photo.(type) {
-	case string:
-		err := writer.WriteField("photo", photo.(string))
-		if err != nil {
-			return nil, err
-		}
-	case InputFile:
-		part, err := writer.CreateFormFile("photo", "photo")
-		if err != nil {
-			return nil, err
-		}
-		_, err = io.Copy(part, photo.(InputFile))
-		if err != nil {
-			return nil, err
-		}
-
-	default:
-		return nil, fmt.Errorf("invalide type %T for photo", photo)
-	}
-
-	if caption != nil {
-		writer.WriteField("caption", *caption)
-	}
-
-	if disableNotification != nil {
-		writer.WriteField("disable_notification", fmt.Sprintf("%t", *disableNotification))
-	}
-
-	if replyToMessageID != nil {
-		writer.WriteField("reply_to_message_id", fmt.Sprintf("%d", *replyToMessageID))
-	}
-	if replyMarkup != nil {
-		b, err := json.Marshal(replyMarkup)
-		if err != nil {
-			return nil, err
-		}
-		writer.WriteField("reply_markup", string(b))
-	}
-
-	err := writer.Close()
-	if err != nil {
-		return nil, err
-	}
-	rsp, err := obj.makingRequest("sendPhoto", writer.FormDataContentType(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	v := new(struct {
-		Result *Message `json:"result,omitempty"`
-		Error
-	})
-
-	err = json.Unmarshal(rsp, v)
+	res, err := obj.callMethod("sendPhoto", parameters...)
 	if err != nil {
 		return nil, err
 	}
 
-	if !v.OK {
-		return nil, fmt.Errorf("error %d: %s", v.ErrorCode, v.Description)
-	}
-
-	return v.Result, nil
+	return res.(*Message), nil
 }
 
-func (obj *API) sendAudio(chatID interface{}, audio interface{}, caption *string, duration *int64, performer *string, title *string, disableNotification *bool, replyToMessageID *int64, replyMarkup interface{}) (*Message, error) {
-	body := new(bytes.Buffer)
-	writer := multipart.NewWriter(body)
+func (obj *BotAPI) SendAudio(chatID interface{}, audio interface{}, caption *string, parseMode *string, duration *int32, performer *string, title *string, disableNotification *bool, replyToMessageID *int32, replyMarkup *interface{}) (*Message, error) {
 
-	switch chatID.(type) {
-	case string:
-		err := writer.WriteField("chat_id", chatID.(string))
-		if err != nil {
-			return nil, err
-		}
-	case int64:
-		err := writer.WriteField("chat_id", fmt.Sprintf("%d", chatID.(int64)))
-		if err != nil {
-			return nil, err
-		}
-	default:
-		return nil, fmt.Errorf("invalide type %T for chat id", chatID)
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+		{
+			name:     "audio",
+			required: true,
+			types: []parameterType{
+				parameterTypeInputFile,
+				parameterTypeString,
+			},
+			value: audio,
+		},
+		{
+			name:     "caption",
+			required: false,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: caption,
+		},
+		{
+			name:     "parse_mode",
+			required: false,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: parseMode,
+		},
+		{
+			name:     "duration",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: duration,
+		},
+		{
+			name:     "performer",
+			required: false,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: performer,
+		},
+		{
+			name:     "title",
+			required: false,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: title,
+		},
+		{
+			name:     "disable_notification",
+			required: false,
+			types: []parameterType{
+				parameterTypeBoolean,
+			},
+			value: disableNotification,
+		},
+		{
+			name:     "reply_to_message_id",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: replyToMessageID,
+		},
+		{
+			name:     "reply_markup",
+			required: false,
+			types: []parameterType{
+				parameterTypeInlineKeyboardMarkup,
+				parameterTypeReplyKeyboardMarkup,
+				parameterTypeReplyKeyboardRemove,
+				parameterTypeForceReply,
+			},
+			value: replyMarkup,
+		},
 	}
 
-	switch audio.(type) {
-	case string:
-		err := writer.WriteField("audio", audio.(string))
-		if err != nil {
-			return nil, err
-		}
-	case InputFile:
-		part, err := writer.CreateFormFile("audio", "audio")
-		if err != nil {
-			return nil, err
-		}
-		_, err = io.Copy(part, audio.(InputFile))
-		if err != nil {
-			return nil, err
-		}
-
-	default:
-		return nil, fmt.Errorf("invalide type %T for audio", audio)
-	}
-
-	if caption != nil {
-		writer.WriteField("caption", *caption)
-	}
-
-	if duration != nil {
-		writer.WriteField("duration", fmt.Sprintf("%d", *duration))
-	}
-
-	if performer != nil {
-		writer.WriteField("performer", *performer)
-	}
-
-	if title != nil {
-		writer.WriteField("title", *title)
-	}
-
-	if disableNotification != nil {
-		writer.WriteField("disable_notification", fmt.Sprintf("%t", *disableNotification))
-	}
-
-	if replyToMessageID != nil {
-		writer.WriteField("reply_to_message_id", fmt.Sprintf("%d", *replyToMessageID))
-	}
-	if replyMarkup != nil {
-		b, err := json.Marshal(replyMarkup)
-		if err != nil {
-			return nil, err
-		}
-		writer.WriteField("reply_markup", string(b))
-	}
-
-	err := writer.Close()
+	res, err := obj.callMethod("sendAudio", parameters...)
 	if err != nil {
 		return nil, err
 	}
 
-	rsp, err := obj.makingRequest("sendAudio", writer.FormDataContentType(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	v := new(struct {
-		Result *Message `json:"result,omitempty"`
-		Error
-	})
-
-	err = json.Unmarshal(rsp, v)
-	if err != nil {
-		return nil, err
-	}
-
-	if !v.OK {
-		return nil, fmt.Errorf("error %d: %s", v.ErrorCode, v.Description)
-	}
-
-	return v.Result, nil
+	return res.(*Message), nil
 }
 
-func (obj *API) sendDocument(chatID interface{}, document interface{}, caption *string, disableNotification *bool, replyToMessageID *int64, replyMarkup interface{}) (*Message, error) {
-	body := new(bytes.Buffer)
-	writer := multipart.NewWriter(body)
+func (obj *BotAPI) SendDocument(chatID interface{}, document interface{}, caption *string, parseMode *string, disableNotification *bool, replyToMessageID *int32, replyMarkup *interface{}) (*Message, error) {
 
-	switch chatID.(type) {
-	case string:
-		err := writer.WriteField("chat_id", chatID.(string))
-		if err != nil {
-			return nil, err
-		}
-	case int64:
-		err := writer.WriteField("chat_id", fmt.Sprintf("%d", chatID.(int64)))
-		if err != nil {
-			return nil, err
-		}
-	default:
-		return nil, fmt.Errorf("invalide type %T for chat id", chatID)
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+		{
+			name:     "document",
+			required: true,
+			types: []parameterType{
+				parameterTypeInputFile,
+				parameterTypeString,
+			},
+			value: document,
+		},
+		{
+			name:     "caption",
+			required: false,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: caption,
+		},
+		{
+			name:     "parse_mode",
+			required: false,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: parseMode,
+		},
+		{
+			name:     "disable_notification",
+			required: false,
+			types: []parameterType{
+				parameterTypeBoolean,
+			},
+			value: disableNotification,
+		},
+		{
+			name:     "reply_to_message_id",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: replyToMessageID,
+		},
+		{
+			name:     "reply_markup",
+			required: false,
+			types: []parameterType{
+				parameterTypeInlineKeyboardMarkup,
+				parameterTypeReplyKeyboardMarkup,
+				parameterTypeReplyKeyboardRemove,
+				parameterTypeForceReply,
+			},
+			value: replyMarkup,
+		},
 	}
 
-	switch document.(type) {
-	case string:
-		err := writer.WriteField("document", document.(string))
-		if err != nil {
-			return nil, err
-		}
-	case InputFile:
-		part, err := writer.CreateFormFile("document", "document")
-		if err != nil {
-			return nil, err
-		}
-		_, err = io.Copy(part, document.(InputFile))
-		if err != nil {
-			return nil, err
-		}
-
-	default:
-		return nil, fmt.Errorf("invalide type %T for document", document)
-	}
-
-	if caption != nil {
-		writer.WriteField("caption", *caption)
-	}
-
-	if disableNotification != nil {
-		writer.WriteField("disable_notification", fmt.Sprintf("%t", *disableNotification))
-	}
-
-	if replyToMessageID != nil {
-		writer.WriteField("reply_to_message_id", fmt.Sprintf("%d", *replyToMessageID))
-	}
-	if replyMarkup != nil {
-		b, err := json.Marshal(replyMarkup)
-		if err != nil {
-			return nil, err
-		}
-		writer.WriteField("reply_markup", string(b))
-	}
-
-	err := writer.Close()
-	if err != nil {
-		return nil, err
-	}
-	rsp, err := obj.makingRequest("sendDocument", writer.FormDataContentType(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	v := new(struct {
-		Result *Message `json:"result,omitempty"`
-		Error
-	})
-
-	err = json.Unmarshal(rsp, v)
+	res, err := obj.callMethod("sendDocument", parameters...)
 	if err != nil {
 		return nil, err
 	}
 
-	if !v.OK {
-		return nil, fmt.Errorf("error %d: %s", v.ErrorCode, v.Description)
-	}
-
-	return v.Result, nil
+	return res.(*Message), nil
 }
 
-func (obj *API) sendSticker(chatID interface{}, sticker interface{}, disableNotification *bool, replyToMessageID *int64, replyMarkup interface{}) (*Message, error) {
-	body := new(bytes.Buffer)
-	writer := multipart.NewWriter(body)
+func (obj *BotAPI) SendVideo(chatID interface{}, video interface{}, duration *int32, width *int32, height *int32, caption *string, parseMode *string, supportsStreaming *bool, disableNotification *bool, replyToMessageID *int32, replyMarkup *interface{}) (*Message, error) {
 
-	switch chatID.(type) {
-	case string:
-		err := writer.WriteField("chat_id", chatID.(string))
-		if err != nil {
-			return nil, err
-		}
-	case int64:
-		err := writer.WriteField("chat_id", fmt.Sprintf("%d", chatID.(int64)))
-		if err != nil {
-			return nil, err
-		}
-	default:
-		return nil, fmt.Errorf("invalide type %T for chat id", chatID)
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+		{
+			name:     "video",
+			required: true,
+			types: []parameterType{
+				parameterTypeInputFile,
+				parameterTypeString,
+			},
+			value: video,
+		},
+		{
+			name:     "duration",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: duration,
+		},
+		{
+			name:     "width",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: width,
+		},
+		{
+			name:     "height",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: height,
+		},
+		{
+			name:     "caption",
+			required: false,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: caption,
+		},
+		{
+			name:     "parse_mode",
+			required: false,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: parseMode,
+		},
+		{
+			name:     "supports_streaming",
+			required: false,
+			types: []parameterType{
+				parameterTypeBoolean,
+			},
+			value: supportsStreaming,
+		},
+		{
+			name:     "disable_notification",
+			required: false,
+			types: []parameterType{
+				parameterTypeBoolean,
+			},
+			value: disableNotification,
+		},
+		{
+			name:     "reply_to_message_id",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: replyToMessageID,
+		},
+		{
+			name:     "reply_markup",
+			required: false,
+			types: []parameterType{
+				parameterTypeInlineKeyboardMarkup,
+				parameterTypeReplyKeyboardMarkup,
+				parameterTypeReplyKeyboardRemove,
+				parameterTypeForceReply,
+			},
+			value: replyMarkup,
+		},
 	}
 
-	switch sticker.(type) {
-	case string:
-		err := writer.WriteField("sticker", sticker.(string))
-		if err != nil {
-			return nil, err
-		}
-	case InputFile:
-		part, err := writer.CreateFormFile("sticker", "sticker")
-		if err != nil {
-			return nil, err
-		}
-		_, err = io.Copy(part, sticker.(InputFile))
-		if err != nil {
-			return nil, err
-		}
-
-	default:
-		return nil, fmt.Errorf("invalide type %T for sticker", sticker)
-	}
-
-	if disableNotification != nil {
-		writer.WriteField("disable_notification", fmt.Sprintf("%t", *disableNotification))
-	}
-
-	if replyToMessageID != nil {
-		writer.WriteField("reply_to_message_id", fmt.Sprintf("%d", *replyToMessageID))
-	}
-	if replyMarkup != nil {
-		b, err := json.Marshal(replyMarkup)
-		if err != nil {
-			return nil, err
-		}
-		writer.WriteField("reply_markup", string(b))
-	}
-
-	err := writer.Close()
+	res, err := obj.callMethod("sendVideo", parameters...)
 	if err != nil {
 		return nil, err
 	}
-	rsp, err := obj.makingRequest("sendSticker", writer.FormDataContentType(), body)
-	if err != nil {
-		return nil, err
-	}
 
-	v := new(struct {
-		Result *Message `json:"result,omitempty"`
-		Error
-	})
-
-	err = json.Unmarshal(rsp, v)
-	if err != nil {
-		return nil, err
-	}
-
-	if !v.OK {
-		return nil, fmt.Errorf("error %d: %s", v.ErrorCode, v.Description)
-	}
-
-	return v.Result, nil
+	return res.(*Message), nil
 }
 
-func (obj *API) sendVideo(chatID interface{}, video interface{}, duration, width, height *int64, caption *string, disableNotification *bool, replyToMessageID *int64, replyMarkup interface{}) (*Message, error) {
-	body := new(bytes.Buffer)
-	writer := multipart.NewWriter(body)
+func (obj *BotAPI) SendVoice(chatID interface{}, voice interface{}, caption *string, parseMode *string, duration *int32, disableNotification *bool, replyToMessageID *int32, replyMarkup *interface{}) (*Message, error) {
 
-	switch chatID.(type) {
-	case string:
-		err := writer.WriteField("chat_id", chatID.(string))
-		if err != nil {
-			return nil, err
-		}
-	case int64:
-		err := writer.WriteField("chat_id", fmt.Sprintf("%d", chatID.(int64)))
-		if err != nil {
-			return nil, err
-		}
-	default:
-		return nil, fmt.Errorf("invalide type %T for chat id", chatID)
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+		{
+			name:     "voice",
+			required: true,
+			types: []parameterType{
+				parameterTypeInputFile,
+				parameterTypeString,
+			},
+			value: voice,
+		},
+		{
+			name:     "caption",
+			required: false,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: caption,
+		},
+		{
+			name:     "parse_mode",
+			required: false,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: parseMode,
+		},
+		{
+			name:     "duration",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: duration,
+		},
+		{
+			name:     "disable_notification",
+			required: false,
+			types: []parameterType{
+				parameterTypeBoolean,
+			},
+			value: disableNotification,
+		},
+		{
+			name:     "reply_to_message_id",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: replyToMessageID,
+		},
+		{
+			name:     "reply_markup",
+			required: false,
+			types: []parameterType{
+				parameterTypeInlineKeyboardMarkup,
+				parameterTypeReplyKeyboardMarkup,
+				parameterTypeReplyKeyboardRemove,
+				parameterTypeForceReply,
+			},
+			value: replyMarkup,
+		},
 	}
 
-	switch video.(type) {
-	case string:
-		err := writer.WriteField("video", video.(string))
-		if err != nil {
-			return nil, err
-		}
-	case InputFile:
-		part, err := writer.CreateFormFile("video", "video")
-		if err != nil {
-			return nil, err
-		}
-		_, err = io.Copy(part, video.(InputFile))
-		if err != nil {
-			return nil, err
-		}
-
-	default:
-		return nil, fmt.Errorf("invalide type %T for video", video)
-	}
-
-	if duration != nil {
-		writer.WriteField("duration", fmt.Sprintf("%d", *duration))
-	}
-
-	if width != nil {
-		writer.WriteField("width", fmt.Sprintf("%d", *width))
-	}
-
-	if height != nil {
-		writer.WriteField("height", fmt.Sprintf("%d", *height))
-	}
-
-	if caption != nil {
-		writer.WriteField("caption", *caption)
-	}
-
-	if disableNotification != nil {
-		writer.WriteField("disable_notification", fmt.Sprintf("%t", *disableNotification))
-	}
-
-	if replyToMessageID != nil {
-		writer.WriteField("reply_to_message_id", fmt.Sprintf("%d", *replyToMessageID))
-	}
-	if replyMarkup != nil {
-		b, err := json.Marshal(replyMarkup)
-		if err != nil {
-			return nil, err
-		}
-		writer.WriteField("reply_markup", string(b))
-	}
-
-	err := writer.Close()
-	if err != nil {
-		return nil, err
-	}
-	rsp, err := obj.makingRequest("sendVideo", writer.FormDataContentType(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	v := new(struct {
-		Result *Message `json:"result,omitempty"`
-		Error
-	})
-
-	err = json.Unmarshal(rsp, v)
+	res, err := obj.callMethod("sendVoice", parameters...)
 	if err != nil {
 		return nil, err
 	}
 
-	if !v.OK {
-		return nil, fmt.Errorf("error %d: %s", v.ErrorCode, v.Description)
-	}
-
-	return v.Result, nil
+	return res.(*Message), nil
 }
 
-func (obj *API) sendVoice(chatID interface{}, voice interface{}, caption *string, duration *int64, disableNotification *bool, replyToMessageID *int64, replyMarkup interface{}) (*Message, error) {
-	body := new(bytes.Buffer)
-	writer := multipart.NewWriter(body)
+func (obj *BotAPI) SendVideoNote(chatID interface{}, videoNote interface{}, duration *int32, length *int32, disableNotification *bool, replyToMessageID *int32, replyMarkup *interface{}) (*Message, error) {
 
-	switch chatID.(type) {
-	case string:
-		err := writer.WriteField("chat_id", chatID.(string))
-		if err != nil {
-			return nil, err
-		}
-	case int64:
-		err := writer.WriteField("chat_id", fmt.Sprintf("%d", chatID.(int64)))
-		if err != nil {
-			return nil, err
-		}
-	default:
-		return nil, fmt.Errorf("invalide type %T for chat id", chatID)
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+		{
+			name:     "video_note",
+			required: true,
+			types: []parameterType{
+				parameterTypeInputFile,
+				parameterTypeString,
+			},
+			value: videoNote,
+		},
+		{
+			name:     "duration",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: duration,
+		},
+		{
+			name:     "length",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: length,
+		},
+		{
+			name:     "disable_notification",
+			required: false,
+			types: []parameterType{
+				parameterTypeBoolean,
+			},
+			value: disableNotification,
+		},
+		{
+			name:     "reply_to_message_id",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: replyToMessageID,
+		},
+		{
+			name:     "reply_markup",
+			required: false,
+			types: []parameterType{
+				parameterTypeInlineKeyboardMarkup,
+				parameterTypeReplyKeyboardMarkup,
+				parameterTypeReplyKeyboardRemove,
+				parameterTypeForceReply,
+			},
+			value: replyMarkup,
+		},
 	}
 
-	switch voice.(type) {
-	case string:
-		err := writer.WriteField("voice", voice.(string))
-		if err != nil {
-			return nil, err
-		}
-	case InputFile:
-		part, err := writer.CreateFormFile("voice", "voice")
-		if err != nil {
-			return nil, err
-		}
-		_, err = io.Copy(part, voice.(InputFile))
-		if err != nil {
-			return nil, err
-		}
-
-	default:
-		return nil, fmt.Errorf("invalide type %T for voice", voice)
-	}
-
-	if caption != nil {
-		writer.WriteField("caption", *caption)
-	}
-
-	if duration != nil {
-		writer.WriteField("duration", fmt.Sprintf("%d", *duration))
-	}
-
-	if disableNotification != nil {
-		writer.WriteField("disable_notification", fmt.Sprintf("%t", *disableNotification))
-	}
-
-	if replyToMessageID != nil {
-		writer.WriteField("reply_to_message_id", fmt.Sprintf("%d", *replyToMessageID))
-	}
-	if replyMarkup != nil {
-		b, err := json.Marshal(replyMarkup)
-		if err != nil {
-			return nil, err
-		}
-		writer.WriteField("reply_markup", string(b))
-	}
-
-	err := writer.Close()
-	if err != nil {
-		return nil, err
-	}
-	rsp, err := obj.makingRequest("sendVoice", writer.FormDataContentType(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	v := new(struct {
-		Result *Message `json:"result,omitempty"`
-		Error
-	})
-
-	err = json.Unmarshal(rsp, v)
+	res, err := obj.callMethod("sendVideoNote", parameters...)
 	if err != nil {
 		return nil, err
 	}
 
-	if !v.OK {
-		return nil, fmt.Errorf("error %d: %s", v.ErrorCode, v.Description)
-	}
-
-	return v.Result, nil
+	return res.(*Message), nil
 }
 
-func (obj *API) sendLocation(chatID interface{}, latitude, longitude float64, disableNotification *bool, replyToMessageID *int64, replyMarkup interface{}) (*Message, error) {
-	body := new(bytes.Buffer)
-	writer := multipart.NewWriter(body)
+func (obj *BotAPI) SendMediaGroup(chatID interface{}, media []InputMedia, disableNotification *bool, replyToMessageID *int32) (*[]Message, error) {
 
-	switch chatID.(type) {
-	case string:
-		writer.WriteField("chat_id", chatID.(string))
-	case int64:
-		writer.WriteField("chat_id", fmt.Sprintf("%d", chatID.(int64)))
-	default:
-		return nil, fmt.Errorf("invalide type %T for chat id", chatID)
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+		{
+			name:     "media",
+			required: true,
+			types: []parameterType{
+				parameterTypeArrayOfInputMedia,
+			},
+			value: media,
+		},
+		{
+			name:     "disable_notification",
+			required: false,
+			types: []parameterType{
+				parameterTypeBoolean,
+			},
+			value: disableNotification,
+		},
+		{
+			name:     "reply_to_message_id",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: replyToMessageID,
+		},
 	}
 
-	writer.WriteField("latitude", fmt.Sprintf("%f", latitude))
-	writer.WriteField("longitude", fmt.Sprintf("%f", longitude))
-	if disableNotification != nil {
-		writer.WriteField("disable_notification", fmt.Sprintf("%t", *disableNotification))
-	}
-	if replyToMessageID != nil {
-		writer.WriteField("reply_to_message_id", fmt.Sprintf("%d", *replyToMessageID))
-	}
-	if replyMarkup != nil {
-		b, err := json.Marshal(replyMarkup)
-		if err != nil {
-			return nil, err
-		}
-		writer.WriteField("reply_markup", string(b))
-	}
-
-	err := writer.Close()
+	res, err := obj.callMethod("sendMediaGroup", parameters...)
 	if err != nil {
 		return nil, err
 	}
 
-	rsp, err := obj.makingRequest("sendLocation", writer.FormDataContentType(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	v := new(struct {
-		Result *Message `json:"result,omitempty"`
-		Error
-	})
-
-	err = json.Unmarshal(rsp, v)
-	if err != nil {
-		return nil, err
-	}
-
-	if !v.OK {
-		return nil, fmt.Errorf("error %d: %s", v.ErrorCode, v.Description)
-	}
-
-	return v.Result, nil
+	return res.(*[]Message), nil
 }
 
-func (obj *API) sendVenue(chatID interface{}, latitude, longitude float64, title, address string, foursquareID *string, disableNotification *bool, replyToMessageID *int64, replyMarkup interface{}) (*Message, error) {
-	body := new(bytes.Buffer)
-	writer := multipart.NewWriter(body)
+func (obj *BotAPI) SendLocation(chatID interface{}, latitude float32, longitude float32, livePeriod *int32, disableNotification *bool, replyToMessageID *int32, replyMarkup *interface{}) (*Message, error) {
 
-	switch chatID.(type) {
-	case string:
-		writer.WriteField("chat_id", chatID.(string))
-	case int64:
-		writer.WriteField("chat_id", fmt.Sprintf("%d", chatID.(int64)))
-	default:
-		return nil, fmt.Errorf("invalide type %T for chat id", chatID)
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+		{
+			name:     "latitude",
+			required: true,
+			types: []parameterType{
+				parameterTypeFloatNumber,
+			},
+			value: latitude,
+		},
+		{
+			name:     "longitude",
+			required: true,
+			types: []parameterType{
+				parameterTypeFloatNumber,
+			},
+			value: longitude,
+		},
+		{
+			name:     "live_period",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: livePeriod,
+		},
+		{
+			name:     "disable_notification",
+			required: false,
+			types: []parameterType{
+				parameterTypeBoolean,
+			},
+			value: disableNotification,
+		},
+		{
+			name:     "reply_to_message_id",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: replyToMessageID,
+		},
+		{
+			name:     "reply_markup",
+			required: false,
+			types: []parameterType{
+				parameterTypeInlineKeyboardMarkup,
+				parameterTypeReplyKeyboardMarkup,
+				parameterTypeReplyKeyboardRemove,
+				parameterTypeForceReply,
+			},
+			value: replyMarkup,
+		},
 	}
 
-	writer.WriteField("latitude", fmt.Sprintf("%f", latitude))
-	writer.WriteField("longitude", fmt.Sprintf("%f", longitude))
-	writer.WriteField("title", title)
-	writer.WriteField("address", address)
-	if foursquareID != nil {
-		writer.WriteField("foursquare_id", *foursquareID)
-	}
-	if disableNotification != nil {
-		writer.WriteField("disable_notification", fmt.Sprintf("%t", *disableNotification))
-	}
-	if replyToMessageID != nil {
-		writer.WriteField("reply_to_message_id", fmt.Sprintf("%d", *replyToMessageID))
-	}
-	if replyMarkup != nil {
-		b, err := json.Marshal(replyMarkup)
-		if err != nil {
-			return nil, err
-		}
-		writer.WriteField("reply_markup", string(b))
-	}
-
-	err := writer.Close()
+	res, err := obj.callMethod("sendLocation", parameters...)
 	if err != nil {
 		return nil, err
 	}
 
-	rsp, err := obj.makingRequest("sendVenue", writer.FormDataContentType(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	v := new(struct {
-		Result *Message `json:"result,omitempty"`
-		Error
-	})
-
-	err = json.Unmarshal(rsp, v)
-	if err != nil {
-		return nil, err
-	}
-
-	if !v.OK {
-		return nil, fmt.Errorf("error %d: %s", v.ErrorCode, v.Description)
-	}
-
-	return v.Result, nil
+	return res.(*Message), nil
 }
 
-func (obj *API) sendContact(chatID interface{}, phoneNumber string, firstName string, lastName *string, disableNotification *bool, replyToMessageID *int64, replyMarkup interface{}) (*Message, error) {
-	body := new(bytes.Buffer)
-	writer := multipart.NewWriter(body)
+func (obj *BotAPI) EditMessageLiveLocation(chatID *interface{}, messageID *int32, inlineMessageID *string, latitude float32, longitude float32, replyMarkup *InlineKeyboardMarkup) (*Message, error) {
 
-	switch chatID.(type) {
-	case string:
-		writer.WriteField("chat_id", chatID.(string))
-	case int64:
-		writer.WriteField("chat_id", fmt.Sprintf("%d", chatID.(int64)))
-	default:
-		return nil, fmt.Errorf("invalide type %T for chat id", chatID)
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+		{
+			name:     "message_id",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: messageID,
+		},
+		{
+			name:     "inline_message_id",
+			required: false,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: inlineMessageID,
+		},
+		{
+			name:     "latitude",
+			required: true,
+			types: []parameterType{
+				parameterTypeFloatNumber,
+			},
+			value: latitude,
+		},
+		{
+			name:     "longitude",
+			required: true,
+			types: []parameterType{
+				parameterTypeFloatNumber,
+			},
+			value: longitude,
+		},
+		{
+			name:     "reply_markup",
+			required: false,
+			types: []parameterType{
+				parameterTypeInlineKeyboardMarkup,
+			},
+			value: replyMarkup,
+		},
 	}
 
-	writer.WriteField("phone_number", phoneNumber)
-	writer.WriteField("first_name", firstName)
-	if lastName != nil {
-		writer.WriteField("last_name", *lastName)
-	}
-	if disableNotification != nil {
-		writer.WriteField("disable_notification", fmt.Sprintf("%t", *disableNotification))
-	}
-	if replyToMessageID != nil {
-		writer.WriteField("reply_to_message_id", fmt.Sprintf("%d", *replyToMessageID))
-	}
-	if replyMarkup != nil {
-		b, err := json.Marshal(replyMarkup)
-		if err != nil {
-			return nil, err
-		}
-		writer.WriteField("reply_markup", string(b))
-	}
-
-	err := writer.Close()
+	res, err := obj.callMethod("editMessageLiveLocation", parameters...)
 	if err != nil {
 		return nil, err
 	}
 
-	rsp, err := obj.makingRequest("sendContact", writer.FormDataContentType(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	v := new(struct {
-		Result *Message `json:"result,omitempty"`
-		Error
-	})
-
-	err = json.Unmarshal(rsp, v)
-	if err != nil {
-		return nil, err
-	}
-
-	if !v.OK {
-		return nil, fmt.Errorf("error %d: %s", v.ErrorCode, v.Description)
-	}
-
-	return v.Result, nil
+	return res.(*Message), nil
 }
 
-// Type of action to broadcast. Choose one, depending on what the user is about to receive: typing for text messages, upload_photo for photos, record_video or upload_video for videos, record_audio or upload_audio for audio files, upload_document for general files, find_location for location data.
-const (
-	ChatActionTyping         = "typing"
-	ChatActionUploadPhoto    = "upload_photo"
-	ChatActionRecordVideo    = "record_video"
-	ChatActionUploadVideo    = "upload_video"
-	ChatActionRecordAudio    = "record_audio"
-	ChatActionUploadAudio    = "upload_audio"
-	ChatActionUploadDocument = "upload_document"
-	ChatActionFindLocation   = "find_location"
-)
+func (obj *BotAPI) StopMessageLiveLocation(chatID *interface{}, messageID *int32, inlineMessageID *string, replyMarkup *InlineKeyboardMarkup) (*Message, error) {
 
-func (obj *API) sendChatAction(chatID interface{}, action string) (*bool, error) {
-	body := new(bytes.Buffer)
-	writer := multipart.NewWriter(body)
-
-	switch chatID.(type) {
-	case string:
-		writer.WriteField("chat_id", chatID.(string))
-	case int64:
-		writer.WriteField("chat_id", fmt.Sprintf("%d", chatID.(int64)))
-	default:
-		return nil, fmt.Errorf("invalide type %T for chat id", chatID)
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+		{
+			name:     "message_id",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: messageID,
+		},
+		{
+			name:     "inline_message_id",
+			required: false,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: inlineMessageID,
+		},
+		{
+			name:     "reply_markup",
+			required: false,
+			types: []parameterType{
+				parameterTypeInlineKeyboardMarkup,
+			},
+			value: replyMarkup,
+		},
 	}
 
-	writer.WriteField("action", action)
-
-	err := writer.Close()
+	res, err := obj.callMethod("stopMessageLiveLocation", parameters...)
 	if err != nil {
 		return nil, err
 	}
 
-	rsp, err := obj.makingRequest("sendChatAction", writer.FormDataContentType(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	v := new(struct {
-		Result *bool `json:"result,omitempty"`
-		Error
-	})
-
-	err = json.Unmarshal(rsp, v)
-	if err != nil {
-		return nil, err
-	}
-
-	if !v.OK {
-		return nil, fmt.Errorf("error %d: %s", v.ErrorCode, v.Description)
-	}
-
-	return v.Result, nil
+	return res.(*Message), nil
 }
 
-func (obj *API) getUserProfilePhotos(userID int64, offset, limit *int64) (*UserProfilePhotos, error) {
-	body := new(bytes.Buffer)
-	writer := multipart.NewWriter(body)
+func (obj *BotAPI) SendVenue(chatID interface{}, latitude float32, longitude float32, title string, address string, foursquareID *string, disableNotification *bool, replyToMessageID *int32, replyMarkup *interface{}) (*Message, error) {
 
-	writer.WriteField("user_id", fmt.Sprintf("%d", userID))
-	if offset != nil {
-		writer.WriteField("offset", fmt.Sprintf("%d", *offset))
-	}
-	if limit != nil {
-		writer.WriteField("limit", fmt.Sprintf("%d", *limit))
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+		{
+			name:     "latitude",
+			required: true,
+			types: []parameterType{
+				parameterTypeFloatNumber,
+			},
+			value: latitude,
+		},
+		{
+			name:     "longitude",
+			required: true,
+			types: []parameterType{
+				parameterTypeFloatNumber,
+			},
+			value: longitude,
+		},
+		{
+			name:     "title",
+			required: true,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: title,
+		},
+		{
+			name:     "address",
+			required: true,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: address,
+		},
+		{
+			name:     "foursquare_id",
+			required: false,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: foursquareID,
+		},
+		{
+			name:     "disable_notification",
+			required: false,
+			types: []parameterType{
+				parameterTypeBoolean,
+			},
+			value: disableNotification,
+		},
+		{
+			name:     "reply_to_message_id",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: replyToMessageID,
+		},
+		{
+			name:     "reply_markup",
+			required: false,
+			types: []parameterType{
+				parameterTypeInlineKeyboardMarkup,
+				parameterTypeReplyKeyboardMarkup,
+				parameterTypeReplyKeyboardRemove,
+				parameterTypeForceReply,
+			},
+			value: replyMarkup,
+		},
 	}
 
-	err := writer.Close()
+	res, err := obj.callMethod("sendVenue", parameters...)
 	if err != nil {
 		return nil, err
 	}
 
-	rsp, err := obj.makingRequest("getUserProfilePhotos", writer.FormDataContentType(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	v := new(struct {
-		Result *UserProfilePhotos `json:"result,omitempty"`
-		Error
-	})
-
-	err = json.Unmarshal(rsp, v)
-	if err != nil {
-		return nil, err
-	}
-
-	if !v.OK {
-		return nil, fmt.Errorf("error %d: %s", v.ErrorCode, v.Description)
-	}
-
-	return v.Result, nil
+	return res.(*Message), nil
 }
 
-func (obj *API) getFile(fileID string) (*File, error) {
-	body := new(bytes.Buffer)
-	writer := multipart.NewWriter(body)
+func (obj *BotAPI) SendContact(chatID interface{}, phoneNumber string, firstName string, lastName *string, disableNotification *bool, replyToMessageID *int32, replyMarkup *interface{}) (*Message, error) {
 
-	writer.WriteField("file_id", fileID)
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+		{
+			name:     "phone_number",
+			required: true,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: phoneNumber,
+		},
+		{
+			name:     "first_name",
+			required: true,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: firstName,
+		},
+		{
+			name:     "last_name",
+			required: false,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: lastName,
+		},
+		{
+			name:     "disable_notification",
+			required: false,
+			types: []parameterType{
+				parameterTypeBoolean,
+			},
+			value: disableNotification,
+		},
+		{
+			name:     "reply_to_message_id",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: replyToMessageID,
+		},
+		{
+			name:     "reply_markup",
+			required: false,
+			types: []parameterType{
+				parameterTypeInlineKeyboardMarkup,
+				parameterTypeReplyKeyboardMarkup,
+				parameterTypeReplyKeyboardRemove,
+				parameterTypeForceReply,
+			},
+			value: replyMarkup,
+		},
+	}
 
-	err := writer.Close()
+	res, err := obj.callMethod("sendContact", parameters...)
 	if err != nil {
 		return nil, err
 	}
 
-	rsp, err := obj.makingRequest("getFile", writer.FormDataContentType(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	v := new(struct {
-		Result *File `json:"result,omitempty"`
-		Error
-	})
-
-	err = json.Unmarshal(rsp, v)
-	if err != nil {
-		return nil, err
-	}
-
-	if !v.OK {
-		return nil, fmt.Errorf("error %d: %s", v.ErrorCode, v.Description)
-	}
-
-	return v.Result, nil
+	return res.(*Message), nil
 }
 
-func (obj *API) kickChatMember(chatID interface{}, userID int64) (*bool, error) {
-	body := new(bytes.Buffer)
-	writer := multipart.NewWriter(body)
+func (obj *BotAPI) SendChatAction(chatID interface{}, action string) (*bool, error) {
 
-	switch chatID.(type) {
-	case string:
-		writer.WriteField("chat_id", chatID.(string))
-	case int64:
-		writer.WriteField("chat_id", fmt.Sprintf("%d", chatID.(int64)))
-	default:
-		return nil, fmt.Errorf("invalide type %T for chat id", chatID)
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+		{
+			name:     "action",
+			required: true,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: action,
+		},
 	}
 
-	writer.WriteField("user_id", fmt.Sprintf("%d", userID))
-
-	err := writer.Close()
+	res, err := obj.callMethod("sendChatAction", parameters...)
 	if err != nil {
 		return nil, err
 	}
 
-	rsp, err := obj.makingRequest("kickChatMember", writer.FormDataContentType(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	v := new(struct {
-		Result *bool `json:"result,omitempty"`
-		Error
-	})
-
-	err = json.Unmarshal(rsp, v)
-	if err != nil {
-		return nil, err
-	}
-
-	if !v.OK {
-		return nil, fmt.Errorf("error %d: %s", v.ErrorCode, v.Description)
-	}
-
-	return v.Result, nil
+	return res.(*bool), nil
 }
 
-func (obj *API) leaveChat(chatID interface{}) (*bool, error) {
-	body := new(bytes.Buffer)
-	writer := multipart.NewWriter(body)
+func (obj *BotAPI) GetUserProfilePhotos(userID int32, offset *int32, limit *int32) (*UserProfilePhotos, error) {
 
-	switch chatID.(type) {
-	case string:
-		writer.WriteField("chat_id", chatID.(string))
-	case int64:
-		writer.WriteField("chat_id", fmt.Sprintf("%d", chatID.(int64)))
-	default:
-		return nil, fmt.Errorf("invalide type %T for chat id", chatID)
+	parameters := []parameter{
+		{
+			name:     "user_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: userID,
+		},
+		{
+			name:     "offset",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: offset,
+		},
+		{
+			name:     "limit",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: limit,
+		},
 	}
 
-	err := writer.Close()
+	res, err := obj.callMethod("getUserProfilePhotos", parameters...)
 	if err != nil {
 		return nil, err
 	}
 
-	rsp, err := obj.makingRequest("leaveChat", writer.FormDataContentType(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	v := new(struct {
-		Result *bool `json:"result,omitempty"`
-		Error
-	})
-
-	err = json.Unmarshal(rsp, v)
-	if err != nil {
-		return nil, err
-	}
-
-	if !v.OK {
-		return nil, fmt.Errorf("error %d: %s", v.ErrorCode, v.Description)
-	}
-
-	return v.Result, nil
+	return res.(*UserProfilePhotos), nil
 }
 
-func (obj *API) unbanChatMember(chatID interface{}, userID int64) (*bool, error) {
-	body := new(bytes.Buffer)
-	writer := multipart.NewWriter(body)
+func (obj *BotAPI) GetFile(fileID string) (*File, error) {
 
-	switch chatID.(type) {
-	case string:
-		writer.WriteField("chat_id", chatID.(string))
-	case int64:
-		writer.WriteField("chat_id", fmt.Sprintf("%d", chatID.(int64)))
-	default:
-		return nil, fmt.Errorf("invalide type %T for chat id", chatID)
+	parameters := []parameter{
+		{
+			name:     "file_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: fileID,
+		},
 	}
 
-	writer.WriteField("user_id", fmt.Sprintf("%d", userID))
-
-	err := writer.Close()
+	res, err := obj.callMethod("getFile", parameters...)
 	if err != nil {
 		return nil, err
 	}
 
-	rsp, err := obj.makingRequest("unbanChatMember", writer.FormDataContentType(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	v := new(struct {
-		Result *bool `json:"result,omitempty"`
-		Error
-	})
-
-	err = json.Unmarshal(rsp, v)
-	if err != nil {
-		return nil, err
-	}
-
-	if !v.OK {
-		return nil, fmt.Errorf("error %d: %s", v.ErrorCode, v.Description)
-	}
-
-	return v.Result, nil
+	return res.(*File), nil
 }
 
-func (obj *API) getChat(chatID interface{}) (*Chat, error) {
-	body := new(bytes.Buffer)
-	writer := multipart.NewWriter(body)
+func (obj *BotAPI) KickChatMember(chatID interface{}, userID int32, untilDate *int32) (*bool, error) {
 
-	switch chatID.(type) {
-	case string:
-		writer.WriteField("chat_id", chatID.(string))
-	case int64:
-		writer.WriteField("chat_id", fmt.Sprintf("%d", chatID.(int64)))
-	default:
-		return nil, fmt.Errorf("invalide type %T for chat id", chatID)
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+		{
+			name:     "user_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: userID,
+		},
+		{
+			name:     "until_date",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: untilDate,
+		},
 	}
 
-	err := writer.Close()
+	res, err := obj.callMethod("kickChatMember", parameters...)
 	if err != nil {
 		return nil, err
 	}
 
-	rsp, err := obj.makingRequest("getChat", writer.FormDataContentType(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	v := new(struct {
-		Result *Chat `json:"result,omitempty"`
-		Error
-	})
-
-	err = json.Unmarshal(rsp, v)
-	if err != nil {
-		return nil, err
-	}
-
-	if !v.OK {
-		return nil, fmt.Errorf("error %d: %s", v.ErrorCode, v.Description)
-	}
-
-	return v.Result, nil
+	return res.(*bool), nil
 }
 
-func (obj *API) getChatAdministrators(chatID interface{}) (*[]ChatMember, error) {
-	body := new(bytes.Buffer)
-	writer := multipart.NewWriter(body)
+func (obj *BotAPI) UnbanChatMember(chatID interface{}, userID int32) (*bool, error) {
 
-	switch chatID.(type) {
-	case string:
-		writer.WriteField("chat_id", chatID.(string))
-	case int64:
-		writer.WriteField("chat_id", fmt.Sprintf("%d", chatID.(int64)))
-	default:
-		return nil, fmt.Errorf("invalide type %T for chat id", chatID)
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+		{
+			name:     "user_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: userID,
+		},
 	}
 
-	err := writer.Close()
+	res, err := obj.callMethod("unbanChatMember", parameters...)
 	if err != nil {
 		return nil, err
 	}
 
-	rsp, err := obj.makingRequest("getChatAdministrators", writer.FormDataContentType(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	v := new(struct {
-		Result *[]ChatMember `json:"result,omitempty"`
-		Error
-	})
-
-	err = json.Unmarshal(rsp, v)
-	if err != nil {
-		return nil, err
-	}
-
-	if !v.OK {
-		return nil, fmt.Errorf("error %d: %s", v.ErrorCode, v.Description)
-	}
-
-	return v.Result, nil
+	return res.(*bool), nil
 }
 
-func (obj *API) getChatMembersCount(chatID interface{}) (*int64, error) {
-	body := new(bytes.Buffer)
-	writer := multipart.NewWriter(body)
+func (obj *BotAPI) RestrictChatMember(chatID interface{}, userID int32, untilDate *int32, canSendMessages *bool, canSendMediaMessages *bool, canSendOtherMessages *bool, canAddWebPagePreviews *bool) (*bool, error) {
 
-	switch chatID.(type) {
-	case string:
-		writer.WriteField("chat_id", chatID.(string))
-	case int64:
-		writer.WriteField("chat_id", fmt.Sprintf("%d", chatID.(int64)))
-	default:
-		return nil, fmt.Errorf("invalide type %T for chat id", chatID)
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+		{
+			name:     "user_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: userID,
+		},
+		{
+			name:     "until_date",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: untilDate,
+		},
+		{
+			name:     "can_send_messages",
+			required: false,
+			types: []parameterType{
+				parameterTypeBoolean,
+			},
+			value: canSendMessages,
+		},
+		{
+			name:     "can_send_media_messages",
+			required: false,
+			types: []parameterType{
+				parameterTypeBoolean,
+			},
+			value: canSendMediaMessages,
+		},
+		{
+			name:     "can_send_other_messages",
+			required: false,
+			types: []parameterType{
+				parameterTypeBoolean,
+			},
+			value: canSendOtherMessages,
+		},
+		{
+			name:     "can_add_web_page_previews",
+			required: false,
+			types: []parameterType{
+				parameterTypeBoolean,
+			},
+			value: canAddWebPagePreviews,
+		},
 	}
 
-	err := writer.Close()
+	res, err := obj.callMethod("restrictChatMember", parameters...)
 	if err != nil {
 		return nil, err
 	}
 
-	rsp, err := obj.makingRequest("getChatMembersCount", writer.FormDataContentType(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	v := new(struct {
-		Result *int64 `json:"result,omitempty"`
-		Error
-	})
-
-	err = json.Unmarshal(rsp, v)
-	if err != nil {
-		return nil, err
-	}
-
-	if !v.OK {
-		return nil, fmt.Errorf("error %d: %s", v.ErrorCode, v.Description)
-	}
-
-	return v.Result, nil
+	return res.(*bool), nil
 }
 
-func (obj *API) getChatMember(chatID interface{}, userID int64) (*ChatMember, error) {
-	body := new(bytes.Buffer)
-	writer := multipart.NewWriter(body)
+func (obj *BotAPI) PromoteChatMember(chatID interface{}, userID int32, canChangeInfo *bool, canPostMessages *bool, canEditMessages *bool, canDeleteMessages *bool, canInviteUsers *bool, canRestrictMembers *bool, canPinMessages *bool, canPromoteMembers *bool) (*bool, error) {
 
-	switch chatID.(type) {
-	case string:
-		writer.WriteField("chat_id", chatID.(string))
-	case int64:
-		writer.WriteField("chat_id", fmt.Sprintf("%d", chatID.(int64)))
-	default:
-		return nil, fmt.Errorf("invalide type %T for chat id", chatID)
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+		{
+			name:     "user_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: userID,
+		},
+		{
+			name:     "can_change_info",
+			required: false,
+			types: []parameterType{
+				parameterTypeBoolean,
+			},
+			value: canChangeInfo,
+		},
+		{
+			name:     "can_post_messages",
+			required: false,
+			types: []parameterType{
+				parameterTypeBoolean,
+			},
+			value: canPostMessages,
+		},
+		{
+			name:     "can_edit_messages",
+			required: false,
+			types: []parameterType{
+				parameterTypeBoolean,
+			},
+			value: canEditMessages,
+		},
+		{
+			name:     "can_delete_messages",
+			required: false,
+			types: []parameterType{
+				parameterTypeBoolean,
+			},
+			value: canDeleteMessages,
+		},
+		{
+			name:     "can_invite_users",
+			required: false,
+			types: []parameterType{
+				parameterTypeBoolean,
+			},
+			value: canInviteUsers,
+		},
+		{
+			name:     "can_restrict_members",
+			required: false,
+			types: []parameterType{
+				parameterTypeBoolean,
+			},
+			value: canRestrictMembers,
+		},
+		{
+			name:     "can_pin_messages",
+			required: false,
+			types: []parameterType{
+				parameterTypeBoolean,
+			},
+			value: canPinMessages,
+		},
+		{
+			name:     "can_promote_members",
+			required: false,
+			types: []parameterType{
+				parameterTypeBoolean,
+			},
+			value: canPromoteMembers,
+		},
 	}
 
-	writer.WriteField("user_id", fmt.Sprintf("%d", userID))
-
-	err := writer.Close()
+	res, err := obj.callMethod("promoteChatMember", parameters...)
 	if err != nil {
 		return nil, err
 	}
 
-	rsp, err := obj.makingRequest("getChatMember", writer.FormDataContentType(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	v := new(struct {
-		Result *ChatMember `json:"result,omitempty"`
-		Error
-	})
-
-	err = json.Unmarshal(rsp, v)
-	if err != nil {
-		return nil, err
-	}
-
-	if !v.OK {
-		return nil, fmt.Errorf("error %d: %s", v.ErrorCode, v.Description)
-	}
-
-	return v.Result, nil
+	return res.(*bool), nil
 }
 
-func (obj *API) answerCallbackQuery(callbackQueryID string, text *string, showAlert *bool, u *string, cacheTime *int64) (*bool, error) {
-	body := new(bytes.Buffer)
-	writer := multipart.NewWriter(body)
+func (obj *BotAPI) ExportChatInviteLink(chatID interface{}) (*string, error) {
 
-	writer.WriteField("callback_query_id", callbackQueryID)
-
-	if text != nil {
-		writer.WriteField("text", *text)
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
 	}
 
-	if showAlert != nil {
-		writer.WriteField("show_alert", fmt.Sprintf("%t", *showAlert))
-	}
-
-	if u != nil {
-		writer.WriteField("url", *u)
-	}
-
-	if cacheTime != nil {
-		writer.WriteField("cache_time", fmt.Sprintf("%d", *cacheTime))
-	}
-
-	err := writer.Close()
+	res, err := obj.callMethod("exportChatInviteLink", parameters...)
 	if err != nil {
 		return nil, err
 	}
 
-	rsp, err := obj.makingRequest("answerCallbackQuery", writer.FormDataContentType(), body)
+	return res.(*string), nil
+}
+
+func (obj *BotAPI) SetChatPhoto(chatID interface{}, photo InputFile) (*bool, error) {
+
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+		{
+			name:     "photo",
+			required: true,
+			types: []parameterType{
+				parameterTypeInputFile,
+			},
+			value: photo,
+		},
+	}
+
+	res, err := obj.callMethod("setChatPhoto", parameters...)
 	if err != nil {
 		return nil, err
 	}
 
-	v := new(struct {
-		Result *bool `json:"result,omitempty"`
-		Error
-	})
+	return res.(*bool), nil
+}
 
-	err = json.Unmarshal(rsp, v)
+func (obj *BotAPI) DeleteChatPhoto(chatID interface{}) (*bool, error) {
+
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+	}
+
+	res, err := obj.callMethod("deleteChatPhoto", parameters...)
 	if err != nil {
 		return nil, err
 	}
 
-	if !v.OK {
-		return nil, fmt.Errorf("error %d: %s", v.ErrorCode, v.Description)
+	return res.(*bool), nil
+}
+
+func (obj *BotAPI) SetChatTitle(chatID interface{}, title string) (*bool, error) {
+
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+		{
+			name:     "title",
+			required: true,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: title,
+		},
 	}
 
-	return v.Result, nil
+	res, err := obj.callMethod("setChatTitle", parameters...)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.(*bool), nil
+}
+
+func (obj *BotAPI) SetChatDescription(chatID interface{}, description *string) (*bool, error) {
+
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+		{
+			name:     "description",
+			required: false,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: description,
+		},
+	}
+
+	res, err := obj.callMethod("setChatDescription", parameters...)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.(*bool), nil
+}
+
+func (obj *BotAPI) PinChatMessage(chatID interface{}, messageID int32, disableNotification *bool) (*bool, error) {
+
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+		{
+			name:     "message_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: messageID,
+		},
+		{
+			name:     "disable_notification",
+			required: false,
+			types: []parameterType{
+				parameterTypeBoolean,
+			},
+			value: disableNotification,
+		},
+	}
+
+	res, err := obj.callMethod("pinChatMessage", parameters...)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.(*bool), nil
+}
+
+func (obj *BotAPI) UnpinChatMessage(chatID interface{}) (*bool, error) {
+
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+	}
+
+	res, err := obj.callMethod("unpinChatMessage", parameters...)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.(*bool), nil
+}
+
+func (obj *BotAPI) LeaveChat(chatID interface{}) (*bool, error) {
+
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+	}
+
+	res, err := obj.callMethod("leaveChat", parameters...)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.(*bool), nil
+}
+
+func (obj *BotAPI) GetChat(chatID interface{}) (*Chat, error) {
+
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+	}
+
+	res, err := obj.callMethod("getChat", parameters...)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.(*Chat), nil
+}
+
+func (obj *BotAPI) GetChatAdministrators(chatID interface{}) (*ChatMember, error) {
+
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+	}
+
+	res, err := obj.callMethod("getChatAdministrators", parameters...)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.(*ChatMember), nil
+}
+
+func (obj *BotAPI) GetChatMembersCount(chatID interface{}) (*int32, error) {
+
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+	}
+
+	res, err := obj.callMethod("getChatMembersCount", parameters...)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.(*int32), nil
+}
+
+func (obj *BotAPI) GetChatMember(chatID interface{}, userID int32) (*ChatMember, error) {
+
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+		{
+			name:     "user_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: userID,
+		},
+	}
+
+	res, err := obj.callMethod("getChatMember", parameters...)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.(*ChatMember), nil
+}
+
+func (obj *BotAPI) SetChatStickerSet(chatID interface{}, stickerSetName string) (*bool, error) {
+
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+		{
+			name:     "sticker_set_name",
+			required: true,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: stickerSetName,
+		},
+	}
+
+	res, err := obj.callMethod("setChatStickerSet", parameters...)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.(*bool), nil
+}
+
+func (obj *BotAPI) DeleteChatStickerSet(chatID interface{}) (*bool, error) {
+
+	parameters := []parameter{
+		{
+			name:     "chat_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeInteger,
+				parameterTypeString,
+			},
+			value: chatID,
+		},
+	}
+
+	res, err := obj.callMethod("deleteChatStickerSet", parameters...)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.(*bool), nil
+}
+
+func (obj *BotAPI) AnswerCallbackQuery(callbackQueryID string, text *string, showAlert *bool, uRL *string, cacheTime *int32) (*bool, error) {
+
+	parameters := []parameter{
+		{
+			name:     "callback_query_id",
+			required: true,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: callbackQueryID,
+		},
+		{
+			name:     "text",
+			required: false,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: text,
+		},
+		{
+			name:     "show_alert",
+			required: false,
+			types: []parameterType{
+				parameterTypeBoolean,
+			},
+			value: showAlert,
+		},
+		{
+			name:     "url",
+			required: false,
+			types: []parameterType{
+				parameterTypeString,
+			},
+			value: uRL,
+		},
+		{
+			name:     "cache_time",
+			required: false,
+			types: []parameterType{
+				parameterTypeInteger,
+			},
+			value: cacheTime,
+		},
+	}
+
+	res, err := obj.callMethod("answerCallbackQuery", parameters...)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.(*bool), nil
 }
