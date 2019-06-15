@@ -11,7 +11,26 @@ go get github.com/nasermirzaei89/telegram
 ```
 
 ## Example
-no example yet!
+
+```go
+package main
+
+import (
+	"github.com/nasermirzaei89/telegram"
+	"log"
+	"os"
+)
+
+func main() {
+	bot := telegram.New(os.Getenv("TOKEN"))
+	res, err := bot.GetUpdates().Do()
+	if err != nil {
+		log.Fatalf("%v", err)
+	}
+
+	log.Printf("%v", res)
+}
+```
 
 ## Status
 Bot API 3.6 (https://core.telegram.org/bots/api#february-13-2018)

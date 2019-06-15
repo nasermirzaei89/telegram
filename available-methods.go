@@ -1,1802 +1,543 @@
 package telegram
 
-// GetMe ...
-func (obj *BotAPI) GetMe() (*User, error) {
-
-	res, err := obj.callMethod("getMe")
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*User), nil
+type GetMeRequest interface {
+	Do() (*User, error)
 }
 
-// SendMessage ...
-func (obj *BotAPI) SendMessage(chatID interface{}, text string, parseMode *string, disableWebPagePreview *bool, disableNotification *bool, replyToMessageID *int32, replyMarkup *interface{}) (*Message, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-		{
-			name:     "text",
-			required: true,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: text,
-		},
-		{
-			name:     "parse_mode",
-			required: false,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: parseMode,
-		},
-		{
-			name:     "disable_web_page_preview",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: disableWebPagePreview,
-		},
-		{
-			name:     "disable_notification",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: disableNotification,
-		},
-		{
-			name:     "reply_to_message_id",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: replyToMessageID,
-		},
-		{
-			name:     "reply_markup",
-			required: false,
-			types: []parameterType{
-				parameterTypeInlineKeyboardMarkup,
-				parameterTypeReplyKeyboardMarkup,
-				parameterTypeReplyKeyboardRemove,
-				parameterTypeForceReply,
-			},
-			value: replyMarkup,
-		},
-	}
-
-	res, err := obj.callMethod("sendMessage", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*Message), nil
+func (b *bot) GetMe() GetMeRequest {
+	panic("implement me")
 }
 
-// ForwardMessage ...
-func (obj *BotAPI) ForwardMessage(chatID interface{}, fromChatID interface{}, disableNotification *bool, messageID int32) (*Message, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-		{
-			name:     "from_chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: fromChatID,
-		},
-		{
-			name:     "disable_notification",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: disableNotification,
-		},
-		{
-			name:     "message_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: messageID,
-		},
-	}
-
-	res, err := obj.callMethod("forwardMessage", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*Message), nil
+type SendMessageRequest interface {
+	ChatID(int) SendMessageRequest
+	ChatUsername(string) SendMessageRequest
+	Text(string) SendMessageRequest
+	ParseMode(string) SendMessageRequest
+	DisableWebPagePreview() SendMessageRequest
+	DisableNotification() SendMessageRequest
+	ReplyToMessageID(int) SendMessageRequest
+	ReplyMarkup(interface{}) SendMessageRequest
+	Do() (*Message, error)
 }
 
-// SendPhoto ...
-func (obj *BotAPI) SendPhoto(chatID interface{}, photo interface{}, caption *string, parseMode *string, disableNotification *bool, replyToMessageID *int32, replyMarkup *interface{}) (*Message, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-		{
-			name:     "photo",
-			required: true,
-			types: []parameterType{
-				parameterTypeInputFile,
-				parameterTypeString,
-			},
-			value: photo,
-		},
-		{
-			name:     "caption",
-			required: false,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: caption,
-		},
-		{
-			name:     "parse_mode",
-			required: false,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: parseMode,
-		},
-		{
-			name:     "disable_notification",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: disableNotification,
-		},
-		{
-			name:     "reply_to_message_id",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: replyToMessageID,
-		},
-		{
-			name:     "reply_markup",
-			required: false,
-			types: []parameterType{
-				parameterTypeInlineKeyboardMarkup,
-				parameterTypeReplyKeyboardMarkup,
-				parameterTypeReplyKeyboardRemove,
-				parameterTypeForceReply,
-			},
-			value: replyMarkup,
-		},
-	}
-
-	res, err := obj.callMethod("sendPhoto", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*Message), nil
+func (b *bot) SendMessage() SendMessageRequest {
+	panic("implement me")
 }
 
-// SendAudio ...
-func (obj *BotAPI) SendAudio(chatID interface{}, audio interface{}, caption *string, parseMode *string, duration *int32, performer *string, title *string, disableNotification *bool, replyToMessageID *int32, replyMarkup *interface{}) (*Message, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-		{
-			name:     "audio",
-			required: true,
-			types: []parameterType{
-				parameterTypeInputFile,
-				parameterTypeString,
-			},
-			value: audio,
-		},
-		{
-			name:     "caption",
-			required: false,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: caption,
-		},
-		{
-			name:     "parse_mode",
-			required: false,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: parseMode,
-		},
-		{
-			name:     "duration",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: duration,
-		},
-		{
-			name:     "performer",
-			required: false,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: performer,
-		},
-		{
-			name:     "title",
-			required: false,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: title,
-		},
-		{
-			name:     "disable_notification",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: disableNotification,
-		},
-		{
-			name:     "reply_to_message_id",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: replyToMessageID,
-		},
-		{
-			name:     "reply_markup",
-			required: false,
-			types: []parameterType{
-				parameterTypeInlineKeyboardMarkup,
-				parameterTypeReplyKeyboardMarkup,
-				parameterTypeReplyKeyboardRemove,
-				parameterTypeForceReply,
-			},
-			value: replyMarkup,
-		},
-	}
-
-	res, err := obj.callMethod("sendAudio", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*Message), nil
+type ForwardMessageRequest interface {
+	ChatID(int) ForwardMessageRequest
+	ChatUsername(string) ForwardMessageRequest
+	FromChatID(int) ForwardMessageRequest
+	FromChatUsername(string) ForwardMessageRequest
+	DisableNotification() ForwardMessageRequest
+	MessageID(int) ForwardMessageRequest
+	Do() (*Message, error)
 }
 
-// SendDocument ...
-func (obj *BotAPI) SendDocument(chatID interface{}, document interface{}, caption *string, parseMode *string, disableNotification *bool, replyToMessageID *int32, replyMarkup *interface{}) (*Message, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-		{
-			name:     "document",
-			required: true,
-			types: []parameterType{
-				parameterTypeInputFile,
-				parameterTypeString,
-			},
-			value: document,
-		},
-		{
-			name:     "caption",
-			required: false,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: caption,
-		},
-		{
-			name:     "parse_mode",
-			required: false,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: parseMode,
-		},
-		{
-			name:     "disable_notification",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: disableNotification,
-		},
-		{
-			name:     "reply_to_message_id",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: replyToMessageID,
-		},
-		{
-			name:     "reply_markup",
-			required: false,
-			types: []parameterType{
-				parameterTypeInlineKeyboardMarkup,
-				parameterTypeReplyKeyboardMarkup,
-				parameterTypeReplyKeyboardRemove,
-				parameterTypeForceReply,
-			},
-			value: replyMarkup,
-		},
-	}
-
-	res, err := obj.callMethod("sendDocument", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*Message), nil
+func (b *bot) ForwardMessage() ForwardMessageRequest {
+	panic("implement me")
 }
 
-// SendVideo ...
-func (obj *BotAPI) SendVideo(chatID interface{}, video interface{}, duration *int32, width *int32, height *int32, caption *string, parseMode *string, supportsStreaming *bool, disableNotification *bool, replyToMessageID *int32, replyMarkup *interface{}) (*Message, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-		{
-			name:     "video",
-			required: true,
-			types: []parameterType{
-				parameterTypeInputFile,
-				parameterTypeString,
-			},
-			value: video,
-		},
-		{
-			name:     "duration",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: duration,
-		},
-		{
-			name:     "width",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: width,
-		},
-		{
-			name:     "height",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: height,
-		},
-		{
-			name:     "caption",
-			required: false,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: caption,
-		},
-		{
-			name:     "parse_mode",
-			required: false,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: parseMode,
-		},
-		{
-			name:     "supports_streaming",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: supportsStreaming,
-		},
-		{
-			name:     "disable_notification",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: disableNotification,
-		},
-		{
-			name:     "reply_to_message_id",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: replyToMessageID,
-		},
-		{
-			name:     "reply_markup",
-			required: false,
-			types: []parameterType{
-				parameterTypeInlineKeyboardMarkup,
-				parameterTypeReplyKeyboardMarkup,
-				parameterTypeReplyKeyboardRemove,
-				parameterTypeForceReply,
-			},
-			value: replyMarkup,
-		},
-	}
-
-	res, err := obj.callMethod("sendVideo", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*Message), nil
+type SendPhotoRequest interface {
+	ChatID(int) SendPhotoRequest
+	ChatUsername(string) SendPhotoRequest
+	Photo(InputFile) SendPhotoRequest
+	PhotoFileID(string) SendPhotoRequest
+	PhotoURL(string) SendPhotoRequest
+	Caption(string) SendPhotoRequest
+	ParseMode(string) SendPhotoRequest
+	DisableNotification() SendPhotoRequest
+	ReplyToMessageID(int) SendPhotoRequest
+	ReplyMarkup(interface{}) SendPhotoRequest
+	Do() (*Message, error)
 }
 
-// SendVoice ...
-func (obj *BotAPI) SendVoice(chatID interface{}, voice interface{}, caption *string, parseMode *string, duration *int32, disableNotification *bool, replyToMessageID *int32, replyMarkup *interface{}) (*Message, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-		{
-			name:     "voice",
-			required: true,
-			types: []parameterType{
-				parameterTypeInputFile,
-				parameterTypeString,
-			},
-			value: voice,
-		},
-		{
-			name:     "caption",
-			required: false,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: caption,
-		},
-		{
-			name:     "parse_mode",
-			required: false,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: parseMode,
-		},
-		{
-			name:     "duration",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: duration,
-		},
-		{
-			name:     "disable_notification",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: disableNotification,
-		},
-		{
-			name:     "reply_to_message_id",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: replyToMessageID,
-		},
-		{
-			name:     "reply_markup",
-			required: false,
-			types: []parameterType{
-				parameterTypeInlineKeyboardMarkup,
-				parameterTypeReplyKeyboardMarkup,
-				parameterTypeReplyKeyboardRemove,
-				parameterTypeForceReply,
-			},
-			value: replyMarkup,
-		},
-	}
-
-	res, err := obj.callMethod("sendVoice", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*Message), nil
+func (b *bot) SendPhoto() SendPhotoRequest {
+	panic("implement me")
 }
 
-// SendVideoNote ...
-func (obj *BotAPI) SendVideoNote(chatID interface{}, videoNote interface{}, duration *int32, length *int32, disableNotification *bool, replyToMessageID *int32, replyMarkup *interface{}) (*Message, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-		{
-			name:     "video_note",
-			required: true,
-			types: []parameterType{
-				parameterTypeInputFile,
-				parameterTypeString,
-			},
-			value: videoNote,
-		},
-		{
-			name:     "duration",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: duration,
-		},
-		{
-			name:     "length",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: length,
-		},
-		{
-			name:     "disable_notification",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: disableNotification,
-		},
-		{
-			name:     "reply_to_message_id",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: replyToMessageID,
-		},
-		{
-			name:     "reply_markup",
-			required: false,
-			types: []parameterType{
-				parameterTypeInlineKeyboardMarkup,
-				parameterTypeReplyKeyboardMarkup,
-				parameterTypeReplyKeyboardRemove,
-				parameterTypeForceReply,
-			},
-			value: replyMarkup,
-		},
-	}
-
-	res, err := obj.callMethod("sendVideoNote", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*Message), nil
+type SendAudioRequest interface {
+	ChatID(int) SendAudioRequest
+	ChatUsername(string) SendAudioRequest
+	Audio(InputFile) SendAudioRequest
+	AudioFileID(string) SendAudioRequest
+	AudioURL(string) SendAudioRequest
+	Caption(string) SendAudioRequest
+	ParseMode(string) SendAudioRequest
+	Duration(int) SendAudioRequest
+	Performer(string) SendAudioRequest
+	Title(string) SendAudioRequest
+	Thumb(InputFile) SendAudioRequest
+	ThumbFileName(string) SendAudioRequest
+	DisableNotification() SendAudioRequest
+	ReplyToMessageID(int) SendAudioRequest
+	ReplyMarkup(interface{}) SendAudioRequest
+	Do() (*Message, error)
 }
 
-// SendMediaGroup ...
-func (obj *BotAPI) SendMediaGroup(chatID interface{}, media []InputMedia, disableNotification *bool, replyToMessageID *int32) (*[]Message, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-		{
-			name:     "media",
-			required: true,
-			types: []parameterType{
-				parameterTypeArrayOfInputMedia,
-			},
-			value: media,
-		},
-		{
-			name:     "disable_notification",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: disableNotification,
-		},
-		{
-			name:     "reply_to_message_id",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: replyToMessageID,
-		},
-	}
-
-	res, err := obj.callMethod("sendMediaGroup", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*[]Message), nil
+func (b *bot) SendAudio() SendAudioRequest {
+	panic("implement me")
 }
 
-// SendLocation ...
-func (obj *BotAPI) SendLocation(chatID interface{}, latitude float32, longitude float32, livePeriod *int32, disableNotification *bool, replyToMessageID *int32, replyMarkup *interface{}) (*Message, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-		{
-			name:     "latitude",
-			required: true,
-			types: []parameterType{
-				parameterTypeFloatNumber,
-			},
-			value: latitude,
-		},
-		{
-			name:     "longitude",
-			required: true,
-			types: []parameterType{
-				parameterTypeFloatNumber,
-			},
-			value: longitude,
-		},
-		{
-			name:     "live_period",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: livePeriod,
-		},
-		{
-			name:     "disable_notification",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: disableNotification,
-		},
-		{
-			name:     "reply_to_message_id",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: replyToMessageID,
-		},
-		{
-			name:     "reply_markup",
-			required: false,
-			types: []parameterType{
-				parameterTypeInlineKeyboardMarkup,
-				parameterTypeReplyKeyboardMarkup,
-				parameterTypeReplyKeyboardRemove,
-				parameterTypeForceReply,
-			},
-			value: replyMarkup,
-		},
-	}
-
-	res, err := obj.callMethod("sendLocation", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*Message), nil
+type SendDocumentRequest interface {
+	ChatID(int) SendDocumentRequest
+	ChatUsername(string) SendDocumentRequest
+	Document(InputFile) SendDocumentRequest
+	DocumentFileID(string) SendDocumentRequest
+	DocumentURL(string) SendDocumentRequest
+	Thumb(InputFile) SendDocumentRequest
+	ThumbFileName(string) SendDocumentRequest
+	Caption(string) SendDocumentRequest
+	ParseMode(string) SendDocumentRequest
+	DisableNotification() SendDocumentRequest
+	ReplyToMessageID(int) SendDocumentRequest
+	ReplyMarkup(interface{}) SendDocumentRequest
+	Do() (*Message, error)
 }
 
-// EditMessageLiveLocation ...
-func (obj *BotAPI) EditMessageLiveLocation(chatID *interface{}, messageID *int32, inlineMessageID *string, latitude float32, longitude float32, replyMarkup *InlineKeyboardMarkup) (*Message, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-		{
-			name:     "message_id",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: messageID,
-		},
-		{
-			name:     "inline_message_id",
-			required: false,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: inlineMessageID,
-		},
-		{
-			name:     "latitude",
-			required: true,
-			types: []parameterType{
-				parameterTypeFloatNumber,
-			},
-			value: latitude,
-		},
-		{
-			name:     "longitude",
-			required: true,
-			types: []parameterType{
-				parameterTypeFloatNumber,
-			},
-			value: longitude,
-		},
-		{
-			name:     "reply_markup",
-			required: false,
-			types: []parameterType{
-				parameterTypeInlineKeyboardMarkup,
-			},
-			value: replyMarkup,
-		},
-	}
-
-	res, err := obj.callMethod("editMessageLiveLocation", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*Message), nil
+func (b *bot) SendDocument() SendDocumentRequest {
+	panic("implement me")
 }
 
-// StopMessageLiveLocation ...
-func (obj *BotAPI) StopMessageLiveLocation(chatID *interface{}, messageID *int32, inlineMessageID *string, replyMarkup *InlineKeyboardMarkup) (*Message, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-		{
-			name:     "message_id",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: messageID,
-		},
-		{
-			name:     "inline_message_id",
-			required: false,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: inlineMessageID,
-		},
-		{
-			name:     "reply_markup",
-			required: false,
-			types: []parameterType{
-				parameterTypeInlineKeyboardMarkup,
-			},
-			value: replyMarkup,
-		},
-	}
-
-	res, err := obj.callMethod("stopMessageLiveLocation", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*Message), nil
+type SendVideoRequest interface {
+	ChatID(int) SendVideoRequest
+	ChatUsername(string) SendVideoRequest
+	Video(InputFile) SendVideoRequest
+	VideoFileID(string) SendVideoRequest
+	VideoURL(string) SendVideoRequest
+	Duration(int) SendVideoRequest
+	Width(int) SendVideoRequest
+	Height(int) SendVideoRequest
+	Thumb(InputFile) SendVideoRequest
+	ThumbFileName(string) SendVideoRequest
+	Caption(string) SendVideoRequest
+	ParseMode(string) SendVideoRequest
+	SupportsStreaming() SendVideoRequest
+	DisableNotification() SendVideoRequest
+	ReplyToMessageID(int) SendVideoRequest
+	ReplyMarkup(interface{}) SendVideoRequest
+	Do() (*Message, error)
 }
 
-// SendVenue ...
-func (obj *BotAPI) SendVenue(chatID interface{}, latitude float32, longitude float32, title string, address string, foursquareID *string, disableNotification *bool, replyToMessageID *int32, replyMarkup *interface{}) (*Message, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-		{
-			name:     "latitude",
-			required: true,
-			types: []parameterType{
-				parameterTypeFloatNumber,
-			},
-			value: latitude,
-		},
-		{
-			name:     "longitude",
-			required: true,
-			types: []parameterType{
-				parameterTypeFloatNumber,
-			},
-			value: longitude,
-		},
-		{
-			name:     "title",
-			required: true,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: title,
-		},
-		{
-			name:     "address",
-			required: true,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: address,
-		},
-		{
-			name:     "foursquare_id",
-			required: false,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: foursquareID,
-		},
-		{
-			name:     "disable_notification",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: disableNotification,
-		},
-		{
-			name:     "reply_to_message_id",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: replyToMessageID,
-		},
-		{
-			name:     "reply_markup",
-			required: false,
-			types: []parameterType{
-				parameterTypeInlineKeyboardMarkup,
-				parameterTypeReplyKeyboardMarkup,
-				parameterTypeReplyKeyboardRemove,
-				parameterTypeForceReply,
-			},
-			value: replyMarkup,
-		},
-	}
-
-	res, err := obj.callMethod("sendVenue", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*Message), nil
+func (b *bot) SendVideo() SendVideoRequest {
+	panic("implement me")
 }
 
-// SendContact ...
-func (obj *BotAPI) SendContact(chatID interface{}, phoneNumber string, firstName string, lastName *string, disableNotification *bool, replyToMessageID *int32, replyMarkup *interface{}) (*Message, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-		{
-			name:     "phone_number",
-			required: true,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: phoneNumber,
-		},
-		{
-			name:     "first_name",
-			required: true,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: firstName,
-		},
-		{
-			name:     "last_name",
-			required: false,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: lastName,
-		},
-		{
-			name:     "disable_notification",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: disableNotification,
-		},
-		{
-			name:     "reply_to_message_id",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: replyToMessageID,
-		},
-		{
-			name:     "reply_markup",
-			required: false,
-			types: []parameterType{
-				parameterTypeInlineKeyboardMarkup,
-				parameterTypeReplyKeyboardMarkup,
-				parameterTypeReplyKeyboardRemove,
-				parameterTypeForceReply,
-			},
-			value: replyMarkup,
-		},
-	}
-
-	res, err := obj.callMethod("sendContact", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*Message), nil
+type SendAnimationRequest interface {
+	ChatID(int) SendAnimationRequest
+	ChatUsername(string) SendAnimationRequest
+	Animation(InputFile) SendAnimationRequest
+	AnimationFileID(string) SendAnimationRequest
+	AnimationURL(string) SendAnimationRequest
+	Duration(int) SendAnimationRequest
+	Width(int) SendAnimationRequest
+	Height(int) SendAnimationRequest
+	Thumb(InputFile) SendAnimationRequest
+	ThumbFileName(string) SendAnimationRequest
+	Caption(string) SendAnimationRequest
+	ParseMode(string) SendAnimationRequest
+	DisableNotification() SendAnimationRequest
+	ReplyToMessageID(int) SendAnimationRequest
+	ReplyMarkup(interface{}) SendAnimationRequest
+	Do() (*Message, error)
 }
 
-// SendChatAction ...
-func (obj *BotAPI) SendChatAction(chatID interface{}, action string) (*bool, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-		{
-			name:     "action",
-			required: true,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: action,
-		},
-	}
-
-	res, err := obj.callMethod("sendChatAction", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*bool), nil
+func (b *bot) SendAnimation() SendAnimationRequest {
+	panic("implement me")
 }
 
-// GetUserProfilePhotos ...
-func (obj *BotAPI) GetUserProfilePhotos(userID int32, offset *int32, limit *int32) (*UserProfilePhotos, error) {
-
-	parameters := []parameter{
-		{
-			name:     "user_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: userID,
-		},
-		{
-			name:     "offset",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: offset,
-		},
-		{
-			name:     "limit",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: limit,
-		},
-	}
-
-	res, err := obj.callMethod("getUserProfilePhotos", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*UserProfilePhotos), nil
+type SendVoiceRequest interface {
+	ChatID(int) SendVoiceRequest
+	ChatUsername(string) SendVoiceRequest
+	Voice(InputFile) SendVoiceRequest
+	VoiceFileID(string) SendVoiceRequest
+	VoiceURL(string) SendVoiceRequest
+	Caption(string) SendVoiceRequest
+	ParseMode(string) SendVoiceRequest
+	Duration(int) SendVoiceRequest
+	DisableNotification() SendVoiceRequest
+	ReplyToMessageID(int) SendVoiceRequest
+	ReplyMarkup(interface{}) SendVoiceRequest
+	Do() (*Message, error)
 }
 
-// GetFile ...
-func (obj *BotAPI) GetFile(fileID string) (*File, error) {
-
-	parameters := []parameter{
-		{
-			name:     "file_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: fileID,
-		},
-	}
-
-	res, err := obj.callMethod("getFile", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*File), nil
+func (b *bot) SendVoice() SendVoiceRequest {
+	panic("implement me")
 }
 
-// KickChatMember ...
-func (obj *BotAPI) KickChatMember(chatID interface{}, userID int32, untilDate *int32) (*bool, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-		{
-			name:     "user_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: userID,
-		},
-		{
-			name:     "until_date",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: untilDate,
-		},
-	}
-
-	res, err := obj.callMethod("kickChatMember", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*bool), nil
+type SendVideoNoteRequest interface {
+	ChatID(int) SendVideoNoteRequest
+	ChatUsername(string) SendVideoNoteRequest
+	VideoNote(InputFile) SendVideoNoteRequest
+	VideoNoteFileID(string) SendVideoNoteRequest
+	VideoNoteURL(string) SendVideoNoteRequest
+	Duration(int) SendVideoNoteRequest
+	Length(int) SendVideoNoteRequest
+	Thumb(InputFile) SendVideoNoteRequest
+	ThumbFileName(string) SendVideoNoteRequest
+	DisableNotification() SendVideoNoteRequest
+	ReplyToMessageID(int) SendVideoNoteRequest
+	ReplyMarkup(interface{}) SendVideoNoteRequest
+	Do() (*Message, error)
 }
 
-// UnbanChatMember ...
-func (obj *BotAPI) UnbanChatMember(chatID interface{}, userID int32) (*bool, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-		{
-			name:     "user_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: userID,
-		},
-	}
-
-	res, err := obj.callMethod("unbanChatMember", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*bool), nil
+func (b *bot) SendVideoNote() SendVideoNoteRequest {
+	panic("implement me")
 }
 
-// RestrictChatMember ...
-func (obj *BotAPI) RestrictChatMember(chatID interface{}, userID int32, untilDate *int32, canSendMessages *bool, canSendMediaMessages *bool, canSendOtherMessages *bool, canAddWebPagePreviews *bool) (*bool, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-		{
-			name:     "user_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: userID,
-		},
-		{
-			name:     "until_date",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: untilDate,
-		},
-		{
-			name:     "can_send_messages",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: canSendMessages,
-		},
-		{
-			name:     "can_send_media_messages",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: canSendMediaMessages,
-		},
-		{
-			name:     "can_send_other_messages",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: canSendOtherMessages,
-		},
-		{
-			name:     "can_add_web_page_previews",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: canAddWebPagePreviews,
-		},
-	}
-
-	res, err := obj.callMethod("restrictChatMember", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*bool), nil
+type SendMediaGroupRequest interface {
+	ChatID(int) SendMediaGroupRequest
+	ChatUsername(string) SendMediaGroupRequest
+	Media([]InputMedia) SendMediaGroupRequest
+	DisableNotification() SendMediaGroupRequest
+	ReplyToMessageID(int) SendMediaGroupRequest
+	Do() (*Message, error)
 }
 
-// PromoteChatMember ...
-func (obj *BotAPI) PromoteChatMember(chatID interface{}, userID int32, canChangeInfo *bool, canPostMessages *bool, canEditMessages *bool, canDeleteMessages *bool, canInviteUsers *bool, canRestrictMembers *bool, canPinMessages *bool, canPromoteMembers *bool) (*bool, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-		{
-			name:     "user_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: userID,
-		},
-		{
-			name:     "can_change_info",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: canChangeInfo,
-		},
-		{
-			name:     "can_post_messages",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: canPostMessages,
-		},
-		{
-			name:     "can_edit_messages",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: canEditMessages,
-		},
-		{
-			name:     "can_delete_messages",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: canDeleteMessages,
-		},
-		{
-			name:     "can_invite_users",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: canInviteUsers,
-		},
-		{
-			name:     "can_restrict_members",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: canRestrictMembers,
-		},
-		{
-			name:     "can_pin_messages",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: canPinMessages,
-		},
-		{
-			name:     "can_promote_members",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: canPromoteMembers,
-		},
-	}
-
-	res, err := obj.callMethod("promoteChatMember", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*bool), nil
+func (b *bot) SendMediaGroup() SendMediaGroupRequest {
+	panic("implement me")
 }
 
-// ExportChatInviteLink ...
-func (obj *BotAPI) ExportChatInviteLink(chatID interface{}) (*string, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-	}
-
-	res, err := obj.callMethod("exportChatInviteLink", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*string), nil
+type SendLocationRequest interface {
+	ChatID(int) SendLocationRequest
+	ChatUsername(string) SendLocationRequest
+	Latitude(float32) SendLocationRequest
+	Longitude(float32) SendLocationRequest
+	LivePeriod(int) SendLocationRequest
+	DisableNotification() SendLocationRequest
+	ReplyToMessageID(int) SendLocationRequest
+	ReplyMarkup(interface{}) SendLocationRequest
+	Do() (*Message, error)
 }
 
-// SetChatPhoto ...
-func (obj *BotAPI) SetChatPhoto(chatID interface{}, photo InputFile) (*bool, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-		{
-			name:     "photo",
-			required: true,
-			types: []parameterType{
-				parameterTypeInputFile,
-			},
-			value: photo,
-		},
-	}
-
-	res, err := obj.callMethod("setChatPhoto", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*bool), nil
+func (b *bot) SendLocation() SendLocationRequest {
+	panic("implement me")
 }
 
-// DeleteChatPhoto ...
-func (obj *BotAPI) DeleteChatPhoto(chatID interface{}) (*bool, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-	}
-
-	res, err := obj.callMethod("deleteChatPhoto", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*bool), nil
+type EditMessageLiveLocationRequest interface {
+	ChatID(int) EditMessageLiveLocationRequest
+	ChatUsername(string) EditMessageLiveLocationRequest
+	MessageID(int) EditMessageLiveLocationRequest
+	InlineMessageID(string) EditMessageLiveLocationRequest
+	Latitude(float32) EditMessageLiveLocationRequest
+	Longitude(float32) EditMessageLiveLocationRequest
+	ReplyMarkup(interface{}) EditMessageLiveLocationRequest
+	Do() (*Message, error)
 }
 
-// SetChatTitle ...
-func (obj *BotAPI) SetChatTitle(chatID interface{}, title string) (*bool, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-		{
-			name:     "title",
-			required: true,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: title,
-		},
-	}
-
-	res, err := obj.callMethod("setChatTitle", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*bool), nil
+func (b *bot) EditMessageLiveLocation() EditMessageLiveLocationRequest {
+	panic("implement me")
 }
 
-// SetChatDescription ...
-func (obj *BotAPI) SetChatDescription(chatID interface{}, description *string) (*bool, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-		{
-			name:     "description",
-			required: false,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: description,
-		},
-	}
-
-	res, err := obj.callMethod("setChatDescription", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*bool), nil
+type StopMessageLiveLocationRequest interface {
+	ChatID(int) StopMessageLiveLocationRequest
+	ChatUsername(string) StopMessageLiveLocationRequest
+	MessageID(int) StopMessageLiveLocationRequest
+	InlineMessageID(string) StopMessageLiveLocationRequest
+	ReplyMarkup(interface{}) StopMessageLiveLocationRequest
+	Do() (*Message, error)
 }
 
-// PinChatMessage ...
-func (obj *BotAPI) PinChatMessage(chatID interface{}, messageID int32, disableNotification *bool) (*bool, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-		{
-			name:     "message_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: messageID,
-		},
-		{
-			name:     "disable_notification",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: disableNotification,
-		},
-	}
-
-	res, err := obj.callMethod("pinChatMessage", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*bool), nil
+func (b *bot) StopMessageLiveLocation() StopMessageLiveLocationRequest {
+	panic("implement me")
 }
 
-// UnpinChatMessage ...
-func (obj *BotAPI) UnpinChatMessage(chatID interface{}) (*bool, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-	}
-
-	res, err := obj.callMethod("unpinChatMessage", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*bool), nil
+type SendVenueRequest interface {
+	ChatID(int) SendVenueRequest
+	ChatUsername(string) SendVenueRequest
+	Latitude(float32) SendVenueRequest
+	Longitude(float32) SendVenueRequest
+	Title(string) SendVenueRequest
+	Address(string) SendVenueRequest
+	FoursquareID(string) SendVenueRequest
+	FoursquareType(string) SendVenueRequest
+	DisableNotification() SendVenueRequest
+	ReplyToMessageID(int) SendVenueRequest
+	ReplyMarkup(interface{}) SendVenueRequest
+	Do() (*Message, error)
 }
 
-// LeaveChat ...
-func (obj *BotAPI) LeaveChat(chatID interface{}) (*bool, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-	}
-
-	res, err := obj.callMethod("leaveChat", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*bool), nil
+func (b *bot) SendVenue() SendVenueRequest {
+	panic("implement me")
 }
 
-// GetChat ...
-func (obj *BotAPI) GetChat(chatID interface{}) (*Chat, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-	}
-
-	res, err := obj.callMethod("getChat", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*Chat), nil
+type SendContactRequest interface {
+	ChatID(int) SendContactRequest
+	ChatUsername(string) SendContactRequest
+	PhoneNumber(string) SendContactRequest
+	FirstName(string) SendContactRequest
+	LastName(string) SendContactRequest
+	VCard(string) SendContactRequest
+	DisableNotification() SendContactRequest
+	ReplyToMessageID(int) SendContactRequest
+	ReplyMarkup(interface{}) SendContactRequest
+	Do() (*Message, error)
 }
 
-// GetChatAdministrators ...
-func (obj *BotAPI) GetChatAdministrators(chatID interface{}) (*ChatMember, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-	}
-
-	res, err := obj.callMethod("getChatAdministrators", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*ChatMember), nil
+func (b *bot) SendContact() SendContactRequest {
+	panic("implement me")
 }
 
-// GetChatMembersCount ...
-func (obj *BotAPI) GetChatMembersCount(chatID interface{}) (*int32, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-	}
-
-	res, err := obj.callMethod("getChatMembersCount", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*int32), nil
+type SendPollRequest interface {
+	ChatID(int) SendPollRequest
+	ChatUsername(string) SendPollRequest
+	Question(string) SendPollRequest
+	Options(...string) SendPollRequest
+	DisableNotification() SendPollRequest
+	ReplyToMessageID(int) SendPollRequest
+	ReplyMarkup(interface{}) SendPollRequest
+	Do() (*Message, error)
 }
 
-// GetChatMember ...
-func (obj *BotAPI) GetChatMember(chatID interface{}, userID int32) (*ChatMember, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-		{
-			name:     "user_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: userID,
-		},
-	}
-
-	res, err := obj.callMethod("getChatMember", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*ChatMember), nil
+func (b *bot) SendPoll() SendPollRequest {
+	panic("implement me")
 }
 
-// SetChatStickerSet ...
-func (obj *BotAPI) SetChatStickerSet(chatID interface{}, stickerSetName string) (*bool, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-		{
-			name:     "sticker_set_name",
-			required: true,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: stickerSetName,
-		},
-	}
-
-	res, err := obj.callMethod("setChatStickerSet", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*bool), nil
+type SendChatActionRequest interface {
+	ChatID(int) SendChatActionRequest
+	ChatUsername(string) SendChatActionRequest
+	Action(string) SendChatActionRequest
+	Do() (*Message, error)
 }
 
-// DeleteChatStickerSet ...
-func (obj *BotAPI) DeleteChatStickerSet(chatID interface{}) (*bool, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-	}
-
-	res, err := obj.callMethod("deleteChatStickerSet", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*bool), nil
+func (b *bot) SendChatAction() SendChatActionRequest {
+	panic("implement me")
 }
 
-// AnswerCallbackQuery ...
-func (obj *BotAPI) AnswerCallbackQuery(callbackQueryID string, text *string, showAlert *bool, uRL *string, cacheTime *int32) (*bool, error) {
+type GetUserProfilePhotosRequest interface {
+	UserID(int) GetUserProfilePhotosRequest
+	Offset(int) GetUserProfilePhotosRequest
+	Limit(int) GetUserProfilePhotosRequest
+	Do() (UserProfilePhotos, error)
+}
 
-	parameters := []parameter{
-		{
-			name:     "callback_query_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: callbackQueryID,
-		},
-		{
-			name:     "text",
-			required: false,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: text,
-		},
-		{
-			name:     "show_alert",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: showAlert,
-		},
-		{
-			name:     "url",
-			required: false,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: uRL,
-		},
-		{
-			name:     "cache_time",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: cacheTime,
-		},
-	}
+func (b *bot) GetUserProfilePhotos() GetUserProfilePhotosRequest {
+	panic("implement me")
+}
 
-	res, err := obj.callMethod("answerCallbackQuery", parameters...)
-	if err != nil {
-		return nil, err
-	}
+type GetFileRequest interface {
+	FileID(string) GetFileRequest
+	Do() (File, error)
+}
 
-	return res.(*bool), nil
+func (b *bot) GetFile() GetFileRequest {
+	panic("implement me")
+}
+
+type KickChatMemberRequest interface {
+	ChatID(int) KickChatMemberRequest
+	ChatUsername(string) KickChatMemberRequest
+	UserID(int) KickChatMemberRequest
+	UntilDate(int) KickChatMemberRequest
+	Do() (bool, error)
+}
+
+func (b *bot) KickChatMember() KickChatMemberRequest {
+	panic("implement me")
+}
+
+type UnbanChatMemberRequest interface {
+	ChatID(int) UnbanChatMemberRequest
+	ChatUsername(string) UnbanChatMemberRequest
+	UserID(int) UnbanChatMemberRequest
+	Do() (bool, error)
+}
+
+func (b *bot) UnbanChatMember() UnbanChatMemberRequest {
+	panic("implement me")
+}
+
+type RestrictChatMemberRequest interface {
+	ChatID(int) RestrictChatMemberRequest
+	ChatUsername(string) RestrictChatMemberRequest
+	UserID(int) RestrictChatMemberRequest
+	UntilDate(int) RestrictChatMemberRequest
+	CanSendMessages() RestrictChatMemberRequest
+	CanSendMediaMessages() RestrictChatMemberRequest
+	CanSendOtherMessages() RestrictChatMemberRequest
+	CanAddWebPagePreviews() RestrictChatMemberRequest
+	Do() (bool, error)
+}
+
+func (b *bot) RestrictChatMember() RestrictChatMemberRequest {
+	panic("implement me")
+}
+
+type PromoteChatMemberRequest interface {
+	ChatID(int) PromoteChatMemberRequest
+	ChatUsername(string) PromoteChatMemberRequest
+	UserID(int) PromoteChatMemberRequest
+	CanChangeInfo() PromoteChatMemberRequest
+	CanSendMessages() PromoteChatMemberRequest
+	CanEditMessages() PromoteChatMemberRequest
+	CanDeleteMessages() PromoteChatMemberRequest
+	CanInviteUsers() PromoteChatMemberRequest
+	CanRestrictMembers() PromoteChatMemberRequest
+	CanPinMessages() PromoteChatMemberRequest
+	CanPromoteMembers() PromoteChatMemberRequest
+	Do() (bool, error)
+}
+
+func (b *bot) PromoteChatMember() PromoteChatMemberRequest {
+	panic("implement me")
+}
+
+type ExportChatInviteLinkRequest interface {
+	ChatID(int) ExportChatInviteLinkRequest
+	ChatUsername(string) ExportChatInviteLinkRequest
+	Do() (bool, error)
+}
+
+func (b *bot) ExportChatInviteLink() ExportChatInviteLinkRequest {
+	panic("implement me")
+}
+
+type SetChatPhotoRequest interface {
+	ChatID(int) SetChatPhotoRequest
+	ChatUsername(string) SetChatPhotoRequest
+	Photo(InputFile) SetChatPhotoRequest
+	Do() (bool, error)
+}
+
+func (b *bot) SetChatPhoto() SetChatPhotoRequest {
+	panic("implement me")
+}
+
+type DeleteChatPhotoRequest interface {
+	ChatID(int) DeleteChatPhotoRequest
+	ChatUsername(string) DeleteChatPhotoRequest
+	Do() (bool, error)
+}
+
+func (b *bot) DeleteChatPhoto() DeleteChatPhotoRequest {
+	panic("implement me")
+}
+
+type SetChatTitleRequest interface {
+	ChatID(int) SetChatTitleRequest
+	ChatUsername(string) SetChatTitleRequest
+	Title(string) SetChatTitleRequest
+	Do() (bool, error)
+}
+
+func (b *bot) SetChatTitle() SetChatTitleRequest {
+	panic("implement me")
+}
+
+type SetChatDescriptionRequest interface {
+	ChatID(int) SetChatDescriptionRequest
+	ChatUsername(string) SetChatDescriptionRequest
+	Description(string) SetChatDescriptionRequest
+	Do() (bool, error)
+}
+
+func (b *bot) SetChatDescription() SetChatDescriptionRequest {
+	panic("implement me")
+}
+
+type PinChatMessageRequest interface {
+	ChatID(int) PinChatMessageRequest
+	ChatUsername(string) PinChatMessageRequest
+	MessageID(int) PinChatMessageRequest
+	DisableNotification() PinChatMessageRequest
+	Do() (bool, error)
+}
+
+func (b *bot) PinChatMessage() PinChatMessageRequest {
+	panic("implement me")
+}
+
+type UnpinChatMessageRequest interface {
+	ChatID(int) UnpinChatMessageRequest
+	ChatUsername(string) UnpinChatMessageRequest
+	Do() (bool, error)
+}
+
+func (b *bot) UnpinChatMessage() UnpinChatMessageRequest {
+	panic("implement me")
+}
+
+type LeaveChatRequest interface {
+	ChatID(int) LeaveChatRequest
+	ChatUsername(string) LeaveChatRequest
+	Do() (bool, error)
+}
+
+func (b *bot) LeaveChat() LeaveChatRequest {
+	panic("implement me")
+}
+
+type GetChatRequest interface {
+	ChatID(int) GetChatRequest
+	ChatUsername(string) GetChatRequest
+	Do() (*Chat, error)
+}
+
+func (b *bot) GetChat() GetChatRequest {
+	panic("implement me")
+}
+
+type GetChatAdministratorsRequest interface {
+	ChatID(int) GetChatAdministratorsRequest
+	ChatUsername(string) GetChatAdministratorsRequest
+	Do() ([]ChatMember, error)
+}
+
+func (b *bot) GetChatAdministrators() GetChatAdministratorsRequest {
+	panic("implement me")
+}
+
+type GetChatMembersCountRequest interface {
+	ChatID(int) GetChatMembersCountRequest
+	ChatUsername(string) GetChatMembersCountRequest
+	Do() (int, error)
+}
+
+func (b *bot) GetChatMembersCount() GetChatMembersCountRequest {
+	panic("implement me")
+}
+
+type GetChatMemberRequest interface {
+	ChatID(int) GetChatMemberRequest
+	ChatUsername(string) GetChatMemberRequest
+	UserID(int) GetChatMemberRequest
+	Do() (*ChatMember, error)
+}
+
+func (b *bot) GetChatMember() GetChatMemberRequest {
+	panic("implement me")
+}
+
+type SetChatStickerSetRequest interface {
+	ChatID(int) SetChatStickerSetRequest
+	ChatUsername(string) SetChatStickerSetRequest
+	StickerSetName(string) SetChatStickerSetRequest
+	Do() (bool, error)
+}
+
+func (b *bot) SetChatStickerSet() SetChatStickerSetRequest {
+	panic("implement me")
+}
+
+type DeleteChatStickerSetRequest interface {
+	ChatID(int) DeleteChatStickerSetRequest
+	ChatUsername(string) DeleteChatStickerSetRequest
+	Do() (bool, error)
+}
+
+func (b *bot) DeleteChatStickerSet() DeleteChatStickerSetRequest {
+	panic("implement me")
+}
+
+type AnswerCallbackQueryRequest interface {
+	CallbackQueryID(string) AnswerCallbackQueryRequest
+	Text(string) AnswerCallbackQueryRequest
+	ShowAlert() AnswerCallbackQueryRequest
+	URL(string) AnswerCallbackQueryRequest
+	CacheTime(int) AnswerCallbackQueryRequest
+	Do() (bool, error)
+}
+
+func (b *bot) AnswerCallbackQuery() AnswerCallbackQueryRequest {
+	panic("implement me")
 }

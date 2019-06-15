@@ -1,303 +1,72 @@
 package telegram
 
-// SendInvoice ...
-func (obj *BotAPI) SendInvoice(chatID int32, title string, description string, payload string, providerToken string, startParameter string, currency string, prices []LabeledPrice, providerData *string, photoURL *string, photoSize *int32, photoWidth *int32, photoHeight *int32, needName *bool, needPhoneNumber *bool, needEmail *bool, needShippingAddress *bool, sendPhoneNumberToProvider *bool, sendEmailToProvider *bool, isFlexible *bool, disableNotification *bool, replyToMessageID *int32, replyMarkup *InlineKeyboardMarkup) (*Message, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: chatID,
-		},
-		{
-			name:     "title",
-			required: true,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: title,
-		},
-		{
-			name:     "description",
-			required: true,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: description,
-		},
-		{
-			name:     "payload",
-			required: true,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: payload,
-		},
-		{
-			name:     "provider_token",
-			required: true,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: providerToken,
-		},
-		{
-			name:     "start_parameter",
-			required: true,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: startParameter,
-		},
-		{
-			name:     "currency",
-			required: true,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: currency,
-		},
-		{
-			name:     "prices",
-			required: true,
-			types: []parameterType{
-				parameterTypeArrayOfLabeledPrice,
-			},
-			value: prices,
-		},
-		{
-			name:     "provider_data",
-			required: false,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: providerData,
-		},
-		{
-			name:     "photo_url",
-			required: false,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: photoURL,
-		},
-		{
-			name:     "photo_size",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: photoSize,
-		},
-		{
-			name:     "photo_width",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: photoWidth,
-		},
-		{
-			name:     "photo_height",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: photoHeight,
-		},
-		{
-			name:     "need_name",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: needName,
-		},
-		{
-			name:     "need_phone_number",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: needPhoneNumber,
-		},
-		{
-			name:     "need_email",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: needEmail,
-		},
-		{
-			name:     "need_shipping_address",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: needShippingAddress,
-		},
-		{
-			name:     "send_phone_number_to_provider",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: sendPhoneNumberToProvider,
-		},
-		{
-			name:     "send_email_to_provider",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: sendEmailToProvider,
-		},
-		{
-			name:     "is_flexible",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: isFlexible,
-		},
-		{
-			name:     "disable_notification",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: disableNotification,
-		},
-		{
-			name:     "reply_to_message_id",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: replyToMessageID,
-		},
-		{
-			name:     "reply_markup",
-			required: false,
-			types: []parameterType{
-				parameterTypeInlineKeyboardMarkup,
-			},
-			value: replyMarkup,
-		},
-	}
-
-	res, err := obj.callMethod("sendInvoice", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*Message), nil
+type SendInvoiceRequest interface {
+	ChatID(int) SendInvoiceRequest
+	Title(string) SendInvoiceRequest
+	Description(string) SendInvoiceRequest
+	Payload(string) SendInvoiceRequest
+	ProviderToken(string) SendInvoiceRequest
+	StartParameter(string) SendInvoiceRequest
+	Currency(string) SendInvoiceRequest
+	Prices([]LabeledPrice) SendInvoiceRequest
+	ProviderData(string) SendInvoiceRequest
+	PhotoURL(string) SendInvoiceRequest
+	PhotoSize(int) SendInvoiceRequest
+	PhotoWidth(int) SendInvoiceRequest
+	PhotoHeight(int) SendInvoiceRequest
+	NeedName() SendInvoiceRequest
+	NeedPhoneNumber() SendInvoiceRequest
+	NeedEmail() SendInvoiceRequest
+	NeedShippingAddress() SendInvoiceRequest
+	SendPhoneNumberToProvider() SendInvoiceRequest
+	SendEmailToProvider() SendInvoiceRequest
+	IsFlexible() SendInvoiceRequest
+	DisableNotification() SendInvoiceRequest
+	ReplyToMessageID(int) SendInvoiceRequest
+	ReplyMarkup(InlineKeyboardMarkup) SendInvoiceRequest
+	Do() (*Message, error)
 }
 
-// AnswerShippingQuery ...
-func (obj *BotAPI) AnswerShippingQuery(shippingQueryID string, ok bool, shippingOptions *[]ShippingOption, errorMessage *string) (*bool, error) {
-
-	parameters := []parameter{
-		{
-			name:     "shipping_query_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: shippingQueryID,
-		},
-		{
-			name:     "ok",
-			required: true,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: ok,
-		},
-		{
-			name:     "shipping_options",
-			required: false,
-			types: []parameterType{
-				parameterTypeArrayOfShippingOption,
-			},
-			value: shippingOptions,
-		},
-		{
-			name:     "error_message",
-			required: false,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: errorMessage,
-		},
-	}
-
-	res, err := obj.callMethod("answerShippingQuery", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*bool), nil
+func (b *bot) SendInvoice() SendInvoiceRequest {
+	panic("implement me")
 }
 
-// AnswerPreCheckoutQuery ...
-func (obj *BotAPI) AnswerPreCheckoutQuery(preCheckoutQueryID string, ok bool, errorMessage *string) (*bool, error) {
-
-	parameters := []parameter{
-		{
-			name:     "pre_checkout_query_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: preCheckoutQueryID,
-		},
-		{
-			name:     "ok",
-			required: true,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: ok,
-		},
-		{
-			name:     "error_message",
-			required: false,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: errorMessage,
-		},
-	}
-
-	res, err := obj.callMethod("answerPreCheckoutQuery", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*bool), nil
+type AnswerShippingQueryRequest interface {
+	ShippingQueryID(string) AnswerShippingQueryRequest
+	OK() AnswerShippingQueryRequest
+	ShippingOptions([]ShippingOption) AnswerShippingQueryRequest
+	ErrorMessage(string) AnswerShippingQueryRequest
+	Do() (bool, error)
 }
 
-// LabeledPrice ...
+func (b *bot) AnswerShippingQuery() AnswerShippingQueryRequest {
+	panic("implement me")
+}
+
+type AnswerPreCheckoutQueryRequest interface {
+	PreCheckoutQueryID(string) AnswerPreCheckoutQueryRequest
+	OK() AnswerPreCheckoutQueryRequest
+	ErrorMessage(string) AnswerPreCheckoutQueryRequest
+	Do() (bool, error)
+}
+
+func (b *bot) AnswerPreCheckoutQuery() AnswerPreCheckoutQueryRequest {
+	panic("implement me")
+}
+
 type LabeledPrice struct {
 	Label  string `json:"label"`
-	Amount int32  `json:"amount"`
+	Amount int    `json:"amount"`
 }
 
-// Invoice ...
 type Invoice struct {
 	Title          string `json:"title"`
 	Description    string `json:"description"`
 	StartParameter string `json:"start_parameter"`
 	Currency       string `json:"currency"`
-	TotalAmount    int32  `json:"total_amount"`
+	TotalAmount    int    `json:"total_amount"`
 }
 
-// ShippingAddress ...
 type ShippingAddress struct {
 	CountryCode string `json:"country_code"`
 	State       string `json:"state"`
@@ -307,7 +76,6 @@ type ShippingAddress struct {
 	PostCode    string `json:"post_code"`
 }
 
-// OrderInfo ...
 type OrderInfo struct {
 	Name            string           `json:"name"`
 	PhoneNumber     *string          `json:"phone_number,omitempty"`
@@ -315,17 +83,15 @@ type OrderInfo struct {
 	ShippingAddress *ShippingAddress `json:"shipping_address,omitempty"`
 }
 
-// ShippingOption ...
 type ShippingOption struct {
 	ID     string         `json:"id"`
 	Title  string         `json:"title"`
 	Prices []LabeledPrice `json:"prices"`
 }
 
-// SuccessfulPayment ...
 type SuccessfulPayment struct {
 	Currency                string     `json:"currency"`
-	TotalAmount             int32      `json:"total_amount"`
+	TotalAmount             int        `json:"total_amount"`
 	InvoicePayload          string     `json:"invoice_payload"`
 	ShippingOptionID        *string    `json:"shipping_option_id,omitempty"`
 	OrderInfo               *OrderInfo `json:"order_info,omitempty"`
@@ -333,7 +99,6 @@ type SuccessfulPayment struct {
 	ProviderPaymentChargeID string
 }
 
-// ShippingQuery ...
 type ShippingQuery struct {
 	ID              string          `json:"id"`
 	From            User            `json:"from"`
@@ -341,12 +106,11 @@ type ShippingQuery struct {
 	ShippingAddress ShippingAddress `json:"shipping_address"`
 }
 
-// PreCheckoutQuery ...
 type PreCheckoutQuery struct {
 	ID               string     `json:"id"`
 	From             User       `json:"from"`
 	Currency         string     `json:"currency"`
-	TotalAmount      int32      `json:"total_amount"`
+	TotalAmount      int        `json:"total_amount"`
 	InvoicePayload   string     `json:"invoice_payload"`
 	ShippingOptionID *string    `json:"shipping_option_id"`
 	OrderInfo        *OrderInfo `json:"order_info"`

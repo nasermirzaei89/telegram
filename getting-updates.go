@@ -1,8 +1,7 @@
 package telegram
 
-// Update ...
 type Update struct {
-	UpdateID           int64               `json:"update_id"`
+	UpdateID           int                 `json:"update_id"`
 	Message            *Message            `json:"message,omitempty"`
 	EditedMessage      *Message            `json:"edited_message,omitempty"`
 	ChannelPost        *Message            `json:"channel_post,omitempty"`
@@ -12,125 +11,55 @@ type Update struct {
 	CallbackQuery      *CallbackQuery      `json:"callback_query,omitempty"`
 	ShippingQuery      *ShippingQuery      `json:"shipping_query,omitempty"`
 	PreCheckoutQuery   *PreCheckoutQuery   `json:"pre_checkout_query,omitempty"`
+	Poll               *Poll               `json:"poll,omitempty"`
 }
 
-// GetUpdates ...
-func (obj *BotAPI) GetUpdates(offset, limit, timeout *int64, allowedUpdates *[]string) ([]Update, error) {
-	parameters := []parameter{
-		{
-			name:     "offset",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: offset,
-		},
-		{
-			name:     "limit",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: limit,
-		},
-		{
-			name:     "timeout",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: timeout,
-		},
-		{
-			name:     "allowed_updates",
-			required: false,
-			types: []parameterType{
-				parameterTypeArrayOfString,
-			},
-			value: allowedUpdates,
-		},
-	}
-
-	res, err := obj.callMethod("getUpdates", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.([]Update), nil
+type GetUpdatesRequest interface {
+	Offset(int) GetUpdatesRequest
+	Limit(int) GetUpdatesRequest
+	Timeout(int) GetUpdatesRequest
+	AllowedUpdates(...string) GetUpdatesRequest
+	Do() ([]Update, error)
 }
 
-// SetWebhook ...
-func (obj *BotAPI) SetWebhook(url string, certificate *InputFile, maxConnections *int32, allowedUpdates *[]string) (*bool, error) {
-	parameters := []parameter{
-		{
-			name:     "url",
-			required: true,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: url,
-		},
-		{
-			name:     "certificate",
-			required: false,
-			types: []parameterType{
-				parameterTypeInputFile,
-			},
-			value: certificate,
-		},
-		{
-			name:     "max_connections",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: maxConnections,
-		},
-		{
-			name:     "allowed_updates",
-			required: false,
-			types: []parameterType{
-				parameterTypeArrayOfString,
-			},
-			value: allowedUpdates,
-		},
-	}
-
-	res, err := obj.callMethod("setWebhook", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*bool), nil
+func (b *bot) GetUpdates() GetUpdatesRequest {
+	panic("implement me")
 }
 
-// DeleteWebhook ...
-func (obj *BotAPI) DeleteWebhook() (*bool, error) {
-	res, err := obj.callMethod("deleteWebhook")
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*bool), nil
+type SetWebhookRequest interface {
+	URL(string) SetWebhookRequest
+	Certificate(InputFile) SetWebhookRequest
+	MaxConnections(string) SetWebhookRequest
+	AllowedUpdates(...string) SetWebhookRequest
+	Do() (bool, error)
 }
 
-// GetWebhookInfo ...
-func (obj *BotAPI) GetWebhookInfo() (*WebhookInfo, error) {
-	res, err := obj.callMethod("getWebhookInfo")
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*WebhookInfo), nil
+func (b *bot) SetWebhook() SetWebhookRequest {
+	panic("implement me")
 }
 
-// WebhookInfo ...
+type DeleteWebhookRequest interface {
+	Do() (bool, error)
+}
+
+func (b *bot) DeleteWebhook() DeleteWebhookRequest {
+	panic("implement me")
+}
+
+type GetWebhookInfoRequest interface {
+	Do() (*WebhookInfo, error)
+}
+
+func (b *bot) GetWebhookInfo() GetWebhookInfoRequest {
+	panic("implement me")
+}
+
 type WebhookInfo struct {
-	URL                  string    `json:"url"`
-	HasCustomCertificate bool      `json:"has_custom_certificate"`
-	PendingUpdateCount   int32     `json:"pending_update_count"`
-	LastErrorDate        *int32    `json:"last_error_date,omitempty"`
-	LastErrorMessage     *string   `json:"last_error_message,omitempty"`
-	MaxConnections       *int32    `json:"max_connections,omitempty"`
-	AllowedUpdates       *[]string `json:"allowed_updates,omitempty"`
+	URL                  string   `json:"url"`
+	HasCustomCertificate bool     `json:"has_custom_certificate"`
+	PendingUpdateCount   int      `json:"pending_update_count"`
+	LastErrorDate        *int     `json:"last_error_date,omitempty"`
+	LastErrorMessage     *string  `json:"last_error_message,omitempty"`
+	MaxConnections       *int     `json:"max_connections,omitempty"`
+	AllowedUpdates       []string `json:"allowed_updates,omitempty"`
 }
