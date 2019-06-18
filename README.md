@@ -23,7 +23,7 @@ import (
 
 func main() {
 	bot := telegram.New(os.Getenv("TOKEN"))
-	res, err := bot.GetUpdates().Do()
+	res, err := bot.GetUpdates()
 	if err != nil {
 		log.Fatalf("%v", err)
 	}

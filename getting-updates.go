@@ -19,70 +19,22 @@ type Update struct {
 	Poll               *Poll               `json:"poll,omitempty"`
 }
 
-type GetUpdatesRequest interface {
-	Offset(int) GetUpdatesRequest
-	Limit(int) GetUpdatesRequest
-	Timeout(int) GetUpdatesRequest
-	AllowedUpdates(...string) GetUpdatesRequest
-	Do() (*GetUpdatesResponse, error)
-}
+type GetUpdatesOption func(*request)
 
 type GetUpdatesResponse struct {
 	Response
 	Result []Update `json:"result,omitempty"`
 }
 
-func (b *bot) GetUpdates() GetUpdatesRequest {
-	return &getUpdatesRequest{*newRequest(b.Token, "getUpdates")}
-}
+func (b *bot) GetUpdates(options ...GetUpdatesOption) (*GetUpdatesResponse, error) {
+	req := newRequest(b.Token, "getUpdates")
 
-type getUpdatesRequest struct {
-	request
-}
-
-func (r *getUpdatesRequest) Offset(v int) GetUpdatesRequest {
-	err := r.writer.WriteField("offset", fmt.Sprintf("%d", v))
-	if err != nil {
-		r.err = err
+	for i := range options {
+		options[i](req)
 	}
 
-	return r
-}
-
-func (r *getUpdatesRequest) Limit(v int) GetUpdatesRequest {
-	err := r.writer.WriteField("limit", fmt.Sprintf("%d", v))
-	if err != nil {
-		r.err = err
-	}
-
-	return r
-}
-
-func (r *getUpdatesRequest) Timeout(v int) GetUpdatesRequest {
-	err := r.writer.WriteField("timeout", fmt.Sprintf("%d", v))
-	if err != nil {
-		r.err = err
-	}
-
-	return r
-}
-
-func (r *getUpdatesRequest) AllowedUpdates(v ...string) GetUpdatesRequest {
-	str := "[]"
-	if len(v) == 0 {
-		str = fmt.Sprintf(`["%s"]`, strings.Join(v, `","`))
-	}
-	err := r.writer.WriteField("allowed_updates", str)
-	if err != nil {
-		r.err = err
-	}
-
-	return r
-}
-
-func (r *getUpdatesRequest) Do() (*GetUpdatesResponse, error) {
 	var res GetUpdatesResponse
-	err := r.request.do(&res)
+	err := req.do(&res)
 	if err != nil {
 		return nil, err
 	}
@@ -90,65 +42,62 @@ func (r *getUpdatesRequest) Do() (*GetUpdatesResponse, error) {
 	return &res, nil
 }
 
-type SetWebhookRequest interface {
-	URL(string) SetWebhookRequest
-	Certificate(InputFile) SetWebhookRequest
-	MaxConnections(string) SetWebhookRequest
-	AllowedUpdates(...string) SetWebhookRequest
-	Do() (*SetWebhookResponse, error)
+func GetUpdatesOffset(v int) GetUpdatesOption {
+	return func(r *request) {
+		err := r.writer.WriteField("offset", fmt.Sprintf("%d", v))
+		if err != nil {
+			r.err = err
+		}
+	}
 }
+
+func GetUpdatesLimit(v int) GetUpdatesOption {
+	return func(r *request) {
+		err := r.writer.WriteField("limit", fmt.Sprintf("%d", v))
+		if err != nil {
+			r.err = err
+		}
+	}
+}
+
+func GetUpdatesTimeout(v int) GetUpdatesOption {
+	return func(r *request) {
+		err := r.writer.WriteField("timeout", fmt.Sprintf("%d", v))
+		if err != nil {
+			r.err = err
+		}
+	}
+}
+
+func GetUpdatesAllowedUpdates(v ...string) GetUpdatesOption {
+	return func(r *request) {
+		str := "[]"
+		if len(v) == 0 {
+			str = fmt.Sprintf(`["%s"]`, strings.Join(v, `","`))
+		}
+		err := r.writer.WriteField("allowed_updates", str)
+		if err != nil {
+			r.err = err
+		}
+	}
+}
+
+type SetWebhookOption func(*request)
 
 type SetWebhookResponse struct {
 	Response
 	Result bool `json:"result,omitempty"`
 }
 
-func (b *bot) SetWebhook() SetWebhookRequest {
-	return &setWebhookRequest{*newRequest(b.Token, "setWebhook")}
-}
+func (b *bot) SetWebhook(options ...SetWebhookOption) (*SetWebhookResponse, error) {
+	req := newRequest(b.Token, "setWebhook")
 
-type setWebhookRequest struct {
-	request
-}
-
-func (r *setWebhookRequest) URL(v string) SetWebhookRequest {
-	err := r.writer.WriteField("url", v)
-	if err != nil {
-		r.err = err
+	for i := range options {
+		options[i](req)
 	}
 
-	return r
-}
-
-func (r *setWebhookRequest) Certificate(v InputFile) SetWebhookRequest {
-	panic("implement me")
-}
-
-func (r *setWebhookRequest) MaxConnections(v string) SetWebhookRequest {
-	err := r.writer.WriteField("max_connections", v)
-	if err != nil {
-		r.err = err
-	}
-
-	return r
-}
-
-func (r *setWebhookRequest) AllowedUpdates(v ...string) SetWebhookRequest {
-	str := "[]"
-	if len(v) == 0 {
-		str = fmt.Sprintf(`["%s"]`, strings.Join(v, `","`))
-	}
-	err := r.writer.WriteField("allowed_updates", str)
-	if err != nil {
-		r.err = err
-	}
-
-	return r
-}
-
-func (r *setWebhookRequest) Do() (*SetWebhookResponse, error) {
 	var res SetWebhookResponse
-	err := r.do(&res)
+	err := req.do(&res)
 	if err != nil {
 		return nil, err
 	}
@@ -156,8 +105,41 @@ func (r *setWebhookRequest) Do() (*SetWebhookResponse, error) {
 	return &res, nil
 }
 
-type DeleteWebhookRequest interface {
-	Do() (*DeleteWebhookResponse, error)
+func SetWebhookURL(v string) SetWebhookOption {
+	return func(r *request) {
+		err := r.writer.WriteField("url", v)
+		if err != nil {
+			r.err = err
+		}
+	}
+}
+
+func SetWebhookCertificate(v InputFile) SetWebhookOption {
+	return func(r *request) {
+		panic("implement me")
+	}
+}
+
+func SetWebhookMaxConnections(v string) SetWebhookOption {
+	return func(r *request) {
+		err := r.writer.WriteField("max_connections", v)
+		if err != nil {
+			r.err = err
+		}
+	}
+}
+
+func SetWebhookAllowedUpdates(v ...string) SetWebhookOption {
+	return func(r *request) {
+		str := "[]"
+		if len(v) == 0 {
+			str = fmt.Sprintf(`["%s"]`, strings.Join(v, `","`))
+		}
+		err := r.writer.WriteField("allowed_updates", str)
+		if err != nil {
+			r.err = err
+		}
+	}
 }
 
 type DeleteWebhookResponse struct {
@@ -165,17 +147,11 @@ type DeleteWebhookResponse struct {
 	Result bool `json:"result,omitempty"`
 }
 
-func (b *bot) DeleteWebhook() DeleteWebhookRequest {
-	return &deleteWebhookRequest{*newRequest(b.Token, "deleteWebhook")}
-}
+func (b *bot) DeleteWebhook() (*DeleteWebhookResponse, error) {
+	req := newRequest(b.Token, "deleteWebhook")
 
-type deleteWebhookRequest struct {
-	request
-}
-
-func (r *deleteWebhookRequest) Do() (*DeleteWebhookResponse, error) {
 	var res DeleteWebhookResponse
-	err := r.do(&res)
+	err := req.do(&res)
 	if err != nil {
 		return nil, err
 	}
@@ -183,26 +159,16 @@ func (r *deleteWebhookRequest) Do() (*DeleteWebhookResponse, error) {
 	return &res, nil
 }
 
-type GetWebhookInfoRequest interface {
-	Do() (*GetWebhookInfoResponse, error)
-}
-
 type GetWebhookInfoResponse struct {
 	Response
 	Result *WebhookInfo `json:"result,omitempty"`
 }
 
-func (b *bot) GetWebhookInfo() GetWebhookInfoRequest {
-	return &getWebhookInfoRequest{*newRequest(b.Token, "getWebhookInfo")}
-}
+func (b *bot) GetWebhookInfo() (*GetWebhookInfoResponse, error) {
+	req := newRequest(b.Token, "getWebhookInfo")
 
-type getWebhookInfoRequest struct {
-	request
-}
-
-func (r *getWebhookInfoRequest) Do() (*GetWebhookInfoResponse, error) {
 	var res GetWebhookInfoResponse
-	err := r.do(&res)
+	err := req.do(&res)
 	if err != nil {
 		return nil, err
 	}

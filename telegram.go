@@ -2,10 +2,10 @@ package telegram
 
 type Bot interface {
 	// getting updates
-	GetUpdates() GetUpdatesRequest
-	SetWebhook() SetWebhookRequest
-	DeleteWebhook() DeleteWebhookRequest
-	GetWebhookInfo() GetWebhookInfoRequest
+	GetUpdates(...GetUpdatesOption) (*GetUpdatesResponse, error)
+	SetWebhook(...SetWebhookOption) (*SetWebhookResponse, error)
+	DeleteWebhook() (*DeleteWebhookResponse, error)
+	GetWebhookInfo() (*GetWebhookInfoResponse, error)
 
 	// available methods
 	GetMe() GetMeRequest
