@@ -1,13 +1,5 @@
 package telegram
 
-import (
-	"encoding/json"
-	"fmt"
-	"io"
-	"io/ioutil"
-	"net/http"
-)
-
 type Bot interface {
 	// getting updates
 	GetUpdates() GetUpdatesRequest
@@ -96,35 +88,4 @@ type bot struct {
 
 func New(token string) Bot {
 	return &bot{Token: token}
-}
-
-type Response struct {
-	OK          bool                `json:"ok"`
-	Description *string             `json:"description,omitempty"`
-	ErrorCode   *int                `json:"error_code,omitempty"`
-	Parameters  *ResponseParameters `json:"parameters,omitempty"`
-	Result      interface{}         `json:"result,omitempty"`
-}
-
-func (b *bot) getURL(methodName string) string {
-	return fmt.Sprintf("https://api.telegram.org/bot%s/%s", b.Token, methodName)
-}
-
-func (b *bot) request(methodName string, body io.Reader, res interface{}) error {
-	resp, err := http.Post(fmt.Sprintf("https://api.telegram.org/bot%s/%s", b.Token, methodName), "application/json", body)
-	if err != nil {
-		return err
-	}
-
-	js, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(js, res)
-	if err != nil {
-		return err
-	}
-
-	return nil
 }
