@@ -1,6 +1,13 @@
 package telegram
 
-import "fmt"
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"mime/multipart"
+	"net/http"
+)
 
 type Response struct {
 	OK          bool                `json:"ok"`
@@ -10,6 +17,48 @@ type Response struct {
 	Result      interface{}         `json:"result,omitempty"`
 }
 
-func (b *bot) getURL(methodName string) string {
-	return fmt.Sprintf("https://api.telegram.org/bot%s/%s", b.Token, methodName)
+type request struct {
+	url    string
+	body   *bytes.Buffer
+	writer *multipart.Writer
+	err    error
+}
+
+func newRequest(token, methodName string) *request {
+	body := &bytes.Buffer{}
+	writer := multipart.NewWriter(body)
+	return &request{
+		url:    fmt.Sprintf("https://api.telegram.org/bot%s/%s", token, methodName),
+		body:   body,
+		writer: writer,
+	}
+}
+
+func (r *request) do(v interface{}) error {
+	if r.err != nil {
+		return r.err
+	}
+
+	err := r.writer.Close()
+	if err != nil {
+		return err
+	}
+
+	resp, err := http.Post(r.url, r.writer.FormDataContentType(), r.body)
+	if err != nil {
+		return err
+	}
+	defer func() { _ = resp.Body.Close() }()
+
+	b, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(b, v)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

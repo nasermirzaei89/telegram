@@ -1,10 +1,8 @@
 package telegram
 
 import (
-	"bytes"
-	"encoding/json"
-	"io/ioutil"
-	"net/http"
+	"fmt"
+	"strings"
 )
 
 type Update struct {
@@ -35,59 +33,56 @@ type GetUpdatesResponse struct {
 }
 
 func (b *bot) GetUpdates() GetUpdatesRequest {
-	return &getUpdatesRequest{
-		url: b.getURL("getUpdates"),
-	}
+	return &getUpdatesRequest{*newRequest(b.Token, "getUpdates")}
 }
 
 type getUpdatesRequest struct {
-	url  string
-	body struct {
-		Offset         *int     `json:"offset,omitempty"`
-		Limit          *int     `json:"limit,omitempty"`
-		Timeout        *int     `json:"timeout,omitempty"`
-		AllowedUpdates []string `json:"allowed_updates,omitempty"`
+	request
+}
+
+func (r *getUpdatesRequest) Offset(v int) GetUpdatesRequest {
+	err := r.writer.WriteField("offset", fmt.Sprintf("%d", v))
+	if err != nil {
+		r.err = err
 	}
-}
 
-func (r *getUpdatesRequest) Offset(offset int) GetUpdatesRequest {
-	r.body.Offset = &offset
 	return r
 }
 
-func (r *getUpdatesRequest) Limit(limit int) GetUpdatesRequest {
-	r.body.Limit = &limit
+func (r *getUpdatesRequest) Limit(v int) GetUpdatesRequest {
+	err := r.writer.WriteField("limit", fmt.Sprintf("%d", v))
+	if err != nil {
+		r.err = err
+	}
+
 	return r
 }
 
-func (r *getUpdatesRequest) Timeout(timeout int) GetUpdatesRequest {
-	r.body.Timeout = &timeout
+func (r *getUpdatesRequest) Timeout(v int) GetUpdatesRequest {
+	err := r.writer.WriteField("timeout", fmt.Sprintf("%d", v))
+	if err != nil {
+		r.err = err
+	}
+
 	return r
 }
 
-func (r *getUpdatesRequest) AllowedUpdates(allowedUpdates ...string) GetUpdatesRequest {
-	r.body.AllowedUpdates = allowedUpdates
+func (r *getUpdatesRequest) AllowedUpdates(v ...string) GetUpdatesRequest {
+	str := "[]"
+	if len(v) == 0 {
+		str = fmt.Sprintf(`["%s"]`, strings.Join(v, `","`))
+	}
+	err := r.writer.WriteField("allowed_updates", str)
+	if err != nil {
+		r.err = err
+	}
+
 	return r
 }
 
 func (r *getUpdatesRequest) Do() (*GetUpdatesResponse, error) {
-	b, err := json.Marshal(&r.body)
-	if err != nil {
-		return nil, err
-	}
-	resp, err := http.Post(r.url, "application/json", bytes.NewReader(b))
-	if err != nil {
-		return nil, err
-	}
-	defer func() { _ = resp.Body.Close() }()
-
-	b, err = ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err
-	}
-
 	var res GetUpdatesResponse
-	err = json.Unmarshal(b, &res)
+	err := r.request.do(&res)
 	if err != nil {
 		return nil, err
 	}
@@ -100,11 +95,65 @@ type SetWebhookRequest interface {
 	Certificate(InputFile) SetWebhookRequest
 	MaxConnections(string) SetWebhookRequest
 	AllowedUpdates(...string) SetWebhookRequest
-	Do() (bool, error)
+	Do() (*SetWebhookResponse, error)
+}
+
+type SetWebhookResponse struct {
+	Response
+	Result bool `json:"result,omitempty"`
 }
 
 func (b *bot) SetWebhook() SetWebhookRequest {
+	return &setWebhookRequest{*newRequest(b.Token, "setWebhook")}
+}
+
+type setWebhookRequest struct {
+	request
+}
+
+func (r *setWebhookRequest) URL(v string) SetWebhookRequest {
+	err := r.writer.WriteField("url", v)
+	if err != nil {
+		r.err = err
+	}
+
+	return r
+}
+
+func (r *setWebhookRequest) Certificate(v InputFile) SetWebhookRequest {
 	panic("implement me")
+}
+
+func (r *setWebhookRequest) MaxConnections(v string) SetWebhookRequest {
+	err := r.writer.WriteField("max_connections", v)
+	if err != nil {
+		r.err = err
+	}
+
+	return r
+}
+
+func (r *setWebhookRequest) AllowedUpdates(v ...string) SetWebhookRequest {
+	str := "[]"
+	if len(v) == 0 {
+		str = fmt.Sprintf(`["%s"]`, strings.Join(v, `","`))
+	}
+	err := r.writer.WriteField("allowed_updates", str)
+	if err != nil {
+		r.err = err
+	}
+
+	return r
+}
+
+func (r *setWebhookRequest) Do() (*SetWebhookResponse, error) {
+	var res SetWebhookResponse
+	err := r.do(&res)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
 }
 
 type DeleteWebhookRequest interface {
