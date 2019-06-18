@@ -99,10 +99,15 @@ func New(token string) Bot {
 }
 
 type Response struct {
-	OK          bool        `json:"ok"`
-	Description string      `json:"description,omitempty"`
-	Result      interface{} `json:"result,omitempty"`
-	ErrorCode   int         `json:"error_code,omitempty"`
+	OK          bool                `json:"ok"`
+	Description *string             `json:"description,omitempty"`
+	ErrorCode   *int                `json:"error_code,omitempty"`
+	Parameters  *ResponseParameters `json:"parameters,omitempty"`
+	Result      interface{}         `json:"result,omitempty"`
+}
+
+func (b *bot) getURL(methodName string) string {
+	return fmt.Sprintf("https://api.telegram.org/bot%s/%s", b.Token, methodName)
 }
 
 func (b *bot) request(methodName string, body io.Reader, res interface{}) error {

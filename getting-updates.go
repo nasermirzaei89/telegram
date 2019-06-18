@@ -1,5 +1,12 @@
 package telegram
 
+import (
+	"bytes"
+	"encoding/json"
+	"io/ioutil"
+	"net/http"
+)
+
 type Update struct {
 	UpdateID           int                 `json:"update_id"`
 	Message            *Message            `json:"message,omitempty"`
@@ -19,11 +26,73 @@ type GetUpdatesRequest interface {
 	Limit(int) GetUpdatesRequest
 	Timeout(int) GetUpdatesRequest
 	AllowedUpdates(...string) GetUpdatesRequest
-	Do() ([]Update, error)
+	Do() (*GetUpdatesResponse, error)
+}
+
+type GetUpdatesResponse struct {
+	Response
+	Result []Update `json:"result,omitempty"`
 }
 
 func (b *bot) GetUpdates() GetUpdatesRequest {
-	panic("implement me")
+	return &getUpdatesRequest{
+		url: b.getURL("getUpdates"),
+	}
+}
+
+type getUpdatesRequest struct {
+	url  string
+	body struct {
+		Offset         *int     `json:"offset,omitempty"`
+		Limit          *int     `json:"limit,omitempty"`
+		Timeout        *int     `json:"timeout,omitempty"`
+		AllowedUpdates []string `json:"allowed_updates,omitempty"`
+	}
+}
+
+func (r *getUpdatesRequest) Offset(offset int) GetUpdatesRequest {
+	r.body.Offset = &offset
+	return r
+}
+
+func (r *getUpdatesRequest) Limit(limit int) GetUpdatesRequest {
+	r.body.Limit = &limit
+	return r
+}
+
+func (r *getUpdatesRequest) Timeout(timeout int) GetUpdatesRequest {
+	r.body.Timeout = &timeout
+	return r
+}
+
+func (r *getUpdatesRequest) AllowedUpdates(allowedUpdates ...string) GetUpdatesRequest {
+	r.body.AllowedUpdates = allowedUpdates
+	return r
+}
+
+func (r *getUpdatesRequest) Do() (*GetUpdatesResponse, error) {
+	b, err := json.Marshal(&r.body)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := http.Post(r.url, "application/json", bytes.NewReader(b))
+	if err != nil {
+		return nil, err
+	}
+	defer func() { _ = resp.Body.Close() }()
+
+	b, err = ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var res GetUpdatesResponse
+	err = json.Unmarshal(b, &res)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
 }
 
 type SetWebhookRequest interface {
