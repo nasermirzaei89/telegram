@@ -1,11 +1,20 @@
 package telegram
 
-type GetMeRequest interface {
-	Do() (*User, error)
+type GetMeResponse struct {
+	Response
+	Result *User `json:"result,omitempty"`
 }
 
-func (b *bot) GetMe() GetMeRequest {
-	panic("implement me")
+func (b *bot) GetMe() (*GetMeResponse, error) {
+	req := newRequest(b.Token, "getMe")
+
+	var res GetMeResponse
+	err := req.do(&res)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
 }
 
 type SendMessageRequest interface {

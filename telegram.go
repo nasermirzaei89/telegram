@@ -8,7 +8,7 @@ type Bot interface {
 	GetWebhookInfo() (*GetWebhookInfoResponse, error)
 
 	// available methods
-	GetMe() GetMeRequest
+	GetMe() (*GetMeResponse, error)
 	SendMessage() SendMessageRequest
 	ForwardMessage() ForwardMessageRequest
 	SendPhoto() SendPhotoRequest
