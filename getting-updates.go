@@ -157,19 +157,57 @@ func (r *setWebhookRequest) Do() (*SetWebhookResponse, error) {
 }
 
 type DeleteWebhookRequest interface {
-	Do() (bool, error)
+	Do() (*DeleteWebhookResponse, error)
+}
+
+type DeleteWebhookResponse struct {
+	Response
+	Result bool `json:"result,omitempty"`
 }
 
 func (b *bot) DeleteWebhook() DeleteWebhookRequest {
-	panic("implement me")
+	return &deleteWebhookRequest{*newRequest(b.Token, "deleteWebhook")}
+}
+
+type deleteWebhookRequest struct {
+	request
+}
+
+func (r *deleteWebhookRequest) Do() (*DeleteWebhookResponse, error) {
+	var res DeleteWebhookResponse
+	err := r.do(&res)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
 }
 
 type GetWebhookInfoRequest interface {
-	Do() (*WebhookInfo, error)
+	Do() (*GetWebhookInfoResponse, error)
+}
+
+type GetWebhookInfoResponse struct {
+	Response
+	Result *WebhookInfo `json:"result,omitempty"`
 }
 
 func (b *bot) GetWebhookInfo() GetWebhookInfoRequest {
-	panic("implement me")
+	return &getWebhookInfoRequest{*newRequest(b.Token, "getWebhookInfo")}
+}
+
+type getWebhookInfoRequest struct {
+	request
+}
+
+func (r *getWebhookInfoRequest) Do() (*GetWebhookInfoResponse, error) {
+	var res GetWebhookInfoResponse
+	err := r.do(&res)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
 }
 
 type WebhookInfo struct {
