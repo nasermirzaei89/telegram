@@ -1,24 +1,63 @@
 package telegram
 
 type SendInvoiceResponse interface {
+	Response
+	GetMessage() *Message
+}
+
+type sendInvoiceResponse struct {
+	response
+	Result *Message `json:"result,omitempty"`
+}
+
+func (r *sendInvoiceResponse) GetMessage() *Message {
+	return r.Result
 }
 
 func (b *bot) SendInvoice(options ...Option) (SendInvoiceResponse, error) {
-	panic("implement me")
+	var res sendInvoiceResponse
+	err := doRequest(b.Token, "sendInvoice", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
 }
 
 type AnswerShippingQueryResponse interface {
+	Response
+}
+
+type answerShippingQueryResponse struct {
+	response
 }
 
 func (b *bot) AnswerShippingQuery(options ...Option) (AnswerShippingQueryResponse, error) {
-	panic("implement me")
+	var res answerShippingQueryResponse
+	err := doRequest(b.Token, "answerShippingQuery", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
 }
 
 type AnswerPreCheckoutQueryResponse interface {
+	Response
+}
+
+type answerPreCheckoutQueryResponse struct {
+	response
 }
 
 func (b *bot) AnswerPreCheckoutQuery(options ...Option) (AnswerPreCheckoutQueryResponse, error) {
-	panic("implement me")
+	var res answerPreCheckoutQueryResponse
+	err := doRequest(b.Token, "answerPreCheckoutQuery", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
 }
 
 type LabeledPrice struct {
