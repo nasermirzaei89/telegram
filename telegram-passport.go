@@ -31,10 +31,21 @@ type EncryptedCredentials struct {
 }
 
 type SetPassportDataErrorsResponse interface {
+	Response
+}
+
+type setPassportDataErrorsResponse struct {
+	response
 }
 
 func (b *bot) SetPassportDataErrors(options ...Option) (SetPassportDataErrorsResponse, error) {
-	panic("implement me")
+	var res setPassportDataErrorsResponse
+	err := doRequest(b.Token, "setPassportDataErrors", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
 }
 
 type PassportElementError interface{}
