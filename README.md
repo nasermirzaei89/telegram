@@ -25,16 +25,15 @@ import (
 
 func main() {
 	bot := telegram.New(os.Getenv("TOKEN"))
-    res, err := bot.GetUpdates()
-    if err != nil {
-        log.Fatalln(err)
-    }
-
-    if res.IsOK() {
-        log.Printf("%+v", res.GetUpdates())
-    } else {
-        log.Printf("%d: %s", res.Error().GetErrorCode(), res.Error().GetDescription())
-    }
+	res, err := bot.GetUpdates()
+	if err != nil {
+		log.Fatalln(err)
+	}
+	if res.IsOK() {
+		log.Printf("%+v", res.GetUpdates())
+	} else {
+		log.Printf("%d: %s", res.Error().GetErrorCode(), res.Error().GetDescription())
+	}
 }
 ```
 
