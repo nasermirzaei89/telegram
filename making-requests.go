@@ -7,15 +7,68 @@ import (
 	"io/ioutil"
 	"mime/multipart"
 	"net/http"
-	"strings"
 )
 
-type Response struct {
+type Response interface {
+	IsOK() bool
+	Error() ResponseError
+}
+
+type response struct {
 	OK          bool                `json:"ok"`
 	Description *string             `json:"description,omitempty"`
 	ErrorCode   *int                `json:"error_code,omitempty"`
 	Parameters  *ResponseParameters `json:"parameters,omitempty"`
 	Result      interface{}         `json:"result,omitempty"`
+}
+
+func (r *response) IsOK() bool {
+	return r.OK
+}
+
+func (r *response) Error() ResponseError {
+	if !r.IsOK() {
+		return &responseError{
+			description: r.Description,
+			errorCode: r.ErrorCode,
+			parameters:r.Parameters,
+		}
+	}
+
+	return nil
+}
+
+type ResponseError interface {
+	GetDescription() string
+	GetErrorCode() int
+	GetParameters() *ResponseParameters
+}
+
+type responseError struct {
+	description *string
+	errorCode   *int
+	parameters  *ResponseParameters
+}
+
+func (r *responseError) GetDescription() string {
+	if r.description != nil {
+
+		return *r.description
+	}
+
+	return ""
+}
+
+func (r *responseError) GetErrorCode() int {
+	if r.errorCode != nil {
+		return *r.errorCode
+	}
+
+	return 0
+}
+
+func (r *responseError) GetParameters() *ResponseParameters {
+	return r.parameters
 }
 
 type request struct {
@@ -25,51 +78,20 @@ type request struct {
 	err    error
 }
 
-func newRequest(token, methodName string) *request {
+func doRequest(token, methodName string, res interface{}, options ...Option) error {
 	body := &bytes.Buffer{}
 	writer := multipart.NewWriter(body)
-	return &request{
+	req := request{
 		url:    fmt.Sprintf("https://api.telegram.org/bot%s/%s", token, methodName),
 		body:   body,
 		writer: writer,
 	}
-}
 
-func (r *request) setString(k, v string)  {
-	err := r.writer.WriteField(k, v)
-	if err != nil {
-		r.err = err
+	for i := range options {
+		options[i](&req)
 	}
-}
 
-func (r *request) setInt(k string, v int)  {
-	err := r.writer.WriteField(k, fmt.Sprintf("%d", v))
-	if err != nil {
-		r.err = err
-	}
-}
-
-func (r *request) setStrings(k string, v ...string)  {
-	str := "[]"
-	if len(v) == 0 {
-		str = fmt.Sprintf(`["%s"]`, strings.Join(v, `","`))
-	}
-	err := r.writer.WriteField(k, str)
-	if err != nil {
-		r.err = err
-	}
-}
-
-func (r *request) setObject(k string, v interface{})  {
-	b, err := json.Marshal(v)
-	if err != nil {
-		r.err = err
-		return
-	}
-	err = r.writer.WriteField(k, string(b))
-	if err != nil {
-		r.err = err
-	}
+	return (&req).do(&res)
 }
 
 func (r *request) do(v interface{}) error {

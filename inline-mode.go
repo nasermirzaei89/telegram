@@ -8,18 +8,10 @@ type InlineQuery struct {
 	Offset   string    `json:"offset"`
 }
 
-type AnswerInlineQueryRequest interface {
-	InlineQueryID(string) AnswerInlineQueryRequest
-	Results([]InlineQueryResult) AnswerInlineQueryRequest
-	CacheTime(int) AnswerInlineQueryRequest
-	IsPersonal() AnswerInlineQueryRequest
-	NextOffset(string) AnswerInlineQueryRequest
-	SwitchPMText(string) AnswerInlineQueryRequest
-	SwitchPMParameter(string) AnswerInlineQueryRequest
-	Do() (bool, error)
+type AnswerInlineQueryResponse interface {
 }
 
-func (b *bot) AnswerInlineQuery() AnswerInlineQueryRequest {
+func (b *bot) AnswerInlineQuery(options ...Option) (AnswerInlineQueryResponse, error) {
 	panic("implement me")
 }
 

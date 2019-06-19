@@ -1,56 +1,23 @@
 package telegram
 
-type SendInvoiceRequest interface {
-	ChatID(int) SendInvoiceRequest
-	Title(string) SendInvoiceRequest
-	Description(string) SendInvoiceRequest
-	Payload(string) SendInvoiceRequest
-	ProviderToken(string) SendInvoiceRequest
-	StartParameter(string) SendInvoiceRequest
-	Currency(string) SendInvoiceRequest
-	Prices([]LabeledPrice) SendInvoiceRequest
-	ProviderData(string) SendInvoiceRequest
-	PhotoURL(string) SendInvoiceRequest
-	PhotoSize(int) SendInvoiceRequest
-	PhotoWidth(int) SendInvoiceRequest
-	PhotoHeight(int) SendInvoiceRequest
-	NeedName() SendInvoiceRequest
-	NeedPhoneNumber() SendInvoiceRequest
-	NeedEmail() SendInvoiceRequest
-	NeedShippingAddress() SendInvoiceRequest
-	SendPhoneNumberToProvider() SendInvoiceRequest
-	SendEmailToProvider() SendInvoiceRequest
-	IsFlexible() SendInvoiceRequest
-	DisableNotification() SendInvoiceRequest
-	ReplyToMessageID(int) SendInvoiceRequest
-	ReplyMarkup(InlineKeyboardMarkup) SendInvoiceRequest
-	Do() (*Message, error)
+type SendInvoiceResponse interface {
 }
 
-func (b *bot) SendInvoice() SendInvoiceRequest {
+func (b *bot) SendInvoice(options ...Option) (SendInvoiceResponse, error) {
 	panic("implement me")
 }
 
-type AnswerShippingQueryRequest interface {
-	ShippingQueryID(string) AnswerShippingQueryRequest
-	OK() AnswerShippingQueryRequest
-	ShippingOptions([]ShippingOption) AnswerShippingQueryRequest
-	ErrorMessage(string) AnswerShippingQueryRequest
-	Do() (bool, error)
+type AnswerShippingQueryResponse interface {
 }
 
-func (b *bot) AnswerShippingQuery() AnswerShippingQueryRequest {
+func (b *bot) AnswerShippingQuery(options ...Option) (AnswerShippingQueryResponse, error) {
 	panic("implement me")
 }
 
-type AnswerPreCheckoutQueryRequest interface {
-	PreCheckoutQueryID(string) AnswerPreCheckoutQueryRequest
-	OK() AnswerPreCheckoutQueryRequest
-	ErrorMessage(string) AnswerPreCheckoutQueryRequest
-	Do() (bool, error)
+type AnswerPreCheckoutQueryResponse interface {
 }
 
-func (b *bot) AnswerPreCheckoutQuery() AnswerPreCheckoutQueryRequest {
+func (b *bot) AnswerPreCheckoutQuery(options ...Option) (AnswerPreCheckoutQueryResponse, error) {
 	panic("implement me")
 }
 

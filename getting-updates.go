@@ -14,22 +14,23 @@ type Update struct {
 	Poll               *Poll               `json:"poll,omitempty"`
 }
 
-type GetUpdatesOption func(*request)
-
-type GetUpdatesResponse struct {
+type GetUpdatesResponse interface {
 	Response
+	GetUpdates() []Update
+}
+
+type getUpdatesResponse struct {
+	response
 	Result []Update `json:"result,omitempty"`
 }
 
-func (b *bot) GetUpdates(options ...GetUpdatesOption) (*GetUpdatesResponse, error) {
-	req := newRequest(b.Token, "getUpdates")
+func (r *getUpdatesResponse) GetUpdates() []Update {
+	return r.Result
+}
 
-	for i := range options {
-		options[i](req)
-	}
-
-	var res GetUpdatesResponse
-	err := req.do(&res)
+func (b *bot) GetUpdates(options ...Option) (GetUpdatesResponse, error) {
+	var res getUpdatesResponse
+	err := doRequest(b.Token, "getUpdates", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -37,46 +38,17 @@ func (b *bot) GetUpdates(options ...GetUpdatesOption) (*GetUpdatesResponse, erro
 	return &res, nil
 }
 
-func GetUpdatesOffset(v int) GetUpdatesOption {
-	return func(r *request) {
-		r.setInt("offset", v)
-	}
-}
-
-func GetUpdatesLimit(v int) GetUpdatesOption {
-	return func(r *request) {
-		r.setInt("limit", v)
-	}
-}
-
-func GetUpdatesTimeout(v int) GetUpdatesOption {
-	return func(r *request) {
-		r.setInt("timeout", v)
-	}
-}
-
-func GetUpdatesAllowedUpdates(v ...string) GetUpdatesOption {
-	return func(r *request) {
-		r.setStrings("allowed_updates", v...)
-	}
-}
-
-type SetWebhookOption func(*request)
-
-type SetWebhookResponse struct {
+type SetWebhookResponse interface {
 	Response
-	Result bool `json:"result,omitempty"`
 }
 
-func (b *bot) SetWebhook(options ...SetWebhookOption) (*SetWebhookResponse, error) {
-	req := newRequest(b.Token, "setWebhook")
+type setWebhookResponse struct {
+	response
+}
 
-	for i := range options {
-		options[i](req)
-	}
-
-	var res SetWebhookResponse
-	err := req.do(&res)
+func (b *bot) SetWebhook(options ...Option) (SetWebhookResponse, error) {
+	var res setWebhookResponse
+	err := doRequest(b.Token, "setWebhook", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -84,40 +56,17 @@ func (b *bot) SetWebhook(options ...SetWebhookOption) (*SetWebhookResponse, erro
 	return &res, nil
 }
 
-func SetWebhookURL(v string) SetWebhookOption {
-	return func(r *request) {
-		r.setString("url", v)
-	}
-}
-
-func SetWebhookCertificate(v InputFile) SetWebhookOption {
-	return func(r *request) {
-		panic("implement me")
-	}
-}
-
-func SetWebhookMaxConnections(v string) SetWebhookOption {
-	return func(r *request) {
-		r.setString("max_connections", v)
-	}
-}
-
-func SetWebhookAllowedUpdates(v ...string) SetWebhookOption {
-	return func(r *request) {
-		r.setStrings("allowed_updates", v...)
-	}
-}
-
-type DeleteWebhookResponse struct {
+type DeleteWebhookResponse interface {
 	Response
-	Result bool `json:"result,omitempty"`
 }
 
-func (b *bot) DeleteWebhook() (*DeleteWebhookResponse, error) {
-	req := newRequest(b.Token, "deleteWebhook")
+type deleteWebhookResponse struct {
+	response
+}
 
-	var res DeleteWebhookResponse
-	err := req.do(&res)
+func (b *bot) DeleteWebhook() (DeleteWebhookResponse, error) {
+	var res deleteWebhookResponse
+	err := doRequest(b.Token, "deleteWebhook", &res)
 	if err != nil {
 		return nil, err
 	}
@@ -125,16 +74,23 @@ func (b *bot) DeleteWebhook() (*DeleteWebhookResponse, error) {
 	return &res, nil
 }
 
-type GetWebhookInfoResponse struct {
+type GetWebhookInfoResponse interface {
 	Response
+	GetWebhookInfo() *WebhookInfo
+}
+
+type getWebhookInfoResponse struct {
+	response
 	Result *WebhookInfo `json:"result,omitempty"`
 }
 
-func (b *bot) GetWebhookInfo() (*GetWebhookInfoResponse, error) {
-	req := newRequest(b.Token, "getWebhookInfo")
+func (r *getWebhookInfoResponse) GetWebhookInfo() *WebhookInfo {
+	return r.Result
+}
 
-	var res GetWebhookInfoResponse
-	err := req.do(&res)
+func (b *bot) GetWebhookInfo() (GetWebhookInfoResponse, error) {
+	var res getWebhookInfoResponse
+	err := doRequest(b.Token, "getWebhookInfo", &res)
 	if err != nil {
 		return nil, err
 	}

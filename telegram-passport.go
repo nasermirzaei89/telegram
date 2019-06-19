@@ -30,13 +30,10 @@ type EncryptedCredentials struct {
 	Secret string `json:"secret"`
 }
 
-type SetPassportDataErrorsRequest interface {
-	UserID(int) SetPassportDataErrorsRequest
-	Errors([]PassportElementError) SetPassportDataErrorsRequest
-	Do() (bool, error)
+type SetPassportDataErrorsResponse interface {
 }
 
-func (b *bot) SetPassportDataErrors() SetPassportDataErrorsRequest {
+func (b *bot) SetPassportDataErrors(options ...Option) (SetPassportDataErrorsResponse, error) {
 	panic("implement me")
 }
 

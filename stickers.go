@@ -25,88 +25,56 @@ type MaskPosition struct {
 	Scale  float32 `json:"scale"`
 }
 
-type SendStickerRequest interface {
-	ChatID(int) SendStickerRequest
-	ChatUsername(string) SendStickerRequest
-	Sticker(InputFile) SendStickerRequest
-	StickerFileID(string) SendStickerRequest
-	StickerURL(string) SendStickerRequest
-	DisableNotification() SendStickerRequest
-	ReplyToMessageID(int) SendStickerRequest
-	ReplyMarkup(interface{}) SendStickerRequest
-	Do() (*Message, error)
+type SendStickerResponse interface {
 }
 
-func (b *bot) SendSticker() SendStickerRequest {
+func (b *bot) SendSticker(options ...Option) (SendStickerResponse, error) {
 	panic("implement me")
 }
 
-type GetStickerSetRequest interface {
-	Name(string) GetStickerSetRequest
+type GetStickerSetResponse interface {
+	Name(string) GetStickerSetResponse
 	Do() (*StickerSet, error)
 }
 
-func (b *bot) GetStickerSet() GetStickerSetRequest {
+func (b *bot) GetStickerSet(options ...Option) (GetStickerSetResponse, error) {
 	panic("implement me")
 }
 
-type UploadStickerFileRequest interface {
-	UserID(int) UploadStickerFileRequest
-	PNGSticker(InputFile) UploadStickerFileRequest
+type UploadStickerFileResponse interface {
+	UserID(int) UploadStickerFileResponse
+	PNGSticker(InputFile) UploadStickerFileResponse
 	Do() (*File, error)
 }
 
-func (b *bot) UploadStickerFile() UploadStickerFileRequest {
+func (b *bot) UploadStickerFile(options ...Option) (UploadStickerFileResponse, error) {
 	panic("implement me")
 }
 
-type CreateNewStickerSetRequest interface {
-	UserID(int) CreateNewStickerSetRequest
-	Name(string) CreateNewStickerSetRequest
-	Title(string) CreateNewStickerSetRequest
-	PNGSticker(InputFile) CreateNewStickerSetRequest
-	PNGStickerFileID(string) CreateNewStickerSetRequest
-	PNGStickerURL(string) CreateNewStickerSetRequest
-	Emojis(string) CreateNewStickerSetRequest
-	ContainsMasks() CreateNewStickerSetRequest
-	MaskPosition(MaskPosition) CreateNewStickerSetRequest
-	Do() (bool, error)
+type CreateNewStickerSetResponse interface {
 }
 
-func (b *bot) CreateNewStickerSet() CreateNewStickerSetRequest {
+func (b *bot) CreateNewStickerSet(options ...Option) (CreateNewStickerSetResponse, error) {
 	panic("implement me")
 }
 
-type AddStickerToSetRequest interface {
-	UserID(int) AddStickerToSetRequest
-	Name(string) AddStickerToSetRequest
-	PNGSticker(InputFile) AddStickerToSetRequest
-	PNGStickerFileID(string) AddStickerToSetRequest
-	PNGStickerURL(string) AddStickerToSetRequest
-	Emojis(string) AddStickerToSetRequest
-	MaskPosition(MaskPosition) AddStickerToSetRequest
-	Do() (bool, error)
+type AddStickerToSetResponse interface {
 }
 
-func (b *bot) AddStickerToSet() AddStickerToSetRequest {
+func (b *bot) AddStickerToSet(options ...Option) (AddStickerToSetResponse, error) {
 	panic("implement me")
 }
 
-type SetStickerPositionInSetRequest interface {
-	Sticker(string) SetStickerPositionInSetRequest
-	Position(int) SetStickerPositionInSetRequest
-	Do() (bool, error)
+type SetStickerPositionInSetResponse interface {
 }
 
-func (b *bot) SetStickerPositionInSet() SetStickerPositionInSetRequest {
+func (b *bot) SetStickerPositionInSet(options ...Option) (SetStickerPositionInSetResponse, error) {
 	panic("implement me")
 }
 
-type DeleteStickerFromSetRequest interface {
-	Sticker(string) DeleteStickerFromSetRequest
-	Do() (bool, error)
+type DeleteStickerFromSetResponse interface {
 }
 
-func (b *bot) DeleteStickerFromSet() DeleteStickerFromSetRequest {
+func (b *bot) DeleteStickerFromSet(options ...Option) (DeleteStickerFromSetResponse, error) {
 	panic("implement me")
 }

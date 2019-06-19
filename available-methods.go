@@ -1,15 +1,22 @@
 package telegram
 
-type GetMeResponse struct {
+type GetMeResponse interface {
 	Response
+	GetUser() *User
+}
+
+type getMeResponse struct {
+	response
 	Result *User `json:"result,omitempty"`
 }
 
-func (b *bot) GetMe() (*GetMeResponse, error) {
-	req := newRequest(b.Token, "getMe")
+func (r *getMeResponse) GetUser() *User {
+	return r.Result
+}
 
-	var res GetMeResponse
-	err := req.do(&res)
+func (b *bot) GetMe() (GetMeResponse, error) {
+	var res getMeResponse
+	err := doRequest(b.Token, "getMe", &res)
 	if err != nil {
 		return nil, err
 	}
@@ -17,536 +24,268 @@ func (b *bot) GetMe() (*GetMeResponse, error) {
 	return &res, nil
 }
 
-type SendMessageRequest interface {
-	ChatID(int) SendMessageRequest
-	ChatUsername(string) SendMessageRequest
-	Text(string) SendMessageRequest
-	ParseMode(string) SendMessageRequest
-	DisableWebPagePreview() SendMessageRequest
-	DisableNotification() SendMessageRequest
-	ReplyToMessageID(int) SendMessageRequest
-	ReplyMarkup(interface{}) SendMessageRequest
-	Do() (*Message, error)
+type SendMessageResponse interface {
 }
 
-func (b *bot) SendMessage() SendMessageRequest {
+func (b *bot) SendMessage(options ...Option) (SendMessageResponse, error) {
 	panic("implement me")
 }
 
-type ForwardMessageRequest interface {
-	ChatID(int) ForwardMessageRequest
-	ChatUsername(string) ForwardMessageRequest
-	FromChatID(int) ForwardMessageRequest
-	FromChatUsername(string) ForwardMessageRequest
-	DisableNotification() ForwardMessageRequest
-	MessageID(int) ForwardMessageRequest
-	Do() (*Message, error)
+type ForwardMessageResponse interface {
 }
 
-func (b *bot) ForwardMessage() ForwardMessageRequest {
+func (b *bot) ForwardMessage(options ...Option) (ForwardMessageResponse, error) {
 	panic("implement me")
 }
 
-type SendPhotoRequest interface {
-	ChatID(int) SendPhotoRequest
-	ChatUsername(string) SendPhotoRequest
-	Photo(InputFile) SendPhotoRequest
-	PhotoFileID(string) SendPhotoRequest
-	PhotoURL(string) SendPhotoRequest
-	Caption(string) SendPhotoRequest
-	ParseMode(string) SendPhotoRequest
-	DisableNotification() SendPhotoRequest
-	ReplyToMessageID(int) SendPhotoRequest
-	ReplyMarkup(interface{}) SendPhotoRequest
-	Do() (*Message, error)
+type SendPhotoResponse interface {
 }
 
-func (b *bot) SendPhoto() SendPhotoRequest {
+func (b *bot) SendPhoto(options ...Option) (SendPhotoResponse , error){
 	panic("implement me")
 }
 
-type SendAudioRequest interface {
-	ChatID(int) SendAudioRequest
-	ChatUsername(string) SendAudioRequest
-	Audio(InputFile) SendAudioRequest
-	AudioFileID(string) SendAudioRequest
-	AudioURL(string) SendAudioRequest
-	Caption(string) SendAudioRequest
-	ParseMode(string) SendAudioRequest
-	Duration(int) SendAudioRequest
-	Performer(string) SendAudioRequest
-	Title(string) SendAudioRequest
-	Thumb(InputFile) SendAudioRequest
-	ThumbFileName(string) SendAudioRequest
-	DisableNotification() SendAudioRequest
-	ReplyToMessageID(int) SendAudioRequest
-	ReplyMarkup(interface{}) SendAudioRequest
-	Do() (*Message, error)
+type SendAudioResponse interface {
 }
 
-func (b *bot) SendAudio() SendAudioRequest {
+func (b *bot) SendAudio(options ...Option) (SendAudioResponse, error) {
 	panic("implement me")
 }
 
-type SendDocumentRequest interface {
-	ChatID(int) SendDocumentRequest
-	ChatUsername(string) SendDocumentRequest
-	Document(InputFile) SendDocumentRequest
-	DocumentFileID(string) SendDocumentRequest
-	DocumentURL(string) SendDocumentRequest
-	Thumb(InputFile) SendDocumentRequest
-	ThumbFileName(string) SendDocumentRequest
-	Caption(string) SendDocumentRequest
-	ParseMode(string) SendDocumentRequest
-	DisableNotification() SendDocumentRequest
-	ReplyToMessageID(int) SendDocumentRequest
-	ReplyMarkup(interface{}) SendDocumentRequest
-	Do() (*Message, error)
+type SendDocumentResponse interface {
 }
 
-func (b *bot) SendDocument() SendDocumentRequest {
+func (b *bot) SendDocument(options ...Option) (SendDocumentResponse, error) {
 	panic("implement me")
 }
 
-type SendVideoRequest interface {
-	ChatID(int) SendVideoRequest
-	ChatUsername(string) SendVideoRequest
-	Video(InputFile) SendVideoRequest
-	VideoFileID(string) SendVideoRequest
-	VideoURL(string) SendVideoRequest
-	Duration(int) SendVideoRequest
-	Width(int) SendVideoRequest
-	Height(int) SendVideoRequest
-	Thumb(InputFile) SendVideoRequest
-	ThumbFileName(string) SendVideoRequest
-	Caption(string) SendVideoRequest
-	ParseMode(string) SendVideoRequest
-	SupportsStreaming() SendVideoRequest
-	DisableNotification() SendVideoRequest
-	ReplyToMessageID(int) SendVideoRequest
-	ReplyMarkup(interface{}) SendVideoRequest
-	Do() (*Message, error)
+type SendVideoResponse interface {
 }
 
-func (b *bot) SendVideo() SendVideoRequest {
+func (b *bot) SendVideo(options ...Option) (SendVideoResponse, error) {
 	panic("implement me")
 }
 
-type SendAnimationRequest interface {
-	ChatID(int) SendAnimationRequest
-	ChatUsername(string) SendAnimationRequest
-	Animation(InputFile) SendAnimationRequest
-	AnimationFileID(string) SendAnimationRequest
-	AnimationURL(string) SendAnimationRequest
-	Duration(int) SendAnimationRequest
-	Width(int) SendAnimationRequest
-	Height(int) SendAnimationRequest
-	Thumb(InputFile) SendAnimationRequest
-	ThumbFileName(string) SendAnimationRequest
-	Caption(string) SendAnimationRequest
-	ParseMode(string) SendAnimationRequest
-	DisableNotification() SendAnimationRequest
-	ReplyToMessageID(int) SendAnimationRequest
-	ReplyMarkup(interface{}) SendAnimationRequest
-	Do() (*Message, error)
+type SendAnimationResponse interface {
 }
 
-func (b *bot) SendAnimation() SendAnimationRequest {
+func (b *bot) SendAnimation(options ...Option) (SendAnimationResponse, error) {
 	panic("implement me")
 }
 
-type SendVoiceRequest interface {
-	ChatID(int) SendVoiceRequest
-	ChatUsername(string) SendVoiceRequest
-	Voice(InputFile) SendVoiceRequest
-	VoiceFileID(string) SendVoiceRequest
-	VoiceURL(string) SendVoiceRequest
-	Caption(string) SendVoiceRequest
-	ParseMode(string) SendVoiceRequest
-	Duration(int) SendVoiceRequest
-	DisableNotification() SendVoiceRequest
-	ReplyToMessageID(int) SendVoiceRequest
-	ReplyMarkup(interface{}) SendVoiceRequest
-	Do() (*Message, error)
+type SendVoiceResponse interface {
 }
 
-func (b *bot) SendVoice() SendVoiceRequest {
+func (b *bot) SendVoice(options ...Option) (SendVoiceResponse, error) {
 	panic("implement me")
 }
 
-type SendVideoNoteRequest interface {
-	ChatID(int) SendVideoNoteRequest
-	ChatUsername(string) SendVideoNoteRequest
-	VideoNote(InputFile) SendVideoNoteRequest
-	VideoNoteFileID(string) SendVideoNoteRequest
-	VideoNoteURL(string) SendVideoNoteRequest
-	Duration(int) SendVideoNoteRequest
-	Length(int) SendVideoNoteRequest
-	Thumb(InputFile) SendVideoNoteRequest
-	ThumbFileName(string) SendVideoNoteRequest
-	DisableNotification() SendVideoNoteRequest
-	ReplyToMessageID(int) SendVideoNoteRequest
-	ReplyMarkup(interface{}) SendVideoNoteRequest
-	Do() (*Message, error)
+type SendVideoNoteResponse interface {
 }
 
-func (b *bot) SendVideoNote() SendVideoNoteRequest {
+func (b *bot) SendVideoNote(options ...Option) (SendVideoNoteResponse, error) {
 	panic("implement me")
 }
 
-type SendMediaGroupRequest interface {
-	ChatID(int) SendMediaGroupRequest
-	ChatUsername(string) SendMediaGroupRequest
-	Media([]InputMedia) SendMediaGroupRequest
-	DisableNotification() SendMediaGroupRequest
-	ReplyToMessageID(int) SendMediaGroupRequest
-	Do() (*Message, error)
+type SendMediaGroupResponse interface {
 }
 
-func (b *bot) SendMediaGroup() SendMediaGroupRequest {
+func (b *bot) SendMediaGroup(options ...Option) (SendMediaGroupResponse, error) {
 	panic("implement me")
 }
 
-type SendLocationRequest interface {
-	ChatID(int) SendLocationRequest
-	ChatUsername(string) SendLocationRequest
-	Latitude(float32) SendLocationRequest
-	Longitude(float32) SendLocationRequest
-	LivePeriod(int) SendLocationRequest
-	DisableNotification() SendLocationRequest
-	ReplyToMessageID(int) SendLocationRequest
-	ReplyMarkup(interface{}) SendLocationRequest
-	Do() (*Message, error)
+type SendLocationResponse interface {
 }
 
-func (b *bot) SendLocation() SendLocationRequest {
+func (b *bot) SendLocation(options ...Option) (SendLocationResponse, error) {
 	panic("implement me")
 }
 
-type EditMessageLiveLocationRequest interface {
-	ChatID(int) EditMessageLiveLocationRequest
-	ChatUsername(string) EditMessageLiveLocationRequest
-	MessageID(int) EditMessageLiveLocationRequest
-	InlineMessageID(string) EditMessageLiveLocationRequest
-	Latitude(float32) EditMessageLiveLocationRequest
-	Longitude(float32) EditMessageLiveLocationRequest
-	ReplyMarkup(interface{}) EditMessageLiveLocationRequest
-	Do() (*Message, error)
+type EditMessageLiveLocationResponse interface {
 }
 
-func (b *bot) EditMessageLiveLocation() EditMessageLiveLocationRequest {
+func (b *bot) EditMessageLiveLocation(options ...Option) (EditMessageLiveLocationResponse, error) {
 	panic("implement me")
 }
 
-type StopMessageLiveLocationRequest interface {
-	ChatID(int) StopMessageLiveLocationRequest
-	ChatUsername(string) StopMessageLiveLocationRequest
-	MessageID(int) StopMessageLiveLocationRequest
-	InlineMessageID(string) StopMessageLiveLocationRequest
-	ReplyMarkup(interface{}) StopMessageLiveLocationRequest
-	Do() (*Message, error)
+type StopMessageLiveLocationResponse interface {
 }
 
-func (b *bot) StopMessageLiveLocation() StopMessageLiveLocationRequest {
+func (b *bot) StopMessageLiveLocation(options ...Option) (StopMessageLiveLocationResponse, error) {
 	panic("implement me")
 }
 
-type SendVenueRequest interface {
-	ChatID(int) SendVenueRequest
-	ChatUsername(string) SendVenueRequest
-	Latitude(float32) SendVenueRequest
-	Longitude(float32) SendVenueRequest
-	Title(string) SendVenueRequest
-	Address(string) SendVenueRequest
-	FoursquareID(string) SendVenueRequest
-	FoursquareType(string) SendVenueRequest
-	DisableNotification() SendVenueRequest
-	ReplyToMessageID(int) SendVenueRequest
-	ReplyMarkup(interface{}) SendVenueRequest
-	Do() (*Message, error)
+type SendVenueResponse interface {
 }
 
-func (b *bot) SendVenue() SendVenueRequest {
+func (b *bot) SendVenue(options ...Option) (SendVenueResponse, error) {
 	panic("implement me")
 }
 
-type SendContactRequest interface {
-	ChatID(int) SendContactRequest
-	ChatUsername(string) SendContactRequest
-	PhoneNumber(string) SendContactRequest
-	FirstName(string) SendContactRequest
-	LastName(string) SendContactRequest
-	VCard(string) SendContactRequest
-	DisableNotification() SendContactRequest
-	ReplyToMessageID(int) SendContactRequest
-	ReplyMarkup(interface{}) SendContactRequest
-	Do() (*Message, error)
+type SendContactResponse interface {
 }
 
-func (b *bot) SendContact() SendContactRequest {
+func (b *bot) SendContact(options ...Option) (SendContactResponse, error) {
 	panic("implement me")
 }
 
-type SendPollRequest interface {
-	ChatID(int) SendPollRequest
-	ChatUsername(string) SendPollRequest
-	Question(string) SendPollRequest
-	Options(...string) SendPollRequest
-	DisableNotification() SendPollRequest
-	ReplyToMessageID(int) SendPollRequest
-	ReplyMarkup(interface{}) SendPollRequest
-	Do() (*Message, error)
+type SendPollResponse interface {
 }
 
-func (b *bot) SendPoll() SendPollRequest {
+func (b *bot) SendPoll(options ...Option) (SendPollResponse, error) {
 	panic("implement me")
 }
 
-type SendChatActionRequest interface {
-	ChatID(int) SendChatActionRequest
-	ChatUsername(string) SendChatActionRequest
-	Action(string) SendChatActionRequest
-	Do() (*Message, error)
+type SendChatActionResponse interface {
 }
 
-func (b *bot) SendChatAction() SendChatActionRequest {
+func (b *bot) SendChatAction(options ...Option) (SendChatActionResponse, error) {
 	panic("implement me")
 }
 
-type GetUserProfilePhotosRequest interface {
-	UserID(int) GetUserProfilePhotosRequest
-	Offset(int) GetUserProfilePhotosRequest
-	Limit(int) GetUserProfilePhotosRequest
-	Do() (UserProfilePhotos, error)
+type GetUserProfilePhotosResponse interface {
 }
 
-func (b *bot) GetUserProfilePhotos() GetUserProfilePhotosRequest {
+func (b *bot) GetUserProfilePhotos(options ...Option) (GetUserProfilePhotosResponse, error) {
 	panic("implement me")
 }
 
-type GetFileRequest interface {
-	FileID(string) GetFileRequest
-	Do() (File, error)
+type GetFileResponse interface {
 }
 
-func (b *bot) GetFile() GetFileRequest {
+func (b *bot) GetFile(options ...Option) (GetFileResponse, error) {
 	panic("implement me")
 }
 
-type KickChatMemberRequest interface {
-	ChatID(int) KickChatMemberRequest
-	ChatUsername(string) KickChatMemberRequest
-	UserID(int) KickChatMemberRequest
-	UntilDate(int) KickChatMemberRequest
-	Do() (bool, error)
+type KickChatMemberResponse interface {
 }
 
-func (b *bot) KickChatMember() KickChatMemberRequest {
+func (b *bot) KickChatMember(options ...Option) (KickChatMemberResponse, error) {
 	panic("implement me")
 }
 
-type UnbanChatMemberRequest interface {
-	ChatID(int) UnbanChatMemberRequest
-	ChatUsername(string) UnbanChatMemberRequest
-	UserID(int) UnbanChatMemberRequest
-	Do() (bool, error)
+type UnbanChatMemberResponse interface {
 }
 
-func (b *bot) UnbanChatMember() UnbanChatMemberRequest {
+func (b *bot) UnbanChatMember(options ...Option) (UnbanChatMemberResponse, error) {
 	panic("implement me")
 }
 
-type RestrictChatMemberRequest interface {
-	ChatID(int) RestrictChatMemberRequest
-	ChatUsername(string) RestrictChatMemberRequest
-	UserID(int) RestrictChatMemberRequest
-	UntilDate(int) RestrictChatMemberRequest
-	CanSendMessages() RestrictChatMemberRequest
-	CanSendMediaMessages() RestrictChatMemberRequest
-	CanSendOtherMessages() RestrictChatMemberRequest
-	CanAddWebPagePreviews() RestrictChatMemberRequest
-	Do() (bool, error)
+type RestrictChatMemberResponse interface {
 }
 
-func (b *bot) RestrictChatMember() RestrictChatMemberRequest {
+func (b *bot) RestrictChatMember(options ...Option) (RestrictChatMemberResponse, error) {
 	panic("implement me")
 }
 
-type PromoteChatMemberRequest interface {
-	ChatID(int) PromoteChatMemberRequest
-	ChatUsername(string) PromoteChatMemberRequest
-	UserID(int) PromoteChatMemberRequest
-	CanChangeInfo() PromoteChatMemberRequest
-	CanSendMessages() PromoteChatMemberRequest
-	CanEditMessages() PromoteChatMemberRequest
-	CanDeleteMessages() PromoteChatMemberRequest
-	CanInviteUsers() PromoteChatMemberRequest
-	CanRestrictMembers() PromoteChatMemberRequest
-	CanPinMessages() PromoteChatMemberRequest
-	CanPromoteMembers() PromoteChatMemberRequest
-	Do() (bool, error)
+type PromoteChatMemberResponse interface {
 }
 
-func (b *bot) PromoteChatMember() PromoteChatMemberRequest {
+func (b *bot) PromoteChatMember(options ...Option) (PromoteChatMemberResponse, error) {
 	panic("implement me")
 }
 
-type ExportChatInviteLinkRequest interface {
-	ChatID(int) ExportChatInviteLinkRequest
-	ChatUsername(string) ExportChatInviteLinkRequest
-	Do() (bool, error)
+type ExportChatInviteLinkResponse interface {
 }
 
-func (b *bot) ExportChatInviteLink() ExportChatInviteLinkRequest {
+func (b *bot) ExportChatInviteLink(options ...Option) (ExportChatInviteLinkResponse, error) {
 	panic("implement me")
 }
 
-type SetChatPhotoRequest interface {
-	ChatID(int) SetChatPhotoRequest
-	ChatUsername(string) SetChatPhotoRequest
-	Photo(InputFile) SetChatPhotoRequest
-	Do() (bool, error)
+type SetChatPhotoResponse interface {
 }
 
-func (b *bot) SetChatPhoto() SetChatPhotoRequest {
+func (b *bot) SetChatPhoto(options ...Option) (SetChatPhotoResponse, error) {
 	panic("implement me")
 }
 
-type DeleteChatPhotoRequest interface {
-	ChatID(int) DeleteChatPhotoRequest
-	ChatUsername(string) DeleteChatPhotoRequest
-	Do() (bool, error)
+type DeleteChatPhotoResponse interface {
 }
 
-func (b *bot) DeleteChatPhoto() DeleteChatPhotoRequest {
+func (b *bot) DeleteChatPhoto(options ...Option) (DeleteChatPhotoResponse, error) {
 	panic("implement me")
 }
 
-type SetChatTitleRequest interface {
-	ChatID(int) SetChatTitleRequest
-	ChatUsername(string) SetChatTitleRequest
-	Title(string) SetChatTitleRequest
-	Do() (bool, error)
+type SetChatTitleResponse interface {
 }
 
-func (b *bot) SetChatTitle() SetChatTitleRequest {
+func (b *bot) SetChatTitle(options ...Option) (SetChatTitleResponse, error) {
 	panic("implement me")
 }
 
-type SetChatDescriptionRequest interface {
-	ChatID(int) SetChatDescriptionRequest
-	ChatUsername(string) SetChatDescriptionRequest
-	Description(string) SetChatDescriptionRequest
-	Do() (bool, error)
+type SetChatDescriptionResponse interface {
 }
 
-func (b *bot) SetChatDescription() SetChatDescriptionRequest {
+func (b *bot) SetChatDescription(options ...Option) (SetChatDescriptionResponse, error) {
 	panic("implement me")
 }
 
-type PinChatMessageRequest interface {
-	ChatID(int) PinChatMessageRequest
-	ChatUsername(string) PinChatMessageRequest
-	MessageID(int) PinChatMessageRequest
-	DisableNotification() PinChatMessageRequest
-	Do() (bool, error)
+type PinChatMessageResponse interface {
 }
 
-func (b *bot) PinChatMessage() PinChatMessageRequest {
+func (b *bot) PinChatMessage(options ...Option) (PinChatMessageResponse, error) {
 	panic("implement me")
 }
 
-type UnpinChatMessageRequest interface {
-	ChatID(int) UnpinChatMessageRequest
-	ChatUsername(string) UnpinChatMessageRequest
-	Do() (bool, error)
+type UnpinChatMessageResponse interface {
 }
 
-func (b *bot) UnpinChatMessage() UnpinChatMessageRequest {
+func (b *bot) UnpinChatMessage(options ...Option) (UnpinChatMessageResponse, error) {
 	panic("implement me")
 }
 
-type LeaveChatRequest interface {
-	ChatID(int) LeaveChatRequest
-	ChatUsername(string) LeaveChatRequest
-	Do() (bool, error)
+type LeaveChatResponse interface {
 }
 
-func (b *bot) LeaveChat() LeaveChatRequest {
+func (b *bot) LeaveChat(options ...Option) (LeaveChatResponse, error) {
 	panic("implement me")
 }
 
-type GetChatRequest interface {
-	ChatID(int) GetChatRequest
-	ChatUsername(string) GetChatRequest
-	Do() (*Chat, error)
+type GetChatResponse interface {
 }
 
-func (b *bot) GetChat() GetChatRequest {
+func (b *bot) GetChat(options ...Option) (GetChatResponse, error) {
 	panic("implement me")
 }
 
-type GetChatAdministratorsRequest interface {
-	ChatID(int) GetChatAdministratorsRequest
-	ChatUsername(string) GetChatAdministratorsRequest
-	Do() ([]ChatMember, error)
+type GetChatAdministratorsResponse interface {
 }
 
-func (b *bot) GetChatAdministrators() GetChatAdministratorsRequest {
+func (b *bot) GetChatAdministrators(options ...Option) (GetChatAdministratorsResponse, error) {
 	panic("implement me")
 }
 
-type GetChatMembersCountRequest interface {
-	ChatID(int) GetChatMembersCountRequest
-	ChatUsername(string) GetChatMembersCountRequest
-	Do() (int, error)
+type GetChatMembersCountResponse interface {
 }
 
-func (b *bot) GetChatMembersCount() GetChatMembersCountRequest {
+func (b *bot) GetChatMembersCount(options ...Option) (GetChatMembersCountResponse, error) {
 	panic("implement me")
 }
 
-type GetChatMemberRequest interface {
-	ChatID(int) GetChatMemberRequest
-	ChatUsername(string) GetChatMemberRequest
-	UserID(int) GetChatMemberRequest
-	Do() (*ChatMember, error)
+type GetChatMemberResponse interface {
 }
 
-func (b *bot) GetChatMember() GetChatMemberRequest {
+func (b *bot) GetChatMember(options ...Option) (GetChatMemberResponse, error) {
 	panic("implement me")
 }
 
-type SetChatStickerSetRequest interface {
-	ChatID(int) SetChatStickerSetRequest
-	ChatUsername(string) SetChatStickerSetRequest
-	StickerSetName(string) SetChatStickerSetRequest
-	Do() (bool, error)
+type SetChatStickerSetResponse interface {
 }
 
-func (b *bot) SetChatStickerSet() SetChatStickerSetRequest {
+func (b *bot) SetChatStickerSet(options ...Option) (SetChatStickerSetResponse, error) {
 	panic("implement me")
 }
 
-type DeleteChatStickerSetRequest interface {
-	ChatID(int) DeleteChatStickerSetRequest
-	ChatUsername(string) DeleteChatStickerSetRequest
-	Do() (bool, error)
+type DeleteChatStickerSetResponse interface {
 }
 
-func (b *bot) DeleteChatStickerSet() DeleteChatStickerSetRequest {
+func (b *bot) DeleteChatStickerSet(options ...Option) (DeleteChatStickerSetResponse, error) {
 	panic("implement me")
 }
 
-type AnswerCallbackQueryRequest interface {
-	CallbackQueryID(string) AnswerCallbackQueryRequest
-	Text(string) AnswerCallbackQueryRequest
-	ShowAlert() AnswerCallbackQueryRequest
-	URL(string) AnswerCallbackQueryRequest
-	CacheTime(int) AnswerCallbackQueryRequest
-	Do() (bool, error)
+type AnswerCallbackQueryResponse interface {
 }
 
-func (b *bot) AnswerCallbackQuery() AnswerCallbackQueryRequest {
+func (b *bot) AnswerCallbackQuery(options ...Option) (AnswerCallbackQueryResponse, error) {
 	panic("implement me")
 }
