@@ -26,55 +26,145 @@ type MaskPosition struct {
 }
 
 type SendStickerResponse interface {
+	Response
+	GetMessage() *Message
+}
+
+type sendStickerResponse struct {
+	response
+	Result *Message `json:"result,omitempty"`
+}
+
+func (r *sendStickerResponse) GetMessage() *Message {
+	return r.Result
 }
 
 func (b *bot) SendSticker(options ...Option) (SendStickerResponse, error) {
-	panic("implement me")
+	var res sendStickerResponse
+	err := doRequest(b.Token, "sendSticker", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
 }
 
 type GetStickerSetResponse interface {
-	Name(string) GetStickerSetResponse
-	Do() (*StickerSet, error)
+	Response
+	GetStickerSet() *StickerSet
+}
+
+type getStickerSetResponse struct {
+	response
+	Result *StickerSet `json:"result,omitempty"`
+}
+
+func (r *getStickerSetResponse) GetStickerSet() *StickerSet {
+	return r.Result
 }
 
 func (b *bot) GetStickerSet(options ...Option) (GetStickerSetResponse, error) {
-	panic("implement me")
+	var res getStickerSetResponse
+	err := doRequest(b.Token, "getStickerSet", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
 }
 
 type UploadStickerFileResponse interface {
-	UserID(int) UploadStickerFileResponse
-	PNGSticker(InputFile) UploadStickerFileResponse
-	Do() (*File, error)
+	Response
+	GetUploadedFile() *File
+}
+
+type uploadStickerFileResponse struct {
+	response
+	Result *File `json:"result,omitempty"`
+}
+
+func (r *uploadStickerFileResponse) GetUploadedFile() *File {
+	return r.Result
 }
 
 func (b *bot) UploadStickerFile(options ...Option) (UploadStickerFileResponse, error) {
-	panic("implement me")
+	var res uploadStickerFileResponse
+	err := doRequest(b.Token, "uploadStickerFile", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
 }
 
 type CreateNewStickerSetResponse interface {
+	Response
+}
+
+type createNewStickerSetResponse struct {
+	response
 }
 
 func (b *bot) CreateNewStickerSet(options ...Option) (CreateNewStickerSetResponse, error) {
-	panic("implement me")
+	var res createNewStickerSetResponse
+	err := doRequest(b.Token, "createNewStickerSet", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
 }
 
 type AddStickerToSetResponse interface {
+	Response
+}
+
+type addStickerToSetResponse struct {
+	response
 }
 
 func (b *bot) AddStickerToSet(options ...Option) (AddStickerToSetResponse, error) {
-	panic("implement me")
+	var res addStickerToSetResponse
+	err := doRequest(b.Token, "addStickerToSet", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
 }
 
 type SetStickerPositionInSetResponse interface {
+	Response
+}
+
+type setStickerPositionInSetResponse struct {
+	response
 }
 
 func (b *bot) SetStickerPositionInSet(options ...Option) (SetStickerPositionInSetResponse, error) {
-	panic("implement me")
+	var res setStickerPositionInSetResponse
+	err := doRequest(b.Token, "setStickerPositionInSet", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
 }
 
 type DeleteStickerFromSetResponse interface {
+	Response
+}
+
+type deleteStickerFromSetResponse struct {
+	response
 }
 
 func (b *bot) DeleteStickerFromSet(options ...Option) (DeleteStickerFromSetResponse, error) {
-	panic("implement me")
+	var res deleteStickerFromSetResponse
+	err := doRequest(b.Token, "deleteStickerFromSet", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
 }

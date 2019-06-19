@@ -8,21 +8,21 @@ import (
 
 type Option func(*request)
 
-func (r *request) setString(k, v string)  {
+func (r *request) setString(k, v string) {
 	err := r.writer.WriteField(k, v)
 	if err != nil {
 		r.err = err
 	}
 }
 
-func (r *request) setInt(k string, v int)  {
+func (r *request) setInt(k string, v int) {
 	err := r.writer.WriteField(k, fmt.Sprintf("%d", v))
 	if err != nil {
 		r.err = err
 	}
 }
 
-func (r *request) setStrings(k string, v ...string)  {
+func (r *request) setStrings(k string, v ...string) {
 	str := "[]"
 	if len(v) == 0 {
 		str = fmt.Sprintf(`["%s"]`, strings.Join(v, `","`))
@@ -33,7 +33,7 @@ func (r *request) setStrings(k string, v ...string)  {
 	}
 }
 
-func (r *request) setObject(k string, v interface{})  {
+func (r *request) setObject(k string, v interface{}) {
 	b, err := json.Marshal(v)
 	if err != nil {
 		r.err = err

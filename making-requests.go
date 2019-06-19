@@ -30,8 +30,8 @@ func (r *response) Error() ResponseError {
 	if !r.IsOK() {
 		return &responseError{
 			description: r.Description,
-			errorCode: r.ErrorCode,
-			parameters:r.Parameters,
+			errorCode:   r.ErrorCode,
+			parameters:  r.Parameters,
 		}
 	}
 
