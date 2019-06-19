@@ -1,18 +1,16 @@
 package telegram
 
-// Sticker ...
 type Sticker struct {
 	FileID       string        `json:"file_id"`
-	Width        int32         `json:"width"`
-	Height       int32         `json:"height"`
+	Width        int           `json:"width"`
+	Height       int           `json:"height"`
 	Thumb        *PhotoSize    `json:"thumb,omitempty"`
 	Emoji        *string       `json:"emoji,omitempty"`
 	SetName      *string       `json:"set_name,omitempty"`
 	MaskPosition *MaskPosition `json:"mask_position,omitempty"`
-	FileSize     *int32        `json:"file_size,omitempty"`
+	FileSize     *int          `json:"file_size,omitempty"`
 }
 
-// StickerSet ...
 type StickerSet struct {
 	Name          string    `json:"name"`
 	Title         string    `json:"title"`
@@ -20,7 +18,6 @@ type StickerSet struct {
 	Stickers      []Sticker `json:"stickers"`
 }
 
-// MaskPosition ...
 type MaskPosition struct {
 	Point  string  `json:"point"`
 	XShift float32 `json:"x_shift"`
@@ -28,291 +25,146 @@ type MaskPosition struct {
 	Scale  float32 `json:"scale"`
 }
 
-// SendSticker ...
-func (obj *BotAPI) SendSticker(chatID interface{}, sticker interface{}, disableNotification *bool, replyToMessageID *int32, replyMarkup *interface{}) (*Message, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-		{
-			name:     "sticker",
-			required: true,
-			types: []parameterType{
-				parameterTypeInputFile,
-				parameterTypeString,
-			},
-			value: sticker,
-		},
-		{
-			name:     "disable_notification",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: disableNotification,
-		},
-		{
-			name:     "reply_to_message_id",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: replyToMessageID,
-		},
-		{
-			name:     "reply_markup",
-			required: false,
-			types: []parameterType{
-				parameterTypeInlineKeyboardMarkup,
-				parameterTypeReplyKeyboardMarkup,
-				parameterTypeReplyKeyboardRemove,
-				parameterTypeForceReply,
-			},
-			value: replyMarkup,
-		},
-	}
-
-	res, err := obj.callMethod("sendSticker", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*Message), nil
+type SendStickerResponse interface {
+	Response
+	GetMessage() *Message
 }
 
-// GetStickerSet ...
-func (obj *BotAPI) GetStickerSet(name string) (*StickerSet, error) {
-
-	parameters := []parameter{
-		{
-			name:     "name",
-			required: true,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: name,
-		},
-	}
-
-	res, err := obj.callMethod("getStickerSet", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*StickerSet), nil
+type sendStickerResponse struct {
+	response
+	Result *Message `json:"result,omitempty"`
 }
 
-// UploadStickerFile ...
-func (obj *BotAPI) UploadStickerFile(userID int32, pngSticker InputFile) (*File, error) {
-
-	parameters := []parameter{
-		{
-			name:     "user_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: userID,
-		},
-		{
-			name:     "png_sticker",
-			required: true,
-			types: []parameterType{
-				parameterTypeInputFile,
-			},
-			value: pngSticker,
-		},
-	}
-
-	res, err := obj.callMethod("uploadStickerFile", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*File), nil
+func (r *sendStickerResponse) GetMessage() *Message {
+	return r.Result
 }
 
-// CreateNewStickerSet ...
-func (obj *BotAPI) CreateNewStickerSet(userID int32, name string, title string, pngSticker interface{}, emojis string, containsMasks *bool, maskPosition *MaskPosition) (*bool, error) {
-
-	parameters := []parameter{
-		{
-			name:     "user_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: userID,
-		},
-		{
-			name:     "name",
-			required: true,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: name,
-		},
-		{
-			name:     "title",
-			required: true,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: title,
-		},
-		{
-			name:     "png_sticker",
-			required: true,
-			types: []parameterType{
-				parameterTypeInputFile,
-				parameterTypeString,
-			},
-			value: pngSticker,
-		},
-		{
-			name:     "emojis",
-			required: true,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: emojis,
-		},
-		{
-			name:     "contains_masks",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: containsMasks,
-		},
-		{
-			name:     "mask_position",
-			required: false,
-			types: []parameterType{
-				parameterTypeMaskPosition,
-			},
-			value: maskPosition,
-		},
-	}
-
-	res, err := obj.callMethod("createNewStickerSet", parameters...)
+func (b *bot) SendSticker(options ...Option) (SendStickerResponse, error) {
+	var res sendStickerResponse
+	err := doRequest(b.Token, "sendSticker", &res, options...)
 	if err != nil {
 		return nil, err
 	}
 
-	return res.(*bool), nil
+	return &res, nil
 }
 
-// AddStickerToSet ...
-func (obj *BotAPI) AddStickerToSet(userID int32, name string, pngSticker interface{}, emojis string, maskPosition *MaskPosition) (*bool, error) {
-
-	parameters := []parameter{
-		{
-			name:     "user_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: userID,
-		},
-		{
-			name:     "name",
-			required: true,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: name,
-		},
-		{
-			name:     "png_sticker",
-			required: true,
-			types: []parameterType{
-				parameterTypeInputFile,
-				parameterTypeString,
-			},
-			value: pngSticker,
-		},
-		{
-			name:     "emojis",
-			required: true,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: emojis,
-		},
-		{
-			name:     "mask_position",
-			required: false,
-			types: []parameterType{
-				parameterTypeMaskPosition,
-			},
-			value: maskPosition,
-		},
-	}
-
-	res, err := obj.callMethod("addStickerToSet", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*bool), nil
+type GetStickerSetResponse interface {
+	Response
+	GetStickerSet() *StickerSet
 }
 
-// SetStickerPositionInSet ...
-func (obj *BotAPI) SetStickerPositionInSet(sticker string, position int32) (*bool, error) {
-
-	parameters := []parameter{
-		{
-			name:     "sticker",
-			required: true,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: sticker,
-		},
-		{
-			name:     "position",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: position,
-		},
-	}
-
-	res, err := obj.callMethod("setStickerPositionInSet", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*bool), nil
+type getStickerSetResponse struct {
+	response
+	Result *StickerSet `json:"result,omitempty"`
 }
 
-// DeleteStickerFromSet ...
-func (obj *BotAPI) DeleteStickerFromSet(sticker string) (*bool, error) {
+func (r *getStickerSetResponse) GetStickerSet() *StickerSet {
+	return r.Result
+}
 
-	parameters := []parameter{
-		{
-			name:     "sticker",
-			required: true,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: sticker,
-		},
-	}
-
-	res, err := obj.callMethod("deleteStickerFromSet", parameters...)
+func (b *bot) GetStickerSet(options ...Option) (GetStickerSetResponse, error) {
+	var res getStickerSetResponse
+	err := doRequest(b.Token, "getStickerSet", &res, options...)
 	if err != nil {
 		return nil, err
 	}
 
-	return res.(*bool), nil
+	return &res, nil
+}
+
+type UploadStickerFileResponse interface {
+	Response
+	GetUploadedFile() *File
+}
+
+type uploadStickerFileResponse struct {
+	response
+	Result *File `json:"result,omitempty"`
+}
+
+func (r *uploadStickerFileResponse) GetUploadedFile() *File {
+	return r.Result
+}
+
+func (b *bot) UploadStickerFile(options ...Option) (UploadStickerFileResponse, error) {
+	var res uploadStickerFileResponse
+	err := doRequest(b.Token, "uploadStickerFile", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+type CreateNewStickerSetResponse interface {
+	Response
+}
+
+type createNewStickerSetResponse struct {
+	response
+}
+
+func (b *bot) CreateNewStickerSet(options ...Option) (CreateNewStickerSetResponse, error) {
+	var res createNewStickerSetResponse
+	err := doRequest(b.Token, "createNewStickerSet", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+type AddStickerToSetResponse interface {
+	Response
+}
+
+type addStickerToSetResponse struct {
+	response
+}
+
+func (b *bot) AddStickerToSet(options ...Option) (AddStickerToSetResponse, error) {
+	var res addStickerToSetResponse
+	err := doRequest(b.Token, "addStickerToSet", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+type SetStickerPositionInSetResponse interface {
+	Response
+}
+
+type setStickerPositionInSetResponse struct {
+	response
+}
+
+func (b *bot) SetStickerPositionInSet(options ...Option) (SetStickerPositionInSetResponse, error) {
+	var res setStickerPositionInSetResponse
+	err := doRequest(b.Token, "setStickerPositionInSet", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+type DeleteStickerFromSetResponse interface {
+	Response
+}
+
+type deleteStickerFromSetResponse struct {
+	response
+}
+
+func (b *bot) DeleteStickerFromSet(options ...Option) (DeleteStickerFromSetResponse, error) {
+	var res deleteStickerFromSetResponse
+	err := doRequest(b.Token, "deleteStickerFromSet", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
 }

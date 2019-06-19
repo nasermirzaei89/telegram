@@ -1,8 +1,7 @@
 package telegram
 
-// Update ...
 type Update struct {
-	UpdateID           int64               `json:"update_id"`
+	UpdateID           int                 `json:"update_id"`
 	Message            *Message            `json:"message,omitempty"`
 	EditedMessage      *Message            `json:"edited_message,omitempty"`
 	ChannelPost        *Message            `json:"channel_post,omitempty"`
@@ -12,125 +11,99 @@ type Update struct {
 	CallbackQuery      *CallbackQuery      `json:"callback_query,omitempty"`
 	ShippingQuery      *ShippingQuery      `json:"shipping_query,omitempty"`
 	PreCheckoutQuery   *PreCheckoutQuery   `json:"pre_checkout_query,omitempty"`
+	Poll               *Poll               `json:"poll,omitempty"`
 }
 
-// GetUpdates ...
-func (obj *BotAPI) GetUpdates(offset, limit, timeout *int64, allowedUpdates *[]string) ([]Update, error) {
-	parameters := []parameter{
-		{
-			name:     "offset",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: offset,
-		},
-		{
-			name:     "limit",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: limit,
-		},
-		{
-			name:     "timeout",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: timeout,
-		},
-		{
-			name:     "allowed_updates",
-			required: false,
-			types: []parameterType{
-				parameterTypeArrayOfString,
-			},
-			value: allowedUpdates,
-		},
-	}
+type GetUpdatesResponse interface {
+	Response
+	GetUpdates() []Update
+}
 
-	res, err := obj.callMethod("getUpdates", parameters...)
+type getUpdatesResponse struct {
+	response
+	Result []Update `json:"result,omitempty"`
+}
+
+func (r *getUpdatesResponse) GetUpdates() []Update {
+	return r.Result
+}
+
+func (b *bot) GetUpdates(options ...Option) (GetUpdatesResponse, error) {
+	var res getUpdatesResponse
+	err := doRequest(b.Token, "getUpdates", &res, options...)
 	if err != nil {
 		return nil, err
 	}
 
-	return res.([]Update), nil
+	return &res, nil
 }
 
-// SetWebhook ...
-func (obj *BotAPI) SetWebhook(url string, certificate *InputFile, maxConnections *int32, allowedUpdates *[]string) (*bool, error) {
-	parameters := []parameter{
-		{
-			name:     "url",
-			required: true,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: url,
-		},
-		{
-			name:     "certificate",
-			required: false,
-			types: []parameterType{
-				parameterTypeInputFile,
-			},
-			value: certificate,
-		},
-		{
-			name:     "max_connections",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: maxConnections,
-		},
-		{
-			name:     "allowed_updates",
-			required: false,
-			types: []parameterType{
-				parameterTypeArrayOfString,
-			},
-			value: allowedUpdates,
-		},
-	}
+type SetWebhookResponse interface {
+	Response
+}
 
-	res, err := obj.callMethod("setWebhook", parameters...)
+type setWebhookResponse struct {
+	response
+}
+
+func (b *bot) SetWebhook(options ...Option) (SetWebhookResponse, error) {
+	var res setWebhookResponse
+	err := doRequest(b.Token, "setWebhook", &res, options...)
 	if err != nil {
 		return nil, err
 	}
 
-	return res.(*bool), nil
+	return &res, nil
 }
 
-// DeleteWebhook ...
-func (obj *BotAPI) DeleteWebhook() (*bool, error) {
-	res, err := obj.callMethod("deleteWebhook")
+type DeleteWebhookResponse interface {
+	Response
+}
+
+type deleteWebhookResponse struct {
+	response
+}
+
+func (b *bot) DeleteWebhook() (DeleteWebhookResponse, error) {
+	var res deleteWebhookResponse
+	err := doRequest(b.Token, "deleteWebhook", &res)
 	if err != nil {
 		return nil, err
 	}
 
-	return res.(*bool), nil
+	return &res, nil
 }
 
-// GetWebhookInfo ...
-func (obj *BotAPI) GetWebhookInfo() (*WebhookInfo, error) {
-	res, err := obj.callMethod("getWebhookInfo")
+type GetWebhookInfoResponse interface {
+	Response
+	GetWebhookInfo() *WebhookInfo
+}
+
+type getWebhookInfoResponse struct {
+	response
+	Result *WebhookInfo `json:"result,omitempty"`
+}
+
+func (r *getWebhookInfoResponse) GetWebhookInfo() *WebhookInfo {
+	return r.Result
+}
+
+func (b *bot) GetWebhookInfo() (GetWebhookInfoResponse, error) {
+	var res getWebhookInfoResponse
+	err := doRequest(b.Token, "getWebhookInfo", &res)
 	if err != nil {
 		return nil, err
 	}
 
-	return res.(*WebhookInfo), nil
+	return &res, nil
 }
 
-// WebhookInfo ...
 type WebhookInfo struct {
-	URL                  string    `json:"url"`
-	HasCustomCertificate bool      `json:"has_custom_certificate"`
-	PendingUpdateCount   int32     `json:"pending_update_count"`
-	LastErrorDate        *int32    `json:"last_error_date,omitempty"`
-	LastErrorMessage     *string   `json:"last_error_message,omitempty"`
-	MaxConnections       *int32    `json:"max_connections,omitempty"`
-	AllowedUpdates       *[]string `json:"allowed_updates,omitempty"`
+	URL                  string   `json:"url"`
+	HasCustomCertificate bool     `json:"has_custom_certificate"`
+	PendingUpdateCount   int      `json:"pending_update_count"`
+	LastErrorDate        *int     `json:"last_error_date,omitempty"`
+	LastErrorMessage     *string  `json:"last_error_message,omitempty"`
+	MaxConnections       *int     `json:"max_connections,omitempty"`
+	AllowedUpdates       []string `json:"allowed_updates,omitempty"`
 }

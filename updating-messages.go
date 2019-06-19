@@ -1,213 +1,139 @@
 package telegram
 
-// EditMessageText ...
-func (obj *BotAPI) EditMessageText(chatID *interface{}, messageID *int32, inlineMessageID *string, text string, parseMode *string, disableWebPagePreview *bool, replyMarkup *InlineKeyboardMarkup) (*Message, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-		{
-			name:     "message_id",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: messageID,
-		},
-		{
-			name:     "inline_message_id",
-			required: false,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: inlineMessageID,
-		},
-		{
-			name:     "text",
-			required: true,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: text,
-		},
-		{
-			name:     "parse_mode",
-			required: false,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: parseMode,
-		},
-		{
-			name:     "disable_web_page_preview",
-			required: false,
-			types: []parameterType{
-				parameterTypeBoolean,
-			},
-			value: disableWebPagePreview,
-		},
-		{
-			name:     "reply_markup",
-			required: false,
-			types: []parameterType{
-				parameterTypeInlineKeyboardMarkup,
-			},
-			value: replyMarkup,
-		},
-	}
-
-	res, err := obj.callMethod("editMessageText", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*Message), nil
+type EditMessageTextResponse interface {
+	Response
+	GetEditedMessage() *Message
 }
 
-// EditMessageCaption ...
-func (obj *BotAPI) EditMessageCaption(chatID *interface{}, messageID *int32, inlineMessageID *string, caption *string, parseMode *string, replyMarkup *InlineKeyboardMarkup) (*Message, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-		{
-			name:     "message_id",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: messageID,
-		},
-		{
-			name:     "inline_message_id",
-			required: false,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: inlineMessageID,
-		},
-		{
-			name:     "caption",
-			required: false,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: caption,
-		},
-		{
-			name:     "parse_mode",
-			required: false,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: parseMode,
-		},
-		{
-			name:     "reply_markup",
-			required: false,
-			types: []parameterType{
-				parameterTypeInlineKeyboardMarkup,
-			},
-			value: replyMarkup,
-		},
-	}
-
-	res, err := obj.callMethod("editMessageCaption", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*Message), nil
+type editMessageTextResponse struct {
+	response
+	Result *Message `json:"result,omitempty"`
 }
 
-// EditMessageReplyMarkup ...
-func (obj *BotAPI) EditMessageReplyMarkup(chatID *interface{}, messageID *int32, inlineMessageID *string, replyMarkup *InlineKeyboardMarkup) (*Message, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-		{
-			name:     "message_id",
-			required: false,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: messageID,
-		},
-		{
-			name:     "inline_message_id",
-			required: false,
-			types: []parameterType{
-				parameterTypeString,
-			},
-			value: inlineMessageID,
-		},
-		{
-			name:     "reply_markup",
-			required: false,
-			types: []parameterType{
-				parameterTypeInlineKeyboardMarkup,
-			},
-			value: replyMarkup,
-		},
-	}
-
-	res, err := obj.callMethod("editMessageReplyMarkup", parameters...)
-	if err != nil {
-		return nil, err
-	}
-
-	return res.(*Message), nil
+func (r *editMessageTextResponse) GetEditedMessage() *Message {
+	return r.Result
 }
 
-// DeleteMessage ...
-func (obj *BotAPI) DeleteMessage(chatID interface{}, messageID int32) (*bool, error) {
-
-	parameters := []parameter{
-		{
-			name:     "chat_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-				parameterTypeString,
-			},
-			value: chatID,
-		},
-		{
-			name:     "message_id",
-			required: true,
-			types: []parameterType{
-				parameterTypeInteger,
-			},
-			value: messageID,
-		},
-	}
-
-	res, err := obj.callMethod("deleteMessage", parameters...)
+func (b *bot) EditMessageText(options ...Option) (EditMessageTextResponse, error) {
+	var res editMessageTextResponse
+	err := doRequest(b.Token, "editMessageText", &res, options...)
 	if err != nil {
 		return nil, err
 	}
 
-	return res.(*bool), nil
+	return &res, nil
+}
+
+type EditMessageCaptionResponse interface {
+	Response
+	GetEditedMessage() *Message
+}
+
+type editMessageCaptionResponse struct {
+	response
+	Result *Message `json:"result,omitempty"`
+}
+
+func (r *editMessageCaptionResponse) GetEditedMessage() *Message {
+	return r.Result
+}
+
+func (b *bot) EditMessageCaption(options ...Option) (EditMessageCaptionResponse, error) {
+	var res editMessageCaptionResponse
+	err := doRequest(b.Token, "editMessageCaption", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+type EditMessageMediaResponse interface {
+	Response
+	GetEditedMessage() *Message
+}
+
+type editMessageMediaResponse struct {
+	response
+	Result *Message `json:"result,omitempty"`
+}
+
+func (r *editMessageMediaResponse) GetEditedMessage() *Message {
+	return r.Result
+}
+
+func (b *bot) EditMessageMedia(options ...Option) (EditMessageMediaResponse, error) {
+	var res editMessageMediaResponse
+	err := doRequest(b.Token, "editMessageMedia", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+type EditMessageReplyMarkupResponse interface {
+	Response
+	GetEditedMessage() *Message
+}
+
+type editMessageReplyMarkupResponse struct {
+	response
+	Result *Message `json:"result,omitempty"`
+}
+
+func (r *editMessageReplyMarkupResponse) GetEditedMessage() *Message {
+	return r.Result
+}
+
+func (b *bot) EditMessageReplyMarkup(options ...Option) (EditMessageReplyMarkupResponse, error) {
+	var res editMessageReplyMarkupResponse
+	err := doRequest(b.Token, "editMessageReplyMarkup", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+type StopPollResponse interface {
+	Response
+	GetStoppedPoll() *Poll
+}
+
+type stopPollResponse struct {
+	response
+	Result *Poll `json:"result,omitempty"`
+}
+
+func (r *stopPollResponse) GetStoppedPoll() *Poll {
+	return r.Result
+}
+
+func (b *bot) StopPoll(options ...Option) (StopPollResponse, error) {
+	var res stopPollResponse
+	err := doRequest(b.Token, "stopPoll", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+type DeleteMessageResponse interface {
+	Response
+}
+
+type deleteMessageResponse struct {
+	response
+}
+
+func (b *bot) DeleteMessage(options ...Option) (DeleteMessageResponse, error) {
+	var res deleteMessageResponse
+	err := doRequest(b.Token, "deleteMessage", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
 }
