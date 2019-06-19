@@ -9,10 +9,21 @@ type InlineQuery struct {
 }
 
 type AnswerInlineQueryResponse interface {
+	Response
+}
+
+type answerInlineQueryResponse struct {
+	response
 }
 
 func (b *bot) AnswerInlineQuery(options ...Option) (AnswerInlineQueryResponse, error) {
-	panic("implement me")
+	var res answerInlineQueryResponse
+	err := doRequest(b.Token, "answerInlineQuery", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
 }
 
 type InlineQueryResult interface{}
