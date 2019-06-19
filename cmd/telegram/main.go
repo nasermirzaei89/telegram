@@ -8,7 +8,7 @@ import (
 
 func main() {
 	bot := telegram.New(os.Getenv("TOKEN"))
-	res, err := bot.GetUpdates()
+	res, err := bot.GetMe()
 	if err != nil {
 		log.Fatalln(err)
 	}

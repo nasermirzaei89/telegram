@@ -44,7 +44,12 @@ func (r *request) do(v interface{}) error {
 		return err
 	}
 
-	resp, err := http.Post(r.url, r.writer.FormDataContentType(), r.body)
+	req, err := http.NewRequest(http.MethodPost, r.url, r.body)
+	if err != nil {
+		return err
+	}
+
+	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return err
 	}
