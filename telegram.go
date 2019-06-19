@@ -77,9 +77,9 @@ type Bot interface {
 	SetPassportDataErrors() SetPassportDataErrorsRequest
 
 	// games
-	SendGame() SendGameRequest
-	SetGameScore() SetGameScoreRequest
-	GetGameHighScores() GetGameHighScoresRequest
+	SendGame(...SendGameOption) (*SendGameResponse, error)
+	SetGameScore(...SetGameScoreOption) (*SetGameScoreResponse, error)
+	GetGameHighScores(...GetGameHighScoresOption) (*GetGameHighScoresResponse, error)
 }
 
 type bot struct {

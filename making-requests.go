@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"mime/multipart"
 	"net/http"
+	"strings"
 )
 
 type Response struct {
@@ -31,6 +32,43 @@ func newRequest(token, methodName string) *request {
 		url:    fmt.Sprintf("https://api.telegram.org/bot%s/%s", token, methodName),
 		body:   body,
 		writer: writer,
+	}
+}
+
+func (r *request) setString(k, v string)  {
+	err := r.writer.WriteField(k, v)
+	if err != nil {
+		r.err = err
+	}
+}
+
+func (r *request) setInt(k string, v int)  {
+	err := r.writer.WriteField(k, fmt.Sprintf("%d", v))
+	if err != nil {
+		r.err = err
+	}
+}
+
+func (r *request) setStrings(k string, v ...string)  {
+	str := "[]"
+	if len(v) == 0 {
+		str = fmt.Sprintf(`["%s"]`, strings.Join(v, `","`))
+	}
+	err := r.writer.WriteField(k, str)
+	if err != nil {
+		r.err = err
+	}
+}
+
+func (r *request) setObject(k string, v interface{})  {
+	b, err := json.Marshal(v)
+	if err != nil {
+		r.err = err
+		return
+	}
+	err = r.writer.WriteField(k, string(b))
+	if err != nil {
+		r.err = err
 	}
 }
 

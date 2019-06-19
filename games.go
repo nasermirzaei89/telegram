@@ -1,16 +1,56 @@
 package telegram
 
-type SendGameRequest interface {
-	ChatID(int) SendGameRequest
-	GameShortName(string) SendGameRequest
-	DisableNotification() SendGameRequest
-	ReplyToMessageID(int) SendGameRequest
-	ReplyMarkup(InlineKeyboardMarkup) SendGameRequest
-	Do() (*Message, error)
+type SendGameOption func(*request)
+
+type SendGameResponse struct {
+	Response
+	Result *Message `json:"result,omitempty"`
 }
 
-func (b *bot) SendGame() SendGameRequest {
-	panic("implement me")
+func (b *bot) SendGame(options ...SendGameOption) (*SendGameResponse, error) {
+	req := newRequest(b.Token, "sendGame")
+
+	for i := range options {
+		options[i](req)
+	}
+
+	var res SendGameResponse
+	err := req.do(&res)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+func SendGameChatID(v int) SendGameOption {
+	return func(r *request) {
+		r.setInt("chat_id", v)
+	}
+}
+
+func SendGameGameShortName(v string) SendGameOption {
+	return func(r *request) {
+		r.setString("game_short_name", v)
+	}
+}
+
+func SendGameDisableNotification() SendGameOption {
+	return func(r *request) {
+		r.setString("disable_notification", "true")
+	}
+}
+
+func SendGameReplyToMessageID(v int) SendGameOption {
+	return func(r *request) {
+		r.setInt("reply_to_message_id", v)
+	}
+}
+
+func SendGameReplyMarkup(v InlineKeyboardMarkup) SendGameOption {
+	return func(r *request) {
+		r.setObject("reply_markup", v)
+	}
 }
 
 type Game struct {
@@ -24,30 +64,25 @@ type Game struct {
 
 type CallbackGame interface{}
 
-type SetGameScoreRequest interface {
-	UserID(int) SetGameScoreRequest
-	Score(int) SetGameScoreRequest
-	Force() SetGameScoreRequest
-	DisableEditMessage(int) SetGameScoreRequest
-	ChatID(int) SetGameScoreRequest
-	MessageID(int) SetGameScoreRequest
-	InlineMessageID(string) SetGameScoreRequest
-	Do() (*Message, bool, error)
+type SetGameScoreOption func(*request)
+
+type SetGameScoreResponse struct {
+	Response
+	Result *Message `json:"result,omitempty"`
 }
 
-func (b *bot) SetGameScore() SetGameScoreRequest {
+func (b *bot) SetGameScore(...SetGameScoreOption) (*SetGameScoreResponse, error) {
 	panic("implement me")
 }
 
-type GetGameHighScoresRequest interface {
-	UserID(int) SetGameScoreRequest
-	ChatID(int) SetGameScoreRequest
-	MessageID(int) SetGameScoreRequest
-	InlineMessageID(string) SetGameScoreRequest
-	Do() ([]GameHighScore, error)
+type GetGameHighScoresOption func(*request)
+
+type GetGameHighScoresResponse struct {
+	Response
+	Result []GameHighScore `json:"result,omitempty"`
 }
 
-func (b *bot) GetGameHighScores() GetGameHighScoresRequest {
+func (b *bot) GetGameHighScores(...GetGameHighScoresOption) (*GetGameHighScoresResponse, error) {
 	panic("implement me")
 }
 

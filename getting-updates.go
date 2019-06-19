@@ -1,10 +1,5 @@
 package telegram
 
-import (
-	"fmt"
-	"strings"
-)
-
 type Update struct {
 	UpdateID           int                 `json:"update_id"`
 	Message            *Message            `json:"message,omitempty"`
@@ -44,41 +39,25 @@ func (b *bot) GetUpdates(options ...GetUpdatesOption) (*GetUpdatesResponse, erro
 
 func GetUpdatesOffset(v int) GetUpdatesOption {
 	return func(r *request) {
-		err := r.writer.WriteField("offset", fmt.Sprintf("%d", v))
-		if err != nil {
-			r.err = err
-		}
+		r.setInt("offset", v)
 	}
 }
 
 func GetUpdatesLimit(v int) GetUpdatesOption {
 	return func(r *request) {
-		err := r.writer.WriteField("limit", fmt.Sprintf("%d", v))
-		if err != nil {
-			r.err = err
-		}
+		r.setInt("limit", v)
 	}
 }
 
 func GetUpdatesTimeout(v int) GetUpdatesOption {
 	return func(r *request) {
-		err := r.writer.WriteField("timeout", fmt.Sprintf("%d", v))
-		if err != nil {
-			r.err = err
-		}
+		r.setInt("timeout", v)
 	}
 }
 
 func GetUpdatesAllowedUpdates(v ...string) GetUpdatesOption {
 	return func(r *request) {
-		str := "[]"
-		if len(v) == 0 {
-			str = fmt.Sprintf(`["%s"]`, strings.Join(v, `","`))
-		}
-		err := r.writer.WriteField("allowed_updates", str)
-		if err != nil {
-			r.err = err
-		}
+		r.setStrings("allowed_updates", v...)
 	}
 }
 
@@ -107,10 +86,7 @@ func (b *bot) SetWebhook(options ...SetWebhookOption) (*SetWebhookResponse, erro
 
 func SetWebhookURL(v string) SetWebhookOption {
 	return func(r *request) {
-		err := r.writer.WriteField("url", v)
-		if err != nil {
-			r.err = err
-		}
+		r.setString("url", v)
 	}
 }
 
@@ -122,23 +98,13 @@ func SetWebhookCertificate(v InputFile) SetWebhookOption {
 
 func SetWebhookMaxConnections(v string) SetWebhookOption {
 	return func(r *request) {
-		err := r.writer.WriteField("max_connections", v)
-		if err != nil {
-			r.err = err
-		}
+		r.setString("max_connections", v)
 	}
 }
 
 func SetWebhookAllowedUpdates(v ...string) SetWebhookOption {
 	return func(r *request) {
-		str := "[]"
-		if len(v) == 0 {
-			str = fmt.Sprintf(`["%s"]`, strings.Join(v, `","`))
-		}
-		err := r.writer.WriteField("allowed_updates", str)
-		if err != nil {
-			r.err = err
-		}
+		r.setStrings("allowed_updates", v...)
 	}
 }
 
