@@ -40,7 +40,7 @@ func (r *sendMessageResponse) GetMessage() *Message {
 
 func (b *bot) SendMessage(options ...Option) (SendMessageResponse, error) {
 	var res sendMessageResponse
-	err := doRequest(b.Token, "sendMessage", &res)
+	err := doRequest(b.Token, "sendMessage", &res, options...)
 	if err != nil {
 		return nil, err
 	}
