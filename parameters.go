@@ -139,8 +139,7 @@ func SetReplyToMessageID(v int) Option {
 
 func SetReplyMarkup(v interface{}) Option {
 	return func(r *request) {
-		// TODO: implement me
-		panic("implement me")
+		r.setObject("reply_markup", v)
 	}
 }
 
