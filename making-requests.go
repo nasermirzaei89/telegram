@@ -109,7 +109,9 @@ func (r *request) do(v interface{}) error {
 		return err
 	}
 
-	req.Header.Set("Content-Type", r.writer.FormDataContentType())
+	if r.body.Len() > 68 {
+		req.Header.Set("Content-Type", r.writer.FormDataContentType())
+	}
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
