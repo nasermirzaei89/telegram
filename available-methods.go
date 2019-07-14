@@ -64,7 +64,7 @@ func (r *forwardMessageResponse) GetMessage() *Message {
 
 func (b *bot) ForwardMessage(options ...Option) (ForwardMessageResponse, error) {
 	var res forwardMessageResponse
-	err := doRequest(b.Token, "forwardMessage", &res)
+	err := doRequest(b.Token, "forwardMessage", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -88,7 +88,7 @@ func (r *sendPhotoResponse) GetMessage() *Message {
 
 func (b *bot) SendPhoto(options ...Option) (SendPhotoResponse, error) {
 	var res sendPhotoResponse
-	err := doRequest(b.Token, "sendPhoto", &res)
+	err := doRequest(b.Token, "sendPhoto", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -112,7 +112,7 @@ func (r *sendAudioResponse) GetMessage() *Message {
 
 func (b *bot) SendAudio(options ...Option) (SendAudioResponse, error) {
 	var res sendAudioResponse
-	err := doRequest(b.Token, "sendAudio", &res)
+	err := doRequest(b.Token, "sendAudio", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -136,7 +136,7 @@ func (r *sendDocumentResponse) GetMessage() *Message {
 
 func (b *bot) SendDocument(options ...Option) (SendDocumentResponse, error) {
 	var res sendDocumentResponse
-	err := doRequest(b.Token, "sendDocument", &res)
+	err := doRequest(b.Token, "sendDocument", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -160,7 +160,7 @@ func (r *sendVideoResponse) GetMessage() *Message {
 
 func (b *bot) SendVideo(options ...Option) (SendVideoResponse, error) {
 	var res sendVideoResponse
-	err := doRequest(b.Token, "sendVideo", &res)
+	err := doRequest(b.Token, "sendVideo", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -184,7 +184,7 @@ func (r *sendAnimationResponse) GetMessage() *Message {
 
 func (b *bot) SendAnimation(options ...Option) (SendAnimationResponse, error) {
 	var res sendAnimationResponse
-	err := doRequest(b.Token, "sendAnimation", &res)
+	err := doRequest(b.Token, "sendAnimation", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -208,7 +208,7 @@ func (r *sendVoiceResponse) GetMessage() *Message {
 
 func (b *bot) SendVoice(options ...Option) (SendVoiceResponse, error) {
 	var res sendVoiceResponse
-	err := doRequest(b.Token, "sendVoice", &res)
+	err := doRequest(b.Token, "sendVoice", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -232,7 +232,7 @@ func (r *sendVideoNoteResponse) GetMessage() *Message {
 
 func (b *bot) SendVideoNote(options ...Option) (SendVideoNoteResponse, error) {
 	var res sendVideoNoteResponse
-	err := doRequest(b.Token, "sendVideoNote", &res)
+	err := doRequest(b.Token, "sendVideoNote", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -256,7 +256,7 @@ func (r *sendMediaGroupResponse) GetMessage() *Message {
 
 func (b *bot) SendMediaGroup(options ...Option) (SendMediaGroupResponse, error) {
 	var res sendMediaGroupResponse
-	err := doRequest(b.Token, "sendMediaGroup", &res)
+	err := doRequest(b.Token, "sendMediaGroup", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -280,7 +280,7 @@ func (r *sendLocationResponse) GetMessage() *Message {
 
 func (b *bot) SendLocation(options ...Option) (SendLocationResponse, error) {
 	var res sendLocationResponse
-	err := doRequest(b.Token, "sendLocation", &res)
+	err := doRequest(b.Token, "sendLocation", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -304,7 +304,7 @@ func (r *editMessageLiveLocationResponse) GetEditedMessage() *Message {
 
 func (b *bot) EditMessageLiveLocation(options ...Option) (EditMessageLiveLocationResponse, error) {
 	var res editMessageLiveLocationResponse
-	err := doRequest(b.Token, "editMessageLiveLocation", &res)
+	err := doRequest(b.Token, "editMessageLiveLocation", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -328,7 +328,7 @@ func (r *stopMessageLiveLocationResponse) GetMessage() *Message {
 
 func (b *bot) StopMessageLiveLocation(options ...Option) (StopMessageLiveLocationResponse, error) {
 	var res stopMessageLiveLocationResponse
-	err := doRequest(b.Token, "stopMessageLiveLocation", &res)
+	err := doRequest(b.Token, "stopMessageLiveLocation", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -352,7 +352,7 @@ func (r *sendVenueResponse) GetMessage() *Message {
 
 func (b *bot) SendVenue(options ...Option) (SendVenueResponse, error) {
 	var res sendVenueResponse
-	err := doRequest(b.Token, "sendVenue", &res)
+	err := doRequest(b.Token, "sendVenue", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -376,7 +376,7 @@ func (r *sendContactResponse) GetMessage() *Message {
 
 func (b *bot) SendContact(options ...Option) (SendContactResponse, error) {
 	var res sendContactResponse
-	err := doRequest(b.Token, "sendContact", &res)
+	err := doRequest(b.Token, "sendContact", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -400,7 +400,7 @@ func (r *sendPollResponse) GetMessage() *Message {
 
 func (b *bot) SendPoll(options ...Option) (SendPollResponse, error) {
 	var res sendPollResponse
-	err := doRequest(b.Token, "sendPoll", &res)
+	err := doRequest(b.Token, "sendPoll", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -418,7 +418,7 @@ type sendChatActionResponse struct {
 
 func (b *bot) SendChatAction(options ...Option) (SendChatActionResponse, error) {
 	var res sendChatActionResponse
-	err := doRequest(b.Token, "sendChatAction", &res)
+	err := doRequest(b.Token, "sendChatAction", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -442,7 +442,7 @@ func (r *getUserProfilePhotosResponse) GetUserProfilePhotos() *UserProfilePhotos
 
 func (b *bot) GetUserProfilePhotos(options ...Option) (GetUserProfilePhotosResponse, error) {
 	var res getUserProfilePhotosResponse
-	err := doRequest(b.Token, "getUserProfilePhotos", &res)
+	err := doRequest(b.Token, "getUserProfilePhotos", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -466,7 +466,7 @@ func (r *getFileResponse) GetFile() *File {
 
 func (b *bot) GetFile(options ...Option) (GetFileResponse, error) {
 	var res getFileResponse
-	err := doRequest(b.Token, "getFile", &res)
+	err := doRequest(b.Token, "getFile", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -484,7 +484,7 @@ type kickChatMemberResponse struct {
 
 func (b *bot) KickChatMember(options ...Option) (KickChatMemberResponse, error) {
 	var res kickChatMemberResponse
-	err := doRequest(b.Token, "kickChatMember", &res)
+	err := doRequest(b.Token, "kickChatMember", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -502,7 +502,7 @@ type unbanChatMemberResponse struct {
 
 func (b *bot) UnbanChatMember(options ...Option) (UnbanChatMemberResponse, error) {
 	var res unbanChatMemberResponse
-	err := doRequest(b.Token, "unbanChatMember", &res)
+	err := doRequest(b.Token, "unbanChatMember", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -520,7 +520,7 @@ type restrictChatMemberResponse struct {
 
 func (b *bot) RestrictChatMember(options ...Option) (RestrictChatMemberResponse, error) {
 	var res restrictChatMemberResponse
-	err := doRequest(b.Token, "restrictChatMember", &res)
+	err := doRequest(b.Token, "restrictChatMember", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -538,7 +538,7 @@ type promoteChatMemberResponse struct {
 
 func (b *bot) PromoteChatMember(options ...Option) (PromoteChatMemberResponse, error) {
 	var res promoteChatMemberResponse
-	err := doRequest(b.Token, "promoteChatMember", &res)
+	err := doRequest(b.Token, "promoteChatMember", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -562,7 +562,7 @@ func (r *exportChatInviteLinkResponse) GetInviteLink() string {
 
 func (b *bot) ExportChatInviteLink(options ...Option) (ExportChatInviteLinkResponse, error) {
 	var res exportChatInviteLinkResponse
-	err := doRequest(b.Token, "exportChatInviteLink", &res)
+	err := doRequest(b.Token, "exportChatInviteLink", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -580,7 +580,7 @@ type setChatPhotoResponse struct {
 
 func (b *bot) SetChatPhoto(options ...Option) (SetChatPhotoResponse, error) {
 	var res setChatPhotoResponse
-	err := doRequest(b.Token, "setChatPhoto", &res)
+	err := doRequest(b.Token, "setChatPhoto", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -598,7 +598,7 @@ type deleteChatPhotoResponse struct {
 
 func (b *bot) DeleteChatPhoto(options ...Option) (DeleteChatPhotoResponse, error) {
 	var res deleteChatPhotoResponse
-	err := doRequest(b.Token, "deleteChatPhoto", &res)
+	err := doRequest(b.Token, "deleteChatPhoto", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -616,7 +616,7 @@ type setChatTitleResponse struct {
 
 func (b *bot) SetChatTitle(options ...Option) (SetChatTitleResponse, error) {
 	var res setChatTitleResponse
-	err := doRequest(b.Token, "setChatTitle", &res)
+	err := doRequest(b.Token, "setChatTitle", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -634,7 +634,7 @@ type setChatDescriptionResponse struct {
 
 func (b *bot) SetChatDescription(options ...Option) (SetChatDescriptionResponse, error) {
 	var res setChatDescriptionResponse
-	err := doRequest(b.Token, "setChatDescription", &res)
+	err := doRequest(b.Token, "setChatDescription", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -652,7 +652,7 @@ type pinChatMessageResponse struct {
 
 func (b *bot) PinChatMessage(options ...Option) (PinChatMessageResponse, error) {
 	var res pinChatMessageResponse
-	err := doRequest(b.Token, "pinChatMessage", &res)
+	err := doRequest(b.Token, "pinChatMessage", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -670,7 +670,7 @@ type unpinChatMessageResponse struct {
 
 func (b *bot) UnpinChatMessage(options ...Option) (UnpinChatMessageResponse, error) {
 	var res unpinChatMessageResponse
-	err := doRequest(b.Token, "unpinChatMessage", &res)
+	err := doRequest(b.Token, "unpinChatMessage", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -688,7 +688,7 @@ type leaveChatResponse struct {
 
 func (b *bot) LeaveChat(options ...Option) (LeaveChatResponse, error) {
 	var res leaveChatResponse
-	err := doRequest(b.Token, "leaveChat", &res)
+	err := doRequest(b.Token, "leaveChat", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -712,7 +712,7 @@ func (r *getChatResponse) GetChat() *Chat {
 
 func (b *bot) GetChat(options ...Option) (GetChatResponse, error) {
 	var res getChatResponse
-	err := doRequest(b.Token, "getChat", &res)
+	err := doRequest(b.Token, "getChat", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -736,7 +736,7 @@ func (r *getChatAdministratorsResponse) GetChatAdministrators() []ChatMember {
 
 func (b *bot) GetChatAdministrators(options ...Option) (GetChatAdministratorsResponse, error) {
 	var res getChatAdministratorsResponse
-	err := doRequest(b.Token, "getChatAdministrators", &res)
+	err := doRequest(b.Token, "getChatAdministrators", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -760,7 +760,7 @@ func (r *getChatMembersCountResponse) GetChatMembersCount() int {
 
 func (b *bot) GetChatMembersCount(options ...Option) (GetChatMembersCountResponse, error) {
 	var res getChatMembersCountResponse
-	err := doRequest(b.Token, "getChatMembersCount", &res)
+	err := doRequest(b.Token, "getChatMembersCount", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -784,7 +784,7 @@ func (r *getChatMemberResponse) GetChatMember() *ChatMember {
 
 func (b *bot) GetChatMember(options ...Option) (GetChatMemberResponse, error) {
 	var res getChatMemberResponse
-	err := doRequest(b.Token, "getChatMember", &res)
+	err := doRequest(b.Token, "getChatMember", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -802,7 +802,7 @@ type setChatStickerSetResponse struct {
 
 func (b *bot) SetChatStickerSet(options ...Option) (SetChatStickerSetResponse, error) {
 	var res setChatStickerSetResponse
-	err := doRequest(b.Token, "setChatStickerSet", &res)
+	err := doRequest(b.Token, "setChatStickerSet", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -820,7 +820,7 @@ type deleteChatStickerSetResponse struct {
 
 func (b *bot) DeleteChatStickerSet(options ...Option) (DeleteChatStickerSetResponse, error) {
 	var res deleteChatStickerSetResponse
-	err := doRequest(b.Token, "deleteChatStickerSet", &res)
+	err := doRequest(b.Token, "deleteChatStickerSet", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -838,7 +838,7 @@ type answerCallbackQueryResponse struct {
 
 func (b *bot) AnswerCallbackQuery(options ...Option) (AnswerCallbackQueryResponse, error) {
 	var res answerCallbackQueryResponse
-	err := doRequest(b.Token, "answerCallbackQuery", &res)
+	err := doRequest(b.Token, "answerCallbackQuery", &res, options...)
 	if err != nil {
 		return nil, err
 	}
