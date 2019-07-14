@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"mime/multipart"
 	"net/http"
 )
@@ -119,12 +118,7 @@ func (r *request) do(v interface{}) error {
 	}
 	defer func() { _ = resp.Body.Close() }()
 
-	b, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(b, v)
+	err = json.NewDecoder(resp.Body).Decode(v)
 	if err != nil {
 		return err
 	}
