@@ -1,5 +1,6 @@
 package telegram
 
+// SendGameResponse interface
 type SendGameResponse interface {
 	Response
 	GetMessage() *Message
@@ -24,6 +25,7 @@ func (b *bot) SendGame(options ...Option) (SendGameResponse, error) {
 	return &res, nil
 }
 
+// Game struct
 type Game struct {
 	Title        string          `json:"title"`
 	Description  string          `json:"description"`
@@ -33,8 +35,10 @@ type Game struct {
 	Animation    *Animation      `json:"animation,omitempty"`
 }
 
+// CallbackGame interface
 type CallbackGame interface{}
 
+// SetGameScoreResponse interface
 type SetGameScoreResponse interface {
 	Response
 	GetEditedMessage() *Message
@@ -59,6 +63,7 @@ func (b *bot) SetGameScore(options ...Option) (SetGameScoreResponse, error) {
 	return &res, nil
 }
 
+// GetGameHighScoresResponse interface
 type GetGameHighScoresResponse interface {
 	Response
 	GetGameHighScores() []GameHighScore
@@ -83,6 +88,7 @@ func (b *bot) GetGameHighScores(options ...Option) (GetGameHighScoresResponse, e
 	return &res, nil
 }
 
+// GameHighScore struct
 type GameHighScore struct {
 	Position int  `json:"position"`
 	User     User `json:"user"`

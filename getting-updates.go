@@ -1,5 +1,6 @@
 package telegram
 
+// Update struct
 type Update struct {
 	UpdateID           int                 `json:"update_id"`
 	Message            *Message            `json:"message,omitempty"`
@@ -14,6 +15,7 @@ type Update struct {
 	Poll               *Poll               `json:"poll,omitempty"`
 }
 
+// GetUpdatesResponse interface
 type GetUpdatesResponse interface {
 	Response
 	GetUpdates() []Update
@@ -38,6 +40,7 @@ func (b *bot) GetUpdates(options ...Option) (GetUpdatesResponse, error) {
 	return &res, nil
 }
 
+// SetWebhookResponse interface
 type SetWebhookResponse interface {
 	Response
 }
@@ -56,6 +59,7 @@ func (b *bot) SetWebhook(options ...Option) (SetWebhookResponse, error) {
 	return &res, nil
 }
 
+// DeleteWebhookResponse interface
 type DeleteWebhookResponse interface {
 	Response
 }
@@ -74,6 +78,7 @@ func (b *bot) DeleteWebhook() (DeleteWebhookResponse, error) {
 	return &res, nil
 }
 
+// GetWebhookInfoResponse interface
 type GetWebhookInfoResponse interface {
 	Response
 	GetWebhookInfo() *WebhookInfo
@@ -98,6 +103,7 @@ func (b *bot) GetWebhookInfo() (GetWebhookInfoResponse, error) {
 	return &res, nil
 }
 
+// WebhookInfo struct
 type WebhookInfo struct {
 	URL                  string   `json:"url"`
 	HasCustomCertificate bool     `json:"has_custom_certificate"`

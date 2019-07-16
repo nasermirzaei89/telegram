@@ -1,5 +1,6 @@
 package telegram
 
+// Bot interface
 type Bot interface {
 	// getting updates
 	GetUpdates(...Option) (GetUpdatesResponse, error)
@@ -86,6 +87,7 @@ type bot struct {
 	Token string
 }
 
+// New return a telegram bot instance
 func New(token string) Bot {
 	return &bot{Token: token}
 }

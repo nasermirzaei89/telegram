@@ -1,5 +1,6 @@
 package telegram
 
+// Sticker struct
 type Sticker struct {
 	FileID       string        `json:"file_id"`
 	Width        int           `json:"width"`
@@ -11,6 +12,7 @@ type Sticker struct {
 	FileSize     *int          `json:"file_size,omitempty"`
 }
 
+// StickerSet struct
 type StickerSet struct {
 	Name          string    `json:"name"`
 	Title         string    `json:"title"`
@@ -18,6 +20,7 @@ type StickerSet struct {
 	Stickers      []Sticker `json:"stickers"`
 }
 
+// MaskPosition struct
 type MaskPosition struct {
 	Point  string  `json:"point"`
 	XShift float32 `json:"x_shift"`
@@ -25,6 +28,7 @@ type MaskPosition struct {
 	Scale  float32 `json:"scale"`
 }
 
+// SendStickerResponse interface
 type SendStickerResponse interface {
 	Response
 	GetMessage() *Message
@@ -49,6 +53,7 @@ func (b *bot) SendSticker(options ...Option) (SendStickerResponse, error) {
 	return &res, nil
 }
 
+// GetStickerSetResponse interface
 type GetStickerSetResponse interface {
 	Response
 	GetStickerSet() *StickerSet
@@ -73,6 +78,7 @@ func (b *bot) GetStickerSet(options ...Option) (GetStickerSetResponse, error) {
 	return &res, nil
 }
 
+// UploadStickerFileResponse interface
 type UploadStickerFileResponse interface {
 	Response
 	GetUploadedFile() *File
@@ -97,6 +103,7 @@ func (b *bot) UploadStickerFile(options ...Option) (UploadStickerFileResponse, e
 	return &res, nil
 }
 
+// CreateNewStickerSetResponse interface
 type CreateNewStickerSetResponse interface {
 	Response
 }
@@ -115,6 +122,7 @@ func (b *bot) CreateNewStickerSet(options ...Option) (CreateNewStickerSetRespons
 	return &res, nil
 }
 
+// AddStickerToSetResponse interface
 type AddStickerToSetResponse interface {
 	Response
 }
@@ -133,6 +141,7 @@ func (b *bot) AddStickerToSet(options ...Option) (AddStickerToSetResponse, error
 	return &res, nil
 }
 
+// SetStickerPositionInSetResponse interface
 type SetStickerPositionInSetResponse interface {
 	Response
 }
@@ -151,6 +160,7 @@ func (b *bot) SetStickerPositionInSet(options ...Option) (SetStickerPositionInSe
 	return &res, nil
 }
 
+// DeleteStickerFromSetResponse interface
 type DeleteStickerFromSetResponse interface {
 	Response
 }

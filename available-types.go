@@ -2,6 +2,7 @@ package telegram
 
 import "io"
 
+// User struct
 type User struct {
 	ID           int     `json:"id"`
 	IsBot        bool    `json:"is_bot"`
@@ -11,6 +12,7 @@ type User struct {
 	LanguageCode *string `json:"language_code,omitempty"`
 }
 
+// Chat struct
 type Chat struct {
 	ID                          int        `json:"id"`
 	Type                        string     `json:"type"`
@@ -27,6 +29,7 @@ type Chat struct {
 	CanSetStickerSet            *bool      `json:"can_set_sticker_set,omitempty"`
 }
 
+// Message struct
 type Message struct {
 	MessageID             int                   `json:"message_id"`
 	From                  *User                 `json:"from,omitempty"`
@@ -77,19 +80,7 @@ type Message struct {
 	ReplyMarkup           *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
 }
 
-//// GetCommand present a more flexible way to communicate with your bot.
-//func (m *Message) GetCommand() (*string, []string) {
-//	if m.Text != nil {
-//		if (*m.Text)[0] == '/' {
-//			ss := strings.Split(*m.Text, " ")
-//			command := ss[0][1:]
-//			return &command, ss[1:]
-//		}
-//	}
-//
-//	return nil, nil
-//}
-//
+// MessageEntity struct
 type MessageEntity struct {
 	Type   string  `json:"type"`
 	Offset int     `json:"offset"`
@@ -98,6 +89,7 @@ type MessageEntity struct {
 	User   *User   `json:"user,omitempty"`
 }
 
+// PhotoSize struct
 type PhotoSize struct {
 	FileID   string `json:"file_id"`
 	Width    int    `json:"width"`
@@ -105,6 +97,7 @@ type PhotoSize struct {
 	FileSize *int   `json:"file_size,omitempty"`
 }
 
+// Audio struct
 type Audio struct {
 	FileID    string     `json:"file_id"`
 	Duration  int        `json:"duration"`
@@ -115,6 +108,7 @@ type Audio struct {
 	Thumb     *PhotoSize `json:"thumb,omitempty"`
 }
 
+// Document struct
 type Document struct {
 	FileID   string     `json:"file_id"`
 	Thumb    *PhotoSize `json:"thumb,omitempty"`
@@ -123,6 +117,7 @@ type Document struct {
 	FileSize *int       `json:"file_size,omitempty"`
 }
 
+// Video struct
 type Video struct {
 	FileID   string     `json:"file_id"`
 	Width    int        `json:"width"`
@@ -133,6 +128,7 @@ type Video struct {
 	FileSize *int       `json:"file_size,omitempty"`
 }
 
+// Animation struct
 type Animation struct {
 	FileID   string     `json:"file_id"`
 	Width    int        `json:"width"`
@@ -144,6 +140,7 @@ type Animation struct {
 	FileSize *int       `json:"file_size,omitempty"`
 }
 
+// Voice struct
 type Voice struct {
 	FileID   string  `json:"file_id"`
 	Duration int     `json:"duration"`
@@ -151,6 +148,7 @@ type Voice struct {
 	FileSize *int    `json:"file_size,omitempty"`
 }
 
+// VideoNote struct
 type VideoNote struct {
 	FileID   string     `json:"file_id"`
 	Length   int        `json:"length"`
@@ -159,6 +157,7 @@ type VideoNote struct {
 	FileSize *int       `json:"file_size,omitempty"`
 }
 
+// Contact struct
 type Contact struct {
 	PhoneNumber string  `json:"phone_number"`
 	FirstName   string  `json:"first_name"`
@@ -167,11 +166,13 @@ type Contact struct {
 	VCard       *string `json:"vcard,omitempty"`
 }
 
+// Location struct
 type Location struct {
 	Longitude float32 `json:"longitude"`
 	Latitude  float32 `json:"latitude"`
 }
 
+// Venue struct
 type Venue struct {
 	Location       Location `json:"location"`
 	Title          string   `json:"title"`
@@ -180,11 +181,13 @@ type Venue struct {
 	FoursquareType *string  `json:"foursquare_type,omitempty"`
 }
 
+// PollOption struct
 type PollOption struct {
 	Text       string `json:"text"`
 	VoterCount int    `json:"voter_count"`
 }
 
+// Poll struct
 type Poll struct {
 	ID       string       `json:"id"`
 	Question string       `json:"question"`
@@ -192,17 +195,20 @@ type Poll struct {
 	IsClosed bool         `json:"is_closed"`
 }
 
+// UserProfilePhotos struct
 type UserProfilePhotos struct {
 	TotalCount int           `json:"total_count"`
 	Photos     [][]PhotoSize `json:"photos"`
 }
 
+// File struct
 type File struct {
 	FileID   string  `json:"file_id"`
 	FileSize *int    `json:"file_size,omitempty"`
 	FilePath *string `json:"file_path,omitempty"`
 }
 
+// ReplyKeyboardMarkup struct
 type ReplyKeyboardMarkup struct {
 	Keyboard        [][]KeyboardButton `json:"keyboard"`
 	ResizeKeyboard  *bool              `json:"resize_keyboard,omitempty"`
@@ -210,21 +216,25 @@ type ReplyKeyboardMarkup struct {
 	Selective       *bool              `json:"selective,omitempty"`
 }
 
+// KeyboardButton struct
 type KeyboardButton struct {
 	Text            string `json:"text"`
 	RequestContact  *bool  `json:"request_contact,omitempty"`
 	RequestLocation *bool  `json:"request_location,omitempty"`
 }
 
+// ReplyKeyboardRemove struct
 type ReplyKeyboardRemove struct {
 	RemoveKeyboard bool  `json:"remove_keyboard"`
 	Selective      *bool `json:"selective,omitempty"`
 }
 
+// InlineKeyboardMarkup struct
 type InlineKeyboardMarkup struct {
 	InlineKeyboard [][]InlineKeyboardButton `json:"inline_keyboard"`
 }
 
+// InlineKeyboardButton struct
 type InlineKeyboardButton struct {
 	Text                         string        `json:"text"`
 	URL                          *string       `json:"url,omitempty"`
@@ -236,6 +246,7 @@ type InlineKeyboardButton struct {
 	Pay                          *bool         `json:"pay,omitempty"`
 }
 
+// LoginURL struct
 type LoginURL struct {
 	URL                string  `json:"url"`
 	ForwardText        *string `json:"forward_text,omitempty"`
@@ -243,6 +254,7 @@ type LoginURL struct {
 	RequestWriteAccess *bool   `json:"request_write_access,omitempty"`
 }
 
+// CallbackQuery struct
 type CallbackQuery struct {
 	ID              string   `json:"id"`
 	From            User     `json:"from"`
@@ -253,16 +265,19 @@ type CallbackQuery struct {
 	GameShortName   *string  `json:"game_short_name,omitempty"`
 }
 
+// ForceReply struct
 type ForceReply struct {
 	ForceReply bool  `json:"force_reply"`
 	Selective  *bool `json:"selective,omitempty"`
 }
 
+// ChatPhoto struct
 type ChatPhoto struct {
 	SmallFileID string `json:"small_file_id"`
 	BigFileID   string `json:"big_file_id"`
 }
 
+// ChatMember struct
 type ChatMember struct {
 	User                  User   `json:"user"`
 	Status                string `json:"status"`
@@ -283,14 +298,17 @@ type ChatMember struct {
 	CanAddWebPagePreviews *bool  `json:"can_add_web_page_previews,omitempty"`
 }
 
+// ResponseParameters struct
 type ResponseParameters struct {
 	MigrateToChatID *int `json:"migrate_to_chat_id,omitempty"`
 	RetryAfter      *int `json:"retry_after,omitempty"`
 }
 
+// InputMedia interface
 type InputMedia interface {
 }
 
+// InputMediaPhoto struct
 type InputMediaPhoto struct {
 	Type      string  `json:"type"`
 	Media     string  `json:"media"`
@@ -298,6 +316,7 @@ type InputMediaPhoto struct {
 	ParseMode *string `json:"parse_mode,omitempty"`
 }
 
+// InputMediaVideo struct
 type InputMediaVideo struct {
 	Type              string      `json:"type"`
 	Media             string      `json:"media"`
@@ -310,6 +329,7 @@ type InputMediaVideo struct {
 	SupportsStreaming *bool       `json:"supports_streaming,omitempty"`
 }
 
+// InputMediaAnimation struct
 type InputMediaAnimation struct {
 	Type      string      `json:"type"`
 	Media     string      `json:"media"`
@@ -321,6 +341,7 @@ type InputMediaAnimation struct {
 	Duration  *int        `json:"duration,omitempty"`
 }
 
+// InputMediaAudio struct
 type InputMediaAudio struct {
 	Type      string      `json:"type"`
 	Media     string      `json:"media"`
@@ -332,6 +353,7 @@ type InputMediaAudio struct {
 	Title     *string     `json:"title,omitempty"`
 }
 
+// InputMediaDocument struct
 type InputMediaDocument struct {
 	Type      string      `json:"type"`
 	Media     string      `json:"media"`
@@ -340,6 +362,7 @@ type InputMediaDocument struct {
 	ParseMode *string     `json:"parse_mode,omitempty"`
 }
 
+// InputFile interface
 type InputFile interface {
 	io.Reader
 }

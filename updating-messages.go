@@ -1,5 +1,6 @@
 package telegram
 
+// EditMessageTextResponse interface
 type EditMessageTextResponse interface {
 	Response
 	GetEditedMessage() *Message
@@ -24,6 +25,7 @@ func (b *bot) EditMessageText(options ...Option) (EditMessageTextResponse, error
 	return &res, nil
 }
 
+// EditMessageCaptionResponse interface
 type EditMessageCaptionResponse interface {
 	Response
 	GetEditedMessage() *Message
@@ -48,6 +50,7 @@ func (b *bot) EditMessageCaption(options ...Option) (EditMessageCaptionResponse,
 	return &res, nil
 }
 
+// EditMessageMediaResponse interface
 type EditMessageMediaResponse interface {
 	Response
 	GetEditedMessage() *Message
@@ -72,6 +75,7 @@ func (b *bot) EditMessageMedia(options ...Option) (EditMessageMediaResponse, err
 	return &res, nil
 }
 
+// EditMessageReplyMarkupResponse interface
 type EditMessageReplyMarkupResponse interface {
 	Response
 	GetEditedMessage() *Message
@@ -96,6 +100,7 @@ func (b *bot) EditMessageReplyMarkup(options ...Option) (EditMessageReplyMarkupR
 	return &res, nil
 }
 
+// StopPollResponse interface
 type StopPollResponse interface {
 	Response
 	GetStoppedPoll() *Poll
@@ -120,6 +125,7 @@ func (b *bot) StopPoll(options ...Option) (StopPollResponse, error) {
 	return &res, nil
 }
 
+// DeleteMessageResponse interface
 type DeleteMessageResponse interface {
 	Response
 }

@@ -8,6 +8,7 @@ import (
 	"net/http"
 )
 
+// Response general interface
 type Response interface {
 	IsOK() bool
 	Error() ResponseError
@@ -37,6 +38,7 @@ func (r *response) Error() ResponseError {
 	return nil
 }
 
+// ResponseError interface
 type ResponseError interface {
 	GetDescription() string
 	GetErrorCode() int

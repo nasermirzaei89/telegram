@@ -1,5 +1,6 @@
 package telegram
 
+// GetMeResponse interface
 type GetMeResponse interface {
 	Response
 	GetUser() *User
@@ -24,6 +25,7 @@ func (b *bot) GetMe() (GetMeResponse, error) {
 	return &res, nil
 }
 
+// SendMessageResponse interface
 type SendMessageResponse interface {
 	Response
 	GetMessage() *Message
@@ -48,6 +50,7 @@ func (b *bot) SendMessage(options ...Option) (SendMessageResponse, error) {
 	return &res, nil
 }
 
+// ForwardMessageResponse interface
 type ForwardMessageResponse interface {
 	Response
 	GetMessage() *Message
@@ -72,6 +75,7 @@ func (b *bot) ForwardMessage(options ...Option) (ForwardMessageResponse, error) 
 	return &res, nil
 }
 
+// SendPhotoResponse interface
 type SendPhotoResponse interface {
 	Response
 	GetMessage() *Message
@@ -96,6 +100,7 @@ func (b *bot) SendPhoto(options ...Option) (SendPhotoResponse, error) {
 	return &res, nil
 }
 
+// SendAudioResponse interface
 type SendAudioResponse interface {
 	Response
 	GetMessage() *Message
@@ -120,6 +125,7 @@ func (b *bot) SendAudio(options ...Option) (SendAudioResponse, error) {
 	return &res, nil
 }
 
+// SendDocumentResponse interface
 type SendDocumentResponse interface {
 	Response
 	GetMessage() *Message
@@ -144,6 +150,7 @@ func (b *bot) SendDocument(options ...Option) (SendDocumentResponse, error) {
 	return &res, nil
 }
 
+// SendVideoResponse interface
 type SendVideoResponse interface {
 	Response
 	GetMessage() *Message
@@ -168,6 +175,7 @@ func (b *bot) SendVideo(options ...Option) (SendVideoResponse, error) {
 	return &res, nil
 }
 
+// SendAnimationResponse interface
 type SendAnimationResponse interface {
 	Response
 	GetMessage() *Message
@@ -192,6 +200,7 @@ func (b *bot) SendAnimation(options ...Option) (SendAnimationResponse, error) {
 	return &res, nil
 }
 
+// SendVoiceResponse interface
 type SendVoiceResponse interface {
 	Response
 	GetMessage() *Message
@@ -216,6 +225,7 @@ func (b *bot) SendVoice(options ...Option) (SendVoiceResponse, error) {
 	return &res, nil
 }
 
+// SendVideoNoteResponse interface
 type SendVideoNoteResponse interface {
 	Response
 	GetMessage() *Message
@@ -240,6 +250,7 @@ func (b *bot) SendVideoNote(options ...Option) (SendVideoNoteResponse, error) {
 	return &res, nil
 }
 
+// SendMediaGroupResponse interface
 type SendMediaGroupResponse interface {
 	Response
 	GetMessage() *Message
@@ -264,6 +275,7 @@ func (b *bot) SendMediaGroup(options ...Option) (SendMediaGroupResponse, error) 
 	return &res, nil
 }
 
+// SendLocationResponse interface
 type SendLocationResponse interface {
 	Response
 	GetMessage() *Message
@@ -288,6 +300,7 @@ func (b *bot) SendLocation(options ...Option) (SendLocationResponse, error) {
 	return &res, nil
 }
 
+// EditMessageLiveLocationResponse interface
 type EditMessageLiveLocationResponse interface {
 	Response
 	GetEditedMessage() *Message
@@ -312,6 +325,7 @@ func (b *bot) EditMessageLiveLocation(options ...Option) (EditMessageLiveLocatio
 	return &res, nil
 }
 
+// StopMessageLiveLocationResponse interface
 type StopMessageLiveLocationResponse interface {
 	Response
 	GetMessage() *Message
@@ -336,6 +350,7 @@ func (b *bot) StopMessageLiveLocation(options ...Option) (StopMessageLiveLocatio
 	return &res, nil
 }
 
+// SendVenueResponse interface
 type SendVenueResponse interface {
 	Response
 	GetMessage() *Message
@@ -360,6 +375,7 @@ func (b *bot) SendVenue(options ...Option) (SendVenueResponse, error) {
 	return &res, nil
 }
 
+// SendContactResponse interface
 type SendContactResponse interface {
 	Response
 	GetMessage() *Message
@@ -384,6 +400,7 @@ func (b *bot) SendContact(options ...Option) (SendContactResponse, error) {
 	return &res, nil
 }
 
+// SendPollResponse interface
 type SendPollResponse interface {
 	Response
 	GetMessage() *Message
@@ -408,6 +425,7 @@ func (b *bot) SendPoll(options ...Option) (SendPollResponse, error) {
 	return &res, nil
 }
 
+// SendChatActionResponse interface
 type SendChatActionResponse interface {
 	Response
 }
@@ -426,6 +444,7 @@ func (b *bot) SendChatAction(options ...Option) (SendChatActionResponse, error) 
 	return &res, nil
 }
 
+// GetUserProfilePhotosResponse interface
 type GetUserProfilePhotosResponse interface {
 	Response
 	GetUserProfilePhotos() *UserProfilePhotos
@@ -450,6 +469,7 @@ func (b *bot) GetUserProfilePhotos(options ...Option) (GetUserProfilePhotosRespo
 	return &res, nil
 }
 
+// GetFileResponse interface
 type GetFileResponse interface {
 	Response
 	GetFile() *File
@@ -474,6 +494,7 @@ func (b *bot) GetFile(options ...Option) (GetFileResponse, error) {
 	return &res, nil
 }
 
+// KickChatMemberResponse interface
 type KickChatMemberResponse interface {
 	Response
 }
@@ -492,6 +513,7 @@ func (b *bot) KickChatMember(options ...Option) (KickChatMemberResponse, error) 
 	return &res, nil
 }
 
+// UnbanChatMemberResponse interface
 type UnbanChatMemberResponse interface {
 	Response
 }
@@ -510,6 +532,7 @@ func (b *bot) UnbanChatMember(options ...Option) (UnbanChatMemberResponse, error
 	return &res, nil
 }
 
+// RestrictChatMemberResponse interface
 type RestrictChatMemberResponse interface {
 	Response
 }
@@ -528,6 +551,7 @@ func (b *bot) RestrictChatMember(options ...Option) (RestrictChatMemberResponse,
 	return &res, nil
 }
 
+// PromoteChatMemberResponse interface
 type PromoteChatMemberResponse interface {
 	Response
 }
@@ -546,6 +570,7 @@ func (b *bot) PromoteChatMember(options ...Option) (PromoteChatMemberResponse, e
 	return &res, nil
 }
 
+// ExportChatInviteLinkResponse interface
 type ExportChatInviteLinkResponse interface {
 	Response
 	GetInviteLink() string
@@ -570,6 +595,7 @@ func (b *bot) ExportChatInviteLink(options ...Option) (ExportChatInviteLinkRespo
 	return &res, nil
 }
 
+// SetChatPhotoResponse interface
 type SetChatPhotoResponse interface {
 	Response
 }
@@ -588,6 +614,7 @@ func (b *bot) SetChatPhoto(options ...Option) (SetChatPhotoResponse, error) {
 	return &res, nil
 }
 
+// DeleteChatPhotoResponse interface
 type DeleteChatPhotoResponse interface {
 	Response
 }
@@ -606,6 +633,7 @@ func (b *bot) DeleteChatPhoto(options ...Option) (DeleteChatPhotoResponse, error
 	return &res, nil
 }
 
+// SetChatTitleResponse interface
 type SetChatTitleResponse interface {
 	Response
 }
@@ -624,6 +652,7 @@ func (b *bot) SetChatTitle(options ...Option) (SetChatTitleResponse, error) {
 	return &res, nil
 }
 
+// SetChatDescriptionResponse interface
 type SetChatDescriptionResponse interface {
 	Response
 }
@@ -642,6 +671,7 @@ func (b *bot) SetChatDescription(options ...Option) (SetChatDescriptionResponse,
 	return &res, nil
 }
 
+// PinChatMessageResponse interface
 type PinChatMessageResponse interface {
 	Response
 }
@@ -660,6 +690,7 @@ func (b *bot) PinChatMessage(options ...Option) (PinChatMessageResponse, error) 
 	return &res, nil
 }
 
+// UnpinChatMessageResponse interface
 type UnpinChatMessageResponse interface {
 	Response
 }
@@ -678,6 +709,7 @@ func (b *bot) UnpinChatMessage(options ...Option) (UnpinChatMessageResponse, err
 	return &res, nil
 }
 
+// LeaveChatResponse interface
 type LeaveChatResponse interface {
 	Response
 }
@@ -696,6 +728,7 @@ func (b *bot) LeaveChat(options ...Option) (LeaveChatResponse, error) {
 	return &res, nil
 }
 
+// GetChatResponse interface
 type GetChatResponse interface {
 	Response
 	GetChat() *Chat
@@ -720,6 +753,7 @@ func (b *bot) GetChat(options ...Option) (GetChatResponse, error) {
 	return &res, nil
 }
 
+// GetChatAdministratorsResponse interface
 type GetChatAdministratorsResponse interface {
 	Response
 	GetChatAdministrators() []ChatMember
@@ -744,6 +778,7 @@ func (b *bot) GetChatAdministrators(options ...Option) (GetChatAdministratorsRes
 	return &res, nil
 }
 
+// GetChatMembersCountResponse interface
 type GetChatMembersCountResponse interface {
 	Response
 	GetChatMembersCount() int
@@ -768,6 +803,7 @@ func (b *bot) GetChatMembersCount(options ...Option) (GetChatMembersCountRespons
 	return &res, nil
 }
 
+// GetChatMemberResponse interface
 type GetChatMemberResponse interface {
 	Response
 	GetChatMember() *ChatMember
@@ -792,6 +828,7 @@ func (b *bot) GetChatMember(options ...Option) (GetChatMemberResponse, error) {
 	return &res, nil
 }
 
+// SetChatStickerSetResponse interface
 type SetChatStickerSetResponse interface {
 	Response
 }
@@ -810,6 +847,7 @@ func (b *bot) SetChatStickerSet(options ...Option) (SetChatStickerSetResponse, e
 	return &res, nil
 }
 
+// DeleteChatStickerSetResponse interface
 type DeleteChatStickerSetResponse interface {
 	Response
 }
@@ -828,6 +866,7 @@ func (b *bot) DeleteChatStickerSet(options ...Option) (DeleteChatStickerSetRespo
 	return &res, nil
 }
 
+// AnswerCallbackQueryResponse interface
 type AnswerCallbackQueryResponse interface {
 	Response
 }
