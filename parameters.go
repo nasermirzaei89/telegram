@@ -2,6 +2,7 @@ package telegram
 
 import (
 	"encoding/json"
+	"regexp"
 	"strings"
 )
 
@@ -14,7 +15,12 @@ func (r *request) setParam(k string, v interface{}) {
 		r.err = err
 		return
 	}
-	err = r.writer.WriteField(k, strings.Trim(string(b), "\""))
+	s := string(b)
+	if strings.Trim(s, "\"") != s {
+		s = strings.Trim(s, "\"")
+		s = regexp.MustCompile(`\\n`).ReplaceAllString(s, "\n")
+	}
+	err = r.writer.WriteField(k, s)
 	if err != nil {
 		r.err = err
 	}
