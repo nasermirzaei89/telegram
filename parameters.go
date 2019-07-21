@@ -406,7 +406,7 @@ func SetInlineQueryID(v string) Option {
 	}
 }
 
-// SetInlineQueryID option function
+// SetResults option function
 func SetResults(v []InlineQueryResult) Option {
 	return func(r *request) {
 		r.setParam("results", v)
