@@ -8,6 +8,9 @@ import (
 	"net/http"
 )
 
+// BaseURL is base of telegram api url
+var BaseURL = "https://api.telegram.org"
+
 // Response general interface
 type Response interface {
 	IsOK() bool
@@ -83,7 +86,7 @@ func doRequest(token, methodName string, res interface{}, options ...Option) err
 	body := &bytes.Buffer{}
 	writer := multipart.NewWriter(body)
 	req := request{
-		url:    fmt.Sprintf("https://api.telegram.org/bot%s/%s", token, methodName),
+		url:    fmt.Sprintf("%s/bot%s/%s", BaseURL, token, methodName),
 		body:   body,
 		writer: writer,
 	}
