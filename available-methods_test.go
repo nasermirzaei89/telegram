@@ -24,8 +24,12 @@ func TestGetMe(t *testing.T) {
 	token := "someToken"
 	response := []byte(`{"ok":true,"result":{"id":1,"is_bot":true,"first_name":"Test Bot","username":"TestBot"}}`)
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		excepted := fmt.Sprintf("/bot%s/getMe", token)
-		except(t, r.URL.String(), excepted)
+		u := fmt.Sprintf("/bot%s/getMe", token)
+		if r.URL.String() != u {
+			w.WriteHeader(http.StatusUnauthorized)
+			_, _ = w.Write([]byte(`{"ok":false,"error_code":401,"description":"Unauthorized"}`))
+			return
+		}
 
 		w.WriteHeader(http.StatusOK)
 		_, _ = w.Write(response)
@@ -34,6 +38,8 @@ func TestGetMe(t *testing.T) {
 	defer server.Close()
 
 	BaseURL = server.URL
+
+	// success
 	bot := New(token)
 
 	res, err := bot.GetMe()
@@ -49,4 +55,17 @@ func TestGetMe(t *testing.T) {
 	notExcept(t, res.GetUser().Username, nil)
 	except(t, *res.GetUser().Username, "TestBot")
 	except(t, res.GetUser().LanguageCode, nil)
+
+	// fail
+	bot = New("invalidToken")
+
+	res, err = bot.GetMe()
+	except(t, err, nil)
+
+	except(t, res.IsOK(), false)
+	except(t, res.GetUser(), nil)
+	notExcept(t, res.Error(), nil)
+	except(t, res.Error().GetErrorCode(), http.StatusUnauthorized)
+	except(t, res.Error().GetDescription(), "Unauthorized")
+	except(t, res.Error().GetParameters(), nil)
 }
