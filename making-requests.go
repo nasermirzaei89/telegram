@@ -95,6 +95,10 @@ func doRequest(token, methodName string, res interface{}, options ...Option) err
 		options[i](&req)
 	}
 
+	if req.err != nil {
+		return req.err
+	}
+
 	return (&req).do(&res)
 }
 

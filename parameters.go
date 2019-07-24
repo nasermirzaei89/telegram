@@ -2,27 +2,48 @@ package telegram
 
 import (
 	"encoding/json"
-	"regexp"
-	"strings"
+	"io"
+	"io/ioutil"
 )
 
 // Option type
 type Option func(*request)
 
 func (r *request) setParam(k string, v interface{}) {
-	b, err := json.Marshal(v)
-	if err != nil {
-		r.err = err
-		return
-	}
-	s := string(b)
-	if strings.Trim(s, "\"") != s {
-		s = strings.Trim(s, "\"")
-		s = regexp.MustCompile(`\\n`).ReplaceAllString(s, "\n")
-	}
-	err = r.writer.WriteField(k, s)
-	if err != nil {
-		r.err = err
+	switch t := v.(type) {
+	case io.Reader:
+		w, err := r.writer.CreateFormFile(k, k)
+		if err != nil {
+			r.err = err
+			return
+		}
+
+		b, err := ioutil.ReadAll(t)
+		if err != nil {
+			r.err = err
+			return
+		}
+
+		_, err = w.Write(b)
+		if err != nil {
+			r.err = err
+			return
+		}
+	case string:
+		err := r.writer.WriteField(k, t)
+		if err != nil {
+			r.err = err
+		}
+	default:
+		b, err := json.Marshal(v)
+		if err != nil {
+			r.err = err
+			return
+		}
+		err = r.writer.WriteField(k, string(b))
+		if err != nil {
+			r.err = err
+		}
 	}
 }
 
@@ -64,8 +85,7 @@ func SetURL(v string) Option {
 // SetCertificate option function
 func SetCertificate(v InputFile) Option {
 	return func(r *request) {
-		// TODO: implement me
-		panic("implement me")
+		r.setParam("certificate", v)
 	}
 }
 
@@ -170,8 +190,7 @@ func SetPhotoFromURL(v string) Option {
 // SetPhoto option function
 func SetPhoto(v InputFile) Option {
 	return func(r *request) {
-		// TODO: implement me
-		panic("implement me")
+		r.setParam("photo", v)
 	}
 }
 
@@ -199,8 +218,7 @@ func SetAudioFromURL(v string) Option {
 // SetAudio option function
 func SetAudio(v InputFile) Option {
 	return func(r *request) {
-		// TODO: implement me
-		panic("implement me")
+		r.setParam("audio", v)
 	}
 }
 
@@ -225,11 +243,12 @@ func SetTitle(v string) Option {
 	}
 }
 
+// TODO: add Thumb string option
+
 // SetThumb option function
-func SetThumb(v interface{}) Option {
+func SetThumb(v InputFile) Option {
 	return func(r *request) {
-		// TODO: implement me
-		panic("implement me")
+		r.setParam("thumb", v)
 	}
 }
 
@@ -250,8 +269,7 @@ func SetDocumentFromURL(v string) Option {
 // SetDocument option function
 func SetDocument(v InputFile) Option {
 	return func(r *request) {
-		// TODO: implement me
-		panic("implement me")
+		r.setParam("document", v)
 	}
 }
 
@@ -272,8 +290,7 @@ func SetVideoFromURL(v string) Option {
 // SetVideo option function
 func SetVideo(v InputFile) Option {
 	return func(r *request) {
-		// TODO: implement me
-		panic("implement me")
+		r.setParam("video", v)
 	}
 }
 
@@ -315,8 +332,7 @@ func SetAnimationFromURL(v string) Option {
 // SetAnimation option function
 func SetAnimation(v InputFile) Option {
 	return func(r *request) {
-		// TODO: implement me
-		panic("implement me")
+		r.setParam("animation", v)
 	}
 }
 
@@ -337,8 +353,7 @@ func SetVoiceFromURL(v string) Option {
 // SetVoice option function
 func SetVoice(v InputFile) Option {
 	return func(r *request) {
-		// TODO: implement me
-		panic("implement me")
+		r.setParam("voice", v)
 	}
 }
 
@@ -359,8 +374,7 @@ func SetVideoNoteFromURL(v string) Option {
 // SetVideoNote option function
 func SetVideoNote(v InputFile) Option {
 	return func(r *request) {
-		// TODO: implement me
-		panic("implement me")
+		r.setParam("video_note", v)
 	}
 }
 
