@@ -14,7 +14,9 @@ var BaseURL = "https://api.telegram.org"
 // Response general interface
 type Response interface {
 	IsOK() bool
-	Error() ResponseError
+	GetErrorCode() *int
+	GetDescription() *string
+	GetParameters() *ResponseParameters
 }
 
 type response struct {
@@ -29,50 +31,16 @@ func (r *response) IsOK() bool {
 	return r.OK
 }
 
-func (r *response) Error() ResponseError {
-	if !r.IsOK() {
-		return &responseError{
-			description: r.Description,
-			errorCode:   r.ErrorCode,
-			parameters:  r.Parameters,
-		}
-	}
-
-	return nil
+func (r *response) GetErrorCode() *int {
+	return r.ErrorCode
 }
 
-// ResponseError interface
-type ResponseError interface {
-	GetDescription() string
-	GetErrorCode() int
-	GetParameters() *ResponseParameters
+func (r *response) GetDescription() *string {
+	return r.Description
 }
 
-type responseError struct {
-	description *string
-	errorCode   *int
-	parameters  *ResponseParameters
-}
-
-func (r *responseError) GetDescription() string {
-	if r.description != nil {
-
-		return *r.description
-	}
-
-	return ""
-}
-
-func (r *responseError) GetErrorCode() int {
-	if r.errorCode != nil {
-		return *r.errorCode
-	}
-
-	return 0
-}
-
-func (r *responseError) GetParameters() *ResponseParameters {
-	return r.parameters
+func (r *response) GetParameters() *ResponseParameters {
+	return r.Parameters
 }
 
 type request struct {

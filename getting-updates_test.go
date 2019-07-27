@@ -35,7 +35,7 @@ func TestGetUpdates(t *testing.T) {
 	except(t, err, nil)
 
 	except(t, res.IsOK(), true)
-	except(t, res.Error(), nil)
+	except(t, res.GetErrorCode(), nil)
 	notExcept(t, res.GetUpdates(), nil)
 	for _, u := range res.GetUpdates() {
 		notExcept(t, u.UpdateID, 0)
@@ -56,8 +56,37 @@ func TestGetUpdates(t *testing.T) {
 
 	except(t, res.IsOK(), false)
 	except(t, len(res.GetUpdates()), 0)
-	notExcept(t, res.Error(), nil)
-	except(t, res.Error().GetErrorCode(), http.StatusUnauthorized)
-	except(t, res.Error().GetDescription(), "Unauthorized")
-	except(t, res.Error().GetParameters(), nil)
+	except(t, *res.GetErrorCode(), http.StatusUnauthorized)
+	except(t, *res.GetDescription(), "Unauthorized")
+	except(t, res.GetParameters(), nil)
+}
+
+func TestSetWebhook(t *testing.T) {
+	token := "someToken"
+	response := []byte(`{"ok":true,"result":true,"description":"Webhook was set"}`)
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		u := fmt.Sprintf("/bot%s/setWebhook", token)
+		if r.URL.String() != u {
+			w.WriteHeader(http.StatusUnauthorized)
+			_, _ = w.Write([]byte(`{"ok":false,"error_code":401,"description":"Unauthorized"}`))
+			return
+		}
+
+		w.WriteHeader(http.StatusOK)
+		_, _ = w.Write(response)
+	}))
+
+	defer server.Close()
+
+	telegram.BaseURL = server.URL
+
+	// success
+	bot := telegram.New(token)
+
+	res, err := bot.SetWebhook()
+	except(t, err, nil)
+
+	except(t, res.IsOK(), true)
+	except(t, res.GetErrorCode(), nil)
+	except(t, *res.GetDescription(), "Webhook was set")
 }

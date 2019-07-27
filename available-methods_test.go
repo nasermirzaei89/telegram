@@ -46,7 +46,7 @@ func TestGetMe(t *testing.T) {
 	except(t, err, nil)
 
 	except(t, res.IsOK(), true)
-	except(t, res.Error(), nil)
+	except(t, res.GetErrorCode(), nil)
 	notExcept(t, res.GetUser(), nil)
 	except(t, res.GetUser().ID, 1)
 	except(t, res.GetUser().IsBot, true)
@@ -64,8 +64,7 @@ func TestGetMe(t *testing.T) {
 
 	except(t, res.IsOK(), false)
 	except(t, res.GetUser(), nil)
-	notExcept(t, res.Error(), nil)
-	except(t, res.Error().GetErrorCode(), http.StatusUnauthorized)
-	except(t, res.Error().GetDescription(), "Unauthorized")
-	except(t, res.Error().GetParameters(), nil)
+	except(t, *res.GetErrorCode(), http.StatusUnauthorized)
+	except(t, *res.GetDescription(), "Unauthorized")
+	except(t, res.GetParameters(), nil)
 }

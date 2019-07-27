@@ -38,7 +38,7 @@ func main() {
 	if res.IsOK() {
 		log.Printf("%+v", res.GetUpdates())
 	} else {
-		log.Printf("%d: %s", res.Error().GetErrorCode(), res.Error().GetDescription())
+		log.Printf("%d: %s", res.GetErrorCode(), *res.GetDescription())
 	}
 }
 ```
