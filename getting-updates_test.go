@@ -83,7 +83,11 @@ func TestSetWebhook(t *testing.T) {
 	// success
 	bot := telegram.New(token)
 
-	res, err := bot.SetWebhook()
+	res, err := bot.SetWebhook(
+		telegram.SetURL("https://example.com/telegram/webhook"),
+		telegram.SetMaxConnections(40),
+		telegram.SetAllowedUpdates("message"),
+	)
 	except(t, err, nil)
 
 	except(t, res.IsOK(), true)

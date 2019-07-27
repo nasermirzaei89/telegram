@@ -90,7 +90,7 @@ func SetCertificate(v InputFile) Option {
 }
 
 // SetMaxConnections option function
-func SetMaxConnections(v string) Option {
+func SetMaxConnections(v int) Option {
 	return func(r *request) {
 		r.setParam("max_connections", v)
 	}
