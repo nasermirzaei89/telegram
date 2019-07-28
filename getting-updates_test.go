@@ -2,18 +2,44 @@ package telegram_test
 
 import (
 	"fmt"
-	"github.com/nasermirzaei89/telegram"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/nasermirzaei89/telegram"
 )
 
 func TestGetUpdates(t *testing.T) {
-	token := "someToken"
-	response := []byte(`{"ok":true,"result":[{"update_id":109399605,
-  "message":{"message_id":1234,"from":{"id":123456789,"is_bot":false,"first_name":"John","last_name":"Doe","username":"johndoe","language_code":"en"},"chat":{"id":123456789,"first_name":"John","last_name":"Doe","username":"johndoe","type":"private"},"date":1234567890,"text":"Test"}}]}`)
+	response := []byte(`{
+  "ok": true,
+  "result": [
+    {
+      "update_id": 109399605,
+      "message": {
+        "message_id": 1234,
+        "from": {
+          "id": 123456789,
+          "is_bot": false,
+          "first_name": "John",
+          "last_name": "Doe",
+          "username": "johndoe",
+          "language_code": "en"
+        },
+        "chat": {
+          "id": 123456789,
+          "first_name": "John",
+          "last_name": "Doe",
+          "username": "johndoe",
+          "type": "private"
+        },
+        "date": 1234567890,
+        "text": "Test"
+      }
+    }
+  ]
+}`)
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		u := fmt.Sprintf("/bot%s/getUpdates", token)
+		u := fmt.Sprintf("/bot%s/getUpdates", testToken)
 		if r.URL.String() != u {
 			w.WriteHeader(http.StatusUnauthorized)
 			_, _ = w.Write([]byte(`{"ok":false,"error_code":401,"description":"Unauthorized"}`))
@@ -29,7 +55,7 @@ func TestGetUpdates(t *testing.T) {
 	telegram.BaseURL = server.URL
 
 	// success
-	bot := telegram.New(token)
+	bot := telegram.New(testToken)
 
 	res, err := bot.GetUpdates()
 	except(t, err, nil)
@@ -49,7 +75,7 @@ func TestGetUpdates(t *testing.T) {
 	//except(t, res.GetUser().LanguageCode, nil)
 
 	// fail
-	bot = telegram.New("invalidToken")
+	bot = telegram.New(invalidToken)
 
 	res, err = bot.GetUpdates()
 	except(t, err, nil)
@@ -62,10 +88,9 @@ func TestGetUpdates(t *testing.T) {
 }
 
 func TestSetWebhook(t *testing.T) {
-	token := "someToken"
 	response := []byte(`{"ok":true,"result":true,"description":"Webhook was set"}`)
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		u := fmt.Sprintf("/bot%s/setWebhook", token)
+		u := fmt.Sprintf("/bot%s/setWebhook", testToken)
 		if r.URL.String() != u {
 			w.WriteHeader(http.StatusUnauthorized)
 			_, _ = w.Write([]byte(`{"ok":false,"error_code":401,"description":"Unauthorized"}`))
@@ -81,7 +106,7 @@ func TestSetWebhook(t *testing.T) {
 	telegram.BaseURL = server.URL
 
 	// success
-	bot := telegram.New(token)
+	bot := telegram.New(testToken)
 
 	res, err := bot.SetWebhook(
 		telegram.SetURL("https://example.com/telegram/webhook"),

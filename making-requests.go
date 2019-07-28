@@ -11,7 +11,7 @@ import (
 )
 
 // BaseURL is base of telegram api url
-var BaseURL = "https://api.telegram.org"
+var BaseURL = "https://api.telegram.org" //nolint:gochecknoglobals
 
 // Response general interface
 type Response interface {
@@ -26,7 +26,6 @@ type response struct {
 	Description *string             `json:"description,omitempty"`
 	ErrorCode   *int                `json:"error_code,omitempty"`
 	Parameters  *ResponseParameters `json:"parameters,omitempty"`
-	Result      interface{}         `json:"result,omitempty"`
 }
 
 func (r *response) IsOK() bool {
