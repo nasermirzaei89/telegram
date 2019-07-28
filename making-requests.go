@@ -47,23 +47,17 @@ func (r *response) GetParameters() *ResponseParameters {
 
 type request struct {
 	params map[string]interface{}
-	url    string
 }
 
 func doRequest(token, methodName string, res interface{}, options ...Option) error {
-	req := request{
+	r := request{
 		params: map[string]interface{}{},
-		url:    fmt.Sprintf("%s/bot%s/%s", BaseURL, token, methodName),
 	}
 
 	for i := range options {
-		options[i](&req)
+		options[i](&r)
 	}
 
-	return (&req).do(&res)
-}
-
-func (r *request) do(v interface{}) error {
 	body := &bytes.Buffer{}
 	writer := multipart.NewWriter(body)
 
@@ -107,7 +101,7 @@ func (r *request) do(v interface{}) error {
 		return err
 	}
 
-	req, err := http.NewRequest(http.MethodPost, r.url, body)
+	req, err := http.NewRequest(http.MethodPost, fmt.Sprintf("%s/bot%s/%s", BaseURL, token, methodName), body)
 	if err != nil {
 		return err
 	}
@@ -124,7 +118,7 @@ func (r *request) do(v interface{}) error {
 	}
 	defer func() { _ = resp.Body.Close() }()
 
-	err = json.NewDecoder(resp.Body).Decode(v)
+	err = json.NewDecoder(resp.Body).Decode(res)
 	if err != nil {
 		return err
 	}
