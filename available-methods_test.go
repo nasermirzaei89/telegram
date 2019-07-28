@@ -7,24 +7,13 @@ import (
 	"testing"
 
 	"github.com/nasermirzaei89/telegram"
+	"github.com/stretchr/testify/assert"
 )
 
 const (
 	testToken    = "someToken"
 	invalidToken = "invalidToken"
 )
-
-func except(t *testing.T, actual, excepted interface{}) {
-	if fmt.Sprintf("%+v", excepted) != fmt.Sprintf("%+v", actual) {
-		t.Errorf("\nexcepted: %+v\nactual:   %+v", excepted, actual)
-	}
-}
-
-func notExcept(t *testing.T, actual, notExcepted interface{}) {
-	if fmt.Sprintf("%+v", notExcepted) == fmt.Sprintf("%+v", actual) {
-		t.Errorf("\nnot excepted: %+v\nactual:       %+v", notExcepted, actual)
-	}
-}
 
 func TestGetMe(t *testing.T) {
 	response := []byte(`{"ok":true,"result":{"id":1,"is_bot":true,"first_name":"Test Bot","username":"TestBot"}}`)
@@ -48,28 +37,28 @@ func TestGetMe(t *testing.T) {
 	bot := telegram.New(testToken)
 
 	res, err := bot.GetMe()
-	except(t, err, nil)
+	assert.Nil(t, err)
 
-	except(t, res.IsOK(), true)
-	except(t, res.GetErrorCode(), 0)
-	notExcept(t, res.GetUser(), nil)
-	except(t, res.GetUser().ID, 1)
-	except(t, res.GetUser().IsBot, true)
-	except(t, res.GetUser().FirstName, "Test Bot")
-	except(t, res.GetUser().LastName, nil)
-	notExcept(t, res.GetUser().Username, nil)
-	except(t, *res.GetUser().Username, "TestBot")
-	except(t, res.GetUser().LanguageCode, nil)
+	assert.True(t, res.IsOK())
+	assert.Zero(t, res.GetErrorCode())
+	assert.NotNil(t, res.GetUser())
+	assert.Equal(t, 1, res.GetUser().ID)
+	assert.True(t, res.GetUser().IsBot)
+	assert.Equal(t, "Test Bot", res.GetUser().FirstName)
+	assert.Nil(t, res.GetUser().LastName)
+	assert.NotNil(t, res.GetUser().Username)
+	assert.Equal(t, "TestBot", *res.GetUser().Username)
+	assert.Nil(t, res.GetUser().LanguageCode)
 
 	// fail
 	bot = telegram.New(invalidToken)
 
 	res, err = bot.GetMe()
-	except(t, err, nil)
+	assert.Nil(t, err)
 
-	except(t, res.IsOK(), false)
-	except(t, res.GetUser(), nil)
-	except(t, res.GetErrorCode(), http.StatusUnauthorized)
-	except(t, res.GetDescription(), "Unauthorized")
-	except(t, res.GetParameters(), nil)
+	assert.False(t, res.IsOK())
+	assert.Nil(t, res.GetUser())
+	assert.Equal(t, http.StatusUnauthorized, res.GetErrorCode())
+	assert.Equal(t, "Unauthorized", res.GetDescription())
+	assert.Nil(t, res.GetParameters())
 }

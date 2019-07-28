@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/nasermirzaei89/telegram"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestGetUpdates(t *testing.T) {
@@ -58,33 +59,26 @@ func TestGetUpdates(t *testing.T) {
 	bot := telegram.New(testToken)
 
 	res, err := bot.GetUpdates()
-	except(t, err, nil)
+	assert.Nil(t, err)
 
-	except(t, res.IsOK(), true)
-	except(t, res.GetErrorCode(), 0)
-	notExcept(t, res.GetUpdates(), nil)
+	assert.True(t, res.IsOK())
+	assert.Zero(t, res.GetErrorCode())
+	assert.NotNil(t, res.GetUpdates())
 	for _, u := range res.GetUpdates() {
-		notExcept(t, u.UpdateID, 0)
+		assert.NotZero(t, u.UpdateID)
 	}
-	//except(t, res.GetUser().ID, 1)
-	//except(t, res.GetUser().IsBot, true)
-	//except(t, res.GetUser().FirstName, "Test Bot")
-	//except(t, res.GetUser().LastName, nil)
-	//notExcept(t, res.GetUser().Username, nil)
-	//except(t, *res.GetUser().Username, "TestBot")
-	//except(t, res.GetUser().LanguageCode, nil)
 
 	// fail
 	bot = telegram.New(invalidToken)
 
 	res, err = bot.GetUpdates()
-	except(t, err, nil)
+	assert.Nil(t, err)
 
-	except(t, res.IsOK(), false)
-	except(t, len(res.GetUpdates()), 0)
-	except(t, res.GetErrorCode(), http.StatusUnauthorized)
-	except(t, res.GetDescription(), "Unauthorized")
-	except(t, res.GetParameters(), nil)
+	assert.False(t, res.IsOK())
+	assert.Empty(t, len(res.GetUpdates()))
+	assert.Equal(t, http.StatusUnauthorized, res.GetErrorCode())
+	assert.Equal(t, "Unauthorized", res.GetDescription())
+	assert.Nil(t, res.GetParameters())
 }
 
 func TestSetWebhook(t *testing.T) {
@@ -113,9 +107,9 @@ func TestSetWebhook(t *testing.T) {
 		telegram.SetMaxConnections(40),
 		telegram.SetAllowedUpdates("message"),
 	)
-	except(t, err, nil)
+	assert.Nil(t, err)
 
-	except(t, res.IsOK(), true)
-	except(t, res.GetErrorCode(), 0)
-	except(t, res.GetDescription(), "Webhook was set")
+	assert.True(t, res.IsOK())
+	assert.Zero(t, res.GetErrorCode())
+	assert.Equal(t, "Webhook was set", res.GetDescription())
 }
