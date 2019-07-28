@@ -35,7 +35,7 @@ func TestGetUpdates(t *testing.T) {
 	except(t, err, nil)
 
 	except(t, res.IsOK(), true)
-	except(t, res.GetErrorCode(), nil)
+	except(t, res.GetErrorCode(), 0)
 	notExcept(t, res.GetUpdates(), nil)
 	for _, u := range res.GetUpdates() {
 		notExcept(t, u.UpdateID, 0)
@@ -56,8 +56,8 @@ func TestGetUpdates(t *testing.T) {
 
 	except(t, res.IsOK(), false)
 	except(t, len(res.GetUpdates()), 0)
-	except(t, *res.GetErrorCode(), http.StatusUnauthorized)
-	except(t, *res.GetDescription(), "Unauthorized")
+	except(t, res.GetErrorCode(), http.StatusUnauthorized)
+	except(t, res.GetDescription(), "Unauthorized")
 	except(t, res.GetParameters(), nil)
 }
 
@@ -91,6 +91,6 @@ func TestSetWebhook(t *testing.T) {
 	except(t, err, nil)
 
 	except(t, res.IsOK(), true)
-	except(t, res.GetErrorCode(), nil)
-	except(t, *res.GetDescription(), "Webhook was set")
+	except(t, res.GetErrorCode(), 0)
+	except(t, res.GetDescription(), "Webhook was set")
 }

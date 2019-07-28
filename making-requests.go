@@ -16,8 +16,8 @@ var BaseURL = "https://api.telegram.org"
 // Response general interface
 type Response interface {
 	IsOK() bool
-	GetErrorCode() *int
-	GetDescription() *string
+	GetErrorCode() int
+	GetDescription() string
 	GetParameters() *ResponseParameters
 }
 
@@ -33,12 +33,20 @@ func (r *response) IsOK() bool {
 	return r.OK
 }
 
-func (r *response) GetErrorCode() *int {
-	return r.ErrorCode
+func (r *response) GetErrorCode() int {
+	if r.ErrorCode != nil {
+		return *r.ErrorCode
+	}
+
+	return 0
 }
 
-func (r *response) GetDescription() *string {
-	return r.Description
+func (r *response) GetDescription() string {
+	if r.Description != nil {
+		return *r.Description
+	}
+
+	return ""
 }
 
 func (r *response) GetParameters() *ResponseParameters {
