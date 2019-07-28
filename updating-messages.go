@@ -17,7 +17,7 @@ func (r *editMessageTextResponse) GetEditedMessage() *Message {
 
 func (b *bot) EditMessageText(options ...Option) (EditMessageTextResponse, error) {
 	var res editMessageTextResponse
-	err := doRequest(b.Token, "editMessageText", &res, options...)
+	err := doRequest(b.token, "editMessageText", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +42,7 @@ func (r *editMessageCaptionResponse) GetEditedMessage() *Message {
 
 func (b *bot) EditMessageCaption(options ...Option) (EditMessageCaptionResponse, error) {
 	var res editMessageCaptionResponse
-	err := doRequest(b.Token, "editMessageCaption", &res, options...)
+	err := doRequest(b.token, "editMessageCaption", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -67,7 +67,7 @@ func (r *editMessageMediaResponse) GetEditedMessage() *Message {
 
 func (b *bot) EditMessageMedia(options ...Option) (EditMessageMediaResponse, error) {
 	var res editMessageMediaResponse
-	err := doRequest(b.Token, "editMessageMedia", &res, options...)
+	err := doRequest(b.token, "editMessageMedia", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -92,7 +92,7 @@ func (r *editMessageReplyMarkupResponse) GetEditedMessage() *Message {
 
 func (b *bot) EditMessageReplyMarkup(options ...Option) (EditMessageReplyMarkupResponse, error) {
 	var res editMessageReplyMarkupResponse
-	err := doRequest(b.Token, "editMessageReplyMarkup", &res, options...)
+	err := doRequest(b.token, "editMessageReplyMarkup", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -117,7 +117,7 @@ func (r *stopPollResponse) GetStoppedPoll() *Poll {
 
 func (b *bot) StopPoll(options ...Option) (StopPollResponse, error) {
 	var res stopPollResponse
-	err := doRequest(b.Token, "stopPoll", &res, options...)
+	err := doRequest(b.token, "stopPoll", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -136,7 +136,7 @@ type deleteMessageResponse struct {
 
 func (b *bot) DeleteMessage(options ...Option) (DeleteMessageResponse, error) {
 	var res deleteMessageResponse
-	err := doRequest(b.Token, "deleteMessage", &res, options...)
+	err := doRequest(b.token, "deleteMessage", &res, options...)
 	if err != nil {
 		return nil, err
 	}

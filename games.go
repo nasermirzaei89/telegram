@@ -17,7 +17,7 @@ func (r *sendGameResponse) GetMessage() *Message {
 
 func (b *bot) SendGame(options ...Option) (SendGameResponse, error) {
 	var res sendGameResponse
-	err := doRequest(b.Token, "sendGame", &res, options...)
+	err := doRequest(b.token, "sendGame", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -55,7 +55,7 @@ func (r *setGameScoreResponse) GetEditedMessage() *Message {
 
 func (b *bot) SetGameScore(options ...Option) (SetGameScoreResponse, error) {
 	var res setGameScoreResponse
-	err := doRequest(b.Token, "setGameScore", &res, options...)
+	err := doRequest(b.token, "setGameScore", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +80,7 @@ func (r *getGameHighScoresResponse) GetGameHighScores() []GameHighScore {
 
 func (b *bot) GetGameHighScores(options ...Option) (GetGameHighScoresResponse, error) {
 	var res getGameHighScoresResponse
-	err := doRequest(b.Token, "getGameHighScores", &res, options...)
+	err := doRequest(b.token, "getGameHighScores", &res, options...)
 	if err != nil {
 		return nil, err
 	}

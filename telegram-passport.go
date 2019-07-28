@@ -45,7 +45,7 @@ type setPassportDataErrorsResponse struct {
 
 func (b *bot) SetPassportDataErrors(options ...Option) (SetPassportDataErrorsResponse, error) {
 	var res setPassportDataErrorsResponse
-	err := doRequest(b.Token, "setPassportDataErrors", &res, options...)
+	err := doRequest(b.token, "setPassportDataErrors", &res, options...)
 	if err != nil {
 		return nil, err
 	}

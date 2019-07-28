@@ -45,7 +45,7 @@ func (r *sendStickerResponse) GetMessage() *Message {
 
 func (b *bot) SendSticker(options ...Option) (SendStickerResponse, error) {
 	var res sendStickerResponse
-	err := doRequest(b.Token, "sendSticker", &res, options...)
+	err := doRequest(b.token, "sendSticker", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -70,7 +70,7 @@ func (r *getStickerSetResponse) GetStickerSet() *StickerSet {
 
 func (b *bot) GetStickerSet(options ...Option) (GetStickerSetResponse, error) {
 	var res getStickerSetResponse
-	err := doRequest(b.Token, "getStickerSet", &res, options...)
+	err := doRequest(b.token, "getStickerSet", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -95,7 +95,7 @@ func (r *uploadStickerFileResponse) GetUploadedFile() *File {
 
 func (b *bot) UploadStickerFile(options ...Option) (UploadStickerFileResponse, error) {
 	var res uploadStickerFileResponse
-	err := doRequest(b.Token, "uploadStickerFile", &res, options...)
+	err := doRequest(b.token, "uploadStickerFile", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -114,7 +114,7 @@ type createNewStickerSetResponse struct {
 
 func (b *bot) CreateNewStickerSet(options ...Option) (CreateNewStickerSetResponse, error) {
 	var res createNewStickerSetResponse
-	err := doRequest(b.Token, "createNewStickerSet", &res, options...)
+	err := doRequest(b.token, "createNewStickerSet", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -133,7 +133,7 @@ type addStickerToSetResponse struct {
 
 func (b *bot) AddStickerToSet(options ...Option) (AddStickerToSetResponse, error) {
 	var res addStickerToSetResponse
-	err := doRequest(b.Token, "addStickerToSet", &res, options...)
+	err := doRequest(b.token, "addStickerToSet", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -152,7 +152,7 @@ type setStickerPositionInSetResponse struct {
 
 func (b *bot) SetStickerPositionInSet(options ...Option) (SetStickerPositionInSetResponse, error) {
 	var res setStickerPositionInSetResponse
-	err := doRequest(b.Token, "setStickerPositionInSet", &res, options...)
+	err := doRequest(b.token, "setStickerPositionInSet", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -171,7 +171,7 @@ type deleteStickerFromSetResponse struct {
 
 func (b *bot) DeleteStickerFromSet(options ...Option) (DeleteStickerFromSetResponse, error) {
 	var res deleteStickerFromSetResponse
-	err := doRequest(b.Token, "deleteStickerFromSet", &res, options...)
+	err := doRequest(b.token, "deleteStickerFromSet", &res, options...)
 	if err != nil {
 		return nil, err
 	}

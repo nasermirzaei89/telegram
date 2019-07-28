@@ -20,7 +20,7 @@ type answerInlineQueryResponse struct {
 
 func (b *bot) AnswerInlineQuery(options ...Option) (AnswerInlineQueryResponse, error) {
 	var res answerInlineQueryResponse
-	err := doRequest(b.Token, "answerInlineQuery", &res, options...)
+	err := doRequest(b.token, "answerInlineQuery", &res, options...)
 	if err != nil {
 		return nil, err
 	}
