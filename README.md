@@ -4,6 +4,7 @@
 
 [![Build Status](https://travis-ci.org/nasermirzaei89/telegram.svg?branch=master)](https://travis-ci.org/nasermirzaei89/telegram)
 [![Go Report Card](https://goreportcard.com/badge/github.com/nasermirzaei89/telegram)](https://goreportcard.com/report/github.com/nasermirzaei89/telegram)
+[![GolangCI](https://golangci.com/badges/github.com/nasermirzaei89/telegram.svg)](https://golangci.com/r/github.com/nasermirzaei89/telegram)
 [![Codecov](https://codecov.io/gh/nasermirzaei89/telegram/branch/master/graph/badge.svg)](https://codecov.io/gh/nasermirzaei89/telegram)
 [![GoDoc](https://godoc.org/github.com/nasermirzaei89/telegram?status.svg)](https://godoc.org/github.com/nasermirzaei89/telegram)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://raw.githubusercontent.com/nasermirzaei89/telegram/master/LICENSE)
