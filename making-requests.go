@@ -4,6 +4,8 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
+	"io/ioutil"
 	"mime/multipart"
 	"net/http"
 )
@@ -44,52 +46,79 @@ func (r *response) GetParameters() *ResponseParameters {
 }
 
 type request struct {
+	params map[string]interface{}
 	url    string
-	body   *bytes.Buffer
-	writer *multipart.Writer
-	err    error
 }
 
 func doRequest(token, methodName string, res interface{}, options ...Option) error {
-	body := &bytes.Buffer{}
-	writer := multipart.NewWriter(body)
 	req := request{
+		params: map[string]interface{}{},
 		url:    fmt.Sprintf("%s/bot%s/%s", BaseURL, token, methodName),
-		body:   body,
-		writer: writer,
 	}
 
 	for i := range options {
 		options[i](&req)
 	}
 
-	if req.err != nil {
-		return req.err
-	}
-
 	return (&req).do(&res)
 }
 
 func (r *request) do(v interface{}) error {
-	if r.err != nil {
-		return r.err
+	body := &bytes.Buffer{}
+	writer := multipart.NewWriter(body)
+
+	for k, v := range r.params {
+		switch t := v.(type) {
+		case io.Reader:
+			w, err := writer.CreateFormFile(k, k)
+			if err != nil {
+				return err
+			}
+
+			b, err := ioutil.ReadAll(t)
+			if err != nil {
+				return err
+			}
+
+			_, err = w.Write(b)
+			if err != nil {
+				return err
+			}
+		case string:
+			err := writer.WriteField(k, t)
+			if err != nil {
+				return err
+			}
+		default:
+			b, err := json.Marshal(v)
+			if err != nil {
+				return err
+			}
+
+			err = writer.WriteField(k, string(b))
+			if err != nil {
+				return err
+			}
+		}
 	}
 
-	err := r.writer.Close()
+	err := writer.Close()
 	if err != nil {
 		return err
 	}
 
-	req, err := http.NewRequest(http.MethodPost, r.url, r.body)
+	req, err := http.NewRequest(http.MethodPost, r.url, body)
 	if err != nil {
 		return err
 	}
 
-	if r.body.Len() > 68 {
-		req.Header.Set("Content-Type", r.writer.FormDataContentType())
+	// don't send content type on empty body
+	if len(r.params) > 0 {
+		req.Header.Set("Content-Type", writer.FormDataContentType())
 	}
 
-	resp, err := http.DefaultClient.Do(req)
+	client := new(http.Client)
+	resp, err := client.Do(req)
 	if err != nil {
 		return err
 	}
