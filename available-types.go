@@ -14,19 +14,19 @@ type User struct {
 
 // Chat struct
 type Chat struct {
-	ID                          int        `json:"id"`
-	Type                        string     `json:"type"`
-	Title                       *string    `json:"title,omitempty"`
-	Username                    *string    `json:"username,omitempty"`
-	FirstName                   *string    `json:"first_name,omitempty"`
-	LastName                    *string    `json:"last_name,omitempty"`
-	AllMembersAreAdministrators *bool      `json:"all_members_are_administrators,omitempty"`
-	Photo                       *ChatPhoto `json:"photo,omitempty"`
-	Description                 *string    `json:"description,omitempty"`
-	InviteLink                  *string    `json:"invite_link,omitempty"`
-	PinnedMessage               *Message   `json:"pinned_message,omitempty"`
-	StickerSetName              *string    `json:"sticker_set_name,omitempty"`
-	CanSetStickerSet            *bool      `json:"can_set_sticker_set,omitempty"`
+	ID               int              `json:"id"`
+	Type             string           `json:"type"`
+	Title            *string          `json:"title,omitempty"`
+	Username         *string          `json:"username,omitempty"`
+	FirstName        *string          `json:"first_name,omitempty"`
+	LastName         *string          `json:"last_name,omitempty"`
+	Photo            *ChatPhoto       `json:"photo,omitempty"`
+	Description      *string          `json:"description,omitempty"`
+	InviteLink       *string          `json:"invite_link,omitempty"`
+	PinnedMessage    *Message         `json:"pinned_message,omitempty"`
+	Permissions      *ChatPermissions `json:"permissions,omitempty"`
+	StickerSetName   *string          `json:"sticker_set_name,omitempty"`
+	CanSetStickerSet *bool            `json:"can_set_sticker_set,omitempty"`
 }
 
 // Message struct
@@ -283,19 +283,32 @@ type ChatMember struct {
 	Status                string `json:"status"`
 	UntilDate             *int   `json:"until_date,omitempty"`
 	CanBeEdited           *bool  `json:"can_be_edited,omitempty"`
-	CanChangeInfo         *bool  `json:"can_change_info,omitempty"`
 	CanPostMessages       *bool  `json:"can_post_messages,omitempty"`
 	CanEditMessages       *bool  `json:"can_edit_messages,omitempty"`
 	CanDeleteMessages     *bool  `json:"can_delete_messages,omitempty"`
-	CanInviteUsers        *bool  `json:"can_invite_users,omitempty"`
 	CanRestrictMembers    *bool  `json:"can_restrict_members,omitempty"`
-	CanPinMessages        *bool  `json:"can_pin_messages,omitempty"`
 	CanPromoteMembers     *bool  `json:"can_promote_members,omitempty"`
+	CanChangeInfo         *bool  `json:"can_change_info,omitempty"`
+	CanInviteUsers        *bool  `json:"can_invite_users,omitempty"`
+	CanPinMessages        *bool  `json:"can_pin_messages,omitempty"`
 	IsMember              *bool  `json:"is_member,omitempty"`
 	CanSendMessages       *bool  `json:"can_send_messages,omitempty"`
 	CanSendMediaMessages  *bool  `json:"can_send_media_messages,omitempty"`
+	CanSendPolls          *bool  `json:"can_send_polls,omitempty"`
 	CanSendOtherMessages  *bool  `json:"can_send_other_messages,omitempty"`
 	CanAddWebPagePreviews *bool  `json:"can_add_web_page_previews,omitempty"`
+}
+
+// ChatPermissions struct
+type ChatPermissions struct {
+	CanSendMessages       *bool `json:"can_send_messages,omitempty"`
+	CanSendMediaMessages  *bool `json:"can_send_media_messages,omitempty"`
+	CanSendPolls          *bool `json:"can_send_polls,omitempty"`
+	CanSendOtherMessages  *bool `json:"can_send_other_messages,omitempty"`
+	CanAddWebPagePreviews *bool `json:"can_add_web_page_previews,omitempty"`
+	CanChangeInfo         *bool `json:"can_change_info,omitempty"`
+	CanInviteUsers        *bool `json:"can_invite_users,omitempty"`
+	CanPinMessages        *bool `json:"can_pin_messages,omitempty"`
 }
 
 // ResponseParameters struct

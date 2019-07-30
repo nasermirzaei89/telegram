@@ -620,3 +620,10 @@ func IsPersonal() Option {
 		r.params["is_personal"] = true
 	}
 }
+
+// SetPermissions option function
+func SetPermissions(v ChatPermissions) Option {
+	return func(r *request) {
+		r.params["permissions"] = v
+	}
+}

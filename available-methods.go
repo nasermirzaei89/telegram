@@ -595,6 +595,25 @@ func (b *bot) ExportChatInviteLink(options ...Option) (ExportChatInviteLinkRespo
 	return &res, nil
 }
 
+// SetChatPermissionsResponse interface
+type SetChatPermissionsResponse interface {
+	Response
+}
+
+type setChatPermissionsResponse struct {
+	response
+}
+
+func (b *bot) SetChatPermissions(options ...Option) (SetChatPermissionsResponse, error) {
+	var res setChatPermissionsResponse
+	err := doRequest(b.token, "setChatPermissions", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
 // SetChatPhotoResponse interface
 type SetChatPhotoResponse interface {
 	Response
