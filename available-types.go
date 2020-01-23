@@ -4,12 +4,15 @@ import "io"
 
 // User struct
 type User struct {
-	ID           int     `json:"id"`
-	IsBot        bool    `json:"is_bot"`
-	FirstName    string  `json:"first_name"`
-	LastName     *string `json:"last_name,omitempty"`
-	Username     *string `json:"username,omitempty"`
-	LanguageCode *string `json:"language_code,omitempty"`
+	ID                      int     `json:"id"`
+	IsBot                   bool    `json:"is_bot"`
+	FirstName               string  `json:"first_name"`
+	LastName                *string `json:"last_name,omitempty"`
+	Username                *string `json:"username,omitempty"`
+	LanguageCode            *string `json:"language_code,omitempty"`
+	CanJoinGroups           *bool   `json:"can_join_groups,omitempty"`
+	CanReadAllGroupMessages *bool   `json:"can_read_all_group_messages,omitempty"`
+	SupportsInlineQueries   *bool   `json:"supports_inline_queries,omitempty"`
 }
 
 // Chat struct
@@ -196,12 +199,24 @@ type PollOption struct {
 	VoterCount int    `json:"voter_count"`
 }
 
+// PollAnswer struct
+type PollAnswer struct {
+	PollID    string `json:"poll_id"`
+	User      User   `json:"user"`
+	OptionIDs []int  `json:"option_ids"`
+}
+
 // Poll struct
 type Poll struct {
-	ID       string       `json:"id"`
-	Question string       `json:"question"`
-	Options  []PollOption `json:"options"`
-	IsClosed bool         `json:"is_closed"`
+	ID                    string       `json:"id"`
+	Question              string       `json:"question"`
+	Options               []PollOption `json:"options"`
+	TotalVoterCount       int          `json:"total_voter_count"`
+	IsClosed              bool         `json:"is_closed"`
+	IsAnonymous           bool         `json:"is_anonymous"`
+	Type                  string       `json:"type"`
+	AllowsMultipleAnswers bool         `json:"allows_multiple_answers"`
+	CorrectOptionID       *int         `json:"correct_option_id,omitempty"`
 }
 
 // UserProfilePhotos struct
@@ -228,9 +243,14 @@ type ReplyKeyboardMarkup struct {
 
 // KeyboardButton struct
 type KeyboardButton struct {
-	Text            string `json:"text"`
-	RequestContact  *bool  `json:"request_contact,omitempty"`
-	RequestLocation *bool  `json:"request_location,omitempty"`
+	Text            string                  `json:"text"`
+	RequestContact  *bool                   `json:"request_contact,omitempty"`
+	RequestLocation *bool                   `json:"request_location,omitempty"`
+	RequestPoll     *KeyboardButtonPollType `json:"request_poll,omitempty"`
+}
+
+type KeyboardButtonPollType struct {
+	Type *string `json:"type,omitempty"`
 }
 
 // ReplyKeyboardRemove struct

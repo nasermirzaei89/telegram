@@ -634,3 +634,38 @@ func SetCustomTitle(v string) Option {
 		r.params["custom_title"] = v
 	}
 }
+
+// IsAnonymous option function
+func IsAnonymous() Option {
+	return func(r *request) {
+		r.params["is_anonymous"] = true
+	}
+}
+
+// SetType option function
+func SetType(v string) Option {
+	return func(r *request) {
+		r.params["type"] = v
+	}
+}
+
+// AllowsMultipleAnswers option function
+func AllowsMultipleAnswers() Option {
+	return func(r *request) {
+		r.params["allows_multiple_answers"] = true
+	}
+}
+
+// SetCorrectOptionID option function
+func SetCorrectOptionID(v int) Option {
+	return func(r *request) {
+		r.params["correct_option_id"] = v
+	}
+}
+
+// IsClosed option function
+func IsClosed() Option {
+	return func(r *request) {
+		r.params["is_closed"] = true
+	}
+}
