@@ -3,6 +3,7 @@ package telegram
 // Sticker struct
 type Sticker struct {
 	FileID       string        `json:"file_id"`
+	FileUniqueID string        `json:"file_unique_id"`
 	Width        int           `json:"width"`
 	Height       int           `json:"height"`
 	IsAnimated   bool          `json:"is_animated"`

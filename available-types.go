@@ -25,6 +25,7 @@ type Chat struct {
 	InviteLink       *string          `json:"invite_link,omitempty"`
 	PinnedMessage    *Message         `json:"pinned_message,omitempty"`
 	Permissions      *ChatPermissions `json:"permissions,omitempty"`
+	SlowModeDelay    *int             `json:"slow_mode_delay,omitempty"`
 	StickerSetName   *string          `json:"sticker_set_name,omitempty"`
 	CanSetStickerSet *bool            `json:"can_set_sticker_set,omitempty"`
 }
@@ -82,79 +83,87 @@ type Message struct {
 
 // MessageEntity struct
 type MessageEntity struct {
-	Type   string  `json:"type"`
-	Offset int     `json:"offset"`
-	Length int     `json:"length"`
-	URL    *string `json:"url,omitempty"`
-	User   *User   `json:"user,omitempty"`
+	Type     string  `json:"type"`
+	Offset   int     `json:"offset"`
+	Length   int     `json:"length"`
+	URL      *string `json:"url,omitempty"`
+	User     *User   `json:"user,omitempty"`
+	Language string  `json:"language,omitempty"`
 }
 
 // PhotoSize struct
 type PhotoSize struct {
-	FileID   string `json:"file_id"`
-	Width    int    `json:"width"`
-	Height   int    `json:"height"`
-	FileSize *int   `json:"file_size,omitempty"`
+	FileID       string `json:"file_id"`
+	FileUniqueID string `json:"file_unique_id"`
+	Width        int    `json:"width"`
+	Height       int    `json:"height"`
+	FileSize     *int   `json:"file_size,omitempty"`
 }
 
 // Audio struct
 type Audio struct {
-	FileID    string     `json:"file_id"`
-	Duration  int        `json:"duration"`
-	Performer *string    `json:"performer,omitempty"`
-	Title     *string    `json:"title,omitempty"`
-	MimeType  *string    `json:"mime_type,omitempty"`
-	FileSize  *int       `json:"file_size,omitempty"`
-	Thumb     *PhotoSize `json:"thumb,omitempty"`
+	FileID       string     `json:"file_id"`
+	FileUniqueID string     `json:"file_unique_id"`
+	Duration     int        `json:"duration"`
+	Performer    *string    `json:"performer,omitempty"`
+	Title        *string    `json:"title,omitempty"`
+	MimeType     *string    `json:"mime_type,omitempty"`
+	FileSize     *int       `json:"file_size,omitempty"`
+	Thumb        *PhotoSize `json:"thumb,omitempty"`
 }
 
 // Document struct
 type Document struct {
-	FileID   string     `json:"file_id"`
-	Thumb    *PhotoSize `json:"thumb,omitempty"`
-	FileName *string    `json:"file_name,omitempty"`
-	MimeType *string    `json:"mime_type,omitempty"`
-	FileSize *int       `json:"file_size,omitempty"`
+	FileID       string     `json:"file_id"`
+	FileUniqueID string     `json:"file_unique_id"`
+	Thumb        *PhotoSize `json:"thumb,omitempty"`
+	FileName     *string    `json:"file_name,omitempty"`
+	MimeType     *string    `json:"mime_type,omitempty"`
+	FileSize     *int       `json:"file_size,omitempty"`
 }
 
 // Video struct
 type Video struct {
-	FileID   string     `json:"file_id"`
-	Width    int        `json:"width"`
-	Height   int        `json:"height"`
-	Duration int        `json:"duration"`
-	Thumb    *PhotoSize `json:"thumb,omitempty"`
-	MimeType *string    `json:"mime_type,omitempty"`
-	FileSize *int       `json:"file_size,omitempty"`
+	FileID       string     `json:"file_id"`
+	FileUniqueID string     `json:"file_unique_id"`
+	Width        int        `json:"width"`
+	Height       int        `json:"height"`
+	Duration     int        `json:"duration"`
+	Thumb        *PhotoSize `json:"thumb,omitempty"`
+	MimeType     *string    `json:"mime_type,omitempty"`
+	FileSize     *int       `json:"file_size,omitempty"`
 }
 
 // Animation struct
 type Animation struct {
-	FileID   string     `json:"file_id"`
-	Width    int        `json:"width"`
-	Height   int        `json:"height"`
-	Duration int        `json:"duration"`
-	Thumb    *PhotoSize `json:"thumb,omitempty"`
-	Filename *string    `json:"filename,omitempty"`
-	MimeType *string    `json:"mime_type,omitempty"`
-	FileSize *int       `json:"file_size,omitempty"`
+	FileID       string     `json:"file_id"`
+	FileUniqueID string     `json:"file_unique_id"`
+	Width        int        `json:"width"`
+	Height       int        `json:"height"`
+	Duration     int        `json:"duration"`
+	Thumb        *PhotoSize `json:"thumb,omitempty"`
+	Filename     *string    `json:"filename,omitempty"`
+	MimeType     *string    `json:"mime_type,omitempty"`
+	FileSize     *int       `json:"file_size,omitempty"`
 }
 
 // Voice struct
 type Voice struct {
-	FileID   string  `json:"file_id"`
-	Duration int     `json:"duration"`
-	MimeType *string `json:"mime_type,omitempty"`
-	FileSize *int    `json:"file_size,omitempty"`
+	FileID       string  `json:"file_id"`
+	FileUniqueID string  `json:"file_unique_id"`
+	Duration     int     `json:"duration"`
+	MimeType     *string `json:"mime_type,omitempty"`
+	FileSize     *int    `json:"file_size,omitempty"`
 }
 
 // VideoNote struct
 type VideoNote struct {
-	FileID   string     `json:"file_id"`
-	Length   int        `json:"length"`
-	Duration int        `json:"duration"`
-	Thumbs   *PhotoSize `json:"thumbs,omitempty"`
-	FileSize *int       `json:"file_size,omitempty"`
+	FileID       string     `json:"file_id"`
+	FileUniqueID string     `json:"file_unique_id"`
+	Length       int        `json:"length"`
+	Duration     int        `json:"duration"`
+	Thumbs       *PhotoSize `json:"thumbs,omitempty"`
+	FileSize     *int       `json:"file_size,omitempty"`
 }
 
 // Contact struct
@@ -203,9 +212,10 @@ type UserProfilePhotos struct {
 
 // File struct
 type File struct {
-	FileID   string  `json:"file_id"`
-	FileSize *int    `json:"file_size,omitempty"`
-	FilePath *string `json:"file_path,omitempty"`
+	FileID       string  `json:"file_id"`
+	FileUniqueID string  `json:"file_unique_id"`
+	FileSize     *int    `json:"file_size,omitempty"`
+	FilePath     *string `json:"file_path,omitempty"`
 }
 
 // ReplyKeyboardMarkup struct
@@ -273,30 +283,33 @@ type ForceReply struct {
 
 // ChatPhoto struct
 type ChatPhoto struct {
-	SmallFileID string `json:"small_file_id"`
-	BigFileID   string `json:"big_file_id"`
+	SmallFileID       string `json:"small_file_id"`
+	SmallFileUniqueID string `json:"small_file_unique_id"`
+	BigFileID         string `json:"big_file_id"`
+	BigFileUniqueID   string `json:"big_file_unique_id"`
 }
 
 // ChatMember struct
 type ChatMember struct {
-	User                  User   `json:"user"`
-	Status                string `json:"status"`
-	UntilDate             *int   `json:"until_date,omitempty"`
-	CanBeEdited           *bool  `json:"can_be_edited,omitempty"`
-	CanPostMessages       *bool  `json:"can_post_messages,omitempty"`
-	CanEditMessages       *bool  `json:"can_edit_messages,omitempty"`
-	CanDeleteMessages     *bool  `json:"can_delete_messages,omitempty"`
-	CanRestrictMembers    *bool  `json:"can_restrict_members,omitempty"`
-	CanPromoteMembers     *bool  `json:"can_promote_members,omitempty"`
-	CanChangeInfo         *bool  `json:"can_change_info,omitempty"`
-	CanInviteUsers        *bool  `json:"can_invite_users,omitempty"`
-	CanPinMessages        *bool  `json:"can_pin_messages,omitempty"`
-	IsMember              *bool  `json:"is_member,omitempty"`
-	CanSendMessages       *bool  `json:"can_send_messages,omitempty"`
-	CanSendMediaMessages  *bool  `json:"can_send_media_messages,omitempty"`
-	CanSendPolls          *bool  `json:"can_send_polls,omitempty"`
-	CanSendOtherMessages  *bool  `json:"can_send_other_messages,omitempty"`
-	CanAddWebPagePreviews *bool  `json:"can_add_web_page_previews,omitempty"`
+	User                  User    `json:"user"`
+	Status                string  `json:"status"`
+	CustomTitle           *string `json:"custom_title,omitempty"`
+	UntilDate             *int    `json:"until_date,omitempty"`
+	CanBeEdited           *bool   `json:"can_be_edited,omitempty"`
+	CanPostMessages       *bool   `json:"can_post_messages,omitempty"`
+	CanEditMessages       *bool   `json:"can_edit_messages,omitempty"`
+	CanDeleteMessages     *bool   `json:"can_delete_messages,omitempty"`
+	CanRestrictMembers    *bool   `json:"can_restrict_members,omitempty"`
+	CanPromoteMembers     *bool   `json:"can_promote_members,omitempty"`
+	CanChangeInfo         *bool   `json:"can_change_info,omitempty"`
+	CanInviteUsers        *bool   `json:"can_invite_users,omitempty"`
+	CanPinMessages        *bool   `json:"can_pin_messages,omitempty"`
+	IsMember              *bool   `json:"is_member,omitempty"`
+	CanSendMessages       *bool   `json:"can_send_messages,omitempty"`
+	CanSendMediaMessages  *bool   `json:"can_send_media_messages,omitempty"`
+	CanSendPolls          *bool   `json:"can_send_polls,omitempty"`
+	CanSendOtherMessages  *bool   `json:"can_send_other_messages,omitempty"`
+	CanAddWebPagePreviews *bool   `json:"can_add_web_page_previews,omitempty"`
 }
 
 // ChatPermissions struct

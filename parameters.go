@@ -627,3 +627,10 @@ func SetPermissions(v ChatPermissions) Option {
 		r.params["permissions"] = v
 	}
 }
+
+// SetCustomTitle option function
+func SetCustomTitle(v string) Option {
+	return func(r *request) {
+		r.params["custom_title"] = v
+	}
+}

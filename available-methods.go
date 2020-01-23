@@ -570,6 +570,25 @@ func (b *bot) PromoteChatMember(options ...Option) (PromoteChatMemberResponse, e
 	return &res, nil
 }
 
+// SetChatAdministratorCustomTitleResponse interface
+type SetChatAdministratorCustomTitleResponse interface {
+	Response
+}
+
+type setChatAdministratorCustomTitleResponse struct {
+	response
+}
+
+func (b *bot) SetChatAdministratorCustomTitle(options ...Option) (SetChatAdministratorCustomTitleResponse, error) {
+	var res setChatAdministratorCustomTitleResponse
+	err := doRequest(b.token, "setChatAdministratorCustomTitle", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
 // ExportChatInviteLinkResponse interface
 type ExportChatInviteLinkResponse interface {
 	Response
