@@ -10,9 +10,6 @@ import (
 	"net/http"
 )
 
-// BaseURL is base of telegram api url
-var BaseURL = "https://api.telegram.org" //nolint:gochecknoglobals
-
 // Response general interface
 type Response interface {
 	IsOK() bool
@@ -56,7 +53,7 @@ type request struct {
 	params map[string]interface{}
 }
 
-func doRequest(token, methodName string, res interface{}, options ...Option) error {
+func (b *bot) doRequest(methodName string, res interface{}, options ...MethodOption) error {
 	r := request{
 		params: map[string]interface{}{},
 	}
@@ -108,7 +105,7 @@ func doRequest(token, methodName string, res interface{}, options ...Option) err
 		return err
 	}
 
-	req, err := http.NewRequest(http.MethodPost, fmt.Sprintf("%s/bot%s/%s", BaseURL, token, methodName), body)
+	req, err := http.NewRequest(http.MethodPost, fmt.Sprintf("%s/bot%s/%s", b.baseURL, b.token, methodName), body)
 	if err != nil {
 		return err
 	}

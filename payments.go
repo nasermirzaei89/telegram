@@ -15,9 +15,9 @@ func (r *sendInvoiceResponse) GetMessage() *Message {
 	return r.Result
 }
 
-func (b *bot) SendInvoice(options ...Option) (SendInvoiceResponse, error) {
+func (b *bot) SendInvoice(options ...MethodOption) (SendInvoiceResponse, error) {
 	var res sendInvoiceResponse
-	err := doRequest(b.token, "sendInvoice", &res, options...)
+	err := b.doRequest("sendInvoice", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -34,9 +34,9 @@ type answerShippingQueryResponse struct {
 	response
 }
 
-func (b *bot) AnswerShippingQuery(options ...Option) (AnswerShippingQueryResponse, error) {
+func (b *bot) AnswerShippingQuery(options ...MethodOption) (AnswerShippingQueryResponse, error) {
 	var res answerShippingQueryResponse
-	err := doRequest(b.token, "answerShippingQuery", &res, options...)
+	err := b.doRequest("answerShippingQuery", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -53,9 +53,9 @@ type answerPreCheckoutQueryResponse struct {
 	response
 }
 
-func (b *bot) AnswerPreCheckoutQuery(options ...Option) (AnswerPreCheckoutQueryResponse, error) {
+func (b *bot) AnswerPreCheckoutQuery(options ...MethodOption) (AnswerPreCheckoutQueryResponse, error) {
 	var res answerPreCheckoutQueryResponse
-	err := doRequest(b.token, "answerPreCheckoutQuery", &res, options...)
+	err := b.doRequest("answerPreCheckoutQuery", &res, options...)
 	if err != nil {
 		return nil, err
 	}

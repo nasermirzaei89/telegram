@@ -31,9 +31,9 @@ func (r *getUpdatesResponse) GetUpdates() []Update {
 	return r.Result
 }
 
-func (b *bot) GetUpdates(options ...Option) (GetUpdatesResponse, error) {
+func (b *bot) GetUpdates(options ...MethodOption) (GetUpdatesResponse, error) {
 	var res getUpdatesResponse
-	err := doRequest(b.token, "getUpdates", &res, options...)
+	err := b.doRequest("getUpdates", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -50,9 +50,9 @@ type setWebhookResponse struct {
 	response
 }
 
-func (b *bot) SetWebhook(options ...Option) (SetWebhookResponse, error) {
+func (b *bot) SetWebhook(options ...MethodOption) (SetWebhookResponse, error) {
 	var res setWebhookResponse
-	err := doRequest(b.token, "setWebhook", &res, options...)
+	err := b.doRequest("setWebhook", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -71,7 +71,7 @@ type deleteWebhookResponse struct {
 
 func (b *bot) DeleteWebhook() (DeleteWebhookResponse, error) {
 	var res deleteWebhookResponse
-	err := doRequest(b.token, "deleteWebhook", &res)
+	err := b.doRequest("deleteWebhook", &res)
 	if err != nil {
 		return nil, err
 	}
@@ -96,7 +96,7 @@ func (r *getWebhookInfoResponse) GetWebhookInfo() *WebhookInfo {
 
 func (b *bot) GetWebhookInfo() (GetWebhookInfoResponse, error) {
 	var res getWebhookInfoResponse
-	err := doRequest(b.token, "getWebhookInfo", &res)
+	err := b.doRequest("getWebhookInfo", &res)
 	if err != nil {
 		return nil, err
 	}

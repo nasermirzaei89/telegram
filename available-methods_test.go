@@ -31,10 +31,8 @@ func TestGetMe(t *testing.T) {
 
 	defer server.Close()
 
-	telegram.BaseURL = server.URL
-
 	// success
-	bot := telegram.New(testToken)
+	bot := telegram.New(testToken, telegram.SetBaseURL(server.URL))
 
 	res, err := bot.GetMe()
 	assert.Nil(t, err)
@@ -51,7 +49,7 @@ func TestGetMe(t *testing.T) {
 	assert.Nil(t, res.GetUser().LanguageCode)
 
 	// fail
-	bot = telegram.New(invalidToken)
+	bot = telegram.New(invalidToken, telegram.SetBaseURL(server.URL))
 
 	res, err = bot.GetMe()
 	assert.Nil(t, err)

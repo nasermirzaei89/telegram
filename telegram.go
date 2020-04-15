@@ -5,95 +5,117 @@ type Bot interface {
 	GetToken() string
 
 	// getting updates
-	GetUpdates(...Option) (GetUpdatesResponse, error)
-	SetWebhook(...Option) (SetWebhookResponse, error)
+	GetUpdates(...MethodOption) (GetUpdatesResponse, error)
+	SetWebhook(...MethodOption) (SetWebhookResponse, error)
 	DeleteWebhook() (DeleteWebhookResponse, error)
 	GetWebhookInfo() (GetWebhookInfoResponse, error)
 
 	// available methods
 	GetMe() (GetMeResponse, error)
-	SendMessage(...Option) (SendMessageResponse, error)
-	ForwardMessage(...Option) (ForwardMessageResponse, error)
-	SendPhoto(...Option) (SendPhotoResponse, error)
-	SendAudio(...Option) (SendAudioResponse, error)
-	SendDocument(...Option) (SendDocumentResponse, error)
-	SendVideo(...Option) (SendVideoResponse, error)
-	SendAnimation(...Option) (SendAnimationResponse, error)
-	SendVoice(...Option) (SendVoiceResponse, error)
-	SendVideoNote(...Option) (SendVideoNoteResponse, error)
-	SendMediaGroup(...Option) (SendMediaGroupResponse, error)
-	SendLocation(...Option) (SendLocationResponse, error)
-	EditMessageLiveLocation(...Option) (EditMessageLiveLocationResponse, error)
-	StopMessageLiveLocation(...Option) (StopMessageLiveLocationResponse, error)
-	SendVenue(...Option) (SendVenueResponse, error)
-	SendContact(...Option) (SendContactResponse, error)
-	SendPoll(...Option) (SendPollResponse, error)
-	SendChatAction(...Option) (SendChatActionResponse, error)
-	GetUserProfilePhotos(...Option) (GetUserProfilePhotosResponse, error)
-	GetFile(...Option) (GetFileResponse, error)
-	KickChatMember(...Option) (KickChatMemberResponse, error)
-	UnbanChatMember(...Option) (UnbanChatMemberResponse, error)
-	RestrictChatMember(...Option) (RestrictChatMemberResponse, error)
-	PromoteChatMember(...Option) (PromoteChatMemberResponse, error)
-	ExportChatInviteLink(...Option) (ExportChatInviteLinkResponse, error)
-	SetChatPhoto(...Option) (SetChatPhotoResponse, error)
-	DeleteChatPhoto(...Option) (DeleteChatPhotoResponse, error)
-	SetChatTitle(...Option) (SetChatTitleResponse, error)
-	SetChatDescription(...Option) (SetChatDescriptionResponse, error)
-	PinChatMessage(...Option) (PinChatMessageResponse, error)
-	UnpinChatMessage(...Option) (UnpinChatMessageResponse, error)
-	LeaveChat(...Option) (LeaveChatResponse, error)
-	GetChat(...Option) (GetChatResponse, error)
-	GetChatAdministrators(...Option) (GetChatAdministratorsResponse, error)
-	GetChatMembersCount(...Option) (GetChatMembersCountResponse, error)
-	GetChatMember(...Option) (GetChatMemberResponse, error)
-	SetChatStickerSet(...Option) (SetChatStickerSetResponse, error)
-	DeleteChatStickerSet(...Option) (DeleteChatStickerSetResponse, error)
-	AnswerCallbackQuery(...Option) (AnswerCallbackQueryResponse, error)
+	SendMessage(...MethodOption) (SendMessageResponse, error)
+	ForwardMessage(...MethodOption) (ForwardMessageResponse, error)
+	SendPhoto(...MethodOption) (SendPhotoResponse, error)
+	SendAudio(...MethodOption) (SendAudioResponse, error)
+	SendDocument(...MethodOption) (SendDocumentResponse, error)
+	SendVideo(...MethodOption) (SendVideoResponse, error)
+	SendAnimation(...MethodOption) (SendAnimationResponse, error)
+	SendVoice(...MethodOption) (SendVoiceResponse, error)
+	SendVideoNote(...MethodOption) (SendVideoNoteResponse, error)
+	SendMediaGroup(...MethodOption) (SendMediaGroupResponse, error)
+	SendLocation(...MethodOption) (SendLocationResponse, error)
+	EditMessageLiveLocation(...MethodOption) (EditMessageLiveLocationResponse, error)
+	StopMessageLiveLocation(...MethodOption) (StopMessageLiveLocationResponse, error)
+	SendVenue(...MethodOption) (SendVenueResponse, error)
+	SendContact(...MethodOption) (SendContactResponse, error)
+	SendPoll(...MethodOption) (SendPollResponse, error)
+	SendChatAction(...MethodOption) (SendChatActionResponse, error)
+	GetUserProfilePhotos(...MethodOption) (GetUserProfilePhotosResponse, error)
+	GetFile(...MethodOption) (GetFileResponse, error)
+	KickChatMember(...MethodOption) (KickChatMemberResponse, error)
+	UnbanChatMember(...MethodOption) (UnbanChatMemberResponse, error)
+	RestrictChatMember(...MethodOption) (RestrictChatMemberResponse, error)
+	PromoteChatMember(...MethodOption) (PromoteChatMemberResponse, error)
+	ExportChatInviteLink(...MethodOption) (ExportChatInviteLinkResponse, error)
+	SetChatPhoto(...MethodOption) (SetChatPhotoResponse, error)
+	DeleteChatPhoto(...MethodOption) (DeleteChatPhotoResponse, error)
+	SetChatTitle(...MethodOption) (SetChatTitleResponse, error)
+	SetChatDescription(...MethodOption) (SetChatDescriptionResponse, error)
+	PinChatMessage(...MethodOption) (PinChatMessageResponse, error)
+	UnpinChatMessage(...MethodOption) (UnpinChatMessageResponse, error)
+	LeaveChat(...MethodOption) (LeaveChatResponse, error)
+	GetChat(...MethodOption) (GetChatResponse, error)
+	GetChatAdministrators(...MethodOption) (GetChatAdministratorsResponse, error)
+	GetChatMembersCount(...MethodOption) (GetChatMembersCountResponse, error)
+	GetChatMember(...MethodOption) (GetChatMemberResponse, error)
+	SetChatStickerSet(...MethodOption) (SetChatStickerSetResponse, error)
+	DeleteChatStickerSet(...MethodOption) (DeleteChatStickerSetResponse, error)
+	AnswerCallbackQuery(...MethodOption) (AnswerCallbackQueryResponse, error)
 
 	// updating messages
-	EditMessageText(...Option) (EditMessageTextResponse, error)
-	EditMessageCaption(...Option) (EditMessageCaptionResponse, error)
-	EditMessageMedia(...Option) (EditMessageMediaResponse, error)
-	EditMessageReplyMarkup(...Option) (EditMessageReplyMarkupResponse, error)
-	StopPoll(...Option) (StopPollResponse, error)
-	DeleteMessage(...Option) (DeleteMessageResponse, error)
+	EditMessageText(...MethodOption) (EditMessageTextResponse, error)
+	EditMessageCaption(...MethodOption) (EditMessageCaptionResponse, error)
+	EditMessageMedia(...MethodOption) (EditMessageMediaResponse, error)
+	EditMessageReplyMarkup(...MethodOption) (EditMessageReplyMarkupResponse, error)
+	StopPoll(...MethodOption) (StopPollResponse, error)
+	DeleteMessage(...MethodOption) (DeleteMessageResponse, error)
 
 	// stickers
-	SendSticker(...Option) (SendStickerResponse, error)
-	GetStickerSet(...Option) (GetStickerSetResponse, error)
-	UploadStickerFile(...Option) (UploadStickerFileResponse, error)
-	CreateNewStickerSet(...Option) (CreateNewStickerSetResponse, error)
-	AddStickerToSet(...Option) (AddStickerToSetResponse, error)
-	SetStickerPositionInSet(...Option) (SetStickerPositionInSetResponse, error)
-	DeleteStickerFromSet(...Option) (DeleteStickerFromSetResponse, error)
+	SendSticker(...MethodOption) (SendStickerResponse, error)
+	GetStickerSet(...MethodOption) (GetStickerSetResponse, error)
+	UploadStickerFile(...MethodOption) (UploadStickerFileResponse, error)
+	CreateNewStickerSet(...MethodOption) (CreateNewStickerSetResponse, error)
+	AddStickerToSet(...MethodOption) (AddStickerToSetResponse, error)
+	SetStickerPositionInSet(...MethodOption) (SetStickerPositionInSetResponse, error)
+	DeleteStickerFromSet(...MethodOption) (DeleteStickerFromSetResponse, error)
 
 	// inline mode
-	AnswerInlineQuery(...Option) (AnswerInlineQueryResponse, error)
+	AnswerInlineQuery(...MethodOption) (AnswerInlineQueryResponse, error)
 
 	// payments
-	SendInvoice(...Option) (SendInvoiceResponse, error)
-	AnswerShippingQuery(...Option) (AnswerShippingQueryResponse, error)
-	AnswerPreCheckoutQuery(...Option) (AnswerPreCheckoutQueryResponse, error)
+	SendInvoice(...MethodOption) (SendInvoiceResponse, error)
+	AnswerShippingQuery(...MethodOption) (AnswerShippingQueryResponse, error)
+	AnswerPreCheckoutQuery(...MethodOption) (AnswerPreCheckoutQueryResponse, error)
 
 	// telegram passport
-	SetPassportDataErrors(...Option) (SetPassportDataErrorsResponse, error)
+	SetPassportDataErrors(...MethodOption) (SetPassportDataErrorsResponse, error)
 
 	// games
-	SendGame(...Option) (SendGameResponse, error)
-	SetGameScore(...Option) (SetGameScoreResponse, error)
-	GetGameHighScores(...Option) (GetGameHighScoresResponse, error)
+	SendGame(...MethodOption) (SendGameResponse, error)
+	SetGameScore(...MethodOption) (SetGameScoreResponse, error)
+	GetGameHighScores(...MethodOption) (GetGameHighScoresResponse, error)
 }
 
+type BotOption func(*bot)
+
 type bot struct {
-	token string
+	token   string
+	baseURL string
 }
 
 // New return a telegram bot instance
-func New(token string) Bot {
-	return &bot{token: token}
+func New(token string, options ...BotOption) Bot {
+	b := bot{
+		token:   token,
+		baseURL: "https://api.telegram.org",
+	}
+
+	for i := range options {
+		options[i](&b)
+	}
+
+	return &b
 }
 
 func (b *bot) GetToken() string {
 	return b.token
+}
+
+func SetBaseURL(v string) BotOption {
+	return func(b *bot) {
+		b.baseURL = v
+	}
+}
+
+func (b *bot) GetBaseURL() string {
+	return b.baseURL
 }

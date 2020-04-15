@@ -18,9 +18,9 @@ type answerInlineQueryResponse struct {
 	response
 }
 
-func (b *bot) AnswerInlineQuery(options ...Option) (AnswerInlineQueryResponse, error) {
+func (b *bot) AnswerInlineQuery(options ...MethodOption) (AnswerInlineQueryResponse, error) {
 	var res answerInlineQueryResponse
-	err := doRequest(b.token, "answerInlineQuery", &res, options...)
+	err := b.doRequest("answerInlineQuery", &res, options...)
 	if err != nil {
 		return nil, err
 	}

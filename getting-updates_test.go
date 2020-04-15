@@ -53,10 +53,8 @@ func TestGetUpdates(t *testing.T) {
 
 	defer server.Close()
 
-	telegram.BaseURL = server.URL
-
 	// success
-	bot := telegram.New(testToken)
+	bot := telegram.New(testToken, telegram.SetBaseURL(server.URL))
 
 	res, err := bot.GetUpdates()
 	assert.Nil(t, err)
@@ -69,7 +67,7 @@ func TestGetUpdates(t *testing.T) {
 	}
 
 	// fail
-	bot = telegram.New(invalidToken)
+	bot = telegram.New(invalidToken, telegram.SetBaseURL(server.URL))
 
 	res, err = bot.GetUpdates()
 	assert.Nil(t, err)
@@ -97,10 +95,8 @@ func TestSetWebhook(t *testing.T) {
 
 	defer server.Close()
 
-	telegram.BaseURL = server.URL
-
 	// success
-	bot := telegram.New(testToken)
+	bot := telegram.New(testToken, telegram.SetBaseURL(server.URL))
 
 	res, err := bot.SetWebhook(
 		telegram.SetURL("https://example.com/telegram/webhook"),
