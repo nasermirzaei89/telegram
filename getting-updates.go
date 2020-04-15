@@ -33,6 +33,7 @@ func (r *getUpdatesResponse) GetUpdates() []Update {
 
 func (b *bot) GetUpdates(options ...MethodOption) (GetUpdatesResponse, error) {
 	var res getUpdatesResponse
+
 	err := b.doRequest("getUpdates", &res, options...)
 	if err != nil {
 		return nil, err
@@ -52,6 +53,7 @@ type setWebhookResponse struct {
 
 func (b *bot) SetWebhook(options ...MethodOption) (SetWebhookResponse, error) {
 	var res setWebhookResponse
+
 	err := b.doRequest("setWebhook", &res, options...)
 	if err != nil {
 		return nil, err
@@ -71,6 +73,7 @@ type deleteWebhookResponse struct {
 
 func (b *bot) DeleteWebhook() (DeleteWebhookResponse, error) {
 	var res deleteWebhookResponse
+
 	err := b.doRequest("deleteWebhook", &res)
 	if err != nil {
 		return nil, err
@@ -96,6 +99,7 @@ func (r *getWebhookInfoResponse) GetWebhookInfo() *WebhookInfo {
 
 func (b *bot) GetWebhookInfo() (GetWebhookInfoResponse, error) {
 	var res getWebhookInfoResponse
+
 	err := b.doRequest("getWebhookInfo", &res)
 	if err != nil {
 		return nil, err

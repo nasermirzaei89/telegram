@@ -17,6 +17,7 @@ func (r *getMeResponse) GetUser() *User {
 
 func (b *bot) GetMe() (GetMeResponse, error) {
 	var res getMeResponse
+
 	err := b.doRequest("getMe", &res)
 	if err != nil {
 		return nil, err
@@ -42,6 +43,7 @@ func (r *sendMessageResponse) GetMessage() *Message {
 
 func (b *bot) SendMessage(options ...MethodOption) (SendMessageResponse, error) {
 	var res sendMessageResponse
+
 	err := b.doRequest("sendMessage", &res, options...)
 	if err != nil {
 		return nil, err
@@ -67,6 +69,7 @@ func (r *forwardMessageResponse) GetMessage() *Message {
 
 func (b *bot) ForwardMessage(options ...MethodOption) (ForwardMessageResponse, error) {
 	var res forwardMessageResponse
+
 	err := b.doRequest("forwardMessage", &res, options...)
 	if err != nil {
 		return nil, err
@@ -92,6 +95,7 @@ func (r *sendPhotoResponse) GetMessage() *Message {
 
 func (b *bot) SendPhoto(options ...MethodOption) (SendPhotoResponse, error) {
 	var res sendPhotoResponse
+
 	err := b.doRequest("sendPhoto", &res, options...)
 	if err != nil {
 		return nil, err
@@ -117,6 +121,7 @@ func (r *sendAudioResponse) GetMessage() *Message {
 
 func (b *bot) SendAudio(options ...MethodOption) (SendAudioResponse, error) {
 	var res sendAudioResponse
+
 	err := b.doRequest("sendAudio", &res, options...)
 	if err != nil {
 		return nil, err
@@ -142,6 +147,7 @@ func (r *sendDocumentResponse) GetMessage() *Message {
 
 func (b *bot) SendDocument(options ...MethodOption) (SendDocumentResponse, error) {
 	var res sendDocumentResponse
+
 	err := b.doRequest("sendDocument", &res, options...)
 	if err != nil {
 		return nil, err
@@ -167,6 +173,7 @@ func (r *sendVideoResponse) GetMessage() *Message {
 
 func (b *bot) SendVideo(options ...MethodOption) (SendVideoResponse, error) {
 	var res sendVideoResponse
+
 	err := b.doRequest("sendVideo", &res, options...)
 	if err != nil {
 		return nil, err
@@ -192,6 +199,7 @@ func (r *sendAnimationResponse) GetMessage() *Message {
 
 func (b *bot) SendAnimation(options ...MethodOption) (SendAnimationResponse, error) {
 	var res sendAnimationResponse
+
 	err := b.doRequest("sendAnimation", &res, options...)
 	if err != nil {
 		return nil, err
@@ -217,6 +225,7 @@ func (r *sendVoiceResponse) GetMessage() *Message {
 
 func (b *bot) SendVoice(options ...MethodOption) (SendVoiceResponse, error) {
 	var res sendVoiceResponse
+
 	err := b.doRequest("sendVoice", &res, options...)
 	if err != nil {
 		return nil, err
@@ -242,6 +251,7 @@ func (r *sendVideoNoteResponse) GetMessage() *Message {
 
 func (b *bot) SendVideoNote(options ...MethodOption) (SendVideoNoteResponse, error) {
 	var res sendVideoNoteResponse
+
 	err := b.doRequest("sendVideoNote", &res, options...)
 	if err != nil {
 		return nil, err
@@ -267,6 +277,7 @@ func (r *sendMediaGroupResponse) GetMessage() *Message {
 
 func (b *bot) SendMediaGroup(options ...MethodOption) (SendMediaGroupResponse, error) {
 	var res sendMediaGroupResponse
+
 	err := b.doRequest("sendMediaGroup", &res, options...)
 	if err != nil {
 		return nil, err
@@ -292,6 +303,7 @@ func (r *sendLocationResponse) GetMessage() *Message {
 
 func (b *bot) SendLocation(options ...MethodOption) (SendLocationResponse, error) {
 	var res sendLocationResponse
+
 	err := b.doRequest("sendLocation", &res, options...)
 	if err != nil {
 		return nil, err
@@ -317,6 +329,7 @@ func (r *editMessageLiveLocationResponse) GetEditedMessage() *Message {
 
 func (b *bot) EditMessageLiveLocation(options ...MethodOption) (EditMessageLiveLocationResponse, error) {
 	var res editMessageLiveLocationResponse
+
 	err := b.doRequest("editMessageLiveLocation", &res, options...)
 	if err != nil {
 		return nil, err
@@ -342,6 +355,7 @@ func (r *stopMessageLiveLocationResponse) GetMessage() *Message {
 
 func (b *bot) StopMessageLiveLocation(options ...MethodOption) (StopMessageLiveLocationResponse, error) {
 	var res stopMessageLiveLocationResponse
+
 	err := b.doRequest("stopMessageLiveLocation", &res, options...)
 	if err != nil {
 		return nil, err
@@ -367,6 +381,7 @@ func (r *sendVenueResponse) GetMessage() *Message {
 
 func (b *bot) SendVenue(options ...MethodOption) (SendVenueResponse, error) {
 	var res sendVenueResponse
+
 	err := b.doRequest("sendVenue", &res, options...)
 	if err != nil {
 		return nil, err
@@ -392,6 +407,7 @@ func (r *sendContactResponse) GetMessage() *Message {
 
 func (b *bot) SendContact(options ...MethodOption) (SendContactResponse, error) {
 	var res sendContactResponse
+
 	err := b.doRequest("sendContact", &res, options...)
 	if err != nil {
 		return nil, err
@@ -417,6 +433,7 @@ func (r *sendPollResponse) GetMessage() *Message {
 
 func (b *bot) SendPoll(options ...MethodOption) (SendPollResponse, error) {
 	var res sendPollResponse
+
 	err := b.doRequest("sendPoll", &res, options...)
 	if err != nil {
 		return nil, err
@@ -436,6 +453,7 @@ type sendDiceResponse struct {
 
 func (b *bot) SendDice(options ...MethodOption) (SendDiceResponse, error) {
 	var res sendDiceResponse
+
 	err := b.doRequest("sendDice", &res, options...)
 	if err != nil {
 		return nil, err
@@ -455,6 +473,7 @@ type sendChatActionResponse struct {
 
 func (b *bot) SendChatAction(options ...MethodOption) (SendChatActionResponse, error) {
 	var res sendChatActionResponse
+
 	err := b.doRequest("sendChatAction", &res, options...)
 	if err != nil {
 		return nil, err
@@ -480,6 +499,7 @@ func (r *getUserProfilePhotosResponse) GetUserProfilePhotos() *UserProfilePhotos
 
 func (b *bot) GetUserProfilePhotos(options ...MethodOption) (GetUserProfilePhotosResponse, error) {
 	var res getUserProfilePhotosResponse
+
 	err := b.doRequest("getUserProfilePhotos", &res, options...)
 	if err != nil {
 		return nil, err
@@ -505,6 +525,7 @@ func (r *getFileResponse) GetFile() *File {
 
 func (b *bot) GetFile(options ...MethodOption) (GetFileResponse, error) {
 	var res getFileResponse
+
 	err := b.doRequest("getFile", &res, options...)
 	if err != nil {
 		return nil, err
@@ -524,6 +545,7 @@ type kickChatMemberResponse struct {
 
 func (b *bot) KickChatMember(options ...MethodOption) (KickChatMemberResponse, error) {
 	var res kickChatMemberResponse
+
 	err := b.doRequest("kickChatMember", &res, options...)
 	if err != nil {
 		return nil, err
@@ -543,6 +565,7 @@ type unbanChatMemberResponse struct {
 
 func (b *bot) UnbanChatMember(options ...MethodOption) (UnbanChatMemberResponse, error) {
 	var res unbanChatMemberResponse
+
 	err := b.doRequest("unbanChatMember", &res, options...)
 	if err != nil {
 		return nil, err
@@ -562,6 +585,7 @@ type restrictChatMemberResponse struct {
 
 func (b *bot) RestrictChatMember(options ...MethodOption) (RestrictChatMemberResponse, error) {
 	var res restrictChatMemberResponse
+
 	err := b.doRequest("restrictChatMember", &res, options...)
 	if err != nil {
 		return nil, err
@@ -581,6 +605,7 @@ type promoteChatMemberResponse struct {
 
 func (b *bot) PromoteChatMember(options ...MethodOption) (PromoteChatMemberResponse, error) {
 	var res promoteChatMemberResponse
+
 	err := b.doRequest("promoteChatMember", &res, options...)
 	if err != nil {
 		return nil, err
@@ -600,6 +625,7 @@ type setChatAdministratorCustomTitleResponse struct {
 
 func (b *bot) SetChatAdministratorCustomTitle(options ...MethodOption) (SetChatAdministratorCustomTitleResponse, error) {
 	var res setChatAdministratorCustomTitleResponse
+
 	err := b.doRequest("setChatAdministratorCustomTitle", &res, options...)
 	if err != nil {
 		return nil, err
@@ -625,6 +651,7 @@ func (r *exportChatInviteLinkResponse) GetInviteLink() string {
 
 func (b *bot) ExportChatInviteLink(options ...MethodOption) (ExportChatInviteLinkResponse, error) {
 	var res exportChatInviteLinkResponse
+
 	err := b.doRequest("exportChatInviteLink", &res, options...)
 	if err != nil {
 		return nil, err
@@ -644,6 +671,7 @@ type setChatPermissionsResponse struct {
 
 func (b *bot) SetChatPermissions(options ...MethodOption) (SetChatPermissionsResponse, error) {
 	var res setChatPermissionsResponse
+
 	err := b.doRequest("setChatPermissions", &res, options...)
 	if err != nil {
 		return nil, err
@@ -663,6 +691,7 @@ type setChatPhotoResponse struct {
 
 func (b *bot) SetChatPhoto(options ...MethodOption) (SetChatPhotoResponse, error) {
 	var res setChatPhotoResponse
+
 	err := b.doRequest("setChatPhoto", &res, options...)
 	if err != nil {
 		return nil, err
@@ -682,6 +711,7 @@ type deleteChatPhotoResponse struct {
 
 func (b *bot) DeleteChatPhoto(options ...MethodOption) (DeleteChatPhotoResponse, error) {
 	var res deleteChatPhotoResponse
+
 	err := b.doRequest("deleteChatPhoto", &res, options...)
 	if err != nil {
 		return nil, err
@@ -701,6 +731,7 @@ type setChatTitleResponse struct {
 
 func (b *bot) SetChatTitle(options ...MethodOption) (SetChatTitleResponse, error) {
 	var res setChatTitleResponse
+
 	err := b.doRequest("setChatTitle", &res, options...)
 	if err != nil {
 		return nil, err
@@ -720,6 +751,7 @@ type setChatDescriptionResponse struct {
 
 func (b *bot) SetChatDescription(options ...MethodOption) (SetChatDescriptionResponse, error) {
 	var res setChatDescriptionResponse
+
 	err := b.doRequest("setChatDescription", &res, options...)
 	if err != nil {
 		return nil, err
@@ -739,6 +771,7 @@ type pinChatMessageResponse struct {
 
 func (b *bot) PinChatMessage(options ...MethodOption) (PinChatMessageResponse, error) {
 	var res pinChatMessageResponse
+
 	err := b.doRequest("pinChatMessage", &res, options...)
 	if err != nil {
 		return nil, err
@@ -758,6 +791,7 @@ type unpinChatMessageResponse struct {
 
 func (b *bot) UnpinChatMessage(options ...MethodOption) (UnpinChatMessageResponse, error) {
 	var res unpinChatMessageResponse
+
 	err := b.doRequest("unpinChatMessage", &res, options...)
 	if err != nil {
 		return nil, err
@@ -777,6 +811,7 @@ type leaveChatResponse struct {
 
 func (b *bot) LeaveChat(options ...MethodOption) (LeaveChatResponse, error) {
 	var res leaveChatResponse
+
 	err := b.doRequest("leaveChat", &res, options...)
 	if err != nil {
 		return nil, err
@@ -802,6 +837,7 @@ func (r *getChatResponse) GetChat() *Chat {
 
 func (b *bot) GetChat(options ...MethodOption) (GetChatResponse, error) {
 	var res getChatResponse
+
 	err := b.doRequest("getChat", &res, options...)
 	if err != nil {
 		return nil, err
@@ -827,6 +863,7 @@ func (r *getChatAdministratorsResponse) GetChatAdministrators() []ChatMember {
 
 func (b *bot) GetChatAdministrators(options ...MethodOption) (GetChatAdministratorsResponse, error) {
 	var res getChatAdministratorsResponse
+
 	err := b.doRequest("getChatAdministrators", &res, options...)
 	if err != nil {
 		return nil, err
@@ -852,6 +889,7 @@ func (r *getChatMembersCountResponse) GetChatMembersCount() int {
 
 func (b *bot) GetChatMembersCount(options ...MethodOption) (GetChatMembersCountResponse, error) {
 	var res getChatMembersCountResponse
+
 	err := b.doRequest("getChatMembersCount", &res, options...)
 	if err != nil {
 		return nil, err
@@ -877,6 +915,7 @@ func (r *getChatMemberResponse) GetChatMember() *ChatMember {
 
 func (b *bot) GetChatMember(options ...MethodOption) (GetChatMemberResponse, error) {
 	var res getChatMemberResponse
+
 	err := b.doRequest("getChatMember", &res, options...)
 	if err != nil {
 		return nil, err
@@ -896,6 +935,7 @@ type setChatStickerSetResponse struct {
 
 func (b *bot) SetChatStickerSet(options ...MethodOption) (SetChatStickerSetResponse, error) {
 	var res setChatStickerSetResponse
+
 	err := b.doRequest("setChatStickerSet", &res, options...)
 	if err != nil {
 		return nil, err
@@ -915,6 +955,7 @@ type deleteChatStickerSetResponse struct {
 
 func (b *bot) DeleteChatStickerSet(options ...MethodOption) (DeleteChatStickerSetResponse, error) {
 	var res deleteChatStickerSetResponse
+
 	err := b.doRequest("deleteChatStickerSet", &res, options...)
 	if err != nil {
 		return nil, err
@@ -934,6 +975,7 @@ type answerCallbackQueryResponse struct {
 
 func (b *bot) AnswerCallbackQuery(options ...MethodOption) (AnswerCallbackQueryResponse, error) {
 	var res answerCallbackQueryResponse
+
 	err := b.doRequest("answerCallbackQuery", &res, options...)
 	if err != nil {
 		return nil, err
@@ -953,6 +995,7 @@ type setMyCommandsResponse struct {
 
 func (b *bot) SetMyCommands(options ...MethodOption) (SetMyCommandsResponse, error) {
 	var res setMyCommandsResponse
+
 	err := b.doRequest("setMyCommands", &res, options...)
 	if err != nil {
 		return nil, err
@@ -973,6 +1016,7 @@ type getMyCommandsResponse struct {
 
 func (b *bot) GetMyCommands() (GetMyCommandsResponse, error) {
 	var res getMyCommandsResponse
+
 	err := b.doRequest("getMyCommands", &res)
 	if err != nil {
 		return nil, err

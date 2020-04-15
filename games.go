@@ -17,6 +17,7 @@ func (r *sendGameResponse) GetMessage() *Message {
 
 func (b *bot) SendGame(options ...MethodOption) (SendGameResponse, error) {
 	var res sendGameResponse
+
 	err := b.doRequest("sendGame", &res, options...)
 	if err != nil {
 		return nil, err
@@ -55,6 +56,7 @@ func (r *setGameScoreResponse) GetEditedMessage() *Message {
 
 func (b *bot) SetGameScore(options ...MethodOption) (SetGameScoreResponse, error) {
 	var res setGameScoreResponse
+
 	err := b.doRequest("setGameScore", &res, options...)
 	if err != nil {
 		return nil, err
@@ -80,6 +82,7 @@ func (r *getGameHighScoresResponse) GetGameHighScores() []GameHighScore {
 
 func (b *bot) GetGameHighScores(options ...MethodOption) (GetGameHighScoresResponse, error) {
 	var res getGameHighScoresResponse
+
 	err := b.doRequest("getGameHighScores", &res, options...)
 	if err != nil {
 		return nil, err

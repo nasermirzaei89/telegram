@@ -17,6 +17,7 @@ func (r *sendInvoiceResponse) GetMessage() *Message {
 
 func (b *bot) SendInvoice(options ...MethodOption) (SendInvoiceResponse, error) {
 	var res sendInvoiceResponse
+
 	err := b.doRequest("sendInvoice", &res, options...)
 	if err != nil {
 		return nil, err
@@ -36,6 +37,7 @@ type answerShippingQueryResponse struct {
 
 func (b *bot) AnswerShippingQuery(options ...MethodOption) (AnswerShippingQueryResponse, error) {
 	var res answerShippingQueryResponse
+
 	err := b.doRequest("answerShippingQuery", &res, options...)
 	if err != nil {
 		return nil, err
@@ -55,6 +57,7 @@ type answerPreCheckoutQueryResponse struct {
 
 func (b *bot) AnswerPreCheckoutQuery(options ...MethodOption) (AnswerPreCheckoutQueryResponse, error) {
 	var res answerPreCheckoutQueryResponse
+
 	err := b.doRequest("answerPreCheckoutQuery", &res, options...)
 	if err != nil {
 		return nil, err

@@ -49,6 +49,7 @@ func (r *sendStickerResponse) GetMessage() *Message {
 
 func (b *bot) SendSticker(options ...MethodOption) (SendStickerResponse, error) {
 	var res sendStickerResponse
+
 	err := b.doRequest("sendSticker", &res, options...)
 	if err != nil {
 		return nil, err
@@ -74,6 +75,7 @@ func (r *getStickerSetResponse) GetStickerSet() *StickerSet {
 
 func (b *bot) GetStickerSet(options ...MethodOption) (GetStickerSetResponse, error) {
 	var res getStickerSetResponse
+
 	err := b.doRequest("getStickerSet", &res, options...)
 	if err != nil {
 		return nil, err
@@ -99,6 +101,7 @@ func (r *uploadStickerFileResponse) GetUploadedFile() *File {
 
 func (b *bot) UploadStickerFile(options ...MethodOption) (UploadStickerFileResponse, error) {
 	var res uploadStickerFileResponse
+
 	err := b.doRequest("uploadStickerFile", &res, options...)
 	if err != nil {
 		return nil, err
@@ -118,6 +121,7 @@ type createNewStickerSetResponse struct {
 
 func (b *bot) CreateNewStickerSet(options ...MethodOption) (CreateNewStickerSetResponse, error) {
 	var res createNewStickerSetResponse
+
 	err := b.doRequest("createNewStickerSet", &res, options...)
 	if err != nil {
 		return nil, err
@@ -137,6 +141,7 @@ type addStickerToSetResponse struct {
 
 func (b *bot) AddStickerToSet(options ...MethodOption) (AddStickerToSetResponse, error) {
 	var res addStickerToSetResponse
+
 	err := b.doRequest("addStickerToSet", &res, options...)
 	if err != nil {
 		return nil, err
@@ -156,6 +161,7 @@ type setStickerPositionInSetResponse struct {
 
 func (b *bot) SetStickerPositionInSet(options ...MethodOption) (SetStickerPositionInSetResponse, error) {
 	var res setStickerPositionInSetResponse
+
 	err := b.doRequest("setStickerPositionInSet", &res, options...)
 	if err != nil {
 		return nil, err
@@ -175,6 +181,7 @@ type deleteStickerFromSetResponse struct {
 
 func (b *bot) DeleteStickerFromSet(options ...MethodOption) (DeleteStickerFromSetResponse, error) {
 	var res deleteStickerFromSetResponse
+
 	err := b.doRequest("deleteStickerFromSet", &res, options...)
 	if err != nil {
 		return nil, err
@@ -194,6 +201,7 @@ type setStickerSetThumbResponse struct {
 
 func (b *bot) SetStickerSetThumb(options ...MethodOption) (SetStickerSetThumbResponse, error) {
 	var res setStickerSetThumbResponse
+
 	err := b.doRequest("setStickerSetThumb", &res, options...)
 	if err != nil {
 		return nil, err

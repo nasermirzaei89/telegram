@@ -62,6 +62,7 @@ func TestGetUpdates(t *testing.T) {
 	assert.True(t, res.IsOK())
 	assert.Zero(t, res.GetErrorCode())
 	assert.NotNil(t, res.GetUpdates())
+
 	for _, u := range res.GetUpdates() {
 		assert.NotZero(t, u.UpdateID)
 	}

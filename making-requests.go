@@ -116,10 +116,12 @@ func (b *bot) doRequest(methodName string, res interface{}, options ...MethodOpt
 	}
 
 	client := new(http.Client)
+
 	resp, err := client.Do(req)
 	if err != nil {
 		return err
 	}
+
 	defer func() { _ = resp.Body.Close() }()
 
 	err = json.NewDecoder(resp.Body).Decode(res)

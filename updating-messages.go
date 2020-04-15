@@ -17,6 +17,7 @@ func (r *editMessageTextResponse) GetEditedMessage() *Message {
 
 func (b *bot) EditMessageText(options ...MethodOption) (EditMessageTextResponse, error) {
 	var res editMessageTextResponse
+
 	err := b.doRequest("editMessageText", &res, options...)
 	if err != nil {
 		return nil, err
@@ -42,6 +43,7 @@ func (r *editMessageCaptionResponse) GetEditedMessage() *Message {
 
 func (b *bot) EditMessageCaption(options ...MethodOption) (EditMessageCaptionResponse, error) {
 	var res editMessageCaptionResponse
+
 	err := b.doRequest("editMessageCaption", &res, options...)
 	if err != nil {
 		return nil, err
@@ -67,6 +69,7 @@ func (r *editMessageMediaResponse) GetEditedMessage() *Message {
 
 func (b *bot) EditMessageMedia(options ...MethodOption) (EditMessageMediaResponse, error) {
 	var res editMessageMediaResponse
+
 	err := b.doRequest("editMessageMedia", &res, options...)
 	if err != nil {
 		return nil, err
@@ -92,6 +95,7 @@ func (r *editMessageReplyMarkupResponse) GetEditedMessage() *Message {
 
 func (b *bot) EditMessageReplyMarkup(options ...MethodOption) (EditMessageReplyMarkupResponse, error) {
 	var res editMessageReplyMarkupResponse
+
 	err := b.doRequest("editMessageReplyMarkup", &res, options...)
 	if err != nil {
 		return nil, err
@@ -117,6 +121,7 @@ func (r *stopPollResponse) GetStoppedPoll() *Poll {
 
 func (b *bot) StopPoll(options ...MethodOption) (StopPollResponse, error) {
 	var res stopPollResponse
+
 	err := b.doRequest("stopPoll", &res, options...)
 	if err != nil {
 		return nil, err
@@ -136,6 +141,7 @@ type deleteMessageResponse struct {
 
 func (b *bot) DeleteMessage(options ...MethodOption) (DeleteMessageResponse, error) {
 	var res deleteMessageResponse
+
 	err := b.doRequest("deleteMessage", &res, options...)
 	if err != nil {
 		return nil, err
