@@ -1007,11 +1007,16 @@ func (b *bot) SetMyCommands(options ...MethodOption) (SetMyCommandsResponse, err
 // GetMyCommandsResponse interface
 type GetMyCommandsResponse interface {
 	Response
+	GetCommands() []BotCommand
 }
 
 type getMyCommandsResponse struct {
 	response
 	Result []BotCommand `json:"result,omitempty"`
+}
+
+func (r *getMyCommandsResponse) GetCommands() []BotCommand {
+	return r.Result
 }
 
 func (b *bot) GetMyCommands() (GetMyCommandsResponse, error) {

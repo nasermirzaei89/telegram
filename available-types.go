@@ -255,6 +255,7 @@ type KeyboardButton struct {
 	RequestPoll     *KeyboardButtonPollType `json:"request_poll,omitempty"`
 }
 
+// KeyboardButtonPollType struct
 type KeyboardButtonPollType struct {
 	Type *string `json:"type,omitempty"`
 }
