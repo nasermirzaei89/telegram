@@ -11,7 +11,7 @@
 
 ## Status
 
-Bot API 4.6 (https://core.telegram.org/bots/api#january-23-2020)
+Bot API 4.7 (https://core.telegram.org/bots/api#march-30-2020)
 
 ## Install
 
@@ -39,7 +39,7 @@ func main() {
 	if res.IsOK() {
 		log.Printf("%+v", res.GetUpdates())
 	} else {
-		log.Printf("%d: %s", res.GetErrorCode(), *res.GetDescription())
+		log.Printf("%d: %s", res.GetErrorCode(), res.GetDescription())
 	}
 }
 ```

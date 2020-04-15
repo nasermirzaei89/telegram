@@ -446,6 +446,13 @@ func SetOptions(v ...string) Option {
 	}
 }
 
+// SetCommands option function
+func SetCommands(v ...BotCommand) Option {
+	return func(r *request) {
+		r.params["commands"] = v
+	}
+}
+
 // SetAction option function
 func SetAction(v string) Option {
 	return func(r *request) {
@@ -667,5 +674,54 @@ func SetCorrectOptionID(v int) Option {
 func IsClosed() Option {
 	return func(r *request) {
 		r.params["is_closed"] = true
+	}
+}
+
+// SetPNGStickerFromFileID option function
+func SetPNGStickerFromFileID(v string) Option {
+	return func(r *request) {
+		r.params["png_sticker"] = v
+	}
+}
+
+// SetPNGStickerFromURL option function
+func SetPNGStickerFromURL(v string) Option {
+	return func(r *request) {
+		r.params["png_sticker"] = v
+	}
+}
+
+// SetPNGSticker option function
+func SetPNGSticker(v InputFile) Option {
+	return func(r *request) {
+		r.params["png_sticker"] = v
+	}
+}
+
+// SetTGSSticker option function
+func SetTGSSticker(v InputFile) Option {
+	return func(r *request) {
+		r.params["tgs_sticker"] = v
+	}
+}
+
+// SetEmojis option function
+func SetEmojis(v string) Option {
+	return func(r *request) {
+		r.params["emojis"] = v
+	}
+}
+
+// ContainsMasks option function
+func ContainsMasks() Option {
+	return func(r *request) {
+		r.params["contains_masks"] = true
+	}
+}
+
+// SetMaskPosition option function
+func SetMaskPosition(v MaskPosition) Option {
+	return func(r *request) {
+		r.params["mask_position"] = v
 	}
 }

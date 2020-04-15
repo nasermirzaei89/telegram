@@ -16,11 +16,12 @@ type Sticker struct {
 
 // StickerSet struct
 type StickerSet struct {
-	Name          string    `json:"name"`
-	Title         string    `json:"title"`
-	IsAnimated    bool      `json:"is_animated"`
-	ContainsMasks bool      `json:"contains_masks"`
-	Stickers      []Sticker `json:"stickers"`
+	Name          string     `json:"name"`
+	Title         string     `json:"title"`
+	IsAnimated    bool       `json:"is_animated"`
+	ContainsMasks bool       `json:"contains_masks"`
+	Stickers      []Sticker  `json:"stickers"`
+	Thumb         *PhotoSize `json:"thumb,omitempty"`
 }
 
 // MaskPosition struct
@@ -175,6 +176,25 @@ type deleteStickerFromSetResponse struct {
 func (b *bot) DeleteStickerFromSet(options ...Option) (DeleteStickerFromSetResponse, error) {
 	var res deleteStickerFromSetResponse
 	err := doRequest(b.token, "deleteStickerFromSet", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// SetStickerSetThumbResponse interface
+type SetStickerSetThumbResponse interface {
+	Response
+}
+
+type setStickerSetThumbResponse struct {
+	response
+}
+
+func (b *bot) SetStickerSetThumb(options ...Option) (SetStickerSetThumbResponse, error) {
+	var res setStickerSetThumbResponse
+	err := doRequest(b.token, "setStickerSetThumb", &res, options...)
 	if err != nil {
 		return nil, err
 	}

@@ -66,6 +66,7 @@ type Message struct {
 	Location              *Location             `json:"location,omitempty"`
 	Venue                 *Venue                `json:"venue,omitempty"`
 	Poll                  *Poll                 `json:"poll,omitempty"`
+	Dice                  *Dice                 `json:"dice,omitempty"`
 	NewChatMembers        []User                `json:"new_chat_members,omitempty"`
 	LeftChatMember        *User                 `json:"left_chat_member,omitempty"`
 	NewChatTitle          *string               `json:"new_chat_title,omitempty"`
@@ -219,6 +220,11 @@ type Poll struct {
 	CorrectOptionID       *int         `json:"correct_option_id,omitempty"`
 }
 
+// Dice struct
+type Dice struct {
+	Value int `json:"value"`
+}
+
 // UserProfilePhotos struct
 type UserProfilePhotos struct {
 	TotalCount int           `json:"total_count"`
@@ -342,6 +348,12 @@ type ChatPermissions struct {
 	CanChangeInfo         *bool `json:"can_change_info,omitempty"`
 	CanInviteUsers        *bool `json:"can_invite_users,omitempty"`
 	CanPinMessages        *bool `json:"can_pin_messages,omitempty"`
+}
+
+// BotCommand struct
+type BotCommand struct {
+	Command     string `json:"command"`
+	Description string `json:"description"`
 }
 
 // ResponseParameters struct

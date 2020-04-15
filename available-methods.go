@@ -425,6 +425,25 @@ func (b *bot) SendPoll(options ...Option) (SendPollResponse, error) {
 	return &res, nil
 }
 
+// SendDiceResponse interface
+type SendDiceResponse interface {
+	Response
+}
+
+type sendDiceResponse struct {
+	response
+}
+
+func (b *bot) SendDice(options ...Option) (SendDiceResponse, error) {
+	var res sendDiceResponse
+	err := doRequest(b.token, "sendDice", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
 // SendChatActionResponse interface
 type SendChatActionResponse interface {
 	Response
@@ -916,6 +935,45 @@ type answerCallbackQueryResponse struct {
 func (b *bot) AnswerCallbackQuery(options ...Option) (AnswerCallbackQueryResponse, error) {
 	var res answerCallbackQueryResponse
 	err := doRequest(b.token, "answerCallbackQuery", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// SetMyCommandsResponse interface
+type SetMyCommandsResponse interface {
+	Response
+}
+
+type setMyCommandsResponse struct {
+	response
+}
+
+func (b *bot) SetMyCommands(options ...Option) (SetMyCommandsResponse, error) {
+	var res setMyCommandsResponse
+	err := doRequest(b.token, "setMyCommands", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// GetMyCommandsResponse interface
+type GetMyCommandsResponse interface {
+	Response
+}
+
+type getMyCommandsResponse struct {
+	response
+	Result []BotCommand `json:"result,omitempty"`
+}
+
+func (b *bot) GetMyCommands() (GetMyCommandsResponse, error) {
+	var res getMyCommandsResponse
+	err := doRequest(b.token, "getMyCommands", &res)
 	if err != nil {
 		return nil, err
 	}
