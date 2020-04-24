@@ -712,6 +712,13 @@ func SetEmojis(v string) MethodOption {
 	}
 }
 
+// SetEmoji option function
+func SetEmoji(v string) MethodOption {
+	return func(r *request) {
+		r.params["emoji"] = v
+	}
+}
+
 // ContainsMasks option function
 func ContainsMasks() MethodOption {
 	return func(r *request) {
@@ -723,5 +730,33 @@ func ContainsMasks() MethodOption {
 func SetMaskPosition(v MaskPosition) MethodOption {
 	return func(r *request) {
 		r.params["mask_position"] = v
+	}
+}
+
+// SetExplanation option function
+func SetExplanation(v string) MethodOption {
+	return func(r *request) {
+		r.params["explanation"] = v
+	}
+}
+
+// SetExplanationParseMode option function
+func SetExplanationParseMode(v string) MethodOption {
+	return func(r *request) {
+		r.params["explanation_parse_mode"] = v
+	}
+}
+
+// SetOpenPeriod option function
+func SetOpenPeriod(v int) MethodOption {
+	return func(r *request) {
+		r.params["open_period"] = v
+	}
+}
+
+// SetCloseDate option function
+func SetCloseDate(v int) MethodOption {
+	return func(r *request) {
+		r.params["close_date"] = v
 	}
 }
