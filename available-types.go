@@ -46,6 +46,7 @@ type Message struct {
 	ForwardSenderName     *string               `json:"forward_sender_name,omitempty"`
 	ForwardDate           *int                  `json:"forward_date,omitempty"`
 	ReplyToMessage        *Message              `json:"reply_to_message,omitempty"`
+	ViaBot                *User                 `json:"via_bot,omitempty"`
 	EditDate              *int                  `json:"edit_date,omitempty"`
 	MediaGroupID          *string               `json:"media_group_id,omitempty"`
 	AuthorSignature       *string               `json:"author_signature,omitempty"`

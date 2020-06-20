@@ -72,6 +72,7 @@ type InlineQueryResultGif struct {
 	GifHeight           *int                  `json:"gif_height,omitempty"`
 	GifDuration         *int                  `json:"gif_duration,omitempty"`
 	ThumbURL            string                `json:"thumb_url"`
+	ThumbMimeType       string                `json:"thumb_mime_type,omitempty"`
 	Title               *string               `json:"title,omitempty"`
 	Caption             *string               `json:"caption,omitempty"`
 	ParseMode           *string               `json:"parse_mode,omitempty"`
@@ -88,6 +89,7 @@ type InlineQueryResultMpeg4Gif struct {
 	Mpeg4Height         *int                  `json:"mpeg4_height,omitempty"`
 	Mpeg4Duration       *int                  `json:"mpeg4_duration,omitempty"`
 	ThumbURL            string                `json:"thumb_url"`
+	ThumbMimeType       string                `json:"thumb_mime_type,omitempty"`
 	Title               *string               `json:"title,omitempty"`
 	Caption             *string               `json:"caption,omitempty"`
 	ParseMode           *string               `json:"parse_mode,omitempty"`
