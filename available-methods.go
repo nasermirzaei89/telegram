@@ -26,6 +26,46 @@ func (b *bot) GetMe() (GetMeResponse, error) {
 	return &res, nil
 }
 
+// LogOutResponse interface
+type LogOutResponse interface {
+	Response
+}
+
+type logOutResponse struct {
+	response
+}
+
+func (b *bot) LogOut() (LogOutResponse, error) {
+	var res logOutResponse
+
+	err := b.doRequest("logOut", &res)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// CloseResponse interface
+type CloseResponse interface {
+	Response
+}
+
+type closeResponse struct {
+	response
+}
+
+func (b *bot) Close() (CloseResponse, error) {
+	var res closeResponse
+
+	err := b.doRequest("close", &res)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
 // SendMessageResponse interface
 type SendMessageResponse interface {
 	Response
@@ -71,6 +111,32 @@ func (b *bot) ForwardMessage(options ...MethodOption) (ForwardMessageResponse, e
 	var res forwardMessageResponse
 
 	err := b.doRequest("forwardMessage", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// CopyMessageResponse interface
+type CopyMessageResponse interface {
+	Response
+	GetMessageID() *MessageID
+}
+
+type copyMessageResponse struct {
+	response
+	Result *MessageID `json:"result,omitempty"`
+}
+
+func (r *copyMessageResponse) GetMessageID() *MessageID {
+	return r.Result
+}
+
+func (b *bot) CopyMessage(options ...MethodOption) (CopyMessageResponse, error) {
+	var res copyMessageResponse
+
+	err := b.doRequest("copyMessage", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -793,6 +859,26 @@ func (b *bot) UnpinChatMessage(options ...MethodOption) (UnpinChatMessageRespons
 	var res unpinChatMessageResponse
 
 	err := b.doRequest("unpinChatMessage", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// UnpinAllChatMessagesResponse interface
+type UnpinAllChatMessagesResponse interface {
+	Response
+}
+
+type unpinAllChatMessagesResponse struct {
+	response
+}
+
+func (b *bot) UnpinAllChatMessages(options ...MethodOption) (UnpinAllChatMessagesResponse, error) {
+	var res unpinAllChatMessagesResponse
+
+	err := b.doRequest("unpinAllChatMessages", &res, options...)
 	if err != nil {
 		return nil, err
 	}

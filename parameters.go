@@ -45,6 +45,34 @@ func SetCertificate(v InputFile) MethodOption {
 	}
 }
 
+// SetIPAddress option function
+func SetIPAddress(v string) MethodOption {
+	return func(r *request) {
+		r.params["ip_address"] = v
+	}
+}
+
+// DropPendingUpdates option function
+func DropPendingUpdates() MethodOption {
+	return func(r *request) {
+		r.params["drop_pending_updates"] = true
+	}
+}
+
+// OnlyIfBanned option function
+func OnlyIfBanned() MethodOption {
+	return func(r *request) {
+		r.params["only_if_banned"] = true
+	}
+}
+
+// DisableContentTypeDetection option function
+func DisableContentTypeDetection() MethodOption {
+	return func(r *request) {
+		r.params["disable_content_type_detection"] = true
+	}
+}
+
 // SetMaxConnections option function
 func SetMaxConnections(v int) MethodOption {
 	return func(r *request) {
@@ -355,10 +383,31 @@ func SetLongitude(v float32) MethodOption {
 	}
 }
 
+// SetHorizontalAccuracy option function
+func SetHorizontalAccuracy(v float32) MethodOption {
+	return func(r *request) {
+		r.params["horizontal_accuracy"] = v
+	}
+}
+
 // SetLivePeriod option function
 func SetLivePeriod(v int) MethodOption {
 	return func(r *request) {
 		r.params["live_period"] = v
+	}
+}
+
+// SetHeading option function
+func SetHeading(v int) MethodOption {
+	return func(r *request) {
+		r.params["heading"] = v
+	}
+}
+
+// SetProximityAlertRadius option function
+func SetProximityAlertRadius(v int) MethodOption {
+	return func(r *request) {
+		r.params["proximity_alert_radius"] = v
 	}
 }
 
@@ -401,6 +450,20 @@ func SetFoursquareID(v string) MethodOption {
 func SetFoursquareType(v string) MethodOption {
 	return func(r *request) {
 		r.params["foursquare_type"] = v
+	}
+}
+
+// SetGooglePlaceID option function
+func SetGooglePlaceID(v string) MethodOption {
+	return func(r *request) {
+		r.params["google_place_id"] = v
+	}
+}
+
+// SetGooglePlaceType option function
+func SetGooglePlaceType(v string) MethodOption {
+	return func(r *request) {
+		r.params["google_place_type"] = v
 	}
 }
 
@@ -478,6 +541,13 @@ func SetUserID(v int) MethodOption {
 func SetUntilDate(v int) MethodOption {
 	return func(r *request) {
 		r.params["until_date"] = v
+	}
+}
+
+// AllowSendingWithoutReply option function
+func AllowSendingWithoutReply() MethodOption {
+	return func(r *request) {
+		r.params["allow_sending_without_reply"] = true
 	}
 }
 

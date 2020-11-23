@@ -161,17 +161,20 @@ type InlineQueryResultDocument struct {
 
 // InlineQueryResultLocation struct
 type InlineQueryResultLocation struct {
-	Type                string                `json:"type"`
-	ID                  string                `json:"id"`
-	Latitude            float64               `json:"latitude"`
-	Longitude           float64               `json:"longitude"`
-	Title               string                `json:"title"`
-	LivePeriod          *int                  `json:"live_period,omitempty"`
-	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
-	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
-	ThumbURL            *string               `json:"thumb_url,omitempty"`
-	ThumbWidth          *int                  `json:"thumb_width,omitempty"`
-	ThumbHeight         *int                  `json:"thumb_height,omitempty"`
+	Type                 string                `json:"type"`
+	ID                   string                `json:"id"`
+	Latitude             float64               `json:"latitude"`
+	Longitude            float64               `json:"longitude"`
+	Title                string                `json:"title"`
+	HorizontalAccuracy   *float32              `json:"horizontal_accuracy,omitempty"`
+	LivePeriod           *int                  `json:"live_period,omitempty"`
+	Heading              *int                  `json:"heading,omitempty"`
+	ProximityAlertRadius *int                  `json:"proximity_alert_radius,omitempty"`
+	ReplyMarkup          *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
+	InputMessageContent  *InputMessageContent  `json:"input_message_content,omitempty"`
+	ThumbURL             *string               `json:"thumb_url,omitempty"`
+	ThumbWidth           *int                  `json:"thumb_width,omitempty"`
+	ThumbHeight          *int                  `json:"thumb_height,omitempty"`
 }
 
 // InlineQueryResultVenue struct
@@ -184,6 +187,8 @@ type InlineQueryResultVenue struct {
 	Address             string                `json:"address"`
 	FoursquareID        *string               `json:"foursquare_id,omitempty"`
 	FoursquareType      *string               `json:"foursquare_type,omitempty"`
+	GooglePlaceID       *string               `json:"google_place_id,omitempty"`
+	GooglePlaceType     *string               `json:"google_place_type,omitempty"`
 	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
 	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
 	ThumbURL            *string               `json:"thumb_url,omitempty"`
@@ -321,19 +326,24 @@ type InputTextMessageContent struct {
 
 // InputLocationMessageContent struct
 type InputLocationMessageContent struct {
-	Latitude   float64 `json:"latitude"`
-	Longitude  float64 `json:"longitude"`
-	LivePeriod *int    `json:"live_period,omitempty"`
+	Latitude             float64  `json:"latitude"`
+	Longitude            float64  `json:"longitude"`
+	HorizontalAccuracy   *float32 `json:"horizontal_accuracy,omitempty"`
+	LivePeriod           *int     `json:"live_period,omitempty"`
+	Heading              *int     `json:"heading,omitempty"`
+	ProximityAlertRadius *int     `json:"proximity_alert_radius,omitempty"`
 }
 
 // InputVenueMessageContent struct
 type InputVenueMessageContent struct {
-	Latitude       float64 `json:"latitude"`
-	Longitude      float64 `json:"longitude"`
-	Title          string  `json:"title"`
-	Address        string  `json:"address"`
-	FoursquareID   *string `json:"foursquare_id,omitempty"`
-	FoursquareType *string `json:"foursquare_type,omitempty"`
+	Latitude        float64 `json:"latitude"`
+	Longitude       float64 `json:"longitude"`
+	Title           string  `json:"title"`
+	Address         string  `json:"address"`
+	FoursquareID    *string `json:"foursquare_id,omitempty"`
+	FoursquareType  *string `json:"foursquare_type,omitempty"`
+	GooglePlaceID   *string `json:"google_place_id,omitempty"`
+	GooglePlaceType *string `json:"google_place_type,omitempty"`
 }
 
 // InputContactMessageContent struct
