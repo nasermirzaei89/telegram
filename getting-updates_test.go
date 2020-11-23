@@ -7,7 +7,6 @@ import (
 	"testing"
 
 	"github.com/nasermirzaei89/telegram"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestGetUpdates(t *testing.T) {
@@ -57,27 +56,52 @@ func TestGetUpdates(t *testing.T) {
 	bot := telegram.New(testToken, telegram.SetBaseURL(server.URL))
 
 	res, err := bot.GetUpdates()
-	assert.Nil(t, err)
+	if err != nil {
+		t.Errorf("error on get updates: %s", err.Error())
+		return
+	}
 
-	assert.True(t, res.IsOK())
-	assert.Zero(t, res.GetErrorCode())
-	assert.NotNil(t, res.GetUpdates())
+	if !res.IsOK() {
+		t.Error("result should be ok but is not")
+		return
+	}
 
-	for _, u := range res.GetUpdates() {
-		assert.NotZero(t, u.UpdateID)
+	if res.GetErrorCode() != 0 {
+		t.Errorf("result error code should be zero but is %d", res.GetErrorCode())
+		return
+	}
+
+	updates := res.GetUpdates()
+
+	if updates == nil {
+		t.Error("result updates should be array but are nil")
+		return
+	}
+
+	for _, u := range updates {
+		if u.UpdateID == 0 {
+			t.Error("update is should not be zero but is")
+		}
 	}
 
 	// fail
 	bot = telegram.New(invalidToken, telegram.SetBaseURL(server.URL))
 
 	res, err = bot.GetUpdates()
-	assert.Nil(t, err)
+	if err != nil {
+		t.Errorf("error on get updates: %s", err.Error())
+		return
+	}
 
-	assert.False(t, res.IsOK())
-	assert.Empty(t, len(res.GetUpdates()))
-	assert.Equal(t, http.StatusUnauthorized, res.GetErrorCode())
-	assert.Equal(t, "Unauthorized", res.GetDescription())
-	assert.Nil(t, res.GetParameters())
+	if res.IsOK() {
+		t.Error("result should not be ok but is")
+		return
+	}
+
+	if res.GetErrorCode() != http.StatusUnauthorized {
+		t.Errorf("result error code should be %d but is %d", http.StatusUnauthorized, res.GetErrorCode())
+		return
+	}
 }
 
 func TestSetWebhook(t *testing.T) {
@@ -104,9 +128,24 @@ func TestSetWebhook(t *testing.T) {
 		telegram.SetMaxConnections(40),
 		telegram.SetAllowedUpdates("message"),
 	)
-	assert.Nil(t, err)
+	if err != nil {
+		t.Errorf("error on set web hook: %s", err.Error())
+		return
+	}
 
-	assert.True(t, res.IsOK())
-	assert.Zero(t, res.GetErrorCode())
-	assert.Equal(t, "Webhook was set", res.GetDescription())
+	if !res.IsOK() {
+		t.Error("result should be ok but is not")
+		return
+	}
+
+	if res.GetErrorCode() != 0 {
+		t.Errorf("result error code should be zero but is %d", res.GetErrorCode())
+		return
+	}
+
+	expectedDesc := "Webhook was set"
+	desc := res.GetDescription()
+	if desc != expectedDesc {
+		t.Errorf("result description should be '%s' but is '%s'", expectedDesc, desc)
+	}
 }
