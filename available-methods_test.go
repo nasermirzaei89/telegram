@@ -1,6 +1,7 @@
 package telegram_test
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
@@ -15,12 +16,15 @@ const (
 )
 
 func TestGetMe(t *testing.T) {
+	ctx := context.Background()
+
 	response := []byte(`{"ok":true,"result":{"id":1,"is_bot":true,"first_name":"Test Bot","username":"TestBot"}}`)
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		u := fmt.Sprintf("/bot%s/getMe", testToken)
 		if r.URL.String() != u {
 			w.WriteHeader(http.StatusUnauthorized)
 			_, _ = w.Write([]byte(`{"ok":false,"error_code":401,"description":"Unauthorized"}`))
+
 			return
 		}
 
@@ -33,19 +37,22 @@ func TestGetMe(t *testing.T) {
 	// success
 	bot := telegram.New(testToken, telegram.SetBaseURL(server.URL))
 
-	res, err := bot.GetMe()
+	res, err := bot.GetMe(ctx)
 	if err != nil {
 		t.Errorf("error on get me: %s", err.Error())
+
 		return
 	}
 
 	if !res.IsOK() {
 		t.Error("result should be ok but is not")
+
 		return
 	}
 
 	if res.GetErrorCode() != 0 {
 		t.Errorf("result error code should be zero but is %d", res.GetErrorCode())
+
 		return
 	}
 
@@ -53,6 +60,7 @@ func TestGetMe(t *testing.T) {
 
 	if usr == nil {
 		t.Error("result user should not be nil but is")
+
 		return
 	}
 
@@ -75,25 +83,27 @@ func TestGetMe(t *testing.T) {
 
 	if usr.Username == nil {
 		t.Errorf("result user username should not be nil but is")
+
 		return
 	}
 
-	expectedUsername := "TestBot"
-	if *usr.Username != expectedUsername {
+	if expectedUsername := "TestBot"; *usr.Username != expectedUsername {
 		t.Errorf("result user username should be '%s' but is '%s'", expectedUsername, *usr.Username)
 	}
 
 	// fail
 	bot = telegram.New(invalidToken, telegram.SetBaseURL(server.URL))
 
-	res, err = bot.GetMe()
+	res, err = bot.GetMe(ctx)
 	if err != nil {
 		t.Errorf("error on get me: %s", err.Error())
+
 		return
 	}
 
 	if res.IsOK() {
 		t.Error("result should not be ok but is")
+
 		return
 	}
 
@@ -103,6 +113,7 @@ func TestGetMe(t *testing.T) {
 
 	if res.GetErrorCode() != http.StatusUnauthorized {
 		t.Errorf("result error code should be %d but is %d", http.StatusUnauthorized, res.GetErrorCode())
+
 		return
 	}
 }

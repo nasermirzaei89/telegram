@@ -1,6 +1,8 @@
 package telegram
 
-// Update struct
+import "context"
+
+// Update struct.
 type Update struct {
 	UpdateID           int                 `json:"update_id"`
 	Message            *Message            `json:"message,omitempty"`
@@ -18,7 +20,7 @@ type Update struct {
 	ChatMember         *ChatMemberUpdated  `json:"chat_member,omitempty"`
 }
 
-// GetUpdatesResponse interface
+// GetUpdatesResponse interface.
 type GetUpdatesResponse interface {
 	Response
 	GetUpdates() []Update
@@ -33,10 +35,10 @@ func (r *getUpdatesResponse) GetUpdates() []Update {
 	return r.Result
 }
 
-func (b *bot) GetUpdates(options ...MethodOption) (GetUpdatesResponse, error) {
+func (b *bot) GetUpdates(ctx context.Context, options ...MethodOption) (GetUpdatesResponse, error) {
 	var res getUpdatesResponse
 
-	err := b.doRequest("getUpdates", &res, options...)
+	err := b.doRequest(ctx, "getUpdates", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -44,7 +46,7 @@ func (b *bot) GetUpdates(options ...MethodOption) (GetUpdatesResponse, error) {
 	return &res, nil
 }
 
-// SetWebhookResponse interface
+// SetWebhookResponse interface.
 type SetWebhookResponse interface {
 	Response
 }
@@ -53,10 +55,10 @@ type setWebhookResponse struct {
 	response
 }
 
-func (b *bot) SetWebhook(options ...MethodOption) (SetWebhookResponse, error) {
+func (b *bot) SetWebhook(ctx context.Context, options ...MethodOption) (SetWebhookResponse, error) {
 	var res setWebhookResponse
 
-	err := b.doRequest("setWebhook", &res, options...)
+	err := b.doRequest(ctx, "setWebhook", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -64,7 +66,7 @@ func (b *bot) SetWebhook(options ...MethodOption) (SetWebhookResponse, error) {
 	return &res, nil
 }
 
-// DeleteWebhookResponse interface
+// DeleteWebhookResponse interface.
 type DeleteWebhookResponse interface {
 	Response
 }
@@ -73,10 +75,10 @@ type deleteWebhookResponse struct {
 	response
 }
 
-func (b *bot) DeleteWebhook() (DeleteWebhookResponse, error) {
+func (b *bot) DeleteWebhook(ctx context.Context) (DeleteWebhookResponse, error) {
 	var res deleteWebhookResponse
 
-	err := b.doRequest("deleteWebhook", &res)
+	err := b.doRequest(ctx, "deleteWebhook", &res)
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +86,7 @@ func (b *bot) DeleteWebhook() (DeleteWebhookResponse, error) {
 	return &res, nil
 }
 
-// GetWebhookInfoResponse interface
+// GetWebhookInfoResponse interface.
 type GetWebhookInfoResponse interface {
 	Response
 	GetWebhookInfo() *WebhookInfo
@@ -99,10 +101,10 @@ func (r *getWebhookInfoResponse) GetWebhookInfo() *WebhookInfo {
 	return r.Result
 }
 
-func (b *bot) GetWebhookInfo() (GetWebhookInfoResponse, error) {
+func (b *bot) GetWebhookInfo(ctx context.Context) (GetWebhookInfoResponse, error) {
 	var res getWebhookInfoResponse
 
-	err := b.doRequest("getWebhookInfo", &res)
+	err := b.doRequest(ctx, "getWebhookInfo", &res)
 	if err != nil {
 		return nil, err
 	}
@@ -110,7 +112,7 @@ func (b *bot) GetWebhookInfo() (GetWebhookInfoResponse, error) {
 	return &res, nil
 }
 
-// WebhookInfo struct
+// WebhookInfo struct.
 type WebhookInfo struct {
 	URL                  string   `json:"url"`
 	HasCustomCertificate bool     `json:"has_custom_certificate"`

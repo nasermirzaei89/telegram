@@ -1,5 +1,7 @@
 package telegram
 
+import "context"
+
 // PassportData struct
 type PassportData struct {
 	Data        []EncryptedPassportElement `json:"data"`
@@ -44,10 +46,10 @@ type setPassportDataErrorsResponse struct {
 	response
 }
 
-func (b *bot) SetPassportDataErrors(options ...MethodOption) (SetPassportDataErrorsResponse, error) {
+func (b *bot) SetPassportDataErrors(ctx context.Context, options ...MethodOption) (SetPassportDataErrorsResponse, error) {
 	var res setPassportDataErrorsResponse
 
-	err := b.doRequest("setPassportDataErrors", &res, options...)
+	err := b.doRequest(ctx, "setPassportDataErrors", &res, options...)
 	if err != nil {
 		return nil, err
 	}

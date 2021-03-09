@@ -1,6 +1,7 @@
 package telegram_test
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
@@ -10,6 +11,8 @@ import (
 )
 
 func TestGetUpdates(t *testing.T) {
+	ctx := context.Background()
+
 	response := []byte(`{
   "ok": true,
   "result": [
@@ -43,6 +46,7 @@ func TestGetUpdates(t *testing.T) {
 		if r.URL.String() != u {
 			w.WriteHeader(http.StatusUnauthorized)
 			_, _ = w.Write([]byte(`{"ok":false,"error_code":401,"description":"Unauthorized"}`))
+
 			return
 		}
 
@@ -55,19 +59,22 @@ func TestGetUpdates(t *testing.T) {
 	// success
 	bot := telegram.New(testToken, telegram.SetBaseURL(server.URL))
 
-	res, err := bot.GetUpdates()
+	res, err := bot.GetUpdates(ctx)
 	if err != nil {
 		t.Errorf("error on get updates: %s", err.Error())
+
 		return
 	}
 
 	if !res.IsOK() {
 		t.Error("result should be ok but is not")
+
 		return
 	}
 
 	if res.GetErrorCode() != 0 {
 		t.Errorf("result error code should be zero but is %d", res.GetErrorCode())
+
 		return
 	}
 
@@ -75,6 +82,7 @@ func TestGetUpdates(t *testing.T) {
 
 	if updates == nil {
 		t.Error("result updates should be array but are nil")
+
 		return
 	}
 
@@ -87,30 +95,36 @@ func TestGetUpdates(t *testing.T) {
 	// fail
 	bot = telegram.New(invalidToken, telegram.SetBaseURL(server.URL))
 
-	res, err = bot.GetUpdates()
+	res, err = bot.GetUpdates(ctx)
 	if err != nil {
 		t.Errorf("error on get updates: %s", err.Error())
+
 		return
 	}
 
 	if res.IsOK() {
 		t.Error("result should not be ok but is")
+
 		return
 	}
 
 	if res.GetErrorCode() != http.StatusUnauthorized {
 		t.Errorf("result error code should be %d but is %d", http.StatusUnauthorized, res.GetErrorCode())
+
 		return
 	}
 }
 
 func TestSetWebhook(t *testing.T) {
+	ctx := context.Background()
+
 	response := []byte(`{"ok":true,"result":true,"description":"Webhook was set"}`)
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		u := fmt.Sprintf("/bot%s/setWebhook", testToken)
 		if r.URL.String() != u {
 			w.WriteHeader(http.StatusUnauthorized)
 			_, _ = w.Write([]byte(`{"ok":false,"error_code":401,"description":"Unauthorized"}`))
+
 			return
 		}
 
@@ -124,28 +138,31 @@ func TestSetWebhook(t *testing.T) {
 	bot := telegram.New(testToken, telegram.SetBaseURL(server.URL))
 
 	res, err := bot.SetWebhook(
+		ctx,
 		telegram.SetURL("https://example.com/telegram/webhook"),
 		telegram.SetMaxConnections(40),
 		telegram.SetAllowedUpdates("message"),
 	)
 	if err != nil {
 		t.Errorf("error on set web hook: %s", err.Error())
+
 		return
 	}
 
 	if !res.IsOK() {
 		t.Error("result should be ok but is not")
+
 		return
 	}
 
 	if res.GetErrorCode() != 0 {
 		t.Errorf("result error code should be zero but is %d", res.GetErrorCode())
+
 		return
 	}
 
 	expectedDesc := "Webhook was set"
-	desc := res.GetDescription()
-	if desc != expectedDesc {
+	if desc := res.GetDescription(); desc != expectedDesc {
 		t.Errorf("result description should be '%s' but is '%s'", expectedDesc, desc)
 	}
 }

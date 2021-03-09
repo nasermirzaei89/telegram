@@ -1,5 +1,7 @@
 package telegram
 
+import "context"
+
 // InlineQuery struct
 type InlineQuery struct {
 	ID       string    `json:"id"`
@@ -18,10 +20,10 @@ type answerInlineQueryResponse struct {
 	response
 }
 
-func (b *bot) AnswerInlineQuery(options ...MethodOption) (AnswerInlineQueryResponse, error) {
+func (b *bot) AnswerInlineQuery(ctx context.Context, options ...MethodOption) (AnswerInlineQueryResponse, error) {
 	var res answerInlineQueryResponse
 
-	err := b.doRequest("answerInlineQuery", &res, options...)
+	err := b.doRequest(ctx, "answerInlineQuery", &res, options...)
 	if err != nil {
 		return nil, err
 	}

@@ -1,5 +1,7 @@
 package telegram
 
+import "context"
+
 // Sticker struct
 type Sticker struct {
 	FileID       string        `json:"file_id"`
@@ -47,10 +49,10 @@ func (r *sendStickerResponse) GetMessage() *Message {
 	return r.Result
 }
 
-func (b *bot) SendSticker(options ...MethodOption) (SendStickerResponse, error) {
+func (b *bot) SendSticker(ctx context.Context, options ...MethodOption) (SendStickerResponse, error) {
 	var res sendStickerResponse
 
-	err := b.doRequest("sendSticker", &res, options...)
+	err := b.doRequest(ctx, "sendSticker", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -73,10 +75,10 @@ func (r *getStickerSetResponse) GetStickerSet() *StickerSet {
 	return r.Result
 }
 
-func (b *bot) GetStickerSet(options ...MethodOption) (GetStickerSetResponse, error) {
+func (b *bot) GetStickerSet(ctx context.Context, options ...MethodOption) (GetStickerSetResponse, error) {
 	var res getStickerSetResponse
 
-	err := b.doRequest("getStickerSet", &res, options...)
+	err := b.doRequest(ctx, "getStickerSet", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -99,10 +101,10 @@ func (r *uploadStickerFileResponse) GetUploadedFile() *File {
 	return r.Result
 }
 
-func (b *bot) UploadStickerFile(options ...MethodOption) (UploadStickerFileResponse, error) {
+func (b *bot) UploadStickerFile(ctx context.Context, options ...MethodOption) (UploadStickerFileResponse, error) {
 	var res uploadStickerFileResponse
 
-	err := b.doRequest("uploadStickerFile", &res, options...)
+	err := b.doRequest(ctx, "uploadStickerFile", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -119,10 +121,10 @@ type createNewStickerSetResponse struct {
 	response
 }
 
-func (b *bot) CreateNewStickerSet(options ...MethodOption) (CreateNewStickerSetResponse, error) {
+func (b *bot) CreateNewStickerSet(ctx context.Context, options ...MethodOption) (CreateNewStickerSetResponse, error) {
 	var res createNewStickerSetResponse
 
-	err := b.doRequest("createNewStickerSet", &res, options...)
+	err := b.doRequest(ctx, "createNewStickerSet", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -139,10 +141,10 @@ type addStickerToSetResponse struct {
 	response
 }
 
-func (b *bot) AddStickerToSet(options ...MethodOption) (AddStickerToSetResponse, error) {
+func (b *bot) AddStickerToSet(ctx context.Context, options ...MethodOption) (AddStickerToSetResponse, error) {
 	var res addStickerToSetResponse
 
-	err := b.doRequest("addStickerToSet", &res, options...)
+	err := b.doRequest(ctx, "addStickerToSet", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -159,10 +161,10 @@ type setStickerPositionInSetResponse struct {
 	response
 }
 
-func (b *bot) SetStickerPositionInSet(options ...MethodOption) (SetStickerPositionInSetResponse, error) {
+func (b *bot) SetStickerPositionInSet(ctx context.Context, options ...MethodOption) (SetStickerPositionInSetResponse, error) {
 	var res setStickerPositionInSetResponse
 
-	err := b.doRequest("setStickerPositionInSet", &res, options...)
+	err := b.doRequest(ctx, "setStickerPositionInSet", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -179,10 +181,10 @@ type deleteStickerFromSetResponse struct {
 	response
 }
 
-func (b *bot) DeleteStickerFromSet(options ...MethodOption) (DeleteStickerFromSetResponse, error) {
+func (b *bot) DeleteStickerFromSet(ctx context.Context, options ...MethodOption) (DeleteStickerFromSetResponse, error) {
 	var res deleteStickerFromSetResponse
 
-	err := b.doRequest("deleteStickerFromSet", &res, options...)
+	err := b.doRequest(ctx, "deleteStickerFromSet", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -199,10 +201,10 @@ type setStickerSetThumbResponse struct {
 	response
 }
 
-func (b *bot) SetStickerSetThumb(options ...MethodOption) (SetStickerSetThumbResponse, error) {
+func (b *bot) SetStickerSetThumb(ctx context.Context, options ...MethodOption) (SetStickerSetThumbResponse, error) {
 	var res setStickerSetThumbResponse
 
-	err := b.doRequest("setStickerSetThumb", &res, options...)
+	err := b.doRequest(ctx, "setStickerSetThumb", &res, options...)
 	if err != nil {
 		return nil, err
 	}

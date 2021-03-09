@@ -1,5 +1,7 @@
 package telegram
 
+import "context"
+
 // SendInvoiceResponse interface
 type SendInvoiceResponse interface {
 	Response
@@ -15,10 +17,10 @@ func (r *sendInvoiceResponse) GetMessage() *Message {
 	return r.Result
 }
 
-func (b *bot) SendInvoice(options ...MethodOption) (SendInvoiceResponse, error) {
+func (b *bot) SendInvoice(ctx context.Context, options ...MethodOption) (SendInvoiceResponse, error) {
 	var res sendInvoiceResponse
 
-	err := b.doRequest("sendInvoice", &res, options...)
+	err := b.doRequest(ctx, "sendInvoice", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -35,10 +37,10 @@ type answerShippingQueryResponse struct {
 	response
 }
 
-func (b *bot) AnswerShippingQuery(options ...MethodOption) (AnswerShippingQueryResponse, error) {
+func (b *bot) AnswerShippingQuery(ctx context.Context, options ...MethodOption) (AnswerShippingQueryResponse, error) {
 	var res answerShippingQueryResponse
 
-	err := b.doRequest("answerShippingQuery", &res, options...)
+	err := b.doRequest(ctx, "answerShippingQuery", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -55,10 +57,10 @@ type answerPreCheckoutQueryResponse struct {
 	response
 }
 
-func (b *bot) AnswerPreCheckoutQuery(options ...MethodOption) (AnswerPreCheckoutQueryResponse, error) {
+func (b *bot) AnswerPreCheckoutQuery(ctx context.Context, options ...MethodOption) (AnswerPreCheckoutQueryResponse, error) {
 	var res answerPreCheckoutQueryResponse
 
-	err := b.doRequest("answerPreCheckoutQuery", &res, options...)
+	err := b.doRequest(ctx, "answerPreCheckoutQuery", &res, options...)
 	if err != nil {
 		return nil, err
 	}

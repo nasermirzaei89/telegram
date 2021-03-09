@@ -2,6 +2,7 @@ package telegram
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -53,7 +54,7 @@ type request struct {
 	params map[string]interface{}
 }
 
-func (b *bot) doRequest(methodName string, res interface{}, options ...MethodOption) error {
+func (b *bot) doRequest(ctx context.Context, methodName string, res interface{}, options ...MethodOption) error {
 	r := request{
 		params: map[string]interface{}{},
 	}
@@ -70,44 +71,44 @@ func (b *bot) doRequest(methodName string, res interface{}, options ...MethodOpt
 		case io.Reader:
 			w, err := writer.CreateFormFile(k, k)
 			if err != nil {
-				return err
+				return fmt.Errorf("error on create field from file: %w", err)
 			}
 
 			b, err := ioutil.ReadAll(t)
 			if err != nil {
-				return err
+				return fmt.Errorf("error on read: %w", err)
 			}
 
 			_, err = w.Write(b)
 			if err != nil {
-				return err
+				return fmt.Errorf("error on write data: %w", err)
 			}
 		case string:
 			err := writer.WriteField(k, t)
 			if err != nil {
-				return err
+				return fmt.Errorf("error on write field: %w", err)
 			}
 		default:
 			b, err := json.Marshal(v)
 			if err != nil {
-				return err
+				return fmt.Errorf("error on marshal json: %w", err)
 			}
 
 			err = writer.WriteField(k, string(b))
 			if err != nil {
-				return err
+				return fmt.Errorf("error on write field: %w", err)
 			}
 		}
 	}
 
 	err := writer.Close()
 	if err != nil {
-		return err
+		return fmt.Errorf("error on close writer: %w", err)
 	}
 
-	req, err := http.NewRequest(http.MethodPost, fmt.Sprintf("%s/bot%s/%s", b.baseURL, b.token, methodName), body)
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, fmt.Sprintf("%s/bot%s/%s", b.baseURL, b.token, methodName), body)
 	if err != nil {
-		return err
+		return fmt.Errorf("error on new http request: %w", err)
 	}
 
 	// don't send content type on empty body
@@ -119,14 +120,14 @@ func (b *bot) doRequest(methodName string, res interface{}, options ...MethodOpt
 
 	resp, err := client.Do(req)
 	if err != nil {
-		return err
+		return fmt.Errorf("error on do http request: %w", err)
 	}
 
 	defer func() { _ = resp.Body.Close() }()
 
 	err = json.NewDecoder(resp.Body).Decode(res)
 	if err != nil {
-		return err
+		return fmt.Errorf("error decode json response: %w", err)
 	}
 
 	return nil

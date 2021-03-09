@@ -1,6 +1,8 @@
 package telegram
 
-// GetMeResponse interface
+import "context"
+
+// GetMeResponse interface.
 type GetMeResponse interface {
 	Response
 	GetUser() *User
@@ -15,10 +17,10 @@ func (r *getMeResponse) GetUser() *User {
 	return r.Result
 }
 
-func (b *bot) GetMe() (GetMeResponse, error) {
+func (b *bot) GetMe(ctx context.Context) (GetMeResponse, error) {
 	var res getMeResponse
 
-	err := b.doRequest("getMe", &res)
+	err := b.doRequest(ctx, "getMe", &res)
 	if err != nil {
 		return nil, err
 	}
@@ -26,7 +28,7 @@ func (b *bot) GetMe() (GetMeResponse, error) {
 	return &res, nil
 }
 
-// LogOutResponse interface
+// LogOutResponse interface.
 type LogOutResponse interface {
 	Response
 }
@@ -35,10 +37,10 @@ type logOutResponse struct {
 	response
 }
 
-func (b *bot) LogOut() (LogOutResponse, error) {
+func (b *bot) LogOut(ctx context.Context) (LogOutResponse, error) {
 	var res logOutResponse
 
-	err := b.doRequest("logOut", &res)
+	err := b.doRequest(ctx, "logOut", &res)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +48,7 @@ func (b *bot) LogOut() (LogOutResponse, error) {
 	return &res, nil
 }
 
-// CloseResponse interface
+// CloseResponse interface.
 type CloseResponse interface {
 	Response
 }
@@ -55,10 +57,10 @@ type closeResponse struct {
 	response
 }
 
-func (b *bot) Close() (CloseResponse, error) {
+func (b *bot) Close(ctx context.Context) (CloseResponse, error) {
 	var res closeResponse
 
-	err := b.doRequest("close", &res)
+	err := b.doRequest(ctx, "close", &res)
 	if err != nil {
 		return nil, err
 	}
@@ -66,7 +68,7 @@ func (b *bot) Close() (CloseResponse, error) {
 	return &res, nil
 }
 
-// SendMessageResponse interface
+// SendMessageResponse interface.
 type SendMessageResponse interface {
 	Response
 	GetMessage() *Message
@@ -81,10 +83,10 @@ func (r *sendMessageResponse) GetMessage() *Message {
 	return r.Result
 }
 
-func (b *bot) SendMessage(options ...MethodOption) (SendMessageResponse, error) {
+func (b *bot) SendMessage(ctx context.Context, options ...MethodOption) (SendMessageResponse, error) {
 	var res sendMessageResponse
 
-	err := b.doRequest("sendMessage", &res, options...)
+	err := b.doRequest(ctx, "sendMessage", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -92,7 +94,7 @@ func (b *bot) SendMessage(options ...MethodOption) (SendMessageResponse, error) 
 	return &res, nil
 }
 
-// ForwardMessageResponse interface
+// ForwardMessageResponse interface.
 type ForwardMessageResponse interface {
 	Response
 	GetMessage() *Message
@@ -107,10 +109,10 @@ func (r *forwardMessageResponse) GetMessage() *Message {
 	return r.Result
 }
 
-func (b *bot) ForwardMessage(options ...MethodOption) (ForwardMessageResponse, error) {
+func (b *bot) ForwardMessage(ctx context.Context, options ...MethodOption) (ForwardMessageResponse, error) {
 	var res forwardMessageResponse
 
-	err := b.doRequest("forwardMessage", &res, options...)
+	err := b.doRequest(ctx, "forwardMessage", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -118,7 +120,7 @@ func (b *bot) ForwardMessage(options ...MethodOption) (ForwardMessageResponse, e
 	return &res, nil
 }
 
-// CopyMessageResponse interface
+// CopyMessageResponse interface.
 type CopyMessageResponse interface {
 	Response
 	GetMessageID() *MessageID
@@ -133,10 +135,10 @@ func (r *copyMessageResponse) GetMessageID() *MessageID {
 	return r.Result
 }
 
-func (b *bot) CopyMessage(options ...MethodOption) (CopyMessageResponse, error) {
+func (b *bot) CopyMessage(ctx context.Context, options ...MethodOption) (CopyMessageResponse, error) {
 	var res copyMessageResponse
 
-	err := b.doRequest("copyMessage", &res, options...)
+	err := b.doRequest(ctx, "copyMessage", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -159,10 +161,10 @@ func (r *sendPhotoResponse) GetMessage() *Message {
 	return r.Result
 }
 
-func (b *bot) SendPhoto(options ...MethodOption) (SendPhotoResponse, error) {
+func (b *bot) SendPhoto(ctx context.Context, options ...MethodOption) (SendPhotoResponse, error) {
 	var res sendPhotoResponse
 
-	err := b.doRequest("sendPhoto", &res, options...)
+	err := b.doRequest(ctx, "sendPhoto", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -185,10 +187,10 @@ func (r *sendAudioResponse) GetMessage() *Message {
 	return r.Result
 }
 
-func (b *bot) SendAudio(options ...MethodOption) (SendAudioResponse, error) {
+func (b *bot) SendAudio(ctx context.Context, options ...MethodOption) (SendAudioResponse, error) {
 	var res sendAudioResponse
 
-	err := b.doRequest("sendAudio", &res, options...)
+	err := b.doRequest(ctx, "sendAudio", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -211,10 +213,10 @@ func (r *sendDocumentResponse) GetMessage() *Message {
 	return r.Result
 }
 
-func (b *bot) SendDocument(options ...MethodOption) (SendDocumentResponse, error) {
+func (b *bot) SendDocument(ctx context.Context, options ...MethodOption) (SendDocumentResponse, error) {
 	var res sendDocumentResponse
 
-	err := b.doRequest("sendDocument", &res, options...)
+	err := b.doRequest(ctx, "sendDocument", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -237,10 +239,10 @@ func (r *sendVideoResponse) GetMessage() *Message {
 	return r.Result
 }
 
-func (b *bot) SendVideo(options ...MethodOption) (SendVideoResponse, error) {
+func (b *bot) SendVideo(ctx context.Context, options ...MethodOption) (SendVideoResponse, error) {
 	var res sendVideoResponse
 
-	err := b.doRequest("sendVideo", &res, options...)
+	err := b.doRequest(ctx, "sendVideo", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -263,10 +265,10 @@ func (r *sendAnimationResponse) GetMessage() *Message {
 	return r.Result
 }
 
-func (b *bot) SendAnimation(options ...MethodOption) (SendAnimationResponse, error) {
+func (b *bot) SendAnimation(ctx context.Context, options ...MethodOption) (SendAnimationResponse, error) {
 	var res sendAnimationResponse
 
-	err := b.doRequest("sendAnimation", &res, options...)
+	err := b.doRequest(ctx, "sendAnimation", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -289,10 +291,10 @@ func (r *sendVoiceResponse) GetMessage() *Message {
 	return r.Result
 }
 
-func (b *bot) SendVoice(options ...MethodOption) (SendVoiceResponse, error) {
+func (b *bot) SendVoice(ctx context.Context, options ...MethodOption) (SendVoiceResponse, error) {
 	var res sendVoiceResponse
 
-	err := b.doRequest("sendVoice", &res, options...)
+	err := b.doRequest(ctx, "sendVoice", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -315,10 +317,10 @@ func (r *sendVideoNoteResponse) GetMessage() *Message {
 	return r.Result
 }
 
-func (b *bot) SendVideoNote(options ...MethodOption) (SendVideoNoteResponse, error) {
+func (b *bot) SendVideoNote(ctx context.Context, options ...MethodOption) (SendVideoNoteResponse, error) {
 	var res sendVideoNoteResponse
 
-	err := b.doRequest("sendVideoNote", &res, options...)
+	err := b.doRequest(ctx, "sendVideoNote", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -341,10 +343,10 @@ func (r *sendMediaGroupResponse) GetMessage() *Message {
 	return r.Result
 }
 
-func (b *bot) SendMediaGroup(options ...MethodOption) (SendMediaGroupResponse, error) {
+func (b *bot) SendMediaGroup(ctx context.Context, options ...MethodOption) (SendMediaGroupResponse, error) {
 	var res sendMediaGroupResponse
 
-	err := b.doRequest("sendMediaGroup", &res, options...)
+	err := b.doRequest(ctx, "sendMediaGroup", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -367,10 +369,10 @@ func (r *sendLocationResponse) GetMessage() *Message {
 	return r.Result
 }
 
-func (b *bot) SendLocation(options ...MethodOption) (SendLocationResponse, error) {
+func (b *bot) SendLocation(ctx context.Context, options ...MethodOption) (SendLocationResponse, error) {
 	var res sendLocationResponse
 
-	err := b.doRequest("sendLocation", &res, options...)
+	err := b.doRequest(ctx, "sendLocation", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -393,10 +395,10 @@ func (r *editMessageLiveLocationResponse) GetEditedMessage() *Message {
 	return r.Result
 }
 
-func (b *bot) EditMessageLiveLocation(options ...MethodOption) (EditMessageLiveLocationResponse, error) {
+func (b *bot) EditMessageLiveLocation(ctx context.Context, options ...MethodOption) (EditMessageLiveLocationResponse, error) {
 	var res editMessageLiveLocationResponse
 
-	err := b.doRequest("editMessageLiveLocation", &res, options...)
+	err := b.doRequest(ctx, "editMessageLiveLocation", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -419,10 +421,10 @@ func (r *stopMessageLiveLocationResponse) GetMessage() *Message {
 	return r.Result
 }
 
-func (b *bot) StopMessageLiveLocation(options ...MethodOption) (StopMessageLiveLocationResponse, error) {
+func (b *bot) StopMessageLiveLocation(ctx context.Context, options ...MethodOption) (StopMessageLiveLocationResponse, error) {
 	var res stopMessageLiveLocationResponse
 
-	err := b.doRequest("stopMessageLiveLocation", &res, options...)
+	err := b.doRequest(ctx, "stopMessageLiveLocation", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -445,10 +447,10 @@ func (r *sendVenueResponse) GetMessage() *Message {
 	return r.Result
 }
 
-func (b *bot) SendVenue(options ...MethodOption) (SendVenueResponse, error) {
+func (b *bot) SendVenue(ctx context.Context, options ...MethodOption) (SendVenueResponse, error) {
 	var res sendVenueResponse
 
-	err := b.doRequest("sendVenue", &res, options...)
+	err := b.doRequest(ctx, "sendVenue", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -471,10 +473,10 @@ func (r *sendContactResponse) GetMessage() *Message {
 	return r.Result
 }
 
-func (b *bot) SendContact(options ...MethodOption) (SendContactResponse, error) {
+func (b *bot) SendContact(ctx context.Context, options ...MethodOption) (SendContactResponse, error) {
 	var res sendContactResponse
 
-	err := b.doRequest("sendContact", &res, options...)
+	err := b.doRequest(ctx, "sendContact", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -497,10 +499,10 @@ func (r *sendPollResponse) GetMessage() *Message {
 	return r.Result
 }
 
-func (b *bot) SendPoll(options ...MethodOption) (SendPollResponse, error) {
+func (b *bot) SendPoll(ctx context.Context, options ...MethodOption) (SendPollResponse, error) {
 	var res sendPollResponse
 
-	err := b.doRequest("sendPoll", &res, options...)
+	err := b.doRequest(ctx, "sendPoll", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -517,10 +519,10 @@ type sendDiceResponse struct {
 	response
 }
 
-func (b *bot) SendDice(options ...MethodOption) (SendDiceResponse, error) {
+func (b *bot) SendDice(ctx context.Context, options ...MethodOption) (SendDiceResponse, error) {
 	var res sendDiceResponse
 
-	err := b.doRequest("sendDice", &res, options...)
+	err := b.doRequest(ctx, "sendDice", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -537,10 +539,10 @@ type sendChatActionResponse struct {
 	response
 }
 
-func (b *bot) SendChatAction(options ...MethodOption) (SendChatActionResponse, error) {
+func (b *bot) SendChatAction(ctx context.Context, options ...MethodOption) (SendChatActionResponse, error) {
 	var res sendChatActionResponse
 
-	err := b.doRequest("sendChatAction", &res, options...)
+	err := b.doRequest(ctx, "sendChatAction", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -563,10 +565,10 @@ func (r *getUserProfilePhotosResponse) GetUserProfilePhotos() *UserProfilePhotos
 	return r.Result
 }
 
-func (b *bot) GetUserProfilePhotos(options ...MethodOption) (GetUserProfilePhotosResponse, error) {
+func (b *bot) GetUserProfilePhotos(ctx context.Context, options ...MethodOption) (GetUserProfilePhotosResponse, error) {
 	var res getUserProfilePhotosResponse
 
-	err := b.doRequest("getUserProfilePhotos", &res, options...)
+	err := b.doRequest(ctx, "getUserProfilePhotos", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -589,10 +591,10 @@ func (r *getFileResponse) GetFile() *File {
 	return r.Result
 }
 
-func (b *bot) GetFile(options ...MethodOption) (GetFileResponse, error) {
+func (b *bot) GetFile(ctx context.Context, options ...MethodOption) (GetFileResponse, error) {
 	var res getFileResponse
 
-	err := b.doRequest("getFile", &res, options...)
+	err := b.doRequest(ctx, "getFile", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -609,10 +611,10 @@ type kickChatMemberResponse struct {
 	response
 }
 
-func (b *bot) KickChatMember(options ...MethodOption) (KickChatMemberResponse, error) {
+func (b *bot) KickChatMember(ctx context.Context, options ...MethodOption) (KickChatMemberResponse, error) {
 	var res kickChatMemberResponse
 
-	err := b.doRequest("kickChatMember", &res, options...)
+	err := b.doRequest(ctx, "kickChatMember", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -629,10 +631,10 @@ type unbanChatMemberResponse struct {
 	response
 }
 
-func (b *bot) UnbanChatMember(options ...MethodOption) (UnbanChatMemberResponse, error) {
+func (b *bot) UnbanChatMember(ctx context.Context, options ...MethodOption) (UnbanChatMemberResponse, error) {
 	var res unbanChatMemberResponse
 
-	err := b.doRequest("unbanChatMember", &res, options...)
+	err := b.doRequest(ctx, "unbanChatMember", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -649,10 +651,10 @@ type restrictChatMemberResponse struct {
 	response
 }
 
-func (b *bot) RestrictChatMember(options ...MethodOption) (RestrictChatMemberResponse, error) {
+func (b *bot) RestrictChatMember(ctx context.Context, options ...MethodOption) (RestrictChatMemberResponse, error) {
 	var res restrictChatMemberResponse
 
-	err := b.doRequest("restrictChatMember", &res, options...)
+	err := b.doRequest(ctx, "restrictChatMember", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -669,10 +671,10 @@ type promoteChatMemberResponse struct {
 	response
 }
 
-func (b *bot) PromoteChatMember(options ...MethodOption) (PromoteChatMemberResponse, error) {
+func (b *bot) PromoteChatMember(ctx context.Context, options ...MethodOption) (PromoteChatMemberResponse, error) {
 	var res promoteChatMemberResponse
 
-	err := b.doRequest("promoteChatMember", &res, options...)
+	err := b.doRequest(ctx, "promoteChatMember", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -689,10 +691,10 @@ type setChatAdministratorCustomTitleResponse struct {
 	response
 }
 
-func (b *bot) SetChatAdministratorCustomTitle(options ...MethodOption) (SetChatAdministratorCustomTitleResponse, error) {
+func (b *bot) SetChatAdministratorCustomTitle(ctx context.Context, options ...MethodOption) (SetChatAdministratorCustomTitleResponse, error) {
 	var res setChatAdministratorCustomTitleResponse
 
-	err := b.doRequest("setChatAdministratorCustomTitle", &res, options...)
+	err := b.doRequest(ctx, "setChatAdministratorCustomTitle", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -709,10 +711,10 @@ type setChatPermissionsResponse struct {
 	response
 }
 
-func (b *bot) SetChatPermissions(options ...MethodOption) (SetChatPermissionsResponse, error) {
+func (b *bot) SetChatPermissions(ctx context.Context, options ...MethodOption) (SetChatPermissionsResponse, error) {
 	var res setChatPermissionsResponse
 
-	err := b.doRequest("setChatPermissions", &res, options...)
+	err := b.doRequest(ctx, "setChatPermissions", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -735,10 +737,10 @@ func (r *exportChatInviteLinkResponse) GetNewInviteLink() string {
 	return r.Result
 }
 
-func (b *bot) ExportChatInviteLink(options ...MethodOption) (ExportChatInviteLinkResponse, error) {
+func (b *bot) ExportChatInviteLink(ctx context.Context, options ...MethodOption) (ExportChatInviteLinkResponse, error) {
 	var res exportChatInviteLinkResponse
 
-	err := b.doRequest("exportChatInviteLink", &res, options...)
+	err := b.doRequest(ctx, "exportChatInviteLink", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -761,10 +763,10 @@ func (r *createChatInviteLinkResponse) GetNewInviteLink() ChatInviteLink {
 	return r.Result
 }
 
-func (b *bot) CreateChatInviteLink(options ...MethodOption) (CreateChatInviteLinkResponse, error) {
+func (b *bot) CreateChatInviteLink(ctx context.Context, options ...MethodOption) (CreateChatInviteLinkResponse, error) {
 	var res createChatInviteLinkResponse
 
-	err := b.doRequest("createChatInviteLink", &res, options...)
+	err := b.doRequest(ctx, "createChatInviteLink", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -787,10 +789,10 @@ func (r *editChatInviteLinkResponse) GetEditedInviteLink() ChatInviteLink {
 	return r.Result
 }
 
-func (b *bot) EditChatInviteLink(options ...MethodOption) (EditChatInviteLinkResponse, error) {
+func (b *bot) EditChatInviteLink(ctx context.Context, options ...MethodOption) (EditChatInviteLinkResponse, error) {
 	var res editChatInviteLinkResponse
 
-	err := b.doRequest("editChatInviteLink", &res, options...)
+	err := b.doRequest(ctx, "editChatInviteLink", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -813,10 +815,10 @@ func (r *revokeChatInviteLinkResponse) GetRevokedInviteLink() ChatInviteLink {
 	return r.Result
 }
 
-func (b *bot) RevokeChatInviteLink(options ...MethodOption) (RevokeChatInviteLinkResponse, error) {
+func (b *bot) RevokeChatInviteLink(ctx context.Context, options ...MethodOption) (RevokeChatInviteLinkResponse, error) {
 	var res revokeChatInviteLinkResponse
 
-	err := b.doRequest("revokeChatInviteLink", &res, options...)
+	err := b.doRequest(ctx, "revokeChatInviteLink", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -833,10 +835,10 @@ type setChatPhotoResponse struct {
 	response
 }
 
-func (b *bot) SetChatPhoto(options ...MethodOption) (SetChatPhotoResponse, error) {
+func (b *bot) SetChatPhoto(ctx context.Context, options ...MethodOption) (SetChatPhotoResponse, error) {
 	var res setChatPhotoResponse
 
-	err := b.doRequest("setChatPhoto", &res, options...)
+	err := b.doRequest(ctx, "setChatPhoto", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -853,10 +855,10 @@ type deleteChatPhotoResponse struct {
 	response
 }
 
-func (b *bot) DeleteChatPhoto(options ...MethodOption) (DeleteChatPhotoResponse, error) {
+func (b *bot) DeleteChatPhoto(ctx context.Context, options ...MethodOption) (DeleteChatPhotoResponse, error) {
 	var res deleteChatPhotoResponse
 
-	err := b.doRequest("deleteChatPhoto", &res, options...)
+	err := b.doRequest(ctx, "deleteChatPhoto", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -873,10 +875,10 @@ type setChatTitleResponse struct {
 	response
 }
 
-func (b *bot) SetChatTitle(options ...MethodOption) (SetChatTitleResponse, error) {
+func (b *bot) SetChatTitle(ctx context.Context, options ...MethodOption) (SetChatTitleResponse, error) {
 	var res setChatTitleResponse
 
-	err := b.doRequest("setChatTitle", &res, options...)
+	err := b.doRequest(ctx, "setChatTitle", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -893,10 +895,10 @@ type setChatDescriptionResponse struct {
 	response
 }
 
-func (b *bot) SetChatDescription(options ...MethodOption) (SetChatDescriptionResponse, error) {
+func (b *bot) SetChatDescription(ctx context.Context, options ...MethodOption) (SetChatDescriptionResponse, error) {
 	var res setChatDescriptionResponse
 
-	err := b.doRequest("setChatDescription", &res, options...)
+	err := b.doRequest(ctx, "setChatDescription", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -913,10 +915,10 @@ type pinChatMessageResponse struct {
 	response
 }
 
-func (b *bot) PinChatMessage(options ...MethodOption) (PinChatMessageResponse, error) {
+func (b *bot) PinChatMessage(ctx context.Context, options ...MethodOption) (PinChatMessageResponse, error) {
 	var res pinChatMessageResponse
 
-	err := b.doRequest("pinChatMessage", &res, options...)
+	err := b.doRequest(ctx, "pinChatMessage", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -933,10 +935,10 @@ type unpinChatMessageResponse struct {
 	response
 }
 
-func (b *bot) UnpinChatMessage(options ...MethodOption) (UnpinChatMessageResponse, error) {
+func (b *bot) UnpinChatMessage(ctx context.Context, options ...MethodOption) (UnpinChatMessageResponse, error) {
 	var res unpinChatMessageResponse
 
-	err := b.doRequest("unpinChatMessage", &res, options...)
+	err := b.doRequest(ctx, "unpinChatMessage", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -953,10 +955,10 @@ type unpinAllChatMessagesResponse struct {
 	response
 }
 
-func (b *bot) UnpinAllChatMessages(options ...MethodOption) (UnpinAllChatMessagesResponse, error) {
+func (b *bot) UnpinAllChatMessages(ctx context.Context, options ...MethodOption) (UnpinAllChatMessagesResponse, error) {
 	var res unpinAllChatMessagesResponse
 
-	err := b.doRequest("unpinAllChatMessages", &res, options...)
+	err := b.doRequest(ctx, "unpinAllChatMessages", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -973,10 +975,10 @@ type leaveChatResponse struct {
 	response
 }
 
-func (b *bot) LeaveChat(options ...MethodOption) (LeaveChatResponse, error) {
+func (b *bot) LeaveChat(ctx context.Context, options ...MethodOption) (LeaveChatResponse, error) {
 	var res leaveChatResponse
 
-	err := b.doRequest("leaveChat", &res, options...)
+	err := b.doRequest(ctx, "leaveChat", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -999,10 +1001,10 @@ func (r *getChatResponse) GetChat() *Chat {
 	return r.Result
 }
 
-func (b *bot) GetChat(options ...MethodOption) (GetChatResponse, error) {
+func (b *bot) GetChat(ctx context.Context, options ...MethodOption) (GetChatResponse, error) {
 	var res getChatResponse
 
-	err := b.doRequest("getChat", &res, options...)
+	err := b.doRequest(ctx, "getChat", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -1025,10 +1027,10 @@ func (r *getChatAdministratorsResponse) GetChatAdministrators() []ChatMember {
 	return r.Result
 }
 
-func (b *bot) GetChatAdministrators(options ...MethodOption) (GetChatAdministratorsResponse, error) {
+func (b *bot) GetChatAdministrators(ctx context.Context, options ...MethodOption) (GetChatAdministratorsResponse, error) {
 	var res getChatAdministratorsResponse
 
-	err := b.doRequest("getChatAdministrators", &res, options...)
+	err := b.doRequest(ctx, "getChatAdministrators", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -1051,10 +1053,10 @@ func (r *getChatMembersCountResponse) GetChatMembersCount() int {
 	return r.Result
 }
 
-func (b *bot) GetChatMembersCount(options ...MethodOption) (GetChatMembersCountResponse, error) {
+func (b *bot) GetChatMembersCount(ctx context.Context, options ...MethodOption) (GetChatMembersCountResponse, error) {
 	var res getChatMembersCountResponse
 
-	err := b.doRequest("getChatMembersCount", &res, options...)
+	err := b.doRequest(ctx, "getChatMembersCount", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -1077,10 +1079,10 @@ func (r *getChatMemberResponse) GetChatMember() *ChatMember {
 	return r.Result
 }
 
-func (b *bot) GetChatMember(options ...MethodOption) (GetChatMemberResponse, error) {
+func (b *bot) GetChatMember(ctx context.Context, options ...MethodOption) (GetChatMemberResponse, error) {
 	var res getChatMemberResponse
 
-	err := b.doRequest("getChatMember", &res, options...)
+	err := b.doRequest(ctx, "getChatMember", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -1097,10 +1099,10 @@ type setChatStickerSetResponse struct {
 	response
 }
 
-func (b *bot) SetChatStickerSet(options ...MethodOption) (SetChatStickerSetResponse, error) {
+func (b *bot) SetChatStickerSet(ctx context.Context, options ...MethodOption) (SetChatStickerSetResponse, error) {
 	var res setChatStickerSetResponse
 
-	err := b.doRequest("setChatStickerSet", &res, options...)
+	err := b.doRequest(ctx, "setChatStickerSet", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -1117,10 +1119,10 @@ type deleteChatStickerSetResponse struct {
 	response
 }
 
-func (b *bot) DeleteChatStickerSet(options ...MethodOption) (DeleteChatStickerSetResponse, error) {
+func (b *bot) DeleteChatStickerSet(ctx context.Context, options ...MethodOption) (DeleteChatStickerSetResponse, error) {
 	var res deleteChatStickerSetResponse
 
-	err := b.doRequest("deleteChatStickerSet", &res, options...)
+	err := b.doRequest(ctx, "deleteChatStickerSet", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -1137,10 +1139,10 @@ type answerCallbackQueryResponse struct {
 	response
 }
 
-func (b *bot) AnswerCallbackQuery(options ...MethodOption) (AnswerCallbackQueryResponse, error) {
+func (b *bot) AnswerCallbackQuery(ctx context.Context, options ...MethodOption) (AnswerCallbackQueryResponse, error) {
 	var res answerCallbackQueryResponse
 
-	err := b.doRequest("answerCallbackQuery", &res, options...)
+	err := b.doRequest(ctx, "answerCallbackQuery", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -1157,10 +1159,10 @@ type setMyCommandsResponse struct {
 	response
 }
 
-func (b *bot) SetMyCommands(options ...MethodOption) (SetMyCommandsResponse, error) {
+func (b *bot) SetMyCommands(ctx context.Context, options ...MethodOption) (SetMyCommandsResponse, error) {
 	var res setMyCommandsResponse
 
-	err := b.doRequest("setMyCommands", &res, options...)
+	err := b.doRequest(ctx, "setMyCommands", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -1183,10 +1185,10 @@ func (r *getMyCommandsResponse) GetCommands() []BotCommand {
 	return r.Result
 }
 
-func (b *bot) GetMyCommands() (GetMyCommandsResponse, error) {
+func (b *bot) GetMyCommands(ctx context.Context) (GetMyCommandsResponse, error) {
 	var res getMyCommandsResponse
 
-	err := b.doRequest("getMyCommands", &res)
+	err := b.doRequest(ctx, "getMyCommands", &res)
 	if err != nil {
 		return nil, err
 	}

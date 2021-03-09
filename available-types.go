@@ -2,7 +2,7 @@ package telegram
 
 import "io"
 
-// User struct
+// User struct.
 type User struct {
 	ID                      int     `json:"id"`
 	IsBot                   bool    `json:"is_bot"`
@@ -15,7 +15,7 @@ type User struct {
 	SupportsInlineQueries   *bool   `json:"supports_inline_queries,omitempty"`
 }
 
-// Chat struct
+// Chat struct.
 type Chat struct {
 	ID               int              `json:"id"`
 	Type             string           `json:"type"`
@@ -36,7 +36,7 @@ type Chat struct {
 	Location         *ChatLocation    `json:"location,omitempty"`
 }
 
-// Message struct
+// Message struct.
 type Message struct {
 	MessageID                     int                            `json:"message_id"`
 	From                          *User                          `json:"from,omitempty"`
@@ -95,12 +95,12 @@ type Message struct {
 	ReplyMarkup                   *InlineKeyboardMarkup          `json:"reply_markup,omitempty"`
 }
 
-// MessageID struct
+// MessageID struct.
 type MessageID struct {
 	MessageID int `json:"message_id"`
 }
 
-// MessageEntity struct
+// MessageEntity struct.
 type MessageEntity struct {
 	Type     string  `json:"type"`
 	Offset   int     `json:"offset"`
@@ -110,7 +110,7 @@ type MessageEntity struct {
 	Language string  `json:"language,omitempty"`
 }
 
-// PhotoSize struct
+// PhotoSize struct.
 type PhotoSize struct {
 	FileID       string `json:"file_id"`
 	FileUniqueID string `json:"file_unique_id"`
@@ -119,7 +119,7 @@ type PhotoSize struct {
 	FileSize     *int   `json:"file_size,omitempty"`
 }
 
-// Animation struct
+// Animation struct.
 type Animation struct {
 	FileID       string     `json:"file_id"`
 	FileUniqueID string     `json:"file_unique_id"`
@@ -132,7 +132,7 @@ type Animation struct {
 	FileSize     *int       `json:"file_size,omitempty"`
 }
 
-// Audio struct
+// Audio struct.
 type Audio struct {
 	FileID       string     `json:"file_id"`
 	FileUniqueID string     `json:"file_unique_id"`

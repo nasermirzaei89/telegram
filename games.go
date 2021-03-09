@@ -1,5 +1,7 @@
 package telegram
 
+import "context"
+
 // SendGameResponse interface
 type SendGameResponse interface {
 	Response
@@ -15,10 +17,10 @@ func (r *sendGameResponse) GetMessage() *Message {
 	return r.Result
 }
 
-func (b *bot) SendGame(options ...MethodOption) (SendGameResponse, error) {
+func (b *bot) SendGame(ctx context.Context, options ...MethodOption) (SendGameResponse, error) {
 	var res sendGameResponse
 
-	err := b.doRequest("sendGame", &res, options...)
+	err := b.doRequest(ctx, "sendGame", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -54,10 +56,10 @@ func (r *setGameScoreResponse) GetEditedMessage() *Message {
 	return r.Result
 }
 
-func (b *bot) SetGameScore(options ...MethodOption) (SetGameScoreResponse, error) {
+func (b *bot) SetGameScore(ctx context.Context, options ...MethodOption) (SetGameScoreResponse, error) {
 	var res setGameScoreResponse
 
-	err := b.doRequest("setGameScore", &res, options...)
+	err := b.doRequest(ctx, "setGameScore", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -80,10 +82,10 @@ func (r *getGameHighScoresResponse) GetGameHighScores() []GameHighScore {
 	return r.Result
 }
 
-func (b *bot) GetGameHighScores(options ...MethodOption) (GetGameHighScoresResponse, error) {
+func (b *bot) GetGameHighScores(ctx context.Context, options ...MethodOption) (GetGameHighScoresResponse, error) {
 	var res getGameHighScoresResponse
 
-	err := b.doRequest("getGameHighScores", &res, options...)
+	err := b.doRequest(ctx, "getGameHighScores", &res, options...)
 	if err != nil {
 		return nil, err
 	}
