@@ -14,6 +14,8 @@ type Update struct {
 	PreCheckoutQuery   *PreCheckoutQuery   `json:"pre_checkout_query,omitempty"`
 	Poll               *Poll               `json:"poll,omitempty"`
 	PollAnswer         *PollAnswer         `json:"poll_answer"`
+	MyChatMember       *ChatMemberUpdated  `json:"my_chat_member,omitempty"`
+	ChatMember         *ChatMemberUpdated  `json:"chat_member,omitempty"`
 }
 
 // GetUpdatesResponse interface

@@ -38,57 +38,61 @@ type Chat struct {
 
 // Message struct
 type Message struct {
-	MessageID               int                      `json:"message_id"`
-	From                    *User                    `json:"from,omitempty"`
-	SenderChat              *Chat                    `json:"sender_chat,omitempty"`
-	Date                    int                      `json:"date"`
-	Chat                    Chat                     `json:"chat"`
-	ForwardFrom             *User                    `json:"forward_from,omitempty"`
-	ForwardFromChat         *Chat                    `json:"forward_from_chat,omitempty"`
-	ForwardFromMessageID    *int                     `json:"forward_from_message_id,omitempty"`
-	ForwardSignature        *string                  `json:"forward_signature,omitempty"`
-	ForwardSenderName       *string                  `json:"forward_sender_name,omitempty"`
-	ForwardDate             *int                     `json:"forward_date,omitempty"`
-	ReplyToMessage          *Message                 `json:"reply_to_message,omitempty"`
-	ViaBot                  *User                    `json:"via_bot,omitempty"`
-	EditDate                *int                     `json:"edit_date,omitempty"`
-	MediaGroupID            *string                  `json:"media_group_id,omitempty"`
-	AuthorSignature         *string                  `json:"author_signature,omitempty"`
-	Text                    *string                  `json:"text,omitempty"`
-	Entities                []MessageEntity          `json:"entities,omitempty"`
-	CaptionEntities         []MessageEntity          `json:"caption_entities,omitempty"`
-	Audio                   *Audio                   `json:"audio,omitempty"`
-	Document                *Document                `json:"document,omitempty"`
-	Animation               *Animation               `json:"animation,omitempty"`
-	Game                    *Game                    `json:"game,omitempty"`
-	Photo                   []PhotoSize              `json:"photo,omitempty"`
-	Sticker                 *Sticker                 `json:"sticker,omitempty"`
-	Video                   *Video                   `json:"video,omitempty"`
-	Voice                   *Voice                   `json:"voice,omitempty"`
-	VideoNote               *VideoNote               `json:"video_note,omitempty"`
-	Caption                 *string                  `json:"caption,omitempty"`
-	Contact                 *Contact                 `json:"contact,omitempty"`
-	Location                *Location                `json:"location,omitempty"`
-	Venue                   *Venue                   `json:"venue,omitempty"`
-	Poll                    *Poll                    `json:"poll,omitempty"`
-	Dice                    *Dice                    `json:"dice,omitempty"`
-	NewChatMembers          []User                   `json:"new_chat_members,omitempty"`
-	LeftChatMember          *User                    `json:"left_chat_member,omitempty"`
-	NewChatTitle            *string                  `json:"new_chat_title,omitempty"`
-	NewChatPhoto            []PhotoSize              `json:"new_chat_photo,omitempty"`
-	DeleteChatPhoto         *bool                    `json:"delete_chat_photo,omitempty"`
-	GroupChatCreated        *bool                    `json:"group_chat_created,omitempty"`
-	SupergroupChatCreated   *bool                    `json:"supergroup_chat_created,omitempty"`
-	ChannelChatCreated      *bool                    `json:"channel_chat_created,omitempty"`
-	MigrateToChatID         *int                     `json:"migrate_to_chat_id,omitempty"`
-	MigrateFromChatID       *int                     `json:"migrate_from_chat_id,omitempty"`
-	PinnedMessage           *Message                 `json:"pinned_message,omitempty"`
-	Invoice                 *Invoice                 `json:"invoice,omitempty"`
-	SuccessfulPayment       *SuccessfulPayment       `json:"successful_payment,omitempty"`
-	ConnectedWebsite        *string                  `json:"connected_website,omitempty"`
-	PassportData            *PassportData            `json:"passport_data,omitempty"`
-	ProximityAlertTriggered *ProximityAlertTriggered `json:"proximity_alert_triggered,omitempty"`
-	ReplyMarkup             *InlineKeyboardMarkup    `json:"reply_markup,omitempty"`
+	MessageID                     int                            `json:"message_id"`
+	From                          *User                          `json:"from,omitempty"`
+	SenderChat                    *Chat                          `json:"sender_chat,omitempty"`
+	Date                          int                            `json:"date"`
+	Chat                          Chat                           `json:"chat"`
+	ForwardFrom                   *User                          `json:"forward_from,omitempty"`
+	ForwardFromChat               *Chat                          `json:"forward_from_chat,omitempty"`
+	ForwardFromMessageID          *int                           `json:"forward_from_message_id,omitempty"`
+	ForwardSignature              *string                        `json:"forward_signature,omitempty"`
+	ForwardSenderName             *string                        `json:"forward_sender_name,omitempty"`
+	ForwardDate                   *int                           `json:"forward_date,omitempty"`
+	ReplyToMessage                *Message                       `json:"reply_to_message,omitempty"`
+	ViaBot                        *User                          `json:"via_bot,omitempty"`
+	EditDate                      *int                           `json:"edit_date,omitempty"`
+	MediaGroupID                  *string                        `json:"media_group_id,omitempty"`
+	AuthorSignature               *string                        `json:"author_signature,omitempty"`
+	Text                          *string                        `json:"text,omitempty"`
+	Entities                      []MessageEntity                `json:"entities,omitempty"`
+	CaptionEntities               []MessageEntity                `json:"caption_entities,omitempty"`
+	Audio                         *Audio                         `json:"audio,omitempty"`
+	Document                      *Document                      `json:"document,omitempty"`
+	Animation                     *Animation                     `json:"animation,omitempty"`
+	Game                          *Game                          `json:"game,omitempty"`
+	Photo                         []PhotoSize                    `json:"photo,omitempty"`
+	Sticker                       *Sticker                       `json:"sticker,omitempty"`
+	Video                         *Video                         `json:"video,omitempty"`
+	Voice                         *Voice                         `json:"voice,omitempty"`
+	VideoNote                     *VideoNote                     `json:"video_note,omitempty"`
+	Caption                       *string                        `json:"caption,omitempty"`
+	Contact                       *Contact                       `json:"contact,omitempty"`
+	Location                      *Location                      `json:"location,omitempty"`
+	Venue                         *Venue                         `json:"venue,omitempty"`
+	Poll                          *Poll                          `json:"poll,omitempty"`
+	Dice                          *Dice                          `json:"dice,omitempty"`
+	NewChatMembers                []User                         `json:"new_chat_members,omitempty"`
+	LeftChatMember                *User                          `json:"left_chat_member,omitempty"`
+	NewChatTitle                  *string                        `json:"new_chat_title,omitempty"`
+	NewChatPhoto                  []PhotoSize                    `json:"new_chat_photo,omitempty"`
+	DeleteChatPhoto               *bool                          `json:"delete_chat_photo,omitempty"`
+	GroupChatCreated              *bool                          `json:"group_chat_created,omitempty"`
+	SupergroupChatCreated         *bool                          `json:"supergroup_chat_created,omitempty"`
+	ChannelChatCreated            *bool                          `json:"channel_chat_created,omitempty"`
+	MessageAutoDeleteTimerChanged *MessageAutoDeleteTimerChanged `json:"message_auto_delete_timer_changed,omitempty"`
+	MigrateToChatID               *int                           `json:"migrate_to_chat_id,omitempty"`
+	MigrateFromChatID             *int                           `json:"migrate_from_chat_id,omitempty"`
+	PinnedMessage                 *Message                       `json:"pinned_message,omitempty"`
+	Invoice                       *Invoice                       `json:"invoice,omitempty"`
+	SuccessfulPayment             *SuccessfulPayment             `json:"successful_payment,omitempty"`
+	ConnectedWebsite              *string                        `json:"connected_website,omitempty"`
+	PassportData                  *PassportData                  `json:"passport_data,omitempty"`
+	ProximityAlertTriggered       *ProximityAlertTriggered       `json:"proximity_alert_triggered,omitempty"`
+	VoiceChatStarted              *VoiceChatStarted              `json:"voice_chat_started,omitempty"`
+	VoiceChatEnded                *VoiceChatEnded                `json:"voice_chat_ended,omitempty"`
+	VoiceChatParticipantsInvited  *VoiceChatParticipantsInvited  `json:"voice_chat_participants_invited,omitempty"`
+	ReplyMarkup                   *InlineKeyboardMarkup          `json:"reply_markup,omitempty"`
 }
 
 // MessageID struct
@@ -113,6 +117,19 @@ type PhotoSize struct {
 	Width        int    `json:"width"`
 	Height       int    `json:"height"`
 	FileSize     *int   `json:"file_size,omitempty"`
+}
+
+// Animation struct
+type Animation struct {
+	FileID       string     `json:"file_id"`
+	FileUniqueID string     `json:"file_unique_id"`
+	Width        int        `json:"width"`
+	Height       int        `json:"height"`
+	Duration     int        `json:"duration"`
+	Thumb        *PhotoSize `json:"thumb,omitempty"`
+	Filename     *string    `json:"filename,omitempty"`
+	MimeType     *string    `json:"mime_type,omitempty"`
+	FileSize     *int       `json:"file_size,omitempty"`
 }
 
 // Audio struct
@@ -151,19 +168,6 @@ type Video struct {
 	FileSize     *int       `json:"file_size,omitempty"`
 }
 
-// Animation struct
-type Animation struct {
-	FileID       string     `json:"file_id"`
-	FileUniqueID string     `json:"file_unique_id"`
-	Width        int        `json:"width"`
-	Height       int        `json:"height"`
-	Duration     int        `json:"duration"`
-	Thumb        *PhotoSize `json:"thumb,omitempty"`
-	Filename     *string    `json:"filename,omitempty"`
-	MimeType     *string    `json:"mime_type,omitempty"`
-	FileSize     *int       `json:"file_size,omitempty"`
-}
-
 // Voice struct
 type Voice struct {
 	FileID       string  `json:"file_id"`
@@ -192,31 +196,10 @@ type Contact struct {
 	VCard       *string `json:"vcard,omitempty"`
 }
 
-// Location struct
-type Location struct {
-	Longitude            float32  `json:"longitude"`
-	Latitude             float32  `json:"latitude"`
-	HorizontalAccuracy   *float32 `json:"horizontal_accuracy,omitempty"`
-	LivePeriod           *int     `json:"live_period,omitempty"`
-	Heading              *int     `json:"heading,omitempty"`
-	ProximityAlertRadius *int     `json:"proximity_alert_radius,omitempty"`
-}
-
-// Venue struct
-type Venue struct {
-	Location        Location `json:"location"`
-	Title           string   `json:"title"`
-	Address         string   `json:"address"`
-	FoursquareID    *string  `json:"foursquare_id,omitempty"`
-	FoursquareType  *string  `json:"foursquare_type,omitempty"`
-	GooglePlaceID   *string  `json:"google_place_id,omitempty"`
-	GooglePlaceType *string  `json:"google_place_type,omitempty"`
-}
-
-type ProximityAlertTriggered struct {
-	Traveler User `json:"traveler"`
-	Watcher  User `json:"watcher"`
-	Distance int  `json:"distance"`
+// Dice struct
+type Dice struct {
+	Emoji string `json:"emoji"`
+	Value int    `json:"value"`
 }
 
 // PollOption struct
@@ -249,10 +232,50 @@ type Poll struct {
 	CloseDate             *int            `json:"close_date,omitempty"`
 }
 
-// Dice struct
-type Dice struct {
-	Emoji string `json:"emoji"`
-	Value int    `json:"value"`
+// Location struct
+type Location struct {
+	Longitude            float32  `json:"longitude"`
+	Latitude             float32  `json:"latitude"`
+	HorizontalAccuracy   *float32 `json:"horizontal_accuracy,omitempty"`
+	LivePeriod           *int     `json:"live_period,omitempty"`
+	Heading              *int     `json:"heading,omitempty"`
+	ProximityAlertRadius *int     `json:"proximity_alert_radius,omitempty"`
+}
+
+// Venue struct
+type Venue struct {
+	Location        Location `json:"location"`
+	Title           string   `json:"title"`
+	Address         string   `json:"address"`
+	FoursquareID    *string  `json:"foursquare_id,omitempty"`
+	FoursquareType  *string  `json:"foursquare_type,omitempty"`
+	GooglePlaceID   *string  `json:"google_place_id,omitempty"`
+	GooglePlaceType *string  `json:"google_place_type,omitempty"`
+}
+
+// ProximityAlertTriggered struct
+type ProximityAlertTriggered struct {
+	Traveler User `json:"traveler"`
+	Watcher  User `json:"watcher"`
+	Distance int  `json:"distance"`
+}
+
+// MessageAutoDeleteTimerChanged struct
+type MessageAutoDeleteTimerChanged struct {
+	MessageAutoDeleteTime int `json:"message_auto_delete_time"`
+}
+
+// VoiceChatStarted struct
+type VoiceChatStarted struct{}
+
+// VoiceChatEnded struct
+type VoiceChatEnded struct {
+	Duration int `json:"duration"` // Voice chat duration; in seconds
+}
+
+// VoiceChatParticipantsInvited struct
+type VoiceChatParticipantsInvited struct {
+	Users *[]User `json:"users,omitempty"`
 }
 
 // UserProfilePhotos struct
@@ -346,6 +369,16 @@ type ChatPhoto struct {
 	BigFileUniqueID   string `json:"big_file_unique_id"`
 }
 
+// ChatInviteLink struct
+type ChatInviteLink struct {
+	InviteLink  string `json:"invite_link"`
+	Creator     User   `json:"creator"`
+	IsPrimary   bool   `json:"is_primary"`
+	IsRevoked   bool   `json:"is_revoked"`
+	ExpireDate  *int   `json:"expire_date,omitempty"`
+	MemberLimit *int   `json:"member_limit,omitempty"`
+}
+
 // ChatMember struct
 type ChatMember struct {
 	User                  User    `json:"user"`
@@ -354,9 +387,11 @@ type ChatMember struct {
 	IsAnonymous           *bool   `json:"is_anonymous,omitempty"`
 	UntilDate             *int    `json:"until_date,omitempty"`
 	CanBeEdited           *bool   `json:"can_be_edited,omitempty"`
+	CanManageChat         *bool   `json:"can_manage_chat,omitempty"`
 	CanPostMessages       *bool   `json:"can_post_messages,omitempty"`
 	CanEditMessages       *bool   `json:"can_edit_messages,omitempty"`
 	CanDeleteMessages     *bool   `json:"can_delete_messages,omitempty"`
+	CanManageVoiceChats   *bool   `json:"can_manage_voice_chats,omitempty"`
 	CanRestrictMembers    *bool   `json:"can_restrict_members,omitempty"`
 	CanPromoteMembers     *bool   `json:"can_promote_members,omitempty"`
 	CanChangeInfo         *bool   `json:"can_change_info,omitempty"`
@@ -368,6 +403,16 @@ type ChatMember struct {
 	CanSendPolls          *bool   `json:"can_send_polls,omitempty"`
 	CanSendOtherMessages  *bool   `json:"can_send_other_messages,omitempty"`
 	CanAddWebPagePreviews *bool   `json:"can_add_web_page_previews,omitempty"`
+}
+
+// ChatMemberUpdated struct
+type ChatMemberUpdated struct {
+	Chat          Chat            `json:"chat"`
+	From          User            `json:"from"`
+	Date          int             `json:"date"`
+	OldChatMember ChatMember      `json:"old_chat_member"`
+	NewChatMember ChatMember      `json:"new_chat_member"`
+	InviteLink    *ChatInviteLink `json:"invite_link,omitempty"`
 }
 
 // ChatPermissions struct

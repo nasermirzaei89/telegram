@@ -614,8 +614,8 @@ func CanInviteUsers() MethodOption {
 	}
 }
 
-// CanRestrictMemebers option function
-func CanRestrictMemebers() MethodOption {
+// CanRestrictMembers option function
+func CanRestrictMembers() MethodOption {
 	return func(r *request) {
 		r.params["can_restrict_members"] = true
 	}
@@ -628,8 +628,8 @@ func CanPinMessages() MethodOption {
 	}
 }
 
-// CanPromoteMemebers option function
-func CanPromoteMemebers() MethodOption {
+// CanPromoteMembers option function
+func CanPromoteMembers() MethodOption {
 	return func(r *request) {
 		r.params["can_promote_members"] = true
 	}
@@ -828,5 +828,47 @@ func SetOpenPeriod(v int) MethodOption {
 func SetCloseDate(v int) MethodOption {
 	return func(r *request) {
 		r.params["close_date"] = v
+	}
+}
+
+// SetExpireDate option function
+func SetExpireDate(v int) MethodOption {
+	return func(r *request) {
+		r.params["expire_date"] = v
+	}
+}
+
+// SetMemberLimit option function
+func SetMemberLimit(v int) MethodOption {
+	return func(r *request) {
+		r.params["member_limit"] = v
+	}
+}
+
+// SetInviteLink option function
+func SetInviteLink(v string) MethodOption {
+	return func(r *request) {
+		r.params["invite_link"] = v
+	}
+}
+
+// CanManageChat option function
+func CanManageChat() MethodOption {
+	return func(r *request) {
+		r.params["can_manage_chat"] = true
+	}
+}
+
+// CanManageVoiceChats option function
+func CanManageVoiceChats() MethodOption {
+	return func(r *request) {
+		r.params["can_manage_voice_chats"] = true
+	}
+}
+
+// RevokeMessages option function
+func RevokeMessages() MethodOption {
+	return func(r *request) {
+		r.params["revoke_messages"] = true
 	}
 }

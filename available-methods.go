@@ -700,10 +700,30 @@ func (b *bot) SetChatAdministratorCustomTitle(options ...MethodOption) (SetChatA
 	return &res, nil
 }
 
+// SetChatPermissionsResponse interface
+type SetChatPermissionsResponse interface {
+	Response
+}
+
+type setChatPermissionsResponse struct {
+	response
+}
+
+func (b *bot) SetChatPermissions(options ...MethodOption) (SetChatPermissionsResponse, error) {
+	var res setChatPermissionsResponse
+
+	err := b.doRequest("setChatPermissions", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
 // ExportChatInviteLinkResponse interface
 type ExportChatInviteLinkResponse interface {
 	Response
-	GetInviteLink() string
+	GetNewInviteLink() string
 }
 
 type exportChatInviteLinkResponse struct {
@@ -711,7 +731,7 @@ type exportChatInviteLinkResponse struct {
 	Result string `json:"result,omitempty"`
 }
 
-func (r *exportChatInviteLinkResponse) GetInviteLink() string {
+func (r *exportChatInviteLinkResponse) GetNewInviteLink() string {
 	return r.Result
 }
 
@@ -726,19 +746,77 @@ func (b *bot) ExportChatInviteLink(options ...MethodOption) (ExportChatInviteLin
 	return &res, nil
 }
 
-// SetChatPermissionsResponse interface
-type SetChatPermissionsResponse interface {
+// CreateChatInviteLinkResponse interface
+type CreateChatInviteLinkResponse interface {
 	Response
+	GetNewInviteLink() ChatInviteLink
 }
 
-type setChatPermissionsResponse struct {
+type createChatInviteLinkResponse struct {
 	response
+	Result ChatInviteLink `json:"result,omitempty"`
 }
 
-func (b *bot) SetChatPermissions(options ...MethodOption) (SetChatPermissionsResponse, error) {
-	var res setChatPermissionsResponse
+func (r *createChatInviteLinkResponse) GetNewInviteLink() ChatInviteLink {
+	return r.Result
+}
 
-	err := b.doRequest("setChatPermissions", &res, options...)
+func (b *bot) CreateChatInviteLink(options ...MethodOption) (CreateChatInviteLinkResponse, error) {
+	var res createChatInviteLinkResponse
+
+	err := b.doRequest("createChatInviteLink", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// EditChatInviteLinkResponse interface
+type EditChatInviteLinkResponse interface {
+	Response
+	GetEditedInviteLink() ChatInviteLink
+}
+
+type editChatInviteLinkResponse struct {
+	response
+	Result ChatInviteLink `json:"result,omitempty"`
+}
+
+func (r *editChatInviteLinkResponse) GetEditedInviteLink() ChatInviteLink {
+	return r.Result
+}
+
+func (b *bot) EditChatInviteLink(options ...MethodOption) (EditChatInviteLinkResponse, error) {
+	var res editChatInviteLinkResponse
+
+	err := b.doRequest("editChatInviteLink", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// RevokeChatInviteLink interface
+type RevokeChatInviteLinkResponse interface {
+	Response
+	GetRevokedInviteLink() ChatInviteLink
+}
+
+type revokeChatInviteLinkResponse struct {
+	response
+	Result ChatInviteLink `json:"result,omitempty"`
+}
+
+func (r *revokeChatInviteLinkResponse) GetRevokedInviteLink() ChatInviteLink {
+	return r.Result
+}
+
+func (b *bot) RevokeChatInviteLink(options ...MethodOption) (RevokeChatInviteLinkResponse, error) {
+	var res revokeChatInviteLinkResponse
+
+	err := b.doRequest("revokeChatInviteLink", &res, options...)
 	if err != nil {
 		return nil, err
 	}
