@@ -25,6 +25,7 @@ go get github.com/nasermirzaei89/telegram
 package main
 
 import (
+	"context"
 	"github.com/nasermirzaei89/telegram"
 	"log"
 	"os"
@@ -33,7 +34,7 @@ import (
 func main() {
 	bot := telegram.New(os.Getenv("TOKEN"))
 
-	res, err := bot.GetUpdates()
+	res, err := bot.GetUpdates(context.Background())
 	if err != nil {
 		log.Fatalln(err)
 	}
