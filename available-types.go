@@ -452,8 +452,7 @@ type ResponseParameters struct {
 }
 
 // InputMedia interface
-type InputMedia interface {
-}
+type InputMedia interface{}
 
 // InputMediaPhoto struct
 type InputMediaPhoto struct {
