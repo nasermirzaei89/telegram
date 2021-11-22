@@ -516,8 +516,24 @@ func SetCommands(v ...BotCommand) MethodOption {
 	}
 }
 
+type Action string
+
+const (
+	ActionTyping          Action = "typing"
+	ActionUploadPhoto     Action = "upload_photo"
+	ActionRecordVideo     Action = "record_video"
+	ActionUploadVideo     Action = "upload_video"
+	ActionRecordVoice     Action = "record_voice"
+	ActionUploadVoice     Action = "upload_voice"
+	ActionUploadDocument  Action = "upload_document"
+	ActionChooseSticker   Action = "choose_sticker"
+	ActionFindLocation    Action = "find_location"
+	ActionRecordVideoNote Action = "record_video_note"
+	ActionUploadVideoNote Action = "upload_video_note"
+)
+
 // SetAction option function
-func SetAction(v string) MethodOption {
+func SetAction(v Action) MethodOption {
 	return func(r *request) {
 		r.params["action"] = v
 	}
@@ -870,5 +886,138 @@ func CanManageVoiceChats() MethodOption {
 func RevokeMessages() MethodOption {
 	return func(r *request) {
 		r.params["revoke_messages"] = true
+	}
+}
+
+// SetPayload option function
+func SetPayload(v string) MethodOption {
+	return func(r *request) {
+		r.params["payload"] = v
+	}
+}
+
+// SetProviderToken option function
+func SetProviderToken(v string) MethodOption {
+	return func(r *request) {
+		r.params["provider_token"] = v
+	}
+}
+
+// SetCurrency option function
+func SetCurrency(v Currency) MethodOption {
+	return func(r *request) {
+		r.params["currency"] = v
+	}
+}
+
+// SetPrices option function
+func SetPrices(v ...LabeledPrice) MethodOption {
+	return func(r *request) {
+		r.params["prices"] = v
+	}
+}
+
+// SetMaxTipAmount option function
+func SetMaxTipAmount(v int) MethodOption {
+	return func(r *request) {
+		r.params["max_tip_amount"] = v
+	}
+}
+
+// SetSuggestedTipAmounts option function
+func SetSuggestedTipAmounts(v ...int) MethodOption {
+	return func(r *request) {
+		r.params["suggested_tip_amounts"] = v
+	}
+}
+
+// SetStartParameter option function
+func SetStartParameter(v string) MethodOption {
+	return func(r *request) {
+		r.params["start_parameter"] = v
+	}
+}
+
+// SetProviderData option function
+func SetProviderData(v string) MethodOption {
+	return func(r *request) {
+		r.params["provider_data"] = v
+	}
+}
+
+// SetPhotoURL option function
+func SetPhotoURL(v string) MethodOption {
+	return func(r *request) {
+		r.params["photo_url"] = v
+	}
+}
+
+// SetPhotoSize option function
+func SetPhotoSize(v int) MethodOption {
+	return func(r *request) {
+		r.params["photo_size"] = v
+	}
+}
+
+// SetPhotoWidth option function
+func SetPhotoWidth(v int) MethodOption {
+	return func(r *request) {
+		r.params["photo_width"] = v
+	}
+}
+
+// SetPhotoHeight option function
+func SetPhotoHeight(v int) MethodOption {
+	return func(r *request) {
+		r.params["photo_height"] = v
+	}
+}
+
+// NeedName option function
+func NeedName() MethodOption {
+	return func(r *request) {
+		r.params["need_name"] = true
+	}
+}
+
+// NeedPhoneNumber option function
+func NeedPhoneNumber() MethodOption {
+	return func(r *request) {
+		r.params["need_phone_number"] = true
+	}
+}
+
+// NeedEmail option function
+func NeedEmail() MethodOption {
+	return func(r *request) {
+		r.params["need_email"] = true
+	}
+}
+
+// NeedShippingAddress option function
+func NeedShippingAddress() MethodOption {
+	return func(r *request) {
+		r.params["need_shipping_address"] = true
+	}
+}
+
+// SendPhoneNumberToProvider option function
+func SendPhoneNumberToProvider() MethodOption {
+	return func(r *request) {
+		r.params["send_phone_number_to_provider"] = true
+	}
+}
+
+// SendEmailToProvider option function
+func SendEmailToProvider() MethodOption {
+	return func(r *request) {
+		r.params["send_email_to_provider"] = true
+	}
+}
+
+// IsFlexible option function
+func IsFlexible() MethodOption {
+	return func(r *request) {
+		r.params["is_flexible"] = true
 	}
 }

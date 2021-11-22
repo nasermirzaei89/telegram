@@ -56,22 +56,22 @@ type Message struct {
 	AuthorSignature               *string                        `json:"author_signature,omitempty"`
 	Text                          *string                        `json:"text,omitempty"`
 	Entities                      []MessageEntity                `json:"entities,omitempty"`
-	CaptionEntities               []MessageEntity                `json:"caption_entities,omitempty"`
+	Animation                     *Animation                     `json:"animation,omitempty"`
 	Audio                         *Audio                         `json:"audio,omitempty"`
 	Document                      *Document                      `json:"document,omitempty"`
-	Animation                     *Animation                     `json:"animation,omitempty"`
-	Game                          *Game                          `json:"game,omitempty"`
 	Photo                         []PhotoSize                    `json:"photo,omitempty"`
 	Sticker                       *Sticker                       `json:"sticker,omitempty"`
 	Video                         *Video                         `json:"video,omitempty"`
-	Voice                         *Voice                         `json:"voice,omitempty"`
 	VideoNote                     *VideoNote                     `json:"video_note,omitempty"`
+	Voice                         *Voice                         `json:"voice,omitempty"`
 	Caption                       *string                        `json:"caption,omitempty"`
+	CaptionEntities               []MessageEntity                `json:"caption_entities,omitempty"`
 	Contact                       *Contact                       `json:"contact,omitempty"`
-	Location                      *Location                      `json:"location,omitempty"`
-	Venue                         *Venue                         `json:"venue,omitempty"`
-	Poll                          *Poll                          `json:"poll,omitempty"`
 	Dice                          *Dice                          `json:"dice,omitempty"`
+	Game                          *Game                          `json:"game,omitempty"`
+	Poll                          *Poll                          `json:"poll,omitempty"`
+	Venue                         *Venue                         `json:"venue,omitempty"`
+	Location                      *Location                      `json:"location,omitempty"`
 	NewChatMembers                []User                         `json:"new_chat_members,omitempty"`
 	LeftChatMember                *User                          `json:"left_chat_member,omitempty"`
 	NewChatTitle                  *string                        `json:"new_chat_title,omitempty"`
@@ -89,6 +89,7 @@ type Message struct {
 	ConnectedWebsite              *string                        `json:"connected_website,omitempty"`
 	PassportData                  *PassportData                  `json:"passport_data,omitempty"`
 	ProximityAlertTriggered       *ProximityAlertTriggered       `json:"proximity_alert_triggered,omitempty"`
+	VoiceChatScheduled            *VoiceChatScheduled            `json:"voice_chat_scheduled,omitempty"`
 	VoiceChatStarted              *VoiceChatStarted              `json:"voice_chat_started,omitempty"`
 	VoiceChatEnded                *VoiceChatEnded                `json:"voice_chat_ended,omitempty"`
 	VoiceChatParticipantsInvited  *VoiceChatParticipantsInvited  `json:"voice_chat_participants_invited,omitempty"`
@@ -263,6 +264,11 @@ type ProximityAlertTriggered struct {
 // MessageAutoDeleteTimerChanged struct
 type MessageAutoDeleteTimerChanged struct {
 	MessageAutoDeleteTime int `json:"message_auto_delete_time"`
+}
+
+// VoiceChatScheduled represents a service message about a voice chat scheduled in the chat.
+type VoiceChatScheduled struct {
+	StartDate int `json:"start_date"` // Point in time (Unix timestamp) when the voice chat is supposed to be started by a chat administrator
 }
 
 // VoiceChatStarted struct

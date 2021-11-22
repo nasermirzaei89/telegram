@@ -2,13 +2,24 @@ package telegram
 
 import "context"
 
+type ChatType string
+
+const (
+	ChatTypeSender     ChatType = "sender"
+	ChatTypePrivate    ChatType = "private"
+	ChatTypeGroup      ChatType = "group"
+	ChatTypeSupergroup ChatType = "supergroup"
+	ChatTypeChannel    ChatType = "channel"
+)
+
 // InlineQuery struct
 type InlineQuery struct {
 	ID       string    `json:"id"`
 	From     User      `json:"from"`
-	Location *Location `json:"location,omitempty"`
 	Query    string    `json:"query"`
 	Offset   string    `json:"offset"`
+	ChatType *ChatType `json:"chat_type,omitempty"`
+	Location *Location `json:"location,omitempty"`
 }
 
 // AnswerInlineQueryResponse interface
@@ -354,6 +365,30 @@ type InputContactMessageContent struct {
 	FirstName   string  `json:"first_name"`
 	LastName    *string `json:"last_name,omitempty"`
 	VCard       *string `json:"vcard,omitempty"`
+}
+
+// InputInvoiceMessageContent represents the content of an invoice message to be sent as the result of an inline query.
+type InputInvoiceMessageContent struct {
+	Title                     string         `json:"title"`
+	Description               string         `json:"description"`
+	Payload                   string         `json:"payload"`
+	ProviderToken             string         `json:"provider_token"`
+	Currency                  Currency       `json:"currency"`
+	Prices                    []LabeledPrice `json:"prices"`
+	MaxTipAmount              *int           `json:"max_tip_amount,omitempty"`
+	SuggestedTipAmounts       []int          `json:"suggested_tip_amounts,omitempty"`
+	ProviderData              *string        `json:"provider_data,omitempty"`
+	PhotoURL                  *string        `json:"photo_url,omitempty"`
+	PhotoSize                 *int           `json:"photo_size,omitempty"`
+	PhotoWidth                *int           `json:"photo_width,omitempty"`
+	PhotoHeight               *int           `json:"photo_height,omitempty"`
+	NeedName                  *bool          `json:"need_name,omitempty"`
+	NeedPhoneNumber           *bool          `json:"need_phone_number,omitempty"`
+	NeedEmail                 *bool          `json:"need_email,omitempty"`
+	NeedShippingAddress       *bool          `json:"need_shipping_address,omitempty"`
+	SendPhoneNumberToProvider *bool          `json:"send_phone_number_to_provider,omitempty"`
+	SendEmailToProvider       *bool          `json:"send_email_to_provider,omitempty"`
+	IsFlexible                *bool          `json:"is_flexible,omitempty"`
 }
 
 // ChosenInlineResult struct
