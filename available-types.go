@@ -18,7 +18,7 @@ type User struct {
 // Chat struct.
 type Chat struct {
 	ID               int              `json:"id"`
-	Type             string           `json:"type"`
+	Type             ChatType         `json:"type"`
 	Title            *string          `json:"title,omitempty"`
 	Username         *string          `json:"username,omitempty"`
 	FirstName        *string          `json:"first_name,omitempty"`
