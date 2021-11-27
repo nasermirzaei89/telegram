@@ -742,6 +742,13 @@ func SetType(v string) MethodOption {
 	}
 }
 
+// SetInlineQueryResultType option function
+func SetInlineQueryResultType(v InlineQueryResultType) MethodOption {
+	return func(r *request) {
+		r.params["type"] = v
+	}
+}
+
 // AllowsMultipleAnswers option function
 func AllowsMultipleAnswers() MethodOption {
 	return func(r *request) {
