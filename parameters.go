@@ -1042,3 +1042,17 @@ func IsFlexible() MethodOption {
 		r.params["is_flexible"] = true
 	}
 }
+
+// CreatesJoinRequest option function
+func CreatesJoinRequest() MethodOption {
+	return func(r *request) {
+		r.params["creates_join_request"] = true
+	}
+}
+
+// SetName option function
+func SetName(v string) MethodOption {
+	return func(r *request) {
+		r.params["name"] = v
+	}
+}

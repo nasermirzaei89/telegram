@@ -397,14 +397,17 @@ type ChatPhoto struct {
 	BigFileUniqueID   string `json:"big_file_unique_id"`
 }
 
-// ChatInviteLink struct
+// ChatInviteLink represents an invite link for a chat.
 type ChatInviteLink struct {
-	InviteLink  string `json:"invite_link"`
-	Creator     User   `json:"creator"`
-	IsPrimary   bool   `json:"is_primary"`
-	IsRevoked   bool   `json:"is_revoked"`
-	ExpireDate  *int   `json:"expire_date,omitempty"`
-	MemberLimit *int   `json:"member_limit,omitempty"`
+	InviteLink              string  `json:"invite_link"`
+	Creator                 User    `json:"creator"`
+	CreatesJoinRequest      User    `json:"creates_join_request"`
+	IsPrimary               bool    `json:"is_primary"`
+	IsRevoked               bool    `json:"is_revoked"`
+	Name                    *string `json:"name"`
+	ExpireDate              *int    `json:"expire_date,omitempty"`
+	MemberLimit             *int    `json:"member_limit,omitempty"`
+	PendingJoinRequestCount *int    `json:"pending_join_request_count,omitempty"`
 }
 
 // ChatMember contains information about one member of a chat. Currently, the following 6 types of chat members are supported:
@@ -486,6 +489,15 @@ type ChatMemberUpdated struct {
 	OldChatMember ChatMember      `json:"old_chat_member"`
 	NewChatMember ChatMember      `json:"new_chat_member"`
 	InviteLink    *ChatInviteLink `json:"invite_link,omitempty"`
+}
+
+// ChatJoinRequest represents a join request sent to a chat.
+type ChatJoinRequest struct {
+	Chat       Chat            `json:"chat"`
+	From       User            `json:"from"`
+	Date       int             `json:"date"`
+	Bio        *string         `json:"bio,omitempty"`
+	InviteLink *ChatInviteLink `json:"invite_link,omitempty"`
 }
 
 // ChatPermissions struct

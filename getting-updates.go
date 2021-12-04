@@ -18,6 +18,7 @@ type Update struct {
 	PollAnswer         *PollAnswer         `json:"poll_answer"`
 	MyChatMember       *ChatMemberUpdated  `json:"my_chat_member,omitempty"`
 	ChatMember         *ChatMemberUpdated  `json:"chat_member,omitempty"`
+	ChatJoinRequest    *ChatJoinRequest    `json:"chat_join_request,omitempty"`
 }
 
 // GetUpdatesResponse interface.

@@ -48,6 +48,8 @@ type Bot interface {
 	CreateChatInviteLink(ctx context.Context, options ...MethodOption) (CreateChatInviteLinkResponse, error)
 	EditChatInviteLink(ctx context.Context, options ...MethodOption) (EditChatInviteLinkResponse, error)
 	RevokeChatInviteLink(ctx context.Context, options ...MethodOption) (RevokeChatInviteLinkResponse, error)
+	ApproveChatJoinRequest(ctx context.Context, options ...MethodOption) (ApproveChatJoinRequestResponse, error)
+	DeclineChatJoinRequest(ctx context.Context, options ...MethodOption) (DeclineChatJoinRequestResponse, error)
 	SetChatPermissions(ctx context.Context, options ...MethodOption) (res SetChatPermissionsResponse, err error)
 	SetChatPhoto(ctx context.Context, options ...MethodOption) (res SetChatPhotoResponse, err error)
 	DeleteChatPhoto(ctx context.Context, options ...MethodOption) (res DeleteChatPhotoResponse, err error)

@@ -800,7 +800,7 @@ func (b *bot) EditChatInviteLink(ctx context.Context, options ...MethodOption) (
 	return &res, nil
 }
 
-// RevokeChatInviteLink interface
+// RevokeChatInviteLinkResponse interface
 type RevokeChatInviteLinkResponse interface {
 	Response
 	GetRevokedInviteLink() ChatInviteLink
@@ -819,6 +819,46 @@ func (b *bot) RevokeChatInviteLink(ctx context.Context, options ...MethodOption)
 	var res revokeChatInviteLinkResponse
 
 	err := b.doRequest(ctx, "revokeChatInviteLink", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// ApproveChatJoinRequestResponse interface
+type ApproveChatJoinRequestResponse interface {
+	Response
+}
+
+type approveChatJoinRequestResponse struct {
+	response
+}
+
+func (b *bot) ApproveChatJoinRequest(ctx context.Context, options ...MethodOption) (ApproveChatJoinRequestResponse, error) {
+	var res approveChatJoinRequestResponse
+
+	err := b.doRequest(ctx, "approveChatJoinRequest", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// DeclineChatJoinRequestResponse interface
+type DeclineChatJoinRequestResponse interface {
+	Response
+}
+
+type declineChatJoinRequestResponse struct {
+	response
+}
+
+func (b *bot) DeclineChatJoinRequest(ctx context.Context, options ...MethodOption) (DeclineChatJoinRequestResponse, error) {
+	var res declineChatJoinRequestResponse
+
+	err := b.doRequest(ctx, "declineChatJoinRequest", &res, options...)
 	if err != nil {
 		return nil, err
 	}
