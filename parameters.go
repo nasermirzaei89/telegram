@@ -516,6 +516,20 @@ func SetCommands(v ...BotCommand) MethodOption {
 	}
 }
 
+// SetScope option function
+func SetScope(v BotCommandScope) MethodOption {
+	return func(r *request) {
+		r.params["scope"] = v
+	}
+}
+
+// SetLanguageCode option function
+func SetLanguageCode(v string) MethodOption {
+	return func(r *request) {
+		r.params["language_code"] = v
+	}
+}
+
 type Action string
 
 const (
@@ -547,7 +561,7 @@ func SetFileID(v string) MethodOption {
 }
 
 // SetUserID option function
-func SetUserID(v int) MethodOption {
+func SetUserID(v int64) MethodOption {
 	return func(r *request) {
 		r.params["user_id"] = v
 	}

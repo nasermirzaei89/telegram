@@ -4,7 +4,7 @@ import "io"
 
 // User struct.
 type User struct {
-	ID                      int     `json:"id"`
+	ID                      int64   `json:"id"`
 	IsBot                   bool    `json:"is_bot"`
 	FirstName               string  `json:"first_name"`
 	LastName                *string `json:"last_name,omitempty"`
@@ -17,7 +17,7 @@ type User struct {
 
 // Chat struct.
 type Chat struct {
-	ID               int              `json:"id"`
+	ID               int64            `json:"id"`
 	Type             ChatType         `json:"type"`
 	Title            *string          `json:"title,omitempty"`
 	Username         *string          `json:"username,omitempty"`
@@ -81,8 +81,8 @@ type Message struct {
 	SupergroupChatCreated         *bool                          `json:"supergroup_chat_created,omitempty"`
 	ChannelChatCreated            *bool                          `json:"channel_chat_created,omitempty"`
 	MessageAutoDeleteTimerChanged *MessageAutoDeleteTimerChanged `json:"message_auto_delete_timer_changed,omitempty"`
-	MigrateToChatID               *int                           `json:"migrate_to_chat_id,omitempty"`
-	MigrateFromChatID             *int                           `json:"migrate_from_chat_id,omitempty"`
+	MigrateToChatID               *int64                         `json:"migrate_to_chat_id,omitempty"`
+	MigrateFromChatID             *int64                         `json:"migrate_from_chat_id,omitempty"`
 	PinnedMessage                 *Message                       `json:"pinned_message,omitempty"`
 	Invoice                       *Invoice                       `json:"invoice,omitempty"`
 	SuccessfulPayment             *SuccessfulPayment             `json:"successful_payment,omitempty"`
@@ -213,7 +213,7 @@ type Contact struct {
 	PhoneNumber string  `json:"phone_number"`
 	FirstName   string  `json:"first_name"`
 	LastName    *string `json:"last_name,omitempty"`
-	UserID      *int    `json:"user_id,omitempty"`
+	UserID      *int64  `json:"user_id,omitempty"`
 	VCard       *string `json:"vcard,omitempty"`
 }
 
@@ -320,10 +320,11 @@ type File struct {
 
 // ReplyKeyboardMarkup struct
 type ReplyKeyboardMarkup struct {
-	Keyboard        [][]KeyboardButton `json:"keyboard"`
-	ResizeKeyboard  *bool              `json:"resize_keyboard,omitempty"`
-	OneTimeKeyboard *bool              `json:"one_time_keyboard,omitempty"`
-	Selective       *bool              `json:"selective,omitempty"`
+	Keyboard              [][]KeyboardButton `json:"keyboard"`                          // Array of button rows, each represented by an Array of KeyboardButton objects
+	ResizeKeyboard        *bool              `json:"resize_keyboard,omitempty"`         // Optional. Requests clients to resize the keyboard vertically for optimal fit (e.g., make the keyboard smaller if there are just two rows of buttons). Defaults to false, in which case the custom keyboard is always of the same height as the app's standard keyboard.
+	OneTimeKeyboard       *bool              `json:"one_time_keyboard,omitempty"`       // Optional. Requests clients to hide the keyboard as soon as it's been used. The keyboard will still be available, but clients will automatically display the usual letter-keyboard in the chat – the user can press a special button in the input field to see the custom keyboard again. Defaults to false.
+	InputFieldPlaceholder *string            `json:"input_field_placeholder,omitempty"` // Optional. The placeholder to be shown in the input field when the keyboard is active; 1-64 characters
+	Selective             *bool              `json:"selective,omitempty"`               // Optional. Use this parameter if you want to show the keyboard to specific users only. Targets: 1) users that are @mentioned in the text of the Message object; 2) if the bot's message is a reply (has reply_to_message_id), sender of the original message. Example: A user requests to change the bot's language, bot replies to the request with a keyboard to select the new language. Other users in the group don't see the keyboard.
 }
 
 // KeyboardButton struct
@@ -383,8 +384,9 @@ type CallbackQuery struct {
 
 // ForceReply struct
 type ForceReply struct {
-	ForceReply bool  `json:"force_reply"`
-	Selective  *bool `json:"selective,omitempty"`
+	ForceReply            bool    `json:"force_reply"`                       // Shows reply interface to the user, as if they manually selected the bot's message and tapped 'Reply'
+	InputFieldPlaceholder *string `json:"input_field_placeholder,omitempty"` // Optional. The placeholder to be shown in the input field when the reply is active; 1-64 characters
+	Selective             *bool   `json:"selective,omitempty"`               // Optional. Use this parameter if you want to force reply from specific users only. Targets: 1) users that are @mentioned in the text of the Message object; 2) if the bot's message is a reply (has reply_to_message_id), sender of the original message.
 }
 
 // ChatPhoto struct
@@ -405,33 +407,78 @@ type ChatInviteLink struct {
 	MemberLimit *int   `json:"member_limit,omitempty"`
 }
 
-// ChatMember struct
-type ChatMember struct {
-	User                  User    `json:"user"`
-	Status                string  `json:"status"`
-	CustomTitle           *string `json:"custom_title,omitempty"`
-	IsAnonymous           *bool   `json:"is_anonymous,omitempty"`
-	UntilDate             *int    `json:"until_date,omitempty"`
-	CanBeEdited           *bool   `json:"can_be_edited,omitempty"`
-	CanManageChat         *bool   `json:"can_manage_chat,omitempty"`
-	CanPostMessages       *bool   `json:"can_post_messages,omitempty"`
-	CanEditMessages       *bool   `json:"can_edit_messages,omitempty"`
-	CanDeleteMessages     *bool   `json:"can_delete_messages,omitempty"`
-	CanManageVoiceChats   *bool   `json:"can_manage_voice_chats,omitempty"`
-	CanRestrictMembers    *bool   `json:"can_restrict_members,omitempty"`
-	CanPromoteMembers     *bool   `json:"can_promote_members,omitempty"`
-	CanChangeInfo         *bool   `json:"can_change_info,omitempty"`
-	CanInviteUsers        *bool   `json:"can_invite_users,omitempty"`
-	CanPinMessages        *bool   `json:"can_pin_messages,omitempty"`
-	IsMember              *bool   `json:"is_member,omitempty"`
-	CanSendMessages       *bool   `json:"can_send_messages,omitempty"`
-	CanSendMediaMessages  *bool   `json:"can_send_media_messages,omitempty"`
-	CanSendPolls          *bool   `json:"can_send_polls,omitempty"`
-	CanSendOtherMessages  *bool   `json:"can_send_other_messages,omitempty"`
-	CanAddWebPagePreviews *bool   `json:"can_add_web_page_previews,omitempty"`
+// ChatMember contains information about one member of a chat. Currently, the following 6 types of chat members are supported:
+// * ChatMemberOwner
+// * ChatMemberAdministrator
+// * ChatMemberMember
+// * ChatMemberRestricted
+// * ChatMemberLeft
+// * ChatMemberBanned
+type ChatMember interface{}
+
+// ChatMemberOwner represents a chat member that owns the chat and has all administrator privileges.
+type ChatMemberOwner struct {
+	Status      string  `json:"status"`
+	User        User    `json:"user"`
+	IsAnonymous bool    `json:"is_anonymous,omitempty"`
+	CustomTitle *string `json:"custom_title,omitempty"`
 }
 
-// ChatMemberUpdated struct
+// ChatMemberAdministrator represents a chat member that has some additional privileges.
+type ChatMemberAdministrator struct {
+	Status              string  `json:"status"`
+	User                User    `json:"user"`
+	CanBeEdited         bool    `json:"can_be_edited,omitempty"`
+	IsAnonymous         bool    `json:"is_anonymous,omitempty"`
+	CanManageChat       bool    `json:"can_manage_chat,omitempty"`
+	CanDeleteMessages   bool    `json:"can_delete_messages,omitempty"`
+	CanManageVoiceChats bool    `json:"can_manage_voice_chats,omitempty"`
+	CanRestrictMembers  bool    `json:"can_restrict_members,omitempty"`
+	CanPromoteMembers   bool    `json:"can_promote_members,omitempty"`
+	CanChangeInfo       bool    `json:"can_change_info,omitempty"`
+	CanInviteUsers      bool    `json:"can_invite_users,omitempty"`
+	CanPostMessages     *bool   `json:"can_post_messages,omitempty"`
+	CanEditMessages     *bool   `json:"can_edit_messages,omitempty"`
+	CanPinMessages      *bool   `json:"can_pin_messages,omitempty"`
+	CustomTitle         *string `json:"custom_title,omitempty"`
+}
+
+// ChatMemberMember represents a chat member that has no additional privileges or restrictions.
+type ChatMemberMember struct {
+	Status string `json:"status"`
+	User   User   `json:"user"`
+}
+
+// ChatMemberRestricted represents a chat member that is under certain restrictions in the chat. Supergroups only.
+type ChatMemberRestricted struct {
+	Status                string `json:"status"`
+	User                  User   `json:"user"`
+	IsMember              bool   `json:"is_member,omitempty"`
+	CanChangeInfo         bool   `json:"can_change_info,omitempty"`
+	CanInviteUsers        bool   `json:"can_invite_users,omitempty"`
+	CanPinMessages        bool   `json:"can_pin_messages,omitempty"`
+	CanSendMessages       bool   `json:"can_send_messages,omitempty"`
+	CanSendMediaMessages  bool   `json:"can_send_media_messages,omitempty"`
+	CanSendPolls          bool   `json:"can_send_polls,omitempty"`
+	CanSendOtherMessages  bool   `json:"can_send_other_messages,omitempty"`
+	CanAddWebPagePreviews bool   `json:"can_add_web_page_previews,omitempty"`
+	UntilDate             int    `json:"until_date,omitempty"`
+}
+
+// ChatMemberLeft represents a chat member that isn't currently a member of the chat, but may join it themselves.
+type ChatMemberLeft struct {
+	Status string `json:"status"`
+	User   User   `json:"user"`
+}
+
+// ChatMemberBanned represents a chat member that was banned in the chat and can't return to the chat or view chat messages.
+type ChatMemberBanned struct {
+	Status    string `json:"status"`
+	User      User   `json:"user"`
+	UntilDate int    `json:"until_date,omitempty"`
+}
+
+// ChatMemberUpdated represents changes in the status of a chat member.
 type ChatMemberUpdated struct {
 	Chat          Chat            `json:"chat"`
 	From          User            `json:"from"`
@@ -465,10 +512,59 @@ type BotCommand struct {
 	Description string `json:"description"`
 }
 
+// BotCommandScope represents the scope to which bot commands are applied. Currently, the following 7 scopes are supported:
+// * BotCommandScopeDefault
+// * BotCommandScopeAllPrivateChats
+// * BotCommandScopeAllGroupChats
+// * BotCommandScopeAllChatAdministrators
+// * BotCommandScopeChat
+// * BotCommandScopeChatAdministrators
+// * BotCommandScopeChatMember
+type BotCommandScope interface{}
+
+// BotCommandScopeDefault represents the default scope of bot commands. Default commands are used if no commands with a narrower scope are specified for the user.
+type BotCommandScopeDefault struct {
+	Type string `json:"type"` // Scope type, must be default
+}
+
+// BotCommandScopeAllPrivateChats represents the scope of bot commands, covering all private chats.
+type BotCommandScopeAllPrivateChats struct {
+	Type string `json:"type"` // Scope type, must be all_private_chats
+}
+
+// BotCommandScopeAllGroupChats represents the scope of bot commands, covering all group and supergroup chats.
+type BotCommandScopeAllGroupChats struct {
+	Type string `json:"type"` // Scope type, must be all_group_chats
+}
+
+// BotCommandScopeAllChatAdministrators represents the scope of bot commands, covering all group and supergroup chat administrators.
+type BotCommandScopeAllChatAdministrators struct {
+	Type string `json:"type"` // Scope type, must be all_chat_administrators
+}
+
+// BotCommandScopeChat represents the scope of bot commands, covering specific chat.
+type BotCommandScopeChat struct {
+	Type   string      `json:"type"`    // Scope type, must be chat
+	ChatID interface{} `json:"chat_id"` // Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+}
+
+// BotCommandScopeChatAdministrators represents the scope of bot commands, covering all administrators of a specific group or supergroup chat.
+type BotCommandScopeChatAdministrators struct {
+	Type   string      `json:"type"`    // Scope type, must be chat_administrators
+	ChatID interface{} `json:"chat_id"` // Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+}
+
+// BotCommandScopeChatMember represents the scope of bot commands, covering a specific member of a group or supergroup chat.
+type BotCommandScopeChatMember struct {
+	Type   string      `json:"type"`    // Scope type, must be chat_member
+	ChatID interface{} `json:"chat_id"` // Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+	UserID int         `json:"user_id"` // Unique identifier of the target user
+}
+
 // ResponseParameters struct
 type ResponseParameters struct {
-	MigrateToChatID *int `json:"migrate_to_chat_id,omitempty"`
-	RetryAfter      *int `json:"retry_after,omitempty"`
+	MigrateToChatID *int64 `json:"migrate_to_chat_id,omitempty"`
+	RetryAfter      *int   `json:"retry_after,omitempty"`
 }
 
 // InputMedia interface

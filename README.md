@@ -11,7 +11,7 @@
 
 ## Status
 
-Bot API 5.2 (https://core.telegram.org/bots/api#april-26-2021)
+Bot API 5.3 (https://core.telegram.org/bots/api#june-25-2021)
 
 ## Install
 

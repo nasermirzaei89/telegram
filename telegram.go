@@ -7,12 +7,14 @@ type Bot interface {
 	GetToken() string
 
 	// getting updates
+
 	GetUpdates(ctx context.Context, options ...MethodOption) (res GetUpdatesResponse, err error)
 	SetWebhook(ctx context.Context, options ...MethodOption) (res SetWebhookResponse, err error)
 	DeleteWebhook(ctx context.Context) (res DeleteWebhookResponse, err error)
 	GetWebhookInfo(ctx context.Context) (res GetWebhookInfoResponse, err error)
 
 	// available methods
+
 	GetMe(ctx context.Context) (res GetMeResponse, err error)
 	LogOut(ctx context.Context) (res LogOutResponse, err error)
 	Close(ctx context.Context) (res CloseResponse, err error)
@@ -37,7 +39,7 @@ type Bot interface {
 	SendChatAction(ctx context.Context, options ...MethodOption) (res SendChatActionResponse, err error)
 	GetUserProfilePhotos(ctx context.Context, options ...MethodOption) (res GetUserProfilePhotosResponse, err error)
 	GetFile(ctx context.Context, options ...MethodOption) (res GetFileResponse, err error)
-	KickChatMember(ctx context.Context, options ...MethodOption) (res KickChatMemberResponse, err error)
+	BanChatMember(ctx context.Context, options ...MethodOption) (res BanChatMemberResponse, err error)
 	UnbanChatMember(ctx context.Context, options ...MethodOption) (res UnbanChatMemberResponse, err error)
 	RestrictChatMember(ctx context.Context, options ...MethodOption) (res RestrictChatMemberResponse, err error)
 	PromoteChatMember(ctx context.Context, options ...MethodOption) (res PromoteChatMemberResponse, err error)
@@ -57,15 +59,17 @@ type Bot interface {
 	LeaveChat(ctx context.Context, options ...MethodOption) (res LeaveChatResponse, err error)
 	GetChat(ctx context.Context, options ...MethodOption) (res GetChatResponse, err error)
 	GetChatAdministrators(ctx context.Context, options ...MethodOption) (res GetChatAdministratorsResponse, err error)
-	GetChatMembersCount(ctx context.Context, options ...MethodOption) (res GetChatMembersCountResponse, err error)
+	GetChatMemberCount(ctx context.Context, options ...MethodOption) (res GetChatMemberCountResponse, err error)
 	GetChatMember(ctx context.Context, options ...MethodOption) (res GetChatMemberResponse, err error)
 	SetChatStickerSet(ctx context.Context, options ...MethodOption) (res SetChatStickerSetResponse, err error)
 	DeleteChatStickerSet(ctx context.Context, options ...MethodOption) (res DeleteChatStickerSetResponse, err error)
 	AnswerCallbackQuery(ctx context.Context, options ...MethodOption) (res AnswerCallbackQueryResponse, err error)
 	SetMyCommands(ctx context.Context, options ...MethodOption) (res SetMyCommandsResponse, err error)
+	DeleteMyCommands(ctx context.Context, options ...MethodOption) (res DeleteMyCommandsResponse, err error)
 	GetMyCommands(ctx context.Context) (res GetMyCommandsResponse, err error)
 
 	// updating messages
+
 	EditMessageText(ctx context.Context, options ...MethodOption) (res EditMessageTextResponse, err error)
 	EditMessageCaption(ctx context.Context, options ...MethodOption) (res EditMessageCaptionResponse, err error)
 	EditMessageMedia(ctx context.Context, options ...MethodOption) (res EditMessageMediaResponse, err error)
@@ -74,6 +78,7 @@ type Bot interface {
 	DeleteMessage(ctx context.Context, options ...MethodOption) (res DeleteMessageResponse, err error)
 
 	// stickers
+
 	SendSticker(ctx context.Context, options ...MethodOption) (res SendStickerResponse, err error)
 	GetStickerSet(ctx context.Context, options ...MethodOption) (res GetStickerSetResponse, err error)
 	UploadStickerFile(ctx context.Context, options ...MethodOption) (res UploadStickerFileResponse, err error)
@@ -84,17 +89,21 @@ type Bot interface {
 	SetStickerSetThumb(ctx context.Context, options ...MethodOption) (res SetStickerSetThumbResponse, err error)
 
 	// inline mode
+
 	AnswerInlineQuery(ctx context.Context, options ...MethodOption) (res AnswerInlineQueryResponse, err error)
 
 	// payments
+
 	SendInvoice(ctx context.Context, options ...MethodOption) (res SendInvoiceResponse, err error)
 	AnswerShippingQuery(ctx context.Context, options ...MethodOption) (res AnswerShippingQueryResponse, err error)
 	AnswerPreCheckoutQuery(ctx context.Context, options ...MethodOption) (res AnswerPreCheckoutQueryResponse, err error)
 
 	// telegram passport
+
 	SetPassportDataErrors(ctx context.Context, options ...MethodOption) (res SetPassportDataErrorsResponse, err error)
 
 	// games
+
 	SendGame(ctx context.Context, options ...MethodOption) (res SendGameResponse, err error)
 	SetGameScore(ctx context.Context, options ...MethodOption) (res SetGameScoreResponse, err error)
 	GetGameHighScores(ctx context.Context, options ...MethodOption) (res GetGameHighScoresResponse, err error)

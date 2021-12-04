@@ -602,19 +602,19 @@ func (b *bot) GetFile(ctx context.Context, options ...MethodOption) (GetFileResp
 	return &res, nil
 }
 
-// KickChatMemberResponse interface
-type KickChatMemberResponse interface {
+// BanChatMemberResponse interface
+type BanChatMemberResponse interface {
 	Response
 }
 
-type kickChatMemberResponse struct {
+type banChatMemberResponse struct {
 	response
 }
 
-func (b *bot) KickChatMember(ctx context.Context, options ...MethodOption) (KickChatMemberResponse, error) {
-	var res kickChatMemberResponse
+func (b *bot) BanChatMember(ctx context.Context, options ...MethodOption) (BanChatMemberResponse, error) {
+	var res banChatMemberResponse
 
-	err := b.doRequest(ctx, "kickChatMember", &res, options...)
+	err := b.doRequest(ctx, "banChatMember", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -1038,25 +1038,25 @@ func (b *bot) GetChatAdministrators(ctx context.Context, options ...MethodOption
 	return &res, nil
 }
 
-// GetChatMembersCountResponse interface
-type GetChatMembersCountResponse interface {
+// GetChatMemberCountResponse interface
+type GetChatMemberCountResponse interface {
 	Response
-	GetChatMembersCount() int
+	GetChatMemberCount() int
 }
 
-type getChatMembersCountResponse struct {
+type getChatMemberCountResponse struct {
 	response
 	Result int `json:"result,omitempty"`
 }
 
-func (r *getChatMembersCountResponse) GetChatMembersCount() int {
+func (r *getChatMemberCountResponse) GetChatMemberCount() int {
 	return r.Result
 }
 
-func (b *bot) GetChatMembersCount(ctx context.Context, options ...MethodOption) (GetChatMembersCountResponse, error) {
-	var res getChatMembersCountResponse
+func (b *bot) GetChatMemberCount(ctx context.Context, options ...MethodOption) (GetChatMemberCountResponse, error) {
+	var res getChatMemberCountResponse
 
-	err := b.doRequest(ctx, "getChatMembersCount", &res, options...)
+	err := b.doRequest(ctx, "getChatMemberCount", &res, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -1163,6 +1163,26 @@ func (b *bot) SetMyCommands(ctx context.Context, options ...MethodOption) (SetMy
 	var res setMyCommandsResponse
 
 	err := b.doRequest(ctx, "setMyCommands", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// DeleteMyCommandsResponse interface
+type DeleteMyCommandsResponse interface {
+	Response
+}
+
+type deleteMyCommandsResponse struct {
+	response
+}
+
+func (b *bot) DeleteMyCommands(ctx context.Context, options ...MethodOption) (DeleteMyCommandsResponse, error) {
+	var res deleteMyCommandsResponse
+
+	err := b.doRequest(ctx, "deleteMyCommands", &res, options...)
 	if err != nil {
 		return nil, err
 	}
