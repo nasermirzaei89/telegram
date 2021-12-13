@@ -44,6 +44,8 @@ type Bot interface {
 	RestrictChatMember(ctx context.Context, options ...MethodOption) (res RestrictChatMemberResponse, err error)
 	PromoteChatMember(ctx context.Context, options ...MethodOption) (res PromoteChatMemberResponse, err error)
 	SetChatAdministratorCustomTitle(ctx context.Context, options ...MethodOption) (res SetChatAdministratorCustomTitleResponse, err error)
+	BanChatSenderChat(ctx context.Context, options ...MethodOption) (res BanChatSenderChatResponse, err error)
+	UnbanChatSenderChat(ctx context.Context, options ...MethodOption) (res UnbanChatSenderChatResponse, err error)
 	ExportChatInviteLink(ctx context.Context, options ...MethodOption) (res ExportChatInviteLinkResponse, err error)
 	CreateChatInviteLink(ctx context.Context, options ...MethodOption) (CreateChatInviteLinkResponse, error)
 	EditChatInviteLink(ctx context.Context, options ...MethodOption) (EditChatInviteLinkResponse, error)

@@ -702,6 +702,46 @@ func (b *bot) SetChatAdministratorCustomTitle(ctx context.Context, options ...Me
 	return &res, nil
 }
 
+// BanChatSenderChatResponse interface
+type BanChatSenderChatResponse interface {
+	Response
+}
+
+type banChatSenderChatResponse struct {
+	response
+}
+
+func (b *bot) BanChatSenderChat(ctx context.Context, options ...MethodOption) (BanChatSenderChatResponse, error) {
+	var res banChatSenderChatResponse
+
+	err := b.doRequest(ctx, "banChatSenderChat", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// UnbanChatSenderChatResponse interface
+type UnbanChatSenderChatResponse interface {
+	Response
+}
+
+type unbanChatSenderChatResponse struct {
+	response
+}
+
+func (b *bot) UnbanChatSenderChat(ctx context.Context, options ...MethodOption) (UnbanChatSenderChatResponse, error) {
+	var res unbanChatSenderChatResponse
+
+	err := b.doRequest(ctx, "unbanChatSenderChat", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
 // SetChatPermissionsResponse interface
 type SetChatPermissionsResponse interface {
 	Response

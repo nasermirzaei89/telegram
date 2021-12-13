@@ -1056,3 +1056,10 @@ func SetName(v string) MethodOption {
 		r.params["name"] = v
 	}
 }
+
+// SetSenderChatID option function
+func SetSenderChatID(v int) MethodOption {
+	return func(r *request) {
+		r.params["sender_chat_id"] = v
+	}
+}
