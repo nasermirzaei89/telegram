@@ -171,7 +171,7 @@ type Audio struct {
 	Thumb        *PhotoSize `json:"thumb,omitempty"`
 }
 
-// Document struct
+// Document struct.
 type Document struct {
 	FileID       string     `json:"file_id"`
 	FileUniqueID string     `json:"file_unique_id"`
@@ -181,7 +181,7 @@ type Document struct {
 	FileSize     *int       `json:"file_size,omitempty"`
 }
 
-// Video struct
+// Video struct.
 type Video struct {
 	FileID       string     `json:"file_id"`
 	FileUniqueID string     `json:"file_unique_id"`
@@ -194,7 +194,7 @@ type Video struct {
 	FileSize     *int       `json:"file_size,omitempty"`
 }
 
-// Voice struct
+// Voice struct.
 type Voice struct {
 	FileID       string  `json:"file_id"`
 	FileUniqueID string  `json:"file_unique_id"`
@@ -203,7 +203,7 @@ type Voice struct {
 	FileSize     *int    `json:"file_size,omitempty"`
 }
 
-// VideoNote struct
+// VideoNote struct.
 type VideoNote struct {
 	FileID       string     `json:"file_id"`
 	FileUniqueID string     `json:"file_unique_id"`
@@ -213,7 +213,7 @@ type VideoNote struct {
 	FileSize     *int       `json:"file_size,omitempty"`
 }
 
-// Contact struct
+// Contact struct.
 type Contact struct {
 	PhoneNumber string  `json:"phone_number"`
 	FirstName   string  `json:"first_name"`
@@ -222,26 +222,26 @@ type Contact struct {
 	VCard       *string `json:"vcard,omitempty"`
 }
 
-// Dice struct
+// Dice struct.
 type Dice struct {
 	Emoji string `json:"emoji"`
 	Value int    `json:"value"`
 }
 
-// PollOption struct
+// PollOption struct.
 type PollOption struct {
 	Text       string `json:"text"`
 	VoterCount int    `json:"voter_count"`
 }
 
-// PollAnswer struct
+// PollAnswer struct.
 type PollAnswer struct {
 	PollID    string `json:"poll_id"`
 	User      User   `json:"user"`
 	OptionIDs []int  `json:"option_ids"`
 }
 
-// Poll struct
+// Poll struct.
 type Poll struct {
 	ID                    string          `json:"id"`
 	Question              string          `json:"question"`
@@ -258,7 +258,7 @@ type Poll struct {
 	CloseDate             *int            `json:"close_date,omitempty"`
 }
 
-// Location struct
+// Location struct.
 type Location struct {
 	Longitude            float32  `json:"longitude"`
 	Latitude             float32  `json:"latitude"`
@@ -268,7 +268,7 @@ type Location struct {
 	ProximityAlertRadius *int     `json:"proximity_alert_radius,omitempty"`
 }
 
-// Venue struct
+// Venue struct.
 type Venue struct {
 	Location        Location `json:"location"`
 	Title           string   `json:"title"`
@@ -279,14 +279,14 @@ type Venue struct {
 	GooglePlaceType *string  `json:"google_place_type,omitempty"`
 }
 
-// ProximityAlertTriggered struct
+// ProximityAlertTriggered struct.
 type ProximityAlertTriggered struct {
 	Traveler User `json:"traveler"`
 	Watcher  User `json:"watcher"`
 	Distance int  `json:"distance"`
 }
 
-// MessageAutoDeleteTimerChanged struct
+// MessageAutoDeleteTimerChanged struct.
 type MessageAutoDeleteTimerChanged struct {
 	MessageAutoDeleteTime int `json:"message_auto_delete_time"`
 }
@@ -296,26 +296,26 @@ type VoiceChatScheduled struct {
 	StartDate int `json:"start_date"` // Point in time (Unix timestamp) when the voice chat is supposed to be started by a chat administrator
 }
 
-// VoiceChatStarted struct
+// VoiceChatStarted struct.
 type VoiceChatStarted struct{}
 
-// VoiceChatEnded struct
+// VoiceChatEnded struct.
 type VoiceChatEnded struct {
 	Duration int `json:"duration"` // Voice chat duration; in seconds
 }
 
-// VoiceChatParticipantsInvited struct
+// VoiceChatParticipantsInvited struct.
 type VoiceChatParticipantsInvited struct {
 	Users *[]User `json:"users,omitempty"`
 }
 
-// UserProfilePhotos struct
+// UserProfilePhotos struct.
 type UserProfilePhotos struct {
 	TotalCount int           `json:"total_count"`
 	Photos     [][]PhotoSize `json:"photos"`
 }
 
-// File struct
+// File struct.
 type File struct {
 	FileID       string  `json:"file_id"`
 	FileUniqueID string  `json:"file_unique_id"`
@@ -323,7 +323,7 @@ type File struct {
 	FilePath     *string `json:"file_path,omitempty"`
 }
 
-// ReplyKeyboardMarkup struct
+// ReplyKeyboardMarkup struct.
 type ReplyKeyboardMarkup struct {
 	Keyboard              [][]KeyboardButton `json:"keyboard"`                          // Array of button rows, each represented by an Array of KeyboardButton objects
 	ResizeKeyboard        *bool              `json:"resize_keyboard,omitempty"`         // Optional. Requests clients to resize the keyboard vertically for optimal fit (e.g., make the keyboard smaller if there are just two rows of buttons). Defaults to false, in which case the custom keyboard is always of the same height as the app's standard keyboard.
@@ -332,7 +332,7 @@ type ReplyKeyboardMarkup struct {
 	Selective             *bool              `json:"selective,omitempty"`               // Optional. Use this parameter if you want to show the keyboard to specific users only. Targets: 1) users that are @mentioned in the text of the Message object; 2) if the bot's message is a reply (has reply_to_message_id), sender of the original message. Example: A user requests to change the bot's language, bot replies to the request with a keyboard to select the new language. Other users in the group don't see the keyboard.
 }
 
-// KeyboardButton struct
+// KeyboardButton struct.
 type KeyboardButton struct {
 	Text            string                  `json:"text"`
 	RequestContact  *bool                   `json:"request_contact,omitempty"`
@@ -340,23 +340,23 @@ type KeyboardButton struct {
 	RequestPoll     *KeyboardButtonPollType `json:"request_poll,omitempty"`
 }
 
-// KeyboardButtonPollType struct
+// KeyboardButtonPollType struct.
 type KeyboardButtonPollType struct {
 	Type *string `json:"type,omitempty"`
 }
 
-// ReplyKeyboardRemove struct
+// ReplyKeyboardRemove struct.
 type ReplyKeyboardRemove struct {
 	RemoveKeyboard bool  `json:"remove_keyboard"`
 	Selective      *bool `json:"selective,omitempty"`
 }
 
-// InlineKeyboardMarkup struct
+// InlineKeyboardMarkup struct.
 type InlineKeyboardMarkup struct {
 	InlineKeyboard [][]InlineKeyboardButton `json:"inline_keyboard"`
 }
 
-// InlineKeyboardButton struct
+// InlineKeyboardButton struct.
 type InlineKeyboardButton struct {
 	Text                         string        `json:"text"`
 	URL                          *string       `json:"url,omitempty"`
@@ -368,7 +368,7 @@ type InlineKeyboardButton struct {
 	Pay                          *bool         `json:"pay,omitempty"`
 }
 
-// LoginURL struct
+// LoginURL struct.
 type LoginURL struct {
 	URL                string  `json:"url"`
 	ForwardText        *string `json:"forward_text,omitempty"`
@@ -376,7 +376,7 @@ type LoginURL struct {
 	RequestWriteAccess *bool   `json:"request_write_access,omitempty"`
 }
 
-// CallbackQuery struct
+// CallbackQuery struct.
 type CallbackQuery struct {
 	ID              string   `json:"id"`
 	From            User     `json:"from"`
@@ -387,14 +387,14 @@ type CallbackQuery struct {
 	GameShortName   *string  `json:"game_short_name,omitempty"`
 }
 
-// ForceReply struct
+// ForceReply struct.
 type ForceReply struct {
 	ForceReply            bool    `json:"force_reply"`                       // Shows reply interface to the user, as if they manually selected the bot's message and tapped 'Reply'
 	InputFieldPlaceholder *string `json:"input_field_placeholder,omitempty"` // Optional. The placeholder to be shown in the input field when the reply is active; 1-64 characters
 	Selective             *bool   `json:"selective,omitempty"`               // Optional. Use this parameter if you want to force reply from specific users only. Targets: 1) users that are @mentioned in the text of the Message object; 2) if the bot's message is a reply (has reply_to_message_id), sender of the original message.
 }
 
-// ChatPhoto struct
+// ChatPhoto struct.
 type ChatPhoto struct {
 	SmallFileID       string `json:"small_file_id"`
 	SmallFileUniqueID string `json:"small_file_unique_id"`
@@ -421,7 +421,7 @@ type ChatInviteLink struct {
 // * ChatMemberMember
 // * ChatMemberRestricted
 // * ChatMemberLeft
-// * ChatMemberBanned
+// * ChatMemberBanned.
 type ChatMember interface{}
 
 // ChatMemberOwner represents a chat member that owns the chat and has all administrator privileges.
@@ -505,7 +505,7 @@ type ChatJoinRequest struct {
 	InviteLink *ChatInviteLink `json:"invite_link,omitempty"`
 }
 
-// ChatPermissions struct
+// ChatPermissions struct.
 type ChatPermissions struct {
 	CanSendMessages       *bool `json:"can_send_messages,omitempty"`
 	CanSendMediaMessages  *bool `json:"can_send_media_messages,omitempty"`
@@ -517,13 +517,13 @@ type ChatPermissions struct {
 	CanPinMessages        *bool `json:"can_pin_messages,omitempty"`
 }
 
-// ChatLocation struct
+// ChatLocation struct.
 type ChatLocation struct {
 	Location Location `json:"location"`
 	Address  string   `json:"address"`
 }
 
-// BotCommand struct
+// BotCommand struct.
 type BotCommand struct {
 	Command     string `json:"command"`
 	Description string `json:"description"`
@@ -536,7 +536,7 @@ type BotCommand struct {
 // * BotCommandScopeAllChatAdministrators
 // * BotCommandScopeChat
 // * BotCommandScopeChatAdministrators
-// * BotCommandScopeChatMember
+// * BotCommandScopeChatMember.
 type BotCommandScope interface{}
 
 // BotCommandScopeDefault represents the default scope of bot commands. Default commands are used if no commands with a narrower scope are specified for the user.
@@ -578,16 +578,16 @@ type BotCommandScopeChatMember struct {
 	UserID int         `json:"user_id"` // Unique identifier of the target user
 }
 
-// ResponseParameters struct
+// ResponseParameters struct.
 type ResponseParameters struct {
 	MigrateToChatID *int64 `json:"migrate_to_chat_id,omitempty"`
 	RetryAfter      *int   `json:"retry_after,omitempty"`
 }
 
-// InputMedia interface
+// InputMedia interface.
 type InputMedia interface{}
 
-// InputMediaPhoto struct
+// InputMediaPhoto struct.
 type InputMediaPhoto struct {
 	Type      string  `json:"type"`
 	Media     string  `json:"media"`
@@ -595,7 +595,7 @@ type InputMediaPhoto struct {
 	ParseMode *string `json:"parse_mode,omitempty"`
 }
 
-// InputMediaVideo struct
+// InputMediaVideo struct.
 type InputMediaVideo struct {
 	Type              string      `json:"type"`
 	Media             string      `json:"media"`
@@ -608,7 +608,7 @@ type InputMediaVideo struct {
 	SupportsStreaming *bool       `json:"supports_streaming,omitempty"`
 }
 
-// InputMediaAnimation struct
+// InputMediaAnimation struct.
 type InputMediaAnimation struct {
 	Type      string      `json:"type"`
 	Media     string      `json:"media"`
@@ -620,7 +620,7 @@ type InputMediaAnimation struct {
 	Duration  *int        `json:"duration,omitempty"`
 }
 
-// InputMediaAudio struct
+// InputMediaAudio struct.
 type InputMediaAudio struct {
 	Type      string      `json:"type"`
 	Media     string      `json:"media"`
@@ -632,7 +632,7 @@ type InputMediaAudio struct {
 	Title     *string     `json:"title,omitempty"`
 }
 
-// InputMediaDocument struct
+// InputMediaDocument struct.
 type InputMediaDocument struct {
 	Type                        string      `json:"type"`
 	Media                       string      `json:"media"`
@@ -642,7 +642,7 @@ type InputMediaDocument struct {
 	DisableContentTypeDetection *bool       `json:"disable_content_type_detection,omitempty"`
 }
 
-// InputFile interface
+// InputFile interface.
 type InputFile interface {
 	io.Reader
 }

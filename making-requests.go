@@ -11,7 +11,7 @@ import (
 	"net/http"
 )
 
-// Response general interface
+// Response general interface.
 type Response interface {
 	IsOK() bool
 	GetErrorCode() int
@@ -54,7 +54,7 @@ type request struct {
 	params map[string]interface{}
 }
 
-func (b *bot) doRequest(ctx context.Context, methodName string, res interface{}, options ...MethodOption) error {
+func (b *Bot) doRequest(ctx context.Context, methodName string, res interface{}, options ...MethodOption) error {
 	r := request{
 		params: map[string]interface{}{},
 	}

@@ -2,7 +2,7 @@ package telegram
 
 import "context"
 
-// Sticker struct
+// Sticker struct.
 type Sticker struct {
 	FileID       string        `json:"file_id"`
 	FileUniqueID string        `json:"file_unique_id"`
@@ -16,7 +16,7 @@ type Sticker struct {
 	FileSize     *int          `json:"file_size,omitempty"`
 }
 
-// StickerSet struct
+// StickerSet struct.
 type StickerSet struct {
 	Name          string     `json:"name"`
 	Title         string     `json:"title"`
@@ -26,7 +26,7 @@ type StickerSet struct {
 	Thumb         *PhotoSize `json:"thumb,omitempty"`
 }
 
-// MaskPosition struct
+// MaskPosition struct.
 type MaskPosition struct {
 	Point  string  `json:"point"`
 	XShift float32 `json:"x_shift"`
@@ -34,7 +34,7 @@ type MaskPosition struct {
 	Scale  float32 `json:"scale"`
 }
 
-// SendStickerResponse interface
+// SendStickerResponse interface.
 type SendStickerResponse interface {
 	Response
 	GetMessage() *Message
@@ -49,7 +49,7 @@ func (r *sendStickerResponse) GetMessage() *Message {
 	return r.Result
 }
 
-func (b *bot) SendSticker(ctx context.Context, options ...MethodOption) (SendStickerResponse, error) {
+func (b *Bot) SendSticker(ctx context.Context, options ...MethodOption) (SendStickerResponse, error) {
 	var res sendStickerResponse
 
 	err := b.doRequest(ctx, "sendSticker", &res, options...)
@@ -60,7 +60,7 @@ func (b *bot) SendSticker(ctx context.Context, options ...MethodOption) (SendSti
 	return &res, nil
 }
 
-// GetStickerSetResponse interface
+// GetStickerSetResponse interface.
 type GetStickerSetResponse interface {
 	Response
 	GetStickerSet() *StickerSet
@@ -75,7 +75,7 @@ func (r *getStickerSetResponse) GetStickerSet() *StickerSet {
 	return r.Result
 }
 
-func (b *bot) GetStickerSet(ctx context.Context, options ...MethodOption) (GetStickerSetResponse, error) {
+func (b *Bot) GetStickerSet(ctx context.Context, options ...MethodOption) (GetStickerSetResponse, error) {
 	var res getStickerSetResponse
 
 	err := b.doRequest(ctx, "getStickerSet", &res, options...)
@@ -86,7 +86,7 @@ func (b *bot) GetStickerSet(ctx context.Context, options ...MethodOption) (GetSt
 	return &res, nil
 }
 
-// UploadStickerFileResponse interface
+// UploadStickerFileResponse interface.
 type UploadStickerFileResponse interface {
 	Response
 	GetUploadedFile() *File
@@ -101,7 +101,7 @@ func (r *uploadStickerFileResponse) GetUploadedFile() *File {
 	return r.Result
 }
 
-func (b *bot) UploadStickerFile(ctx context.Context, options ...MethodOption) (UploadStickerFileResponse, error) {
+func (b *Bot) UploadStickerFile(ctx context.Context, options ...MethodOption) (UploadStickerFileResponse, error) {
 	var res uploadStickerFileResponse
 
 	err := b.doRequest(ctx, "uploadStickerFile", &res, options...)
@@ -112,7 +112,7 @@ func (b *bot) UploadStickerFile(ctx context.Context, options ...MethodOption) (U
 	return &res, nil
 }
 
-// CreateNewStickerSetResponse interface
+// CreateNewStickerSetResponse interface.
 type CreateNewStickerSetResponse interface {
 	Response
 }
@@ -121,7 +121,7 @@ type createNewStickerSetResponse struct {
 	response
 }
 
-func (b *bot) CreateNewStickerSet(ctx context.Context, options ...MethodOption) (CreateNewStickerSetResponse, error) {
+func (b *Bot) CreateNewStickerSet(ctx context.Context, options ...MethodOption) (CreateNewStickerSetResponse, error) {
 	var res createNewStickerSetResponse
 
 	err := b.doRequest(ctx, "createNewStickerSet", &res, options...)
@@ -132,7 +132,7 @@ func (b *bot) CreateNewStickerSet(ctx context.Context, options ...MethodOption) 
 	return &res, nil
 }
 
-// AddStickerToSetResponse interface
+// AddStickerToSetResponse interface.
 type AddStickerToSetResponse interface {
 	Response
 }
@@ -141,7 +141,7 @@ type addStickerToSetResponse struct {
 	response
 }
 
-func (b *bot) AddStickerToSet(ctx context.Context, options ...MethodOption) (AddStickerToSetResponse, error) {
+func (b *Bot) AddStickerToSet(ctx context.Context, options ...MethodOption) (AddStickerToSetResponse, error) {
 	var res addStickerToSetResponse
 
 	err := b.doRequest(ctx, "addStickerToSet", &res, options...)
@@ -152,7 +152,7 @@ func (b *bot) AddStickerToSet(ctx context.Context, options ...MethodOption) (Add
 	return &res, nil
 }
 
-// SetStickerPositionInSetResponse interface
+// SetStickerPositionInSetResponse interface.
 type SetStickerPositionInSetResponse interface {
 	Response
 }
@@ -161,7 +161,7 @@ type setStickerPositionInSetResponse struct {
 	response
 }
 
-func (b *bot) SetStickerPositionInSet(ctx context.Context, options ...MethodOption) (SetStickerPositionInSetResponse, error) {
+func (b *Bot) SetStickerPositionInSet(ctx context.Context, options ...MethodOption) (SetStickerPositionInSetResponse, error) {
 	var res setStickerPositionInSetResponse
 
 	err := b.doRequest(ctx, "setStickerPositionInSet", &res, options...)
@@ -172,7 +172,7 @@ func (b *bot) SetStickerPositionInSet(ctx context.Context, options ...MethodOpti
 	return &res, nil
 }
 
-// DeleteStickerFromSetResponse interface
+// DeleteStickerFromSetResponse interface.
 type DeleteStickerFromSetResponse interface {
 	Response
 }
@@ -181,7 +181,7 @@ type deleteStickerFromSetResponse struct {
 	response
 }
 
-func (b *bot) DeleteStickerFromSet(ctx context.Context, options ...MethodOption) (DeleteStickerFromSetResponse, error) {
+func (b *Bot) DeleteStickerFromSet(ctx context.Context, options ...MethodOption) (DeleteStickerFromSetResponse, error) {
 	var res deleteStickerFromSetResponse
 
 	err := b.doRequest(ctx, "deleteStickerFromSet", &res, options...)
@@ -192,7 +192,7 @@ func (b *bot) DeleteStickerFromSet(ctx context.Context, options ...MethodOption)
 	return &res, nil
 }
 
-// SetStickerSetThumbResponse interface
+// SetStickerSetThumbResponse interface.
 type SetStickerSetThumbResponse interface {
 	Response
 }
@@ -201,7 +201,7 @@ type setStickerSetThumbResponse struct {
 	response
 }
 
-func (b *bot) SetStickerSetThumb(ctx context.Context, options ...MethodOption) (SetStickerSetThumbResponse, error) {
+func (b *Bot) SetStickerSetThumb(ctx context.Context, options ...MethodOption) (SetStickerSetThumbResponse, error) {
 	var res setStickerSetThumbResponse
 
 	err := b.doRequest(ctx, "setStickerSetThumb", &res, options...)

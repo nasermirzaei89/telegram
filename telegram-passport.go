@@ -2,13 +2,13 @@ package telegram
 
 import "context"
 
-// PassportData struct
+// PassportData struct.
 type PassportData struct {
 	Data        []EncryptedPassportElement `json:"data"`
 	Credentials EncryptedCredentials       `json:"credentials"`
 }
 
-// PassportFile struct
+// PassportFile struct.
 type PassportFile struct {
 	FileID       string `json:"file_id"`
 	FileUniqueID string `json:"file_unique_id"`
@@ -16,7 +16,7 @@ type PassportFile struct {
 	FileDate     int    `json:"file_date"`
 }
 
-// EncryptedPassportElement struct
+// EncryptedPassportElement struct.
 type EncryptedPassportElement struct {
 	Type        string         `json:"type"`
 	Data        *string        `json:"data,omitempty"`
@@ -30,14 +30,14 @@ type EncryptedPassportElement struct {
 	Hash        string         `json:"hash"`
 }
 
-// EncryptedCredentials struct
+// EncryptedCredentials struct.
 type EncryptedCredentials struct {
 	Data   string `json:"data"`
 	Hash   string `json:"hash"`
 	Secret string `json:"secret"`
 }
 
-// SetPassportDataErrorsResponse interface
+// SetPassportDataErrorsResponse interface.
 type SetPassportDataErrorsResponse interface {
 	Response
 }
@@ -46,7 +46,7 @@ type setPassportDataErrorsResponse struct {
 	response
 }
 
-func (b *bot) SetPassportDataErrors(ctx context.Context, options ...MethodOption) (SetPassportDataErrorsResponse, error) {
+func (b *Bot) SetPassportDataErrors(ctx context.Context, options ...MethodOption) (SetPassportDataErrorsResponse, error) {
 	var res setPassportDataErrorsResponse
 
 	err := b.doRequest(ctx, "setPassportDataErrors", &res, options...)
@@ -57,10 +57,10 @@ func (b *bot) SetPassportDataErrors(ctx context.Context, options ...MethodOption
 	return &res, nil
 }
 
-// PassportElementError interface
+// PassportElementError interface.
 type PassportElementError interface{}
 
-// PassportElementErrorDataField struct
+// PassportElementErrorDataField struct.
 type PassportElementErrorDataField struct {
 	Source    string `json:"source"`
 	Type      string `json:"type"`
@@ -69,7 +69,7 @@ type PassportElementErrorDataField struct {
 	Message   string `json:"message"`
 }
 
-// PassportElementErrorFrontSide struct
+// PassportElementErrorFrontSide struct.
 type PassportElementErrorFrontSide struct {
 	Source   string `json:"source"`
 	Type     string `json:"type"`
@@ -77,7 +77,7 @@ type PassportElementErrorFrontSide struct {
 	Message  string `json:"message"`
 }
 
-// PassportElementErrorReverseSide struct
+// PassportElementErrorReverseSide struct.
 type PassportElementErrorReverseSide struct {
 	Source   string `json:"source"`
 	Type     string `json:"type"`
@@ -85,7 +85,7 @@ type PassportElementErrorReverseSide struct {
 	Message  string `json:"message"`
 }
 
-// PassportElementErrorSelfie struct
+// PassportElementErrorSelfie struct.
 type PassportElementErrorSelfie struct {
 	Source   string `json:"source"`
 	Type     string `json:"type"`
@@ -93,7 +93,7 @@ type PassportElementErrorSelfie struct {
 	Message  string `json:"message"`
 }
 
-// PassportElementErrorFile struct
+// PassportElementErrorFile struct.
 type PassportElementErrorFile struct {
 	Source   string `json:"source"`
 	Type     string `json:"type"`
@@ -101,7 +101,7 @@ type PassportElementErrorFile struct {
 	Message  string `json:"message"`
 }
 
-// PassportElementErrorFiles struct
+// PassportElementErrorFiles struct.
 type PassportElementErrorFiles struct {
 	Source     string   `json:"source"`
 	Type       string   `json:"type"`
@@ -109,7 +109,7 @@ type PassportElementErrorFiles struct {
 	Message    string   `json:"message"`
 }
 
-// PassportElementErrorTranslationFile struct
+// PassportElementErrorTranslationFile struct.
 type PassportElementErrorTranslationFile struct {
 	Source   string `json:"source"`
 	Type     string `json:"type"`
@@ -117,7 +117,7 @@ type PassportElementErrorTranslationFile struct {
 	Message  string `json:"message"`
 }
 
-// PassportElementErrorTranslationFiles struct
+// PassportElementErrorTranslationFiles struct.
 type PassportElementErrorTranslationFiles struct {
 	Source     string   `json:"source"`
 	Type       string   `json:"type"`
@@ -125,7 +125,7 @@ type PassportElementErrorTranslationFiles struct {
 	Message    string   `json:"message"`
 }
 
-// PassportElementErrorUnspecified struct
+// PassportElementErrorUnspecified struct.
 type PassportElementErrorUnspecified struct {
 	Source      string `json:"source"`
 	Type        string `json:"type"`

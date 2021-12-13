@@ -2,7 +2,7 @@ package telegram
 
 import "context"
 
-// SendInvoiceResponse interface
+// SendInvoiceResponse interface.
 type SendInvoiceResponse interface {
 	Response
 	GetMessage() *Message
@@ -17,7 +17,7 @@ func (r *sendInvoiceResponse) GetMessage() *Message {
 	return r.Result
 }
 
-func (b *bot) SendInvoice(ctx context.Context, options ...MethodOption) (SendInvoiceResponse, error) {
+func (b *Bot) SendInvoice(ctx context.Context, options ...MethodOption) (SendInvoiceResponse, error) {
 	var res sendInvoiceResponse
 
 	err := b.doRequest(ctx, "sendInvoice", &res, options...)
@@ -28,7 +28,7 @@ func (b *bot) SendInvoice(ctx context.Context, options ...MethodOption) (SendInv
 	return &res, nil
 }
 
-// AnswerShippingQueryResponse interface
+// AnswerShippingQueryResponse interface.
 type AnswerShippingQueryResponse interface {
 	Response
 }
@@ -37,7 +37,7 @@ type answerShippingQueryResponse struct {
 	response
 }
 
-func (b *bot) AnswerShippingQuery(ctx context.Context, options ...MethodOption) (AnswerShippingQueryResponse, error) {
+func (b *Bot) AnswerShippingQuery(ctx context.Context, options ...MethodOption) (AnswerShippingQueryResponse, error) {
 	var res answerShippingQueryResponse
 
 	err := b.doRequest(ctx, "answerShippingQuery", &res, options...)
@@ -48,7 +48,7 @@ func (b *bot) AnswerShippingQuery(ctx context.Context, options ...MethodOption) 
 	return &res, nil
 }
 
-// AnswerPreCheckoutQueryResponse interface
+// AnswerPreCheckoutQueryResponse interface.
 type AnswerPreCheckoutQueryResponse interface {
 	Response
 }
@@ -57,7 +57,7 @@ type answerPreCheckoutQueryResponse struct {
 	response
 }
 
-func (b *bot) AnswerPreCheckoutQuery(ctx context.Context, options ...MethodOption) (AnswerPreCheckoutQueryResponse, error) {
+func (b *Bot) AnswerPreCheckoutQuery(ctx context.Context, options ...MethodOption) (AnswerPreCheckoutQueryResponse, error) {
 	var res answerPreCheckoutQueryResponse
 
 	err := b.doRequest(ctx, "answerPreCheckoutQuery", &res, options...)
@@ -68,13 +68,13 @@ func (b *bot) AnswerPreCheckoutQuery(ctx context.Context, options ...MethodOptio
 	return &res, nil
 }
 
-// LabeledPrice struct
+// LabeledPrice struct.
 type LabeledPrice struct {
 	Label  string `json:"label"`
 	Amount int    `json:"amount"`
 }
 
-// Invoice struct
+// Invoice struct.
 type Invoice struct {
 	Title          string `json:"title"`
 	Description    string `json:"description"`
@@ -83,7 +83,7 @@ type Invoice struct {
 	TotalAmount    int    `json:"total_amount"`
 }
 
-// ShippingAddress struct
+// ShippingAddress struct.
 type ShippingAddress struct {
 	CountryCode string `json:"country_code"`
 	State       string `json:"state"`
@@ -93,7 +93,7 @@ type ShippingAddress struct {
 	PostCode    string `json:"post_code"`
 }
 
-// OrderInfo struct
+// OrderInfo struct.
 type OrderInfo struct {
 	Name            string           `json:"name"`
 	PhoneNumber     *string          `json:"phone_number,omitempty"`
@@ -101,14 +101,14 @@ type OrderInfo struct {
 	ShippingAddress *ShippingAddress `json:"shipping_address,omitempty"`
 }
 
-// ShippingOption struct
+// ShippingOption struct.
 type ShippingOption struct {
 	ID     string         `json:"id"`
 	Title  string         `json:"title"`
 	Prices []LabeledPrice `json:"prices"`
 }
 
-// SuccessfulPayment struct
+// SuccessfulPayment struct.
 type SuccessfulPayment struct {
 	Currency                string     `json:"currency"`
 	TotalAmount             int        `json:"total_amount"`
@@ -119,7 +119,7 @@ type SuccessfulPayment struct {
 	ProviderPaymentChargeID string
 }
 
-// ShippingQuery struct
+// ShippingQuery struct.
 type ShippingQuery struct {
 	ID              string          `json:"id"`
 	From            User            `json:"from"`
@@ -127,7 +127,7 @@ type ShippingQuery struct {
 	ShippingAddress ShippingAddress `json:"shipping_address"`
 }
 
-// PreCheckoutQuery struct
+// PreCheckoutQuery struct.
 type PreCheckoutQuery struct {
 	ID               string     `json:"id"`
 	From             User       `json:"from"`

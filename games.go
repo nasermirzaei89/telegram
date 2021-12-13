@@ -2,7 +2,7 @@ package telegram
 
 import "context"
 
-// SendGameResponse interface
+// SendGameResponse interface.
 type SendGameResponse interface {
 	Response
 	GetMessage() *Message
@@ -17,7 +17,7 @@ func (r *sendGameResponse) GetMessage() *Message {
 	return r.Result
 }
 
-func (b *bot) SendGame(ctx context.Context, options ...MethodOption) (SendGameResponse, error) {
+func (b *Bot) SendGame(ctx context.Context, options ...MethodOption) (SendGameResponse, error) {
 	var res sendGameResponse
 
 	err := b.doRequest(ctx, "sendGame", &res, options...)
@@ -28,7 +28,7 @@ func (b *bot) SendGame(ctx context.Context, options ...MethodOption) (SendGameRe
 	return &res, nil
 }
 
-// Game struct
+// Game struct.
 type Game struct {
 	Title        string          `json:"title"`
 	Description  string          `json:"description"`
@@ -38,10 +38,10 @@ type Game struct {
 	Animation    *Animation      `json:"animation,omitempty"`
 }
 
-// CallbackGame interface
+// CallbackGame interface.
 type CallbackGame interface{}
 
-// SetGameScoreResponse interface
+// SetGameScoreResponse interface.
 type SetGameScoreResponse interface {
 	Response
 	GetEditedMessage() *Message
@@ -56,7 +56,7 @@ func (r *setGameScoreResponse) GetEditedMessage() *Message {
 	return r.Result
 }
 
-func (b *bot) SetGameScore(ctx context.Context, options ...MethodOption) (SetGameScoreResponse, error) {
+func (b *Bot) SetGameScore(ctx context.Context, options ...MethodOption) (SetGameScoreResponse, error) {
 	var res setGameScoreResponse
 
 	err := b.doRequest(ctx, "setGameScore", &res, options...)
@@ -67,7 +67,7 @@ func (b *bot) SetGameScore(ctx context.Context, options ...MethodOption) (SetGam
 	return &res, nil
 }
 
-// GetGameHighScoresResponse interface
+// GetGameHighScoresResponse interface.
 type GetGameHighScoresResponse interface {
 	Response
 	GetGameHighScores() []GameHighScore
@@ -82,7 +82,7 @@ func (r *getGameHighScoresResponse) GetGameHighScores() []GameHighScore {
 	return r.Result
 }
 
-func (b *bot) GetGameHighScores(ctx context.Context, options ...MethodOption) (GetGameHighScoresResponse, error) {
+func (b *Bot) GetGameHighScores(ctx context.Context, options ...MethodOption) (GetGameHighScoresResponse, error) {
 	var res getGameHighScoresResponse
 
 	err := b.doRequest(ctx, "getGameHighScores", &res, options...)
@@ -93,7 +93,7 @@ func (b *bot) GetGameHighScores(ctx context.Context, options ...MethodOption) (G
 	return &res, nil
 }
 
-// GameHighScore struct
+// GameHighScore struct.
 type GameHighScore struct {
 	Position int  `json:"position"`
 	User     User `json:"user"`

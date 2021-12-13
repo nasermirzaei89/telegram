@@ -12,7 +12,7 @@ const (
 	ChatTypeChannel    ChatType = "channel"
 )
 
-// InlineQuery struct
+// InlineQuery struct.
 type InlineQuery struct {
 	ID       string    `json:"id"`
 	From     User      `json:"from"`
@@ -22,7 +22,7 @@ type InlineQuery struct {
 	Location *Location `json:"location,omitempty"`
 }
 
-// AnswerInlineQueryResponse interface
+// AnswerInlineQueryResponse interface.
 type AnswerInlineQueryResponse interface {
 	Response
 }
@@ -31,7 +31,7 @@ type answerInlineQueryResponse struct {
 	response
 }
 
-func (b *bot) AnswerInlineQuery(ctx context.Context, options ...MethodOption) (AnswerInlineQueryResponse, error) {
+func (b *Bot) AnswerInlineQuery(ctx context.Context, options ...MethodOption) (AnswerInlineQueryResponse, error) {
 	var res answerInlineQueryResponse
 
 	err := b.doRequest(ctx, "answerInlineQuery", &res, options...)
@@ -42,7 +42,7 @@ func (b *bot) AnswerInlineQuery(ctx context.Context, options ...MethodOption) (A
 	return &res, nil
 }
 
-// InlineQueryResult interface
+// InlineQueryResult interface.
 type InlineQueryResult interface{}
 
 type InlineQueryResultType string
@@ -63,7 +63,7 @@ const (
 	InlineQueryResultTypeSticker  = "sticker"
 )
 
-// InlineQueryResultArticle struct
+// InlineQueryResultArticle struct.
 type InlineQueryResultArticle struct {
 	Type                InlineQueryResultType `json:"type"`
 	ID                  string                `json:"id"`
@@ -78,7 +78,7 @@ type InlineQueryResultArticle struct {
 	ThumbHeight         *int                  `json:"thumb_height,omitempty"`
 }
 
-// InlineQueryResultPhoto struct
+// InlineQueryResultPhoto struct.
 type InlineQueryResultPhoto struct {
 	Type                InlineQueryResultType `json:"type"`
 	ID                  string                `json:"id"`
@@ -94,7 +94,7 @@ type InlineQueryResultPhoto struct {
 	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
 }
 
-// InlineQueryResultGif struct
+// InlineQueryResultGif struct.
 type InlineQueryResultGif struct {
 	Type                InlineQueryResultType `json:"type"`
 	ID                  string                `json:"id"`
@@ -111,7 +111,7 @@ type InlineQueryResultGif struct {
 	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
 }
 
-// InlineQueryResultMpeg4Gif struct
+// InlineQueryResultMpeg4Gif struct.
 type InlineQueryResultMpeg4Gif struct {
 	Type                InlineQueryResultType `json:"type"`
 	ID                  string                `json:"id"`
@@ -128,7 +128,7 @@ type InlineQueryResultMpeg4Gif struct {
 	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
 }
 
-// InlineQueryResultVideo struct
+// InlineQueryResultVideo struct.
 type InlineQueryResultVideo struct {
 	Type                InlineQueryResultType `json:"type"`
 	ID                  string                `json:"id"`
@@ -146,7 +146,7 @@ type InlineQueryResultVideo struct {
 	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
 }
 
-// InlineQueryResultAudio struct
+// InlineQueryResultAudio struct.
 type InlineQueryResultAudio struct {
 	Type                InlineQueryResultType `json:"type"`
 	ID                  string                `json:"id"`
@@ -160,7 +160,7 @@ type InlineQueryResultAudio struct {
 	InputMessageContent InputMessageContent   `json:"input_message_content,omitempty"`
 }
 
-// InlineQueryResultVoice struct
+// InlineQueryResultVoice struct.
 type InlineQueryResultVoice struct {
 	Type                InlineQueryResultType `json:"type"`
 	ID                  string                `json:"id"`
@@ -173,7 +173,7 @@ type InlineQueryResultVoice struct {
 	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
 }
 
-// InlineQueryResultDocument struct
+// InlineQueryResultDocument struct.
 type InlineQueryResultDocument struct {
 	Type                InlineQueryResultType `json:"type"`
 	ID                  string                `json:"id"`
@@ -190,7 +190,7 @@ type InlineQueryResultDocument struct {
 	ThumbHeight         *int                  `json:"thumb_height,omitempty"`
 }
 
-// InlineQueryResultLocation struct
+// InlineQueryResultLocation struct.
 type InlineQueryResultLocation struct {
 	Type                 InlineQueryResultType `json:"type"`
 	ID                   string                `json:"id"`
@@ -208,7 +208,7 @@ type InlineQueryResultLocation struct {
 	ThumbHeight          *int                  `json:"thumb_height,omitempty"`
 }
 
-// InlineQueryResultVenue struct
+// InlineQueryResultVenue struct.
 type InlineQueryResultVenue struct {
 	Type                InlineQueryResultType `json:"type"`
 	ID                  string                `json:"id"`
@@ -227,7 +227,7 @@ type InlineQueryResultVenue struct {
 	ThumbHeight         *int                  `json:"thumb_height,omitempty"`
 }
 
-// InlineQueryResultContact struct
+// InlineQueryResultContact struct.
 type InlineQueryResultContact struct {
 	Type                InlineQueryResultType `json:"type"`
 	ID                  string                `json:"id"`
@@ -242,7 +242,7 @@ type InlineQueryResultContact struct {
 	ThumbHeight         *int                  `json:"thumb_height,omitempty"`
 }
 
-// InlineQueryResultGame struct
+// InlineQueryResultGame struct.
 type InlineQueryResultGame struct {
 	Type          InlineQueryResultType `json:"type"`
 	ID            string                `json:"id"`
@@ -250,7 +250,7 @@ type InlineQueryResultGame struct {
 	ReplyMarkup   *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
 }
 
-// InlineQueryResultCachedPhoto struct
+// InlineQueryResultCachedPhoto struct.
 type InlineQueryResultCachedPhoto struct {
 	Type                InlineQueryResultType `json:"type"`
 	ID                  string                `json:"id"`
@@ -263,7 +263,7 @@ type InlineQueryResultCachedPhoto struct {
 	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
 }
 
-// InlineQueryResultCachedGif struct
+// InlineQueryResultCachedGif struct.
 type InlineQueryResultCachedGif struct {
 	Type                InlineQueryResultType `json:"type"`
 	ID                  string                `json:"id"`
@@ -275,7 +275,7 @@ type InlineQueryResultCachedGif struct {
 	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
 }
 
-// InlineQueryResultCachedMpeg4Gif struct
+// InlineQueryResultCachedMpeg4Gif struct.
 type InlineQueryResultCachedMpeg4Gif struct {
 	Type                InlineQueryResultType `json:"type"`
 	ID                  string                `json:"id"`
@@ -287,7 +287,7 @@ type InlineQueryResultCachedMpeg4Gif struct {
 	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
 }
 
-// InlineQueryResultCachedSticker struct
+// InlineQueryResultCachedSticker struct.
 type InlineQueryResultCachedSticker struct {
 	Type                InlineQueryResultType `json:"type"`
 	ID                  string                `json:"id"`
@@ -296,7 +296,7 @@ type InlineQueryResultCachedSticker struct {
 	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
 }
 
-// InlineQueryResultCachedDocument struct
+// InlineQueryResultCachedDocument struct.
 type InlineQueryResultCachedDocument struct {
 	Type                InlineQueryResultType `json:"type"`
 	ID                  string                `json:"id"`
@@ -309,7 +309,7 @@ type InlineQueryResultCachedDocument struct {
 	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
 }
 
-// InlineQueryResultCachedVideo struct
+// InlineQueryResultCachedVideo struct.
 type InlineQueryResultCachedVideo struct {
 	Type                InlineQueryResultType `json:"type"`
 	ID                  string                `json:"id"`
@@ -322,7 +322,7 @@ type InlineQueryResultCachedVideo struct {
 	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
 }
 
-// InlineQueryResultCachedVoice struct
+// InlineQueryResultCachedVoice struct.
 type InlineQueryResultCachedVoice struct {
 	Type                InlineQueryResultType `json:"type"`
 	ID                  string                `json:"id"`
@@ -334,7 +334,7 @@ type InlineQueryResultCachedVoice struct {
 	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
 }
 
-// InlineQueryResultCachedAudio struct
+// InlineQueryResultCachedAudio struct.
 type InlineQueryResultCachedAudio struct {
 	Type                InlineQueryResultType `json:"type"`
 	ID                  string                `json:"id"`
@@ -346,17 +346,17 @@ type InlineQueryResultCachedAudio struct {
 	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
 }
 
-// InputMessageContent interface
+// InputMessageContent interface.
 type InputMessageContent interface{}
 
-// InputTextMessageContent struct
+// InputTextMessageContent struct.
 type InputTextMessageContent struct {
 	MessageText           string  `json:"message_text"`
 	ParseMode             *string `json:"parse_mode,omitempty"`
 	DisableWebPagePreview *bool   `json:"disable_web_page_preview,omitempty"`
 }
 
-// InputLocationMessageContent struct
+// InputLocationMessageContent struct.
 type InputLocationMessageContent struct {
 	Latitude             float64  `json:"latitude"`
 	Longitude            float64  `json:"longitude"`
@@ -366,7 +366,7 @@ type InputLocationMessageContent struct {
 	ProximityAlertRadius *int     `json:"proximity_alert_radius,omitempty"`
 }
 
-// InputVenueMessageContent struct
+// InputVenueMessageContent struct.
 type InputVenueMessageContent struct {
 	Latitude        float64 `json:"latitude"`
 	Longitude       float64 `json:"longitude"`
@@ -378,7 +378,7 @@ type InputVenueMessageContent struct {
 	GooglePlaceType *string `json:"google_place_type,omitempty"`
 }
 
-// InputContactMessageContent struct
+// InputContactMessageContent struct.
 type InputContactMessageContent struct {
 	PhoneNumber string  `json:"phone_number"`
 	FirstName   string  `json:"first_name"`
@@ -410,7 +410,7 @@ type InputInvoiceMessageContent struct {
 	IsFlexible                *bool          `json:"is_flexible,omitempty"`
 }
 
-// ChosenInlineResult struct
+// ChosenInlineResult struct.
 type ChosenInlineResult struct {
 	ResultID        string    `json:"result_id"`
 	From            User      `json:"from"`

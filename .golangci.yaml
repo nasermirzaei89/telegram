@@ -1,6 +1,6 @@
 run:
   deadline: 5m
-  tests: false
+  tests: true
   modules-download-mode: readonly
 
 linters:
@@ -11,10 +11,14 @@ linters:
     - maligned # deprecated
     - interfacer # deprecated
     - varnamelen
-    - tagliatelle
     - ireturn
     - funlen
-    - godot
     - godox
     - lll
     - cyclop
+
+linters-settings:
+  tagliatelle:
+    case:
+      rules:
+        json: snake

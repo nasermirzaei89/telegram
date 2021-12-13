@@ -11,6 +11,8 @@ import (
 )
 
 func TestGetUpdates(t *testing.T) {
+	t.Parallel()
+
 	ctx := context.Background()
 
 	response := []byte(`{
@@ -116,6 +118,8 @@ func TestGetUpdates(t *testing.T) {
 }
 
 func TestSetWebhook(t *testing.T) {
+	t.Parallel()
+
 	ctx := context.Background()
 
 	response := []byte(`{"ok":true,"result":true,"description":"Webhook was set"}`)

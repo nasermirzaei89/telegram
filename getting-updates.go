@@ -36,7 +36,7 @@ func (r *getUpdatesResponse) GetUpdates() []Update {
 	return r.Result
 }
 
-func (b *bot) GetUpdates(ctx context.Context, options ...MethodOption) (GetUpdatesResponse, error) {
+func (b *Bot) GetUpdates(ctx context.Context, options ...MethodOption) (GetUpdatesResponse, error) {
 	var res getUpdatesResponse
 
 	err := b.doRequest(ctx, "getUpdates", &res, options...)
@@ -56,7 +56,7 @@ type setWebhookResponse struct {
 	response
 }
 
-func (b *bot) SetWebhook(ctx context.Context, options ...MethodOption) (SetWebhookResponse, error) {
+func (b *Bot) SetWebhook(ctx context.Context, options ...MethodOption) (SetWebhookResponse, error) {
 	var res setWebhookResponse
 
 	err := b.doRequest(ctx, "setWebhook", &res, options...)
@@ -76,7 +76,7 @@ type deleteWebhookResponse struct {
 	response
 }
 
-func (b *bot) DeleteWebhook(ctx context.Context) (DeleteWebhookResponse, error) {
+func (b *Bot) DeleteWebhook(ctx context.Context) (DeleteWebhookResponse, error) {
 	var res deleteWebhookResponse
 
 	err := b.doRequest(ctx, "deleteWebhook", &res)
@@ -102,7 +102,7 @@ func (r *getWebhookInfoResponse) GetWebhookInfo() *WebhookInfo {
 	return r.Result
 }
 
-func (b *bot) GetWebhookInfo(ctx context.Context) (GetWebhookInfoResponse, error) {
+func (b *Bot) GetWebhookInfo(ctx context.Context) (GetWebhookInfoResponse, error) {
 	var res getWebhookInfoResponse
 
 	err := b.doRequest(ctx, "getWebhookInfo", &res)

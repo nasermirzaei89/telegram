@@ -16,6 +16,8 @@ const (
 )
 
 func TestGetMe(t *testing.T) {
+	t.Parallel()
+
 	ctx := context.Background()
 
 	response := []byte(`{"ok":true,"result":{"id":1,"is_bot":true,"first_name":"Test Bot","username":"TestBot"}}`)

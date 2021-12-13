@@ -2,7 +2,7 @@ package telegram
 
 import "context"
 
-// EditMessageTextResponse interface
+// EditMessageTextResponse interface.
 type EditMessageTextResponse interface {
 	Response
 	GetEditedMessage() *Message
@@ -17,7 +17,7 @@ func (r *editMessageTextResponse) GetEditedMessage() *Message {
 	return r.Result
 }
 
-func (b *bot) EditMessageText(ctx context.Context, options ...MethodOption) (EditMessageTextResponse, error) {
+func (b *Bot) EditMessageText(ctx context.Context, options ...MethodOption) (EditMessageTextResponse, error) {
 	var res editMessageTextResponse
 
 	err := b.doRequest(ctx, "editMessageText", &res, options...)
@@ -28,7 +28,7 @@ func (b *bot) EditMessageText(ctx context.Context, options ...MethodOption) (Edi
 	return &res, nil
 }
 
-// EditMessageCaptionResponse interface
+// EditMessageCaptionResponse interface.
 type EditMessageCaptionResponse interface {
 	Response
 	GetEditedMessage() *Message
@@ -43,7 +43,7 @@ func (r *editMessageCaptionResponse) GetEditedMessage() *Message {
 	return r.Result
 }
 
-func (b *bot) EditMessageCaption(ctx context.Context, options ...MethodOption) (EditMessageCaptionResponse, error) {
+func (b *Bot) EditMessageCaption(ctx context.Context, options ...MethodOption) (EditMessageCaptionResponse, error) {
 	var res editMessageCaptionResponse
 
 	err := b.doRequest(ctx, "editMessageCaption", &res, options...)
@@ -54,7 +54,7 @@ func (b *bot) EditMessageCaption(ctx context.Context, options ...MethodOption) (
 	return &res, nil
 }
 
-// EditMessageMediaResponse interface
+// EditMessageMediaResponse interface.
 type EditMessageMediaResponse interface {
 	Response
 	GetEditedMessage() *Message
@@ -69,7 +69,7 @@ func (r *editMessageMediaResponse) GetEditedMessage() *Message {
 	return r.Result
 }
 
-func (b *bot) EditMessageMedia(ctx context.Context, options ...MethodOption) (EditMessageMediaResponse, error) {
+func (b *Bot) EditMessageMedia(ctx context.Context, options ...MethodOption) (EditMessageMediaResponse, error) {
 	var res editMessageMediaResponse
 
 	err := b.doRequest(ctx, "editMessageMedia", &res, options...)
@@ -80,7 +80,7 @@ func (b *bot) EditMessageMedia(ctx context.Context, options ...MethodOption) (Ed
 	return &res, nil
 }
 
-// EditMessageReplyMarkupResponse interface
+// EditMessageReplyMarkupResponse interface.
 type EditMessageReplyMarkupResponse interface {
 	Response
 	GetEditedMessage() *Message
@@ -95,7 +95,7 @@ func (r *editMessageReplyMarkupResponse) GetEditedMessage() *Message {
 	return r.Result
 }
 
-func (b *bot) EditMessageReplyMarkup(ctx context.Context, options ...MethodOption) (EditMessageReplyMarkupResponse, error) {
+func (b *Bot) EditMessageReplyMarkup(ctx context.Context, options ...MethodOption) (EditMessageReplyMarkupResponse, error) {
 	var res editMessageReplyMarkupResponse
 
 	err := b.doRequest(ctx, "editMessageReplyMarkup", &res, options...)
@@ -106,7 +106,7 @@ func (b *bot) EditMessageReplyMarkup(ctx context.Context, options ...MethodOptio
 	return &res, nil
 }
 
-// StopPollResponse interface
+// StopPollResponse interface.
 type StopPollResponse interface {
 	Response
 	GetStoppedPoll() *Poll
@@ -121,7 +121,7 @@ func (r *stopPollResponse) GetStoppedPoll() *Poll {
 	return r.Result
 }
 
-func (b *bot) StopPoll(ctx context.Context, options ...MethodOption) (StopPollResponse, error) {
+func (b *Bot) StopPoll(ctx context.Context, options ...MethodOption) (StopPollResponse, error) {
 	var res stopPollResponse
 
 	err := b.doRequest(ctx, "stopPoll", &res, options...)
@@ -132,7 +132,7 @@ func (b *bot) StopPoll(ctx context.Context, options ...MethodOption) (StopPollRe
 	return &res, nil
 }
 
-// DeleteMessageResponse interface
+// DeleteMessageResponse interface.
 type DeleteMessageResponse interface {
 	Response
 }
@@ -141,7 +141,7 @@ type deleteMessageResponse struct {
 	response
 }
 
-func (b *bot) DeleteMessage(ctx context.Context, options ...MethodOption) (DeleteMessageResponse, error) {
+func (b *Bot) DeleteMessage(ctx context.Context, options ...MethodOption) (DeleteMessageResponse, error) {
 	var res deleteMessageResponse
 
 	err := b.doRequest(ctx, "deleteMessage", &res, options...)

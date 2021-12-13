@@ -1,226 +1,226 @@
 package telegram
 
-// MethodOption type
+// MethodOption type.
 type MethodOption func(*request)
 
-// SetOffset option function
+// SetOffset option function.
 func SetOffset(v int) MethodOption {
 	return func(r *request) {
 		r.params["offset"] = v
 	}
 }
 
-// SetLimit option function
+// SetLimit option function.
 func SetLimit(v int) MethodOption {
 	return func(r *request) {
 		r.params["limit"] = v
 	}
 }
 
-// SetTimeout option function
+// SetTimeout option function.
 func SetTimeout(v int) MethodOption {
 	return func(r *request) {
 		r.params["timeout"] = v
 	}
 }
 
-// SetAllowedUpdates option function
+// SetAllowedUpdates option function.
 func SetAllowedUpdates(v ...string) MethodOption {
 	return func(r *request) {
 		r.params["allowed_updates"] = v
 	}
 }
 
-// SetURL option function
+// SetURL option function.
 func SetURL(v string) MethodOption {
 	return func(r *request) {
 		r.params["url"] = v
 	}
 }
 
-// SetCertificate option function
+// SetCertificate option function.
 func SetCertificate(v InputFile) MethodOption {
 	return func(r *request) {
 		r.params["certificate"] = v
 	}
 }
 
-// SetIPAddress option function
+// SetIPAddress option function.
 func SetIPAddress(v string) MethodOption {
 	return func(r *request) {
 		r.params["ip_address"] = v
 	}
 }
 
-// DropPendingUpdates option function
+// DropPendingUpdates option function.
 func DropPendingUpdates() MethodOption {
 	return func(r *request) {
 		r.params["drop_pending_updates"] = true
 	}
 }
 
-// OnlyIfBanned option function
+// OnlyIfBanned option function.
 func OnlyIfBanned() MethodOption {
 	return func(r *request) {
 		r.params["only_if_banned"] = true
 	}
 }
 
-// DisableContentTypeDetection option function
+// DisableContentTypeDetection option function.
 func DisableContentTypeDetection() MethodOption {
 	return func(r *request) {
 		r.params["disable_content_type_detection"] = true
 	}
 }
 
-// SetMaxConnections option function
+// SetMaxConnections option function.
 func SetMaxConnections(v int) MethodOption {
 	return func(r *request) {
 		r.params["max_connections"] = v
 	}
 }
 
-// SetChatID option function
+// SetChatID option function.
 func SetChatID(v int) MethodOption {
 	return func(r *request) {
 		r.params["chat_id"] = v
 	}
 }
 
-// SetChatUsername option function
+// SetChatUsername option function.
 func SetChatUsername(v string) MethodOption {
 	return func(r *request) {
 		r.params["chat_id"] = v
 	}
 }
 
-// SetText option function
+// SetText option function.
 func SetText(v string) MethodOption {
 	return func(r *request) {
 		r.params["text"] = v
 	}
 }
 
-// SetParseMode option function
+// SetParseMode option function.
 func SetParseMode(v string) MethodOption {
 	return func(r *request) {
 		r.params["parse_mode"] = v
 	}
 }
 
-// DisableWebPagePreview option function
+// DisableWebPagePreview option function.
 func DisableWebPagePreview() MethodOption {
 	return func(r *request) {
 		r.params["disable_web_page_preview"] = true
 	}
 }
 
-// DisableNotification option function
+// DisableNotification option function.
 func DisableNotification() MethodOption {
 	return func(r *request) {
 		r.params["disable_notification"] = true
 	}
 }
 
-// SetReplyToMessageID option function
+// SetReplyToMessageID option function.
 func SetReplyToMessageID(v int) MethodOption {
 	return func(r *request) {
 		r.params["reply_to_message_id"] = v
 	}
 }
 
-// SetReplyMarkup option function
+// SetReplyMarkup option function.
 func SetReplyMarkup(v interface{}) MethodOption {
 	return func(r *request) {
 		r.params["reply_markup"] = v
 	}
 }
 
-// SetFromChatID option function
+// SetFromChatID option function.
 func SetFromChatID(v int) MethodOption {
 	return func(r *request) {
 		r.params["from_chat_id"] = v
 	}
 }
 
-// SetFromChatUsername option function
+// SetFromChatUsername option function.
 func SetFromChatUsername(v string) MethodOption {
 	return func(r *request) {
 		r.params["from_chat_id"] = v
 	}
 }
 
-// SetMessageID option function
+// SetMessageID option function.
 func SetMessageID(v int) MethodOption {
 	return func(r *request) {
 		r.params["message_id"] = v
 	}
 }
 
-// SetPhotoFromFileID option function
+// SetPhotoFromFileID option function.
 func SetPhotoFromFileID(v string) MethodOption {
 	return func(r *request) {
 		r.params["photo"] = v
 	}
 }
 
-// SetPhotoFromURL option function
+// SetPhotoFromURL option function.
 func SetPhotoFromURL(v string) MethodOption {
 	return func(r *request) {
 		r.params["photo"] = v
 	}
 }
 
-// SetPhoto option function
+// SetPhoto option function.
 func SetPhoto(v InputFile) MethodOption {
 	return func(r *request) {
 		r.params["photo"] = v
 	}
 }
 
-// SetCaption option function
+// SetCaption option function.
 func SetCaption(v string) MethodOption {
 	return func(r *request) {
 		r.params["caption"] = v
 	}
 }
 
-// SetAudioFromFileID option function
+// SetAudioFromFileID option function.
 func SetAudioFromFileID(v string) MethodOption {
 	return func(r *request) {
 		r.params["audio"] = v
 	}
 }
 
-// SetAudioFromURL option function
+// SetAudioFromURL option function.
 func SetAudioFromURL(v string) MethodOption {
 	return func(r *request) {
 		r.params["audio"] = v
 	}
 }
 
-// SetAudio option function
+// SetAudio option function.
 func SetAudio(v InputFile) MethodOption {
 	return func(r *request) {
 		r.params["audio"] = v
 	}
 }
 
-// SetDuration option function
+// SetDuration option function.
 func SetDuration(v int) MethodOption {
 	return func(r *request) {
 		r.params["duration"] = v
 	}
 }
 
-// SetPerformer option function
+// SetPerformer option function.
 func SetPerformer(v string) MethodOption {
 	return func(r *request) {
 		r.params["performer"] = v
 	}
 }
 
-// SetTitle option function
+// SetTitle option function.
 func SetTitle(v string) MethodOption {
 	return func(r *request) {
 		r.params["title"] = v
@@ -229,301 +229,301 @@ func SetTitle(v string) MethodOption {
 
 // TODO: add Thumb string option
 
-// SetThumb option function
+// SetThumb option function.
 func SetThumb(v InputFile) MethodOption {
 	return func(r *request) {
 		r.params["thumb"] = v
 	}
 }
 
-// SetDocumentFromFileID option function
+// SetDocumentFromFileID option function.
 func SetDocumentFromFileID(v string) MethodOption {
 	return func(r *request) {
 		r.params["document"] = v
 	}
 }
 
-// SetDocumentFromURL option function
+// SetDocumentFromURL option function.
 func SetDocumentFromURL(v string) MethodOption {
 	return func(r *request) {
 		r.params["document"] = v
 	}
 }
 
-// SetDocument option function
+// SetDocument option function.
 func SetDocument(v InputFile) MethodOption {
 	return func(r *request) {
 		r.params["document"] = v
 	}
 }
 
-// SetVideoFromFileID option function
+// SetVideoFromFileID option function.
 func SetVideoFromFileID(v string) MethodOption {
 	return func(r *request) {
 		r.params["video"] = v
 	}
 }
 
-// SetVideoFromURL option function
+// SetVideoFromURL option function.
 func SetVideoFromURL(v string) MethodOption {
 	return func(r *request) {
 		r.params["video"] = v
 	}
 }
 
-// SetVideo option function
+// SetVideo option function.
 func SetVideo(v InputFile) MethodOption {
 	return func(r *request) {
 		r.params["video"] = v
 	}
 }
 
-// SetWidth option function
+// SetWidth option function.
 func SetWidth(v string) MethodOption {
 	return func(r *request) {
 		r.params["width"] = v
 	}
 }
 
-// SetHeight option function
+// SetHeight option function.
 func SetHeight(v string) MethodOption {
 	return func(r *request) {
 		r.params["height"] = v
 	}
 }
 
-// SupportsStreaming option function
+// SupportsStreaming option function.
 func SupportsStreaming() MethodOption {
 	return func(r *request) {
 		r.params["supports_streaming"] = true
 	}
 }
 
-// SetAnimationFromFileID option function
+// SetAnimationFromFileID option function.
 func SetAnimationFromFileID(v string) MethodOption {
 	return func(r *request) {
 		r.params["animation"] = v
 	}
 }
 
-// SetAnimationFromURL option function
+// SetAnimationFromURL option function.
 func SetAnimationFromURL(v string) MethodOption {
 	return func(r *request) {
 		r.params["animation"] = v
 	}
 }
 
-// SetAnimation option function
+// SetAnimation option function.
 func SetAnimation(v InputFile) MethodOption {
 	return func(r *request) {
 		r.params["animation"] = v
 	}
 }
 
-// SetVoiceFromFileID option function
+// SetVoiceFromFileID option function.
 func SetVoiceFromFileID(v string) MethodOption {
 	return func(r *request) {
 		r.params["voice"] = v
 	}
 }
 
-// SetVoiceFromURL option function
+// SetVoiceFromURL option function.
 func SetVoiceFromURL(v string) MethodOption {
 	return func(r *request) {
 		r.params["voice"] = v
 	}
 }
 
-// SetVoice option function
+// SetVoice option function.
 func SetVoice(v InputFile) MethodOption {
 	return func(r *request) {
 		r.params["voice"] = v
 	}
 }
 
-// SetVideoNoteFromFileID option function
+// SetVideoNoteFromFileID option function.
 func SetVideoNoteFromFileID(v string) MethodOption {
 	return func(r *request) {
 		r.params["video_note"] = v
 	}
 }
 
-// SetVideoNoteFromURL option function
+// SetVideoNoteFromURL option function.
 func SetVideoNoteFromURL(v string) MethodOption {
 	return func(r *request) {
 		r.params["video_note"] = v
 	}
 }
 
-// SetVideoNote option function
+// SetVideoNote option function.
 func SetVideoNote(v InputFile) MethodOption {
 	return func(r *request) {
 		r.params["video_note"] = v
 	}
 }
 
-// SetMedia option function
+// SetMedia option function.
 func SetMedia(v ...InputMedia) MethodOption {
 	return func(r *request) {
 		r.params["media"] = v
 	}
 }
 
-// SetLatitude option function
+// SetLatitude option function.
 func SetLatitude(v float32) MethodOption {
 	return func(r *request) {
 		r.params["latitude"] = v
 	}
 }
 
-// SetLongitude option function
+// SetLongitude option function.
 func SetLongitude(v float32) MethodOption {
 	return func(r *request) {
 		r.params["longitude"] = v
 	}
 }
 
-// SetHorizontalAccuracy option function
+// SetHorizontalAccuracy option function.
 func SetHorizontalAccuracy(v float32) MethodOption {
 	return func(r *request) {
 		r.params["horizontal_accuracy"] = v
 	}
 }
 
-// SetLivePeriod option function
+// SetLivePeriod option function.
 func SetLivePeriod(v int) MethodOption {
 	return func(r *request) {
 		r.params["live_period"] = v
 	}
 }
 
-// SetHeading option function
+// SetHeading option function.
 func SetHeading(v int) MethodOption {
 	return func(r *request) {
 		r.params["heading"] = v
 	}
 }
 
-// SetProximityAlertRadius option function
+// SetProximityAlertRadius option function.
 func SetProximityAlertRadius(v int) MethodOption {
 	return func(r *request) {
 		r.params["proximity_alert_radius"] = v
 	}
 }
 
-// SetInlineMessageID option function
+// SetInlineMessageID option function.
 func SetInlineMessageID(v string) MethodOption {
 	return func(r *request) {
 		r.params["inline_message_id"] = v
 	}
 }
 
-// SetInlineQueryID option function
+// SetInlineQueryID option function.
 func SetInlineQueryID(v string) MethodOption {
 	return func(r *request) {
 		r.params["inline_query_id"] = v
 	}
 }
 
-// SetResults option function
+// SetResults option function.
 func SetResults(v []InlineQueryResult) MethodOption {
 	return func(r *request) {
 		r.params["results"] = v
 	}
 }
 
-// SetAddress option function
+// SetAddress option function.
 func SetAddress(v string) MethodOption {
 	return func(r *request) {
 		r.params["address"] = v
 	}
 }
 
-// SetFoursquareID option function
+// SetFoursquareID option function.
 func SetFoursquareID(v string) MethodOption {
 	return func(r *request) {
 		r.params["foursquare_id"] = v
 	}
 }
 
-// SetFoursquareType option function
+// SetFoursquareType option function.
 func SetFoursquareType(v string) MethodOption {
 	return func(r *request) {
 		r.params["foursquare_type"] = v
 	}
 }
 
-// SetGooglePlaceID option function
+// SetGooglePlaceID option function.
 func SetGooglePlaceID(v string) MethodOption {
 	return func(r *request) {
 		r.params["google_place_id"] = v
 	}
 }
 
-// SetGooglePlaceType option function
+// SetGooglePlaceType option function.
 func SetGooglePlaceType(v string) MethodOption {
 	return func(r *request) {
 		r.params["google_place_type"] = v
 	}
 }
 
-// SetPhoneNumber option function
+// SetPhoneNumber option function.
 func SetPhoneNumber(v string) MethodOption {
 	return func(r *request) {
 		r.params["phone_number"] = v
 	}
 }
 
-// SetFirstName option function
+// SetFirstName option function.
 func SetFirstName(v string) MethodOption {
 	return func(r *request) {
 		r.params["first_name"] = v
 	}
 }
 
-// SetLastName option function
+// SetLastName option function.
 func SetLastName(v string) MethodOption {
 	return func(r *request) {
 		r.params["last_name"] = v
 	}
 }
 
-// SetVCard option function
+// SetVCard option function.
 func SetVCard(v string) MethodOption {
 	return func(r *request) {
 		r.params["vcard"] = v
 	}
 }
 
-// SetQuestion option function
+// SetQuestion option function.
 func SetQuestion(v string) MethodOption {
 	return func(r *request) {
 		r.params["question"] = v
 	}
 }
 
-// SetOptions option function
+// SetOptions option function.
 func SetOptions(v ...string) MethodOption {
 	return func(r *request) {
 		r.params["options"] = v
 	}
 }
 
-// SetCommands option function
+// SetCommands option function.
 func SetCommands(v ...BotCommand) MethodOption {
 	return func(r *request) {
 		r.params["commands"] = v
 	}
 }
 
-// SetScope option function
+// SetScope option function.
 func SetScope(v BotCommandScope) MethodOption {
 	return func(r *request) {
 		r.params["scope"] = v
 	}
 }
 
-// SetLanguageCode option function
+// SetLanguageCode option function.
 func SetLanguageCode(v string) MethodOption {
 	return func(r *request) {
 		r.params["language_code"] = v
@@ -546,518 +546,518 @@ const (
 	ActionUploadVideoNote Action = "upload_video_note"
 )
 
-// SetAction option function
+// SetAction option function.
 func SetAction(v Action) MethodOption {
 	return func(r *request) {
 		r.params["action"] = v
 	}
 }
 
-// SetFileID option function
+// SetFileID option function.
 func SetFileID(v string) MethodOption {
 	return func(r *request) {
 		r.params["file_id"] = v
 	}
 }
 
-// SetUserID option function
+// SetUserID option function.
 func SetUserID(v int64) MethodOption {
 	return func(r *request) {
 		r.params["user_id"] = v
 	}
 }
 
-// SetUntilDate option function
+// SetUntilDate option function.
 func SetUntilDate(v int) MethodOption {
 	return func(r *request) {
 		r.params["until_date"] = v
 	}
 }
 
-// AllowSendingWithoutReply option function
+// AllowSendingWithoutReply option function.
 func AllowSendingWithoutReply() MethodOption {
 	return func(r *request) {
 		r.params["allow_sending_without_reply"] = true
 	}
 }
 
-// CanSendMessages option function
+// CanSendMessages option function.
 func CanSendMessages() MethodOption {
 	return func(r *request) {
 		r.params["can_send_messages"] = true
 	}
 }
 
-// CanSendMediaMessages option function
+// CanSendMediaMessages option function.
 func CanSendMediaMessages() MethodOption {
 	return func(r *request) {
 		r.params["can_send_media_messages"] = true
 	}
 }
 
-// CanSendOtherMessages option function
+// CanSendOtherMessages option function.
 func CanSendOtherMessages() MethodOption {
 	return func(r *request) {
 		r.params["can_send_other_messages"] = true
 	}
 }
 
-// CanAddWebPagePreviews option function
+// CanAddWebPagePreviews option function.
 func CanAddWebPagePreviews() MethodOption {
 	return func(r *request) {
 		r.params["can_add_web_page_previews"] = true
 	}
 }
 
-// CanChangeInfo option function
+// CanChangeInfo option function.
 func CanChangeInfo() MethodOption {
 	return func(r *request) {
 		r.params["can_change_info"] = true
 	}
 }
 
-// CanPostMessages option function
+// CanPostMessages option function.
 func CanPostMessages() MethodOption {
 	return func(r *request) {
 		r.params["can_post_messages"] = true
 	}
 }
 
-// CanEditMessages option function
+// CanEditMessages option function.
 func CanEditMessages() MethodOption {
 	return func(r *request) {
 		r.params["can_edit_messages"] = true
 	}
 }
 
-// CanDeleteMessages option function
+// CanDeleteMessages option function.
 func CanDeleteMessages() MethodOption {
 	return func(r *request) {
 		r.params["can_delete_messages"] = true
 	}
 }
 
-// CanInviteUsers option function
+// CanInviteUsers option function.
 func CanInviteUsers() MethodOption {
 	return func(r *request) {
 		r.params["can_invite_users"] = true
 	}
 }
 
-// CanRestrictMembers option function
+// CanRestrictMembers option function.
 func CanRestrictMembers() MethodOption {
 	return func(r *request) {
 		r.params["can_restrict_members"] = true
 	}
 }
 
-// CanPinMessages option function
+// CanPinMessages option function.
 func CanPinMessages() MethodOption {
 	return func(r *request) {
 		r.params["can_pin_messages"] = true
 	}
 }
 
-// CanPromoteMembers option function
+// CanPromoteMembers option function.
 func CanPromoteMembers() MethodOption {
 	return func(r *request) {
 		r.params["can_promote_members"] = true
 	}
 }
 
-// SetDescription option function
+// SetDescription option function.
 func SetDescription(v string) MethodOption {
 	return func(r *request) {
 		r.params["description"] = v
 	}
 }
 
-// SetStickerSetName option function
+// SetStickerSetName option function.
 func SetStickerSetName(v string) MethodOption {
 	return func(r *request) {
 		r.params["sticker_set_name"] = v
 	}
 }
 
-// SetCallbackQueryID option function
+// SetCallbackQueryID option function.
 func SetCallbackQueryID(v string) MethodOption {
 	return func(r *request) {
 		r.params["callback_query_id"] = v
 	}
 }
 
-// ShowAlert option function
+// ShowAlert option function.
 func ShowAlert() MethodOption {
 	return func(r *request) {
 		r.params["show_alert"] = true
 	}
 }
 
-// SetCacheTime option function
+// SetCacheTime option function.
 func SetCacheTime(v int) MethodOption {
 	return func(r *request) {
 		r.params["cache_time"] = v
 	}
 }
 
-// SetNextOffset option function
+// SetNextOffset option function.
 func SetNextOffset(v string) MethodOption {
 	return func(r *request) {
 		r.params["next_offset"] = v
 	}
 }
 
-// SetSwitchPMText option function
+// SetSwitchPMText option function.
 func SetSwitchPMText(v string) MethodOption {
 	return func(r *request) {
 		r.params["switch_pm_text"] = v
 	}
 }
 
-// SetSwitchPMParameter option function
+// SetSwitchPMParameter option function.
 func SetSwitchPMParameter(v string) MethodOption {
 	return func(r *request) {
 		r.params["switch_pm_parameter"] = v
 	}
 }
 
-// IsPersonal option function
+// IsPersonal option function.
 func IsPersonal() MethodOption {
 	return func(r *request) {
 		r.params["is_personal"] = true
 	}
 }
 
-// SetPermissions option function
+// SetPermissions option function.
 func SetPermissions(v ChatPermissions) MethodOption {
 	return func(r *request) {
 		r.params["permissions"] = v
 	}
 }
 
-// SetCustomTitle option function
+// SetCustomTitle option function.
 func SetCustomTitle(v string) MethodOption {
 	return func(r *request) {
 		r.params["custom_title"] = v
 	}
 }
 
-// IsAnonymous option function
+// IsAnonymous option function.
 func IsAnonymous() MethodOption {
 	return func(r *request) {
 		r.params["is_anonymous"] = true
 	}
 }
 
-// SetType option function
+// SetType option function.
 func SetType(v string) MethodOption {
 	return func(r *request) {
 		r.params["type"] = v
 	}
 }
 
-// SetInlineQueryResultType option function
+// SetInlineQueryResultType option function.
 func SetInlineQueryResultType(v InlineQueryResultType) MethodOption {
 	return func(r *request) {
 		r.params["type"] = v
 	}
 }
 
-// AllowsMultipleAnswers option function
+// AllowsMultipleAnswers option function.
 func AllowsMultipleAnswers() MethodOption {
 	return func(r *request) {
 		r.params["allows_multiple_answers"] = true
 	}
 }
 
-// SetCorrectOptionID option function
+// SetCorrectOptionID option function.
 func SetCorrectOptionID(v int) MethodOption {
 	return func(r *request) {
 		r.params["correct_option_id"] = v
 	}
 }
 
-// IsClosed option function
+// IsClosed option function.
 func IsClosed() MethodOption {
 	return func(r *request) {
 		r.params["is_closed"] = true
 	}
 }
 
-// SetPNGStickerFromFileID option function
+// SetPNGStickerFromFileID option function.
 func SetPNGStickerFromFileID(v string) MethodOption {
 	return func(r *request) {
 		r.params["png_sticker"] = v
 	}
 }
 
-// SetPNGStickerFromURL option function
+// SetPNGStickerFromURL option function.
 func SetPNGStickerFromURL(v string) MethodOption {
 	return func(r *request) {
 		r.params["png_sticker"] = v
 	}
 }
 
-// SetPNGSticker option function
+// SetPNGSticker option function.
 func SetPNGSticker(v InputFile) MethodOption {
 	return func(r *request) {
 		r.params["png_sticker"] = v
 	}
 }
 
-// SetTGSSticker option function
+// SetTGSSticker option function.
 func SetTGSSticker(v InputFile) MethodOption {
 	return func(r *request) {
 		r.params["tgs_sticker"] = v
 	}
 }
 
-// SetEmojis option function
+// SetEmojis option function.
 func SetEmojis(v string) MethodOption {
 	return func(r *request) {
 		r.params["emojis"] = v
 	}
 }
 
-// SetEmoji option function
+// SetEmoji option function.
 func SetEmoji(v string) MethodOption {
 	return func(r *request) {
 		r.params["emoji"] = v
 	}
 }
 
-// ContainsMasks option function
+// ContainsMasks option function.
 func ContainsMasks() MethodOption {
 	return func(r *request) {
 		r.params["contains_masks"] = true
 	}
 }
 
-// SetMaskPosition option function
+// SetMaskPosition option function.
 func SetMaskPosition(v MaskPosition) MethodOption {
 	return func(r *request) {
 		r.params["mask_position"] = v
 	}
 }
 
-// SetExplanation option function
+// SetExplanation option function.
 func SetExplanation(v string) MethodOption {
 	return func(r *request) {
 		r.params["explanation"] = v
 	}
 }
 
-// SetExplanationParseMode option function
+// SetExplanationParseMode option function.
 func SetExplanationParseMode(v string) MethodOption {
 	return func(r *request) {
 		r.params["explanation_parse_mode"] = v
 	}
 }
 
-// SetOpenPeriod option function
+// SetOpenPeriod option function.
 func SetOpenPeriod(v int) MethodOption {
 	return func(r *request) {
 		r.params["open_period"] = v
 	}
 }
 
-// SetCloseDate option function
+// SetCloseDate option function.
 func SetCloseDate(v int) MethodOption {
 	return func(r *request) {
 		r.params["close_date"] = v
 	}
 }
 
-// SetExpireDate option function
+// SetExpireDate option function.
 func SetExpireDate(v int) MethodOption {
 	return func(r *request) {
 		r.params["expire_date"] = v
 	}
 }
 
-// SetMemberLimit option function
+// SetMemberLimit option function.
 func SetMemberLimit(v int) MethodOption {
 	return func(r *request) {
 		r.params["member_limit"] = v
 	}
 }
 
-// SetInviteLink option function
+// SetInviteLink option function.
 func SetInviteLink(v string) MethodOption {
 	return func(r *request) {
 		r.params["invite_link"] = v
 	}
 }
 
-// CanManageChat option function
+// CanManageChat option function.
 func CanManageChat() MethodOption {
 	return func(r *request) {
 		r.params["can_manage_chat"] = true
 	}
 }
 
-// CanManageVoiceChats option function
+// CanManageVoiceChats option function.
 func CanManageVoiceChats() MethodOption {
 	return func(r *request) {
 		r.params["can_manage_voice_chats"] = true
 	}
 }
 
-// RevokeMessages option function
+// RevokeMessages option function.
 func RevokeMessages() MethodOption {
 	return func(r *request) {
 		r.params["revoke_messages"] = true
 	}
 }
 
-// SetPayload option function
+// SetPayload option function.
 func SetPayload(v string) MethodOption {
 	return func(r *request) {
 		r.params["payload"] = v
 	}
 }
 
-// SetProviderToken option function
+// SetProviderToken option function.
 func SetProviderToken(v string) MethodOption {
 	return func(r *request) {
 		r.params["provider_token"] = v
 	}
 }
 
-// SetCurrency option function
+// SetCurrency option function.
 func SetCurrency(v Currency) MethodOption {
 	return func(r *request) {
 		r.params["currency"] = v
 	}
 }
 
-// SetPrices option function
+// SetPrices option function.
 func SetPrices(v ...LabeledPrice) MethodOption {
 	return func(r *request) {
 		r.params["prices"] = v
 	}
 }
 
-// SetMaxTipAmount option function
+// SetMaxTipAmount option function.
 func SetMaxTipAmount(v int) MethodOption {
 	return func(r *request) {
 		r.params["max_tip_amount"] = v
 	}
 }
 
-// SetSuggestedTipAmounts option function
+// SetSuggestedTipAmounts option function.
 func SetSuggestedTipAmounts(v ...int) MethodOption {
 	return func(r *request) {
 		r.params["suggested_tip_amounts"] = v
 	}
 }
 
-// SetStartParameter option function
+// SetStartParameter option function.
 func SetStartParameter(v string) MethodOption {
 	return func(r *request) {
 		r.params["start_parameter"] = v
 	}
 }
 
-// SetProviderData option function
+// SetProviderData option function.
 func SetProviderData(v string) MethodOption {
 	return func(r *request) {
 		r.params["provider_data"] = v
 	}
 }
 
-// SetPhotoURL option function
+// SetPhotoURL option function.
 func SetPhotoURL(v string) MethodOption {
 	return func(r *request) {
 		r.params["photo_url"] = v
 	}
 }
 
-// SetPhotoSize option function
+// SetPhotoSize option function.
 func SetPhotoSize(v int) MethodOption {
 	return func(r *request) {
 		r.params["photo_size"] = v
 	}
 }
 
-// SetPhotoWidth option function
+// SetPhotoWidth option function.
 func SetPhotoWidth(v int) MethodOption {
 	return func(r *request) {
 		r.params["photo_width"] = v
 	}
 }
 
-// SetPhotoHeight option function
+// SetPhotoHeight option function.
 func SetPhotoHeight(v int) MethodOption {
 	return func(r *request) {
 		r.params["photo_height"] = v
 	}
 }
 
-// NeedName option function
+// NeedName option function.
 func NeedName() MethodOption {
 	return func(r *request) {
 		r.params["need_name"] = true
 	}
 }
 
-// NeedPhoneNumber option function
+// NeedPhoneNumber option function.
 func NeedPhoneNumber() MethodOption {
 	return func(r *request) {
 		r.params["need_phone_number"] = true
 	}
 }
 
-// NeedEmail option function
+// NeedEmail option function.
 func NeedEmail() MethodOption {
 	return func(r *request) {
 		r.params["need_email"] = true
 	}
 }
 
-// NeedShippingAddress option function
+// NeedShippingAddress option function.
 func NeedShippingAddress() MethodOption {
 	return func(r *request) {
 		r.params["need_shipping_address"] = true
 	}
 }
 
-// SendPhoneNumberToProvider option function
+// SendPhoneNumberToProvider option function.
 func SendPhoneNumberToProvider() MethodOption {
 	return func(r *request) {
 		r.params["send_phone_number_to_provider"] = true
 	}
 }
 
-// SendEmailToProvider option function
+// SendEmailToProvider option function.
 func SendEmailToProvider() MethodOption {
 	return func(r *request) {
 		r.params["send_email_to_provider"] = true
 	}
 }
 
-// IsFlexible option function
+// IsFlexible option function.
 func IsFlexible() MethodOption {
 	return func(r *request) {
 		r.params["is_flexible"] = true
 	}
 }
 
-// CreatesJoinRequest option function
+// CreatesJoinRequest option function.
 func CreatesJoinRequest() MethodOption {
 	return func(r *request) {
 		r.params["creates_join_request"] = true
 	}
 }
 
-// SetName option function
+// SetName option function.
 func SetName(v string) MethodOption {
 	return func(r *request) {
 		r.params["name"] = v
 	}
 }
 
-// SetSenderChatID option function
+// SetSenderChatID option function.
 func SetSenderChatID(v int) MethodOption {
 	return func(r *request) {
 		r.params["sender_chat_id"] = v
