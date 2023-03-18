@@ -35,7 +35,7 @@ type Chat struct {
 	HasProtectedContent   *bool            `json:"has_protected_content,omitempty"`
 	StickerSetName        *string          `json:"sticker_set_name,omitempty"`
 	CanSetStickerSet      *bool            `json:"can_set_sticker_set,omitempty"`
-	LinkedChatID          *int             `json:"linked_chat_id,omitempty"`
+	LinkedChatID          *int64           `json:"linked_chat_id,omitempty"`
 	Location              *ChatLocation    `json:"location,omitempty"`
 }
 

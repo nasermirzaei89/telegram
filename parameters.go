@@ -81,7 +81,7 @@ func SetMaxConnections(v int) MethodOption {
 }
 
 // SetChatID option function
-func SetChatID(v int) MethodOption {
+func SetChatID(v int64) MethodOption {
 	return func(r *request) {
 		r.params["chat_id"] = v
 	}
