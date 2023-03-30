@@ -1063,3 +1063,10 @@ func SetSenderChatID(v int) MethodOption {
 		r.params["sender_chat_id"] = v
 	}
 }
+
+// ProtectContent option function
+func ProtectContent() MethodOption {
+	return func(r *request) {
+		r.params["protect_content"] = true
+	}
+}

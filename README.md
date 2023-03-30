@@ -11,7 +11,7 @@
 
 ## Status
 
-Bot API 5.5 (https://core.telegram.org/bots/api#december-7-2021)
+Bot API 5.6 (https://core.telegram.org/bots/api-changelog#december-30-2021)
 
 ## Install
 
@@ -53,5 +53,5 @@ MIT License
 
 ## Contributing
 
-You can submit a [new issue](https://github.com/nasermirzaei89/telegram/issues/new) in github [issues](https://github.com/nasermirzaei89/telegram/issues).
+You can submit a [new issue](https://github.com/nasermirzaei89/telegram/issues/new) in GitHub [issues](https://github.com/nasermirzaei89/telegram/issues).
 Or you can [create a fork](https://help.github.com/articles/fork-a-repo), hack on your fork and when you're done create a [pull request](https://help.github.com/articles/fork-a-repo#pull-requests), so that the code contribution can get merged into the main package.

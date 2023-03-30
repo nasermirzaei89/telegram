@@ -124,6 +124,7 @@ const (
 	MessageEntityTypePre           MessageEntityType = "pre"
 	MessageEntityTypeTextLink      MessageEntityType = "text_link"
 	MessageEntityTypeTextMention   MessageEntityType = "text_mention"
+	MessageEntityTypeSpoiler       MessageEntityType = "spoiler"
 )
 
 // MessageEntity struct.
