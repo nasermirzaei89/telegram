@@ -897,9 +897,17 @@ func CanManageChat() MethodOption {
 }
 
 // CanManageVoiceChats option function
+// Deprecated
 func CanManageVoiceChats() MethodOption {
 	return func(r *request) {
 		r.params["can_manage_voice_chats"] = true
+	}
+}
+
+// CanManageVideoChats option function
+func CanManageVideoChats() MethodOption {
+	return func(r *request) {
+		r.params["can_manage_video_chats"] = true
 	}
 }
 
@@ -1068,5 +1076,33 @@ func SetSenderChatID(v int) MethodOption {
 func ProtectContent() MethodOption {
 	return func(r *request) {
 		r.params["protect_content"] = true
+	}
+}
+
+// SetWebAppQueryID option function
+func SetWebAppQueryID(v string) MethodOption {
+	return func(r *request) {
+		r.params["web_app_query_id"] = v
+	}
+}
+
+// SetMenuButton option function
+func SetMenuButton(v MenuButton) MethodOption {
+	return func(r *request) {
+		r.params["menu_button"] = v
+	}
+}
+
+// SetRights option function
+func SetRights(v ChatAdministratorRights) MethodOption {
+	return func(r *request) {
+		r.params["rights"] = v
+	}
+}
+
+// ForChannels option function
+func ForChannels() MethodOption {
+	return func(r *request) {
+		r.params["for_channels"] = true
 	}
 }

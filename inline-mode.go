@@ -418,3 +418,34 @@ type ChosenInlineResult struct {
 	InlineMessageID *string   `json:"inline_message_id,omitempty"`
 	Query           string    `json:"query"`
 }
+
+// AnswerWebAppQueryResponse interface.
+type AnswerWebAppQueryResponse interface {
+	Response
+	GetMessage() *Message
+}
+
+type answerWebAppQueryResponse struct {
+	response
+	Result *Message `json:"result,omitempty"`
+}
+
+func (r *answerWebAppQueryResponse) GetMessage() *Message {
+	return r.Result
+}
+
+func (b *bot) AnswerWebAppQuery(ctx context.Context, options ...MethodOption) (AnswerWebAppQueryResponse, error) {
+	var res answerWebAppQueryResponse
+
+	err := b.doRequest(ctx, "answerWebAppQuery", &res, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// SentWebAppMessage describes an inline message sent by a Web App on behalf of a user.
+type SentWebAppMessage struct {
+	InlineMessageID *string `json:"inline_message_id,omitempty"` // Optional. Identifier of the sent inline message. Available only if there is an inline keyboard attached to the message.
+}

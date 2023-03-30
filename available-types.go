@@ -94,10 +94,15 @@ type Message struct {
 	ConnectedWebsite              *string                        `json:"connected_website,omitempty"`
 	PassportData                  *PassportData                  `json:"passport_data,omitempty"`
 	ProximityAlertTriggered       *ProximityAlertTriggered       `json:"proximity_alert_triggered,omitempty"`
-	VoiceChatScheduled            *VoiceChatScheduled            `json:"voice_chat_scheduled,omitempty"`
-	VoiceChatStarted              *VoiceChatStarted              `json:"voice_chat_started,omitempty"`
-	VoiceChatEnded                *VoiceChatEnded                `json:"voice_chat_ended,omitempty"`
-	VoiceChatParticipantsInvited  *VoiceChatParticipantsInvited  `json:"voice_chat_participants_invited,omitempty"`
+	VoiceChatScheduled            *VoiceChatScheduled            `json:"voice_chat_scheduled,omitempty"` // Deprecated
+	VideoChatScheduled            *VideoChatScheduled            `json:"video_chat_scheduled,omitempty"`
+	VoiceChatStarted              *VoiceChatStarted              `json:"voice_chat_started,omitempty"` // Deprecated
+	VideoChatStarted              *VideoChatStarted              `json:"video_chat_started,omitempty"`
+	VoiceChatEnded                *VoiceChatEnded                `json:"voice_chat_ended,omitempty"` // Deprecated
+	VideoChatEnded                *VideoChatEnded                `json:"video_chat_ended,omitempty"`
+	VoiceChatParticipantsInvited  *VoiceChatParticipantsInvited  `json:"voice_chat_participants_invited,omitempty"` // Deprecated
+	VideoChatParticipantsInvited  *VideoChatParticipantsInvited  `json:"video_chat_participants_invited,omitempty"`
+	WebAppData                    *WebAppData                    `json:"web_app_data,omitempty"` // Optional. Service message: data sent by a Web App
 	ReplyMarkup                   *InlineKeyboardMarkup          `json:"reply_markup,omitempty"`
 }
 
@@ -280,6 +285,12 @@ type Venue struct {
 	GooglePlaceType *string  `json:"google_place_type,omitempty"`
 }
 
+// WebAppData describes data sent from a Web App to the bot.
+type WebAppData struct {
+	Data       string `json:"data"`        // The data. Be aware that a bad client can send arbitrary data in this field.
+	ButtonText string `json:"button_text"` // Text of the web_app keyboard button from which the Web App was opened. Be aware that a bad client can send arbitrary data in this field.
+}
+
 // ProximityAlertTriggered struct
 type ProximityAlertTriggered struct {
 	Traveler User `json:"traveler"`
@@ -293,20 +304,42 @@ type MessageAutoDeleteTimerChanged struct {
 }
 
 // VoiceChatScheduled represents a service message about a voice chat scheduled in the chat.
+// Deprecated
 type VoiceChatScheduled struct {
 	StartDate int `json:"start_date"` // Point in time (Unix timestamp) when the voice chat is supposed to be started by a chat administrator
 }
 
+// VideoChatScheduled represents a service message about a voice chat scheduled in the chat.
+type VideoChatScheduled struct {
+	StartDate int `json:"start_date"` // Point in time (Unix timestamp) when the voice chat is supposed to be started by a chat administrator
+}
+
 // VoiceChatStarted struct
+// Deprecated
 type VoiceChatStarted struct{}
 
+// VideoChatStarted struct
+type VideoChatStarted struct{}
+
 // VoiceChatEnded struct
+// Deprecated
 type VoiceChatEnded struct {
 	Duration int `json:"duration"` // Voice chat duration; in seconds
 }
 
+// VideoChatEnded struct
+type VideoChatEnded struct {
+	Duration int `json:"duration"` // Voice chat duration; in seconds
+}
+
 // VoiceChatParticipantsInvited struct
+// Deprecated
 type VoiceChatParticipantsInvited struct {
+	Users *[]User `json:"users,omitempty"`
+}
+
+// VideoChatParticipantsInvited struct
+type VideoChatParticipantsInvited struct {
 	Users *[]User `json:"users,omitempty"`
 }
 
@@ -324,6 +357,11 @@ type File struct {
 	FilePath     *string `json:"file_path,omitempty"`
 }
 
+// WebAppInfo struct
+type WebAppInfo struct {
+	URL string `json:"url"` // An HTTPS URL of a Web App to be opened with additional data as specified in Initializing Web Apps (https://core.telegram.org/bots/webapps#initializing-web-apps)
+}
+
 // ReplyKeyboardMarkup struct
 type ReplyKeyboardMarkup struct {
 	Keyboard              [][]KeyboardButton `json:"keyboard"`                          // Array of button rows, each represented by an Array of KeyboardButton objects
@@ -339,6 +377,7 @@ type KeyboardButton struct {
 	RequestContact  *bool                   `json:"request_contact,omitempty"`
 	RequestLocation *bool                   `json:"request_location,omitempty"`
 	RequestPoll     *KeyboardButtonPollType `json:"request_poll,omitempty"`
+	WebApp          *WebAppInfo             `json:"web_app,omitempty"`
 }
 
 // KeyboardButtonPollType struct
@@ -363,6 +402,7 @@ type InlineKeyboardButton struct {
 	URL                          *string       `json:"url,omitempty"`
 	LoginURL                     *LoginURL     `json:"login_url,omitempty"`
 	CallbackData                 *string       `json:"callback_data,omitempty"`
+	WebApp                       *WebAppInfo   `json:"web_app,omitempty"`
 	SwitchInlineQuery            *string       `json:"switch_inline_query,omitempty"`
 	SwitchInlineQueryCurrentChat *string       `json:"switch_inline_query_current_chat,omitempty"`
 	CallbackGame                 *CallbackGame `json:"callback_game,omitempty"`
@@ -416,6 +456,22 @@ type ChatInviteLink struct {
 	PendingJoinRequestCount *int    `json:"pending_join_request_count,omitempty"`
 }
 
+// ChatAdministratorRights represents the rights of an administrator in a chat.
+type ChatAdministratorRights struct {
+	IsAnonymous         bool `json:"is_anonymous"`           // True, if the user's presence in the chat is hidden
+	CanManageChat       bool `json:"can_manage_chat"`        // True, if the administrator can access the chat event log, chat statistics, message statistics in channels, see channel members, see anonymous administrators in supergroups and ignore slow mode. Implied by any other administrator privilege
+	CanDeleteMessages   bool `json:"can_delete_messages"`    // True, if the administrator can delete messages of other users
+	CanManageVideoChats bool `json:"can_manage_video_chats"` // True, if the administrator can manage video chats
+	CanRestrictMembers  bool `json:"can_restrict_members"`   // True, if the administrator can restrict, ban or unban chat members
+	CanPromoteMembers   bool `json:"can_promote_members"`    // True, if the administrator can add new administrators with a subset of their own privileges or demote administrators that they have promoted, directly or indirectly (promoted by administrators that were appointed by the user)
+	CanChangeInfo       bool `json:"can_change_info"`        // True, if the user is allowed to change the chat title, photo and other settings
+	CanInviteUsers      bool `json:"can_invite_users"`       // True, if the user is allowed to invite new users to the chat
+	CanPostMessages     bool `json:"can_post_messages"`      // Optional. True, if the administrator can post in the channel; channels only
+	CanEditMessages     bool `json:"can_edit_messages"`      // Optional. True, if the administrator can edit messages of other users and can pin messages; channels only
+	CanPinMessages      bool `json:"can_pin_messages"`       // Optional. True, if the user is allowed to pin messages; groups and supergroups only
+	CanManageTopics     bool `json:"can_manage_topics"`      // Optional. True, if the user is allowed to create, rename, close, and reopen forum topics; supergroups only
+}
+
 // ChatMember contains information about one member of a chat. Currently, the following 6 types of chat members are supported:
 // * ChatMemberOwner
 // * ChatMemberAdministrator
@@ -441,7 +497,8 @@ type ChatMemberAdministrator struct {
 	IsAnonymous         bool    `json:"is_anonymous,omitempty"`
 	CanManageChat       bool    `json:"can_manage_chat,omitempty"`
 	CanDeleteMessages   bool    `json:"can_delete_messages,omitempty"`
-	CanManageVoiceChats bool    `json:"can_manage_voice_chats,omitempty"`
+	CanManageVoiceChats bool    `json:"can_manage_voice_chats,omitempty"` // deprecated
+	CanManageVideoChats bool    `json:"can_manage_video_chats,omitempty"`
 	CanRestrictMembers  bool    `json:"can_restrict_members,omitempty"`
 	CanPromoteMembers   bool    `json:"can_promote_members,omitempty"`
 	CanChangeInfo       bool    `json:"can_change_info,omitempty"`
@@ -577,6 +634,32 @@ type BotCommandScopeChatMember struct {
 	Type   string      `json:"type"`    // Scope type, must be chat_member
 	ChatID interface{} `json:"chat_id"` // Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
 	UserID int         `json:"user_id"` // Unique identifier of the target user
+}
+
+// MenuButton describes the bot's menu button in a private chat. It should be one of
+//
+//   - MenuButtonCommands
+//   - MenuButtonWebApp
+//   - MenuButtonDefault
+//
+// If a menu button other than MenuButtonDefault is set for a private chat, then it is applied in the chat. Otherwise the default menu button is applied. By default, the menu button opens the list of bot commands.
+type MenuButton interface{}
+
+// MenuButtonCommands represents a menu button, which opens the bot's list of commands.
+type MenuButtonCommands struct {
+	Type string `json:"type"`
+}
+
+// MenuButtonWebApp represents a menu button, which launches a Web App.
+type MenuButtonWebApp struct {
+	Type   string     `json:"type"`
+	Text   string     `json:"text"`
+	WebApp WebAppInfo `json:"web_app"`
+}
+
+// MenuButtonDefault describes that no specific value for the menu button was set.
+type MenuButtonDefault struct {
+	Type string `json:"type"`
 }
 
 // ResponseParameters struct

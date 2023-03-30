@@ -1295,3 +1295,95 @@ func (b *bot) GetMyCommands(ctx context.Context) (GetMyCommandsResponse, error) 
 
 	return &res, nil
 }
+
+// SetChatMenuButtonResponse interface
+type SetChatMenuButtonResponse interface {
+	Response
+}
+
+type setChatMenuButtonResponse struct {
+	response
+}
+
+func (b *bot) SetChatMenuButton(ctx context.Context) (SetChatMenuButtonResponse, error) {
+	var res setChatMenuButtonResponse
+
+	err := b.doRequest(ctx, "setChatMenuButton", &res)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// GetChatMenuButtonResponse interface
+type GetChatMenuButtonResponse interface {
+	Response
+	GetMenuButton() *MenuButton
+}
+
+type getChatMenuButtonResponse struct {
+	response
+	Result *MenuButton `json:"result,omitempty"`
+}
+
+func (r *getChatMenuButtonResponse) GetMenuButton() *MenuButton {
+	return r.Result
+}
+
+func (b *bot) GetChatMenuButton(ctx context.Context) (GetChatMenuButtonResponse, error) {
+	var res getChatMenuButtonResponse
+
+	err := b.doRequest(ctx, "getChatMenuButton", &res)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// SetMyDefaultAdministratorRightsResponse interface
+type SetMyDefaultAdministratorRightsResponse interface {
+	Response
+}
+
+type setMyDefaultAdministratorRightsResponse struct {
+	response
+}
+
+func (b *bot) SetMyDefaultAdministratorRights(ctx context.Context) (SetMyDefaultAdministratorRightsResponse, error) {
+	var res setMyDefaultAdministratorRightsResponse
+
+	err := b.doRequest(ctx, "setMyDefaultAdministratorRights", &res)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// GetMyDefaultAdministratorRightsResponse interface
+type GetMyDefaultAdministratorRightsResponse interface {
+	Response
+	GetChatAdministratorRights() *ChatAdministratorRights
+}
+
+type getMyDefaultAdministratorRightsResponse struct {
+	response
+	Result *ChatAdministratorRights `json:"result,omitempty"`
+}
+
+func (r *getMyDefaultAdministratorRightsResponse) GetChatAdministratorRights() *ChatAdministratorRights {
+	return r.Result
+}
+
+func (b *bot) GetMyDefaultAdministratorRights(ctx context.Context) (GetMyDefaultAdministratorRightsResponse, error) {
+	var res getMyDefaultAdministratorRightsResponse
+
+	err := b.doRequest(ctx, "getMyDefaultAdministratorRights", &res)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
